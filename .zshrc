@@ -1,16 +1,21 @@
 ZSH_THEME="gnzh"
-
 export LANG=ja_JP.UTF-8
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 export PATH="{$PATH}:/c/Program Files/Git LFS"
+export PATH=$PATH:/opt/gradle/gradle-6.3/bin  # gradleのパス
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # history設定
 HISTFILE=~/.zsh_history
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt hist_ignore_dups
 setopt share_history
 
@@ -59,14 +64,14 @@ setopt correct  # コマンドミスを修正
 # cd後にls
 chpwd() { ls -a --color=auto }
 # mkdir後にcd
-function mkcd() {
-  if [[ -d $1 ]]; then
-    echo "$1 already exists!"
-    cd $1
-  else
-    mkdir -p $1 && cd $1
-  fi
-}
+# function mkcd() {
+#   if [[ -d $1 ]]; then
+#     echo "$1 already exists!"
+#     cd $1
+#   else
+#     mkdir -p $1 && cd $1
+#   fi
+# }
 
 # kawaii
 ## 色設定
@@ -103,6 +108,7 @@ alias vp='vim ~/.zpreztorc'
 alias vv='vim ~/.vimrc'
 alias h='history'
 alias sshz='ssh s1260133@sshgate.u-aizu.ac.jp'
+alias sshzy='ssh -Y s1260133@sshgate.u-aizu.ac.jp'
 alias sftpz='sftp s1260133@sshgate.u-aizu.ac.jp'
 alias so='source'
 alias soz='source ~/.zshrc'
@@ -111,10 +117,13 @@ alias ls='ls -GF --color'
 alias lsa='ls -aGF --color'
 alias gls='gls --color'
 alias lsl='ls -lh'
-alias mkdir='(){mkdir $1;cd $1}'
+#alias mkdir='(){mkdir $1;cd $1}'
 alias exp='explorer.exe'
 alias open='cmd.exe /c start'
+alias clip='clip.exe'
+alias adb='adb.exe'
 
-cd /mnt/d
+#cd /mnt/d/
+cd /mnt/d/Workspace
 
-# export DISPLAY=localhost:0.0
+export DISPLAY=localhost:0.0
