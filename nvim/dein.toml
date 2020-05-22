@@ -89,3 +89,6 @@ repo = 'hrsh7th/vim-vsnip'
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip-integ'
+
+[[plugins]]
+repo = 'neovim/nvim-lsp'

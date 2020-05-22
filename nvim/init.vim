@@ -63,6 +63,20 @@ if dein#load_state('~/.cache/dein')
 endif
 
 
+" nvim-lsp
+lua require'nvim_lsp'.tsserver.setup{}
+
+"omnifuncを設定
+"autocmd Filetype typescript setlocal omnifunc=v:lua.vim.lsp.omnifunc
+"
+""lsp.txtそのまま
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+
 " Elm
 
 "if executable('elm-language-server')
