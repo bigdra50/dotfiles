@@ -53,14 +53,14 @@ repo = 'airblade/vim-gitgutter'
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 
-[[plugins]]
-repo = 'ElmCast/elm-vim'
+#[[plugins]]
+#repo = 'ElmCast/elm-vim'
 
 [[plugins]]
 repo = 'prabirshrestha/async.vim'
 
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
+#[[plugins]]
+#repo = 'prabirshrestha/vim-lsp'
 
 #[[plugins]]
 #repo = 'mattn/vim-lsp-settings'
@@ -71,24 +71,28 @@ repo = 'prabirshrestha/vim-lsp'
 #[[plugins]]
 #repo = 'mattn/vim-foimports'
 
-[[plugins]]
-repo = 'prabirshrestha/asyncomplete.vim'
+#[[plugins]]
+#repo = 'prabirshrestha/asyncomplete.vim'
+#
+#[[plugins]]
+#repo = 'prabirshrestha/asyncomplete-lsp.vim'
+
+#[[plugins]]
+#repo = 'Shougo/deoplete.nvim'
+
+#[[plugins]]
+#repo = 'lighttinger2505/deoplete-vim-lsp'
+
+# [[plugins]]
+# repo = 'hrsh7th/vim-vsnip'
+# 
+# [[plugins]]
+# repo = 'hrsh7th/vim-vsnip-integ'
+
+# [[plugins]]
+# repo = 'neovim/nvim-lsp'
 
 [[plugins]]
-repo = 'prabirshrestha/asyncomplete-lsp.vim'
-
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-
-[[plugins]]
-repo = 'lighttinger2505/deoplete-vim-lsp'
-
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip'
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip-integ'
-
-[[plugins]]
-repo = 'neovim/nvim-lsp'
+repo = 'neoclide/coc.nvim'
+build = './install.sh nightly'
+book_add = 'source ~/.config/nvim/coc-settings.json'

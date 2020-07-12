@@ -5,6 +5,8 @@ export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
+export LIBGL_ALWAYS_INDIRECT=1
+
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
@@ -167,7 +169,6 @@ alias open='cmd.exe /c start'
 alias clip='clip.exe'
 alias adb='adb.exe'
 
-#cd /mnt/d/
 cd /mnt/d/Workspace
 
 #export DISPLAY=localhost:0.0
