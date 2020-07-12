@@ -11,6 +11,8 @@ set smartindent
 set showmatch
 set statusline=2
 
+set statusline^=%{coc#status()}
+
 set wildmode=list:longest
 
 nnoremap j gj
@@ -28,10 +30,49 @@ set wrapscan
 set hlsearch
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
-" 補完時の挙動 set completeopt=menuone,noinsert
+" 補完時の挙動 
+"set completeopt=menuone,noinsert
 inoremap <expr><CR> pumvisible() ? "<C-y>" : "<CR>"
 inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
 inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
+
+" coc.vimの設定
+" call plug#begin('~/.vim/vim-plug')
+"   Plug 'itchyny/lightline.vim'
+"   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" call plug#end()
+
+"LightLineにcoc.nvimのステータスを載せます
+let g:lightline = {
+  \'active': {
+    \'right': [
+      \['coc']
+    \]
+  \},
+  \'component_function': {
+    \'coc': 'coc#status'
+  \}
+\}
+
+"Diagnosticsの、左横のアイコンの色設定
+highlight CocErrorSign ctermfg=15 ctermbg=196
+highlight CocWarningSign ctermfg=0 ctermbg=172
+
+"以下ショートカット
+
+"ノーマルモードで
+"スペース2回でCocList
+nmap <silent> <space><space> :<C-u>CocList<cr>
+"スペースhでHover
+nmap <silent> <space>h :<C-u>call CocAction('doHover')<cr>
+"スペースdfでDefinition
+nmap <silent> <space>df <Plug>(coc-definition)
+"スペースrfでReferences
+nmap <silent> <space>rf <Plug>(coc-references)
+"スペースrnでRename
+nmap <silent> <space>rn <Plug>(coc-rename)
+"スペースfmtでFormat
+nmap <silent> <space>fmt <Plug>(coc-format)
 
 
 if &compatible
@@ -63,19 +104,21 @@ if dein#load_state('~/.cache/dein')
 endif
 
 
-" nvim-lsp
-lua require'nvim_lsp'.tsserver.setup{}
-
-"omnifuncを設定
-"autocmd Filetype typescript setlocal omnifunc=v:lua.vim.lsp.omnifunc
-"
-""lsp.txtそのまま
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+" " start nvim-lsp
+"  lua require'nvim_lsp'.tsserver.setup{}
+" 
+" " omnifuncを設定
+" autocmd Filetype typescript setlocal omnifunc=v:lua.vim.lsp.omnifunc
+" 
+" "lsp.txtそのまま
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+" 
+" " end nvim-lsp
 
 " Elm
 
@@ -126,3 +169,4 @@ let g:elm_setup_keybindings = 0
 filetype plugin indent on
 syntax enable 
 colorscheme molokai
+
