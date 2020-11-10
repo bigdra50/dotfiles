@@ -22,10 +22,10 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # goenv
-export GOENV_ROOT=$HOME/.goenv
-export PATH=$GOENV_ROOT/bin:$PATH
-export GO114MODULE=on
-eval "$(goenv init -)"
+#export GOENV_ROOT=$HOME/.goenv
+#export PATH=$GOENV_ROOT/bin:$PATH
+#export GO114MODULE=on
+# eval "$(goenv init -)"
 # end goenv
 
 # pyenv
@@ -171,6 +171,8 @@ alias ls='ls -GF --color'
 alias lsa='ls -aGF --color'
 alias gls='gls --color'
 alias lsl='ls -lh'
+alias uni='cd /mnt/d/Workspace/src/Unityprojects'
+alias w~='cd /mnt/d/Workspace'
 #alias mkdir='(){mkdir $1;cd $1}'
 alias exp='explorer.exe'
 alias open='cmd.exe /c start'
