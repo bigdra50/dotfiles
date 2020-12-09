@@ -1,4 +1,0 @@
-# 拡張可能な非同期の補完フレームワーク
-#[[plugins]]
-#repo = 'Shougo/deoplete.nvim'
-#hook_add = 'source ~/.config/nvim/plugins/deoplete.vim'
