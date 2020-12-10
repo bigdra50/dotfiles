@@ -19,6 +19,10 @@
 
 " End dein Scripts-------------------------
 
+" For Windows
+
+let g:python3_host_prog='C:\Users\ryudai\AppData\Local\Programs\Python\Python38\python.exe'
+
 colorscheme molokai
 
 set fenc=utf-8
