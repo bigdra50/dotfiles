@@ -171,26 +171,11 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () { vcs_info }
 RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 
-
-alias v='nvim'
-alias vz='nvim ~/.zshrc'
-alias vp='nvim ~/.zpreztorc'
-alias vv='nvim ~/.config/nvim/init.vim'
-alias h='history'
-alias sshz='ssh s1260133@sshgate.u-aizu.ac.jp'
-alias sshzy='ssh -Y s1260133@sshgate.u-aizu.ac.jp'
-alias sftpz='sftp s1260133@sshgate.u-aizu.ac.jp'
-alias scpz='scp s1260133@sshgate.u-aizu.ac.jp:/home/student/s1260133/'
-alias so='source'
-alias soz='source ~/.zshrc'
-alias sov='source ~/.vimrc'
-alias lsl='ls -lh'
-#alias mkdir='(){mkdir $1;cd $1}'
-
 # OS別の設定
 case ${OSTYPE} in
   darwin*)
     # Mac
+    alias ls="LC_COLLATE=C gls --group-directories-first"
     ;;
   linux*)
     # Linux(wsl)
@@ -209,12 +194,11 @@ case ${OSTYPE} in
     export PATH=$PATH:/opt/gradle/gradle-6.3/bin  # gradleのパス
     export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
 
-    # cd後にls
-    chpwd() { ls -a --color=auto }
 
-    alias ls='ls -GF --color'
-    alias lsa='ls -aGF --color'
-    alias gls='gls --color'
+    # alias ls='ls -GF --color'
+    # alias lsa='ls -aGF --color'
+    # alias gls='gls --color'
+    alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
     alias exp='explorer.exe'
     alias open='cmd.exe /c start'
     alias clip='clip.exe'
@@ -225,6 +209,23 @@ case ${OSTYPE} in
     ;;
 esac
 
+alias ll="ls -lh"
+alias la="ls -a"
+alias lal='ls -al'
+# cd後にls
+chpwd() { ls }
 
+alias v='nvim'
+alias vz='nvim ~/.zshrc'
+alias vp='nvim ~/.zpreztorc'
+alias vv='nvim ~/.config/nvim/init.vim'
+alias h='history'
+alias sshz='ssh s1260133@sshgate.u-aizu.ac.jp'
+alias sshzy='ssh -Y s1260133@sshgate.u-aizu.ac.jp'
+alias sftpz='sftp s1260133@sshgate.u-aizu.ac.jp'
+alias scpz='scp s1260133@sshgate.u-aizu.ac.jp:/home/student/s1260133/'
+alias so='source'
+alias soz='source ~/.zshenv && source ~/.zshrc'
+#alias mkdir='(){mkdir $1;cd $1}'
 #export DISPLAY=localhost:0.0
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
