@@ -25,6 +25,14 @@ if [ ! -d ${DOTPATH} ]; then
   fi
   cd ${DOTPATH}
 
+  for f in .??*
+  do
+    [[ "$f" == ".git" ]] && continue
+    [[ "$f" == ".gitignore" ]] && continue
+    [[ "$f" == ".DS_Store" ]] && continue
+    
+    ln -snfv "$DOTPATH/$f" "$HOME/$f"
+  done
   for f in *
   do
     [[ "$f" == ".git" ]] && continue
@@ -33,7 +41,7 @@ if [ ! -d ${DOTPATH} ]; then
     [[ "$f" == "README.md" ]] && continue
     [[ "$f" == "install.sh" ]] && continue
   
-    ln -snf $DOTPATH/"$f" $HOME/"$f"
+    ln -snfv "$DOTPATH/$f" "$HOME/$f"
     echo "Installed $f"
   done
 else
