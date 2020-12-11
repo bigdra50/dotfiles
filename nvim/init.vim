@@ -70,6 +70,10 @@ nmap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
+inoremap <silent> jj <ESC>
 " 数値に対してインクリメント･デクリメント"
 nnoremap + <C-a>
 nnoremap - <C-x>
+
+" terminal insertモードからESCでterminal normalモードへ戻る
+tnoremap <silent> <ESC> <C-\><C-n>
