@@ -56,3 +56,13 @@ hook_add = 'source ~/.config/nvim/plugins/denite.vim'
 repo = 'kassio/neoterm'
 hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
 
+# vimにファイルツリー表示
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+hook_add = 'source ~/.config/nvim/plugins/nerdtree-tab.vim'
