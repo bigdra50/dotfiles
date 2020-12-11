@@ -23,8 +23,17 @@ export NVM_DIR="$HOME/.nvm"
 # end goenv
 
 
+case ${OSTYPE} in
+  darwin*)
+    ;;
+  linux*)
+    eval $(dircolors -b ~/.colorrc)
+    ;;
+esac
+
 # vimキーバインドへ
 bindkey -v
+
 
 # history設定
 HISTFILE=~/.zsh_history
@@ -162,6 +171,7 @@ SPROMPT="%{$fg[red]%}%{$suggest%}(*'~'%)? < もしかして %B%r%b %{$fg[red]%}�
 #zle -N zle-keymap-select
 #zle -N edit-command-line
 
+
 autoload -Uz vcs_info
 #setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
@@ -196,9 +206,6 @@ case ${OSTYPE} in
     export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
 
 
-    # alias ls='ls -GF --color'
-    # alias lsa='ls -aGF --color'
-    # alias gls='gls --color'
     alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
     alias exp='explorer.exe'
     alias open='cmd.exe /c start'
