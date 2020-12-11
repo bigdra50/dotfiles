@@ -39,6 +39,8 @@ fi
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_CACHE_HOME="$HOME/.cache"
 
+# vimキーバインドへ
+bindkey -v
 
 # history設定
 HISTFILE=~/.zsh_history
@@ -143,6 +145,39 @@ PROMPT2='[%n]> '
 ## もしかして時のプロンプト指定
 SPROMPT="%{$fg[red]%}%{$suggest%}(*'~'%)? < もしかして %B%r%b %{$fg[red]%}かな? [そう!(y), 違う!(n),a,e]:${reset_color} "
 #
+#autoload -Uz colors; colors
+#autoload -Uz add-zsh-hook
+#autoload -Uz terminfo
+#
+#terminfo_down_sc=$terminfo[cud1]$terminfo[cuu1]$terminfo[sc]$terminfo[cud1]
+#left_down_prompt_preexec() {
+#    print -rn -- $terminfo[el]
+#}
+#
+#
+#add-zsh-hook preexec left_down_prompt_preexec
+#function zle-keymap-select zle-line-init zle-line-finish
+#{
+#  case $KEYMAP in
+#    main|viins)
+#      PROMPT_2="$fg[cyan]-- INSERT --$reset_color"
+#        ;;
+#    vicmd)
+#      PROMPT_2="$fg[white]-- NORMAL --$reset_color"
+#        ;;
+#    vivis|vivli)
+#      PROMPT_2="$fg[yellow]-- VISUAL --$reset_color"
+#        ;;
+#  esac
+#
+#  PROMPT="%{$terminfo_down_sc$PROMPT_2$terminfo[rc]%}[%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%}]%# "
+#  zle reset-prompt
+#}
+#
+#zle -N zle-line-init
+#zle -N zle-line-finish
+#zle -N zle-keymap-select
+#zle -N edit-command-line
 
 autoload -Uz vcs_info
 #setopt prompt_subst
