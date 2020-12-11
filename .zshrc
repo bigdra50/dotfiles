@@ -86,6 +86,7 @@ setopt rec_exact
 unsetopt list_beep
 
 bindkey "^I" menu-complete  # 展開する前に補完候補を出させる(Ctrl-iで補完)
+bindkey "^E" autosuggest-accept
 
 # 範囲指定できるようにする
 # 例: mkdir {1-3}でフォルダ1, 2, 3を作れる
