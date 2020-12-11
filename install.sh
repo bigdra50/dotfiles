@@ -31,9 +31,21 @@ if [ ! -d ${DOTPATH} ]; then
     [[ "$f" == ".gitignore" ]] && continue
     [[ "$f" == ".DS_Store" ]] && continue
     
-    ln -snfv "$DOTPATH/$f" "$HOME/$f"
+    ln -snf "$DOTPATH/$f" "$HOME/$f"
   done
-  ln -snfv "$DOTPATH/nvim" "$HOME/.config/nvim"
+  for f in *
+  do
+    [[ "$f" == ".git" ]] && continue
+    [[ "$f" == ".gitignore" ]] && continue
+    [[ "$f" == ".DS_Store" ]] && continue
+    [[ "$f" == "README.md" ]] && continue
+    [[ "$f" == "install.sh" ]] && continue
+    ln -snf "$DOTPATH/$f" "$HOME/$f"
+    echo "Installed $f"
+  done
+
+  mkdir -p $HOME/.config/
+  ln -snf "$DOTPATH/.config/nvim/" "$HOME/.config/nvim"
 else
   echo "dotfiles already exists"
   exit 1
