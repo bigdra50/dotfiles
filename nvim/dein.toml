@@ -47,7 +47,12 @@ repo = 'jiangmiao/auto-pairs'
 repo = 'tpope/vim-fugitive'
 hook_add = 'source ~/.config/nvim/plugins/fugitive.vim'
 
-# vim用の統合インターフェイス
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 hook_add = 'source ~/.config/nvim/plugins/denite.vim'
+
+
+[[plugins]]
+repo = 'kassio/neoterm'
+hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
+
