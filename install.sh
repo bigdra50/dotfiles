@@ -33,7 +33,7 @@ if [ ! -d ${DOTPATH} ]; then
     
     ln -snfv "$DOTPATH/$f" "$HOME/$f"
   done
-  ln -snfv "$DOTPATH/nvim" "$HOME/.config"
+  ln -snfv "$DOTPATH/nvim" "$HOME/.config/nvim"
 else
   echo "dotfiles already exists"
   exit 1
