@@ -40,12 +40,11 @@ if [ ! -d ${DOTPATH} ]; then
     [[ "$f" == ".DS_Store" ]] && continue
     [[ "$f" == "README.md" ]] && continue
     [[ "$f" == "install.sh" ]] && continue
+    [[ "$f" == "nvim" ]] && mkdir -p $HOME/.config/ && ln -sf "$DOTPATH/.config/nvim/" "$HOME/.config/nvim"
     ln -snf "$DOTPATH/$f" "$HOME/$f"
     echo "Installed $f"
   done
 
-  mkdir -p $HOME/.config/
-  ln -snf "$DOTPATH/.config/nvim/" "$HOME/.config/nvim"
 else
   echo "dotfiles already exists"
   exit 1
