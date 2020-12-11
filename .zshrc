@@ -11,15 +11,9 @@ if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-export PATH="{$PATH}:/c/Program Files/Git LFS"
-export PATH=$PATH:/opt/gradle/gradle-6.3/bin  # gradleのパス
-export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # goenv
 #export GOENV_ROOT=$HOME/.goenv
@@ -28,16 +22,6 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # eval "$(goenv init -)"
 # end goenv
 
-# pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-# end pyenv
-
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_CACHE_HOME="$HOME/.cache"
 
 # vimキーバインドへ
 bindkey -v
@@ -117,8 +101,6 @@ zstyle ':completion:*' use-cache true
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 
 
-# cd後にls
-chpwd() { ls -a --color=auto }
 # mkdir後にcd
 # function mkcd() {
 #   if [[ -d $1 ]]; then
@@ -202,19 +184,47 @@ alias scpz='scp s1260133@sshgate.u-aizu.ac.jp:/home/student/s1260133/'
 alias so='source'
 alias soz='source ~/.zshrc'
 alias sov='source ~/.vimrc'
-alias ls='ls -GF --color'
-alias lsa='ls -aGF --color'
-alias gls='gls --color'
 alias lsl='ls -lh'
-alias uni='cd /mnt/d/Workspace/src/Unityprojects'
-alias w~='cd /mnt/d/Workspace'
 #alias mkdir='(){mkdir $1;cd $1}'
-alias exp='explorer.exe'
-alias open='cmd.exe /c start'
-alias clip='clip.exe'
-alias adb='adb.exe'
 
-cd /mnt/d/Workspace
+# OS別の設定
+case ${OSTYPE} in
+  darwin*)
+    # Mac
+    ;;
+  linux*)
+    # Linux(wsl)
+    # pyenv
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    if command -v pyenv 1>/dev/null 2>&1; then
+      eval "$(pyenv init -)"
+    fi
+    # end pyenv
+    
+    export XDG_CONFIG_HOME="$HOME/.config"
+    export XDG_CACHE_HOME="$HOME/.cache"
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+    export PATH="{$PATH}:/c/Program Files/Git LFS"
+    export PATH=$PATH:/opt/gradle/gradle-6.3/bin  # gradleのパス
+    export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
+
+    # cd後にls
+    chpwd() { ls -a --color=auto }
+
+    alias ls='ls -GF --color'
+    alias lsa='ls -aGF --color'
+    alias gls='gls --color'
+    alias exp='explorer.exe'
+    alias open='cmd.exe /c start'
+    alias clip='clip.exe'
+    alias adb='adb.exe'
+    alias uni='cd /mnt/d/Workspace/src/Unityprojects'
+    alias w~='cd /mnt/d/Workspace'
+    cd /mnt/d/Workspace
+    ;;
+esac
+
 
 #export DISPLAY=localhost:0.0
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
