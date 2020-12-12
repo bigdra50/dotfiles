@@ -6,6 +6,37 @@
   "diagnostic.signOffset": 100,
   "diagnostic.warningSign": "--",
   "diagnostic.refreshOnInsertMode": true,
-  "languageserver": {},
-  "clangd.path": "/Users/bigdra/.config/coc/extensions/coc-clangd-data/install/11.0.0/clangd_11.0.0/bin/clangd"
+  "languageserver": {
+    "elmLS": {
+      "command": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-language-server",
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "elm"
+      ],
+      "rootPatterns": [
+        "elm.json"
+      ],
+      "trace.server": "verbose",
+      "initializationOptions": {
+        "runtime": "node",
+        "elmPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm",
+        "elmFormatPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-format",
+        "elmTestPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-test",
+        "elmAnalyseTrigger": "change"
+      }
+    },
+    "go": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod"
+      ],
+      "trace.server": "verbose",
+      "filetypes": [
+        "go"
+      ]
+    }
+  },
+  "codeLens.enable": true
 }

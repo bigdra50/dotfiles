@@ -12,7 +12,7 @@ repo = 'vim-airline/vim-airline-themes'
 # LSPとか
 [[plugins]]
 repo = 'neoclide/coc.nvim'
-build = './install.sh nightly'
+rev = "release"
 hook_add = 'source ~/.config/nvim/plugins/coc.vim'
 
 # vim上でコンパイル･実行
@@ -28,6 +28,7 @@ build = 'make'
 # 非同期でsyntaxチェック
 [[plugins]]
 repo = 'w0rp/ale'
+hook_add = 'source ~/.config/nvim/plugins/ale.vim'
 
 # gitのdiffを表示したり差分を戻したり
 [[plugins]]
@@ -66,3 +67,8 @@ repo = 'Xuyuanp/nerdtree-git-plugin'
 [[plugins]]
 repo = 'jistr/vim-nerdtree-tabs'
 hook_add = 'source ~/.config/nvim/plugins/nerdtree-tab.vim'
+
+
+[[plugins]]
+repo = 'andys8/vim-elm-syntax'
+on_ft = ['elm']
