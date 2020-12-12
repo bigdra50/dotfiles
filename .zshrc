@@ -213,7 +213,8 @@ case ${OSTYPE} in
     alias adb='adb.exe'
     alias uni='cd /mnt/d/Workspace/src/Unityprojects'
     alias w~='cd /mnt/d/Workspace'
-    cd /mnt/d/Workspace
+    #cd /mnt/d/Workspace
+    cd ~
     ;;
 esac
 
