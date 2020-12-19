@@ -186,7 +186,7 @@ RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
 case ${OSTYPE} in
   darwin*)
     # Mac
-    alias ls="LC_COLLATE=C gls --group-directories-first"
+    alias ls="LC_COLLATE=C gls -a --group-directories-first"
     ;;
   linux*)
     # Linux(wsl)
@@ -206,7 +206,7 @@ case ${OSTYPE} in
     export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
 
 
-    alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
+    alias ls='LC_COLLATE=C ls -a --color=auto --human-readable --group-directories-first'
     alias exp='explorer.exe'
     alias open='cmd.exe /c start'
     alias clip='clip.exe'
