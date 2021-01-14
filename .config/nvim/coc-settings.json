@@ -8,7 +8,7 @@
   "diagnostic.refreshOnInsertMode": true,
   "languageserver": {
     "elmLS": {
-      "command": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-language-server",
+      "command": "~/.config/yarn/global/node_modules/.bin/elm-language-server",
       "args": [
         "--stdio"
       ],
@@ -21,9 +21,9 @@
       "trace.server": "verbose",
       "initializationOptions": {
         "runtime": "node",
-        "elmPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm",
-        "elmFormatPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-format",
-        "elmTestPath": "/home/bigdra/.config/yarn/global/node_modules/.bin/elm-test",
+        "elmPath": "~/.config/yarn/global/node_modules/.bin/elm",
+        "elmFormatPath": "~/.config/yarn/global/node_modules/.bin/elm-format",
+        "elmTestPath": "~/.config/yarn/global/node_modules/.bin/elm-test",
         "elmAnalyseTrigger": "change"
       }
     },
