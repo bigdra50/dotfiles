@@ -40,7 +40,7 @@ if [ ! -d ${DOTPATH} ]; then
     [[ "$f" == ".DS_Store" ]] && continue
     [[ "$f" == "README.md" ]] && continue
     [[ "$f" == "install.sh" ]] && continue
-    [[ "$f" == "nvim" ]] && mkdir -p $HOME/.config/ && ln -sf "$DOTPATH/.config/nvim" "$HOME/.config/nvim" && continue
+    [[ "$f" == "nvim" ]] && mkdir -p $HOME/.config/ && ln -sf "$DOTPATH/.config/nvim" "$HOME/.config" && continue
     ln -sf "$DOTPATH/$f" "$HOME/$f"
     echo "Installed $f"
   done
