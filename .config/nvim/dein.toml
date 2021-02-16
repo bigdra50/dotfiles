@@ -48,9 +48,9 @@ repo = 'jiangmiao/auto-pairs'
 repo = 'tpope/vim-fugitive'
 hook_add = 'source ~/.config/nvim/plugins/fugitive.vim'
 
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-hook_add = 'source ~/.config/nvim/plugins/denite.vim'
+#[[plugins]]
+#repo = 'Shougo/denite.nvim'
+#hook_add = 'source ~/.config/nvim/plugins/denite.vim'
 
 
 [[plugins]]
