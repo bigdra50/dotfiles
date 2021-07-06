@@ -206,8 +206,8 @@ case ${OSTYPE} in
     export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
 
 
-    alias c='mnt/c'
-    alias d='mnt/d'
+    alias c='/mnt/c'
+    alias d='/mnt/d'
     alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
     alias exp='explorer.exe'
     alias open='cmd.exe /c start'
