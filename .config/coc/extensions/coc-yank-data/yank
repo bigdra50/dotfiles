@@ -1,0 +1,1149 @@
+cea83763c09d8f4d20c552985d6c6e28|file:///home/bigdra/dev/testing/chart2/index.html|23|1|V|html
+	pyen
+6b541628ba1cb7ed0fd4629df0eb50cd|file:///home/bigdra/dev/testing/chart2/index.html|23|1|V|html
+	$HOME/
+650ba995b5d536e5549c53f7ac528668|file:///home/bigdra/dev/testing/chart2/index.html|16|1|V|html
+	  <div style="width:50%;">
+	    <canvas id="chart2" width="400px" height="400px"></canvas>
+	  </div>
+8b263983d108b71e0efdcf7e658c1a3d|file:///home/bigdra/dev/testing/chart2/main.js|3|13|v|javascript
+	document.getElementById('chart1');
+aeff6193317db6f02392571531eeb9c3|file:///home/bigdra/dev/testing/chart2/main.js|3|1|V|javascript
+	const ctx = 
+e6921e29abb3ca69babe83ffa859b072|file:///home/bigdra/dev/testing/chart2/main.js|20|1|V|javascript
+	        'rgba(255, 99, 132, 0.2)',
+	        'rgba(54, 162, 235, 0.2)',
+	        'rgba(255, 206, 86, 0.2)',
+	        'rgba(75, 192, 192, 0.2)',
+	        'rgba(153, 102, 255, 0.2)',
+dc143c2842993a5b616fd82ed7a9eb10|file:///home/bigdra/dev/testing/chart2/main.js|19|1|V|javascript
+	      backgroundColor: [
+	        'rgba(255, 99, 132, 0.2)',
+	        'rgba(54, 162, 235, 0.2)',
+	        'rgba(255, 206, 86, 0.2)',
+	        'rgba(75, 192, 192, 0.2)',
+	        'rgba(153, 102, 255, 0.2)',
+	        'rgba(255, 159, 64, 0.2)'
+	      ],
+	      borderColor: [
+	        'rgba(255, 99, 132, 1)',
+	        'rgba(54, 162, 235, 1)',
+	        'rgba(255, 206, 86, 1)',
+	        'rgba(75, 192, 192, 1)',
+	        'rgba(153, 102, 255, 1)',
+	        'rgba(255, 159, 64, 1)'
+	      ],
+	      borderWidth: 1
+c76b524a2fda085c5fc969816747b039|file:///home/bigdra/dev/testing/chart2/main.js|8|5|V|javascript
+	    borderColor: 'rgba(255, 0, 0, 1)'
+2f4091f0ed2d3d62edaf3575fcbb9090|file:///home/bigdra/dev/testing/chart2/main.js|5|1|V|javascript
+	  var data = {
+	    labels: ["4", "5", "6", "7", "8"],
+	    datasets: [11433, 23510, 15943, 34212, 19841],
+	    backgroundColor: [
+	      'rgba(255, 99, 132, 0.2)',
+	      'rgba(54, 162, 235, 0.2)',
+	      'rgba(255, 206, 86, 0.2)',
+	      'rgba(75, 192, 192, 0.2)',
+	      'rgba(153, 102, 255, 0.2)',
+	      'rgba(255, 159, 64, 0.2)'
+	    ],
+	    borderColor: [
+	      'rgba(255, 99, 132, 1)',
+	      'rgba(54, 162, 235, 1)',
+	      'rgba(255, 206, 86, 1)',
+	      'rgba(75, 192, 192, 1)',
+	      'rgba(153, 102, 255, 1)',
+	      'rgba(255, 159, 64, 1)'
+	    ],
+	    borderWidth: 1
+	  }
+126102b9527627d891f2374280bd31ce|file:///home/bigdra/dev/testing/chart2/main.js|7|1|V|javascript
+	const chart = new Chart(ctx, {
+	  type: 'line',
+	  data: {
+	    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+	    datasets: [{
+	      label: '# of Votes',
+	      data: [12, 19, 3, 5, 2, 3],
+	      backgroundColor: [
+	        'rgba(255, 99, 132, 0.2)',
+	        'rgba(54, 162, 235, 0.2)',
+	        'rgba(255, 206, 86, 0.2)',
+	        'rgba(75, 192, 192, 0.2)',
+	        'rgba(153, 102, 255, 0.2)',
+	        'rgba(255, 159, 64, 0.2)'
+	      ],
+	      borderColor: [
+	        'rgba(255, 99, 132, 1)',
+	        'rgba(54, 162, 235, 1)',
+	        'rgba(255, 206, 86, 1)',
+	        'rgba(75, 192, 192, 1)',
+	        'rgba(153, 102, 255, 1)',
+	        'rgba(255, 159, 64, 1)'
+	      ],
+	      borderWidth: 1
+	    }]
+	  }
+	})
+6680dba00f3a88f66f8029a93d71d93c|file:///home/bigdra/dev/testing/chart2/main.js|5|1|v|javascript
+	const
+388843138daaa8d87d39a7c704fd2ebd|file:///home/bigdra/dev/testing/chart2/main.js|4|3|V|javascript
+	  const ctx = document.getElementById('chart1');
+2ca8de789aa2a55891a6afbcb0b24561|file:///home/bigdra/dev/testing/chart2/main.js|5|1|V|javascript
+	function getChart() {
+df1e2bb697a2d80a8be76a7dc0576607|file:///home/bigdra/dev/testing/chart2/main.js|32|3|V|javascript
+	  return chart;
+b50951613bcd649dc2f9fe580866fe38|file:///home/bigdra/dev/testing/chart2/main.js|5|7|v|javascript
+	chart
+0428a6f502da696fb2cd281445291153|file:///home/bigdra/dev/testing/chart2/main.js|5|7|v|javascript
+	votesChart
+d827395a657e561c17120b3488fa1806|file:///home/bigdra/dev/testing/chart2/index.html|14|1|V|html
+	    <canvas id="chart1" width="400px" height="400px"></canvas>
+b1e21c4ed40f40bc614f25404f237198|file:///home/bigdra/dev/testing/chart2/main.js|3|1|V|javascript
+	const ctx = document.getElementById('chart1');
+18b93b0fafca02e72f980e9bef26e774|file:///home/bigdra/dev/testing/chart2/main.js|48|9|v|javascript
+	{
+	
+	  }
+86b89328783cc2cb23f2a8084e9a41fc|file:///home/bigdra/dev/testing/chart2/main.js|53|1|V|javascript
+	var xmlHttpRequest = new XMLHttpRequest();
+	xmlHttpRequest.onreadystatechange = function () {
+	  if (this.readyState == 4 && this.status == 200) {
+	    if (this.response) {
+	      console.log(this.response);
+	    }
+	  }
+	}
+	
+	xmlHttpRequest.open('GET', 'https://api.ouraring.com/v1/userinfo?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP')
+	xmlHttpRequest.responseType = 'json';
+	xmlHttpRequest.send(null);
+c72b48e57304d28963c489cc353cb9e0|file:///home/bigdra/dev/testing/chart2/main.js|16|1|V|javascript
+	//const {Chart} = require("chart.js");
+366ef918c98367e09dd3c1606e7efd3f|file:///home/bigdra/dev/testing/chart2/index.html|7|3|V|html
+	  <script src="./node_modules/chart.js/dist/Chart.js"></script>
+f1b45baf9be314fd6f726631b7b51eb2|file:///home/bigdra/dev/testing/chart2/index.html|7|3|V|html
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+5a618878044ef8e5ac690609ac320f5f|file:///home/bigdra/dev/testing/chart2/index.html|16|3|V|html
+	  <script src='main.js'></script>
+4d7fbe6a8fcdc37fa8e59998dde9d20e|file:///home/bigdra/dev/testing/chart2/index.html|12|3|V|html
+	  <script src="main.js"></script>
+d0c0bc7b1930e34f5faf4666533189a2|file:///home/bigdra/dev/testing/chart2/main.js|12|57|v|javascript
+	userinfo
+10e51314a7eed86b1b229ccdf383502e|file:///home/bigdra/dev/testing/chart2/main.js|12|1|V|javascript
+	const 
+0998ae13206dea54f479b4cb5e9dbb70|file:///home/bigdra/dev/testing/chart2/main.js|13|29|v|javascript
+	https://api.ouraring.com/v1/
+58724edefc30049ce77da81fbcc3c82b|file:///home/bigdra/dev/testing/chart2/main.js|13|3|V|javascript
+	  args.join('/')
+97f750643c9fc6bf50de8b58117b824e|file:///home/bigdra/dev/testing/chart2/main.js|13|1|V|javascript
+	.replace(searchValue, replaceValue)
+f1a2cae4c5dd4c709a704b990aa44a50|file:///home/bigdra/dev/testing/chart2/main.js|27|51|v|javascript
+	E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP
+704120c789050bc31982236f2733d279|file:///home/bigdra/dev/testing/chart2/main.js|22|1|V|javascript
+	const activity = "activity";
+d56bac5fb78447844b46d82e23cf0517|file:///home/bigdra/dev/testing/chart2/main.js|27|28|v|javascript
+	'activity?access_token='
+1cb91ca6a958aff91254f57a7e343d00|file:///home/bigdra/dev/testing/chart2/main.js|25|18|v|javascript
+	URLJoin(host, "activity", "?access_token=", token);
+f5af2a57faa05d9183ead4ebfd7289de|file:///home/bigdra/dev/testing/chart2/main.js|24|48|v|javascript
+	"?access_token=",
+be6e86033d3b04341a8821cf1f845942|file:///home/bigdra/dev/testing/chart2/main.js|22|1|V|javascript
+	      const startDate = "?start=2021-06-01"
+e4dfb3f5dd911dc868eb4f2c2a836d64|file:///home/bigdra/dev/testing/chart2/main.js|23|13|v|javascript
+	startDate
+ea2b2676c28c0db26d39331a336c6b92|file:///home/bigdra/dev/testing/chart2/main.js|23|25|v|javascript
+	start
+4c6b7cd617a0dcf2d783efd0d73e87ee|file:///home/bigdra/dev/testing/chart2/main.js|33|23|v|javascript
+	2021-07-10
+5fc732311905cb27e82d67f4f6511f7f|file:///home/bigdra/dev/testing/chart2/main.js|21|23|v|javascript
+	date
+308057108001256c60fcaaa1cd037803|file:///home/bigdra/dev/testing/chart2/main.js|22|3|V|javascript
+	  var dt = new Date();
+573176c2602330860bdf8efd9eb70e27|file:///home/bigdra/dev/testing/chart2/main.js|30|27|v|javascript
+	2021-06-01
+605bf12e30f3e10264f2dbf9828b5f5e|file:///home/bigdra/dev/testing/chart2/main.js|32|19|v|javascript
+	lastMonth
+37a6259cc0c1dae299a7866489dff0bd|file:///home/bigdra/dev/testing/chart2/main.js|43|21|v|javascript
+	null
+b85cba3677f65d93cfd788b70b7b6d4c|file:///home/bigdra/dev/testing/chart2/main.js|3|1|V|javascript
+	const xmlHttpRequest = new XMLHttpRequest();
+	xmlHttpRequest.onreadystatechange = function () {
+	  if (this.readyState == 4 && this.status == 200) {
+	    if (this.response) {
+	      console.log(this.response);
+	    }
+	  }
+	}
+aafa5f27fefd6c0632d0b08b35716c7d|file:///home/bigdra/dev/testing/chart2/main.js|34|37|v|javascript
+	function 
+f38f60827c6845cb7c774a2723f89dac|file:///home/bigdra/dev/testing/chart2/main.js|40|3|V|javascript
+	  console.log(this.response);
+82f1d3ee8939f6d82159461d0ef65083|file:///home/bigdra/dev/testing/chart2/main.js|40|30|v|javascript
+	xmlHttpRequest
+d1fc8eaf36937be0c3ba8cfe0a2c1bfe|file:///home/bigdra/dev/testing/chart2/main.js|38|20|v|javascript
+	response
+9d858cf4183e7049b96933bc2fdc314b|file:///home/bigdra/dev/testing/chart2/main.js|38|3|V|javascript
+	  console.log(this.responseText);
+4cc4af0ad4058abcf57719d08829026b|file:///home/bigdra/dev/testing/chart2/main.js|39|35|v|javascript
+	responseText
+95807967b1fe774a37b54075bc7704c5|file:///home/bigdra/dev/testing/chart2/main.js|47|1|V|javascript
+	xmlHttpRequest.open('GET', ouraActivity)
+	xmlHttpRequest.responseType = 'json';
+	xmlHttpRequest.send(null);
+fcecd632c44f8caf90bd7a00addc127e|file:///home/bigdra/dev/testing/chart2/main.js|34|1|V|javascript
+	xmlHttpRequest.onloadstart = () => console.log("onloadstart");
+fea75e86d80987a86ddf044b1e3ec87b|file:///home/bigdra/dev/testing/chart2/main.js|35|16|v|javascript
+	onloadstart
+62ea725e4025a055a734a7299cb2cffd|file:///home/bigdra/dev/testing/chart2/main.js|35|1|V|javascript
+	xmlHttpRequest.onprogress = () => console.log("onprogress");
+9de057c4de5c1ab8cc8c1adba2deb984|file:///home/bigdra/dev/testing/chart2/main.js|36|16|v|javascript
+	onprogress
+792c1074846c08dabf9802fd7520bc10|file:///home/bigdra/dev/testing/chart2/main.js|41|16|v|javascript
+	onreadystatechange
+c8f17ffc77e345ba879eb2e84894d910|file:///home/bigdra/dev/testing/chart2/main.js|42|3|V|javascript
+	  console.log("onreadystatechange: " + "state: " + this.readyState + "status: " + this.status + "responseText: " + this.responseText);
+0b1855e76d816d4baeda27e767c78e08|file:///home/bigdra/dev/testing/chart2/main.js|43|3|V|javascript
+	  if (!this.response) return;
+93f832f4134cb1971480d196f3acf7e6|file:///home/bigdra/dev/testing/chart2/main.js|41|16|v|javascript
+	onload
+ddf2b9050c9e29637d22e1af05493d1b|file:///home/bigdra/dev/testing/chart2/main.js|42|50|v|javascript
+	 return;
+0f33adfdaa2a094c13ce17802b4fb7bb|file:///home/bigdra/dev/testing/chart2/main.js|34|1|V|javascript
+	xmlHttpRequest.open('GET', ouraActivity)
+	xmlHttpRequest.responseType = 'json';
+	xmlHttpRequest.send();
+505b97969baa28c3f607a38ee02f4f2d|file:///home/bigdra/dev/testing/chart2/main.js|39|51|v|javascript
+	return;
+c90a05e6dbfd59bb4fac2618e3b70bf5|file:///home/bigdra/dev/testing/chart2/main.js|42|3|V|javascript
+	    console.log(this.responseText);
+a43c1b0aa53a0c908810c06ab1ff3967|file:///home/bigdra/dev/testing/chart2/main.js|32|7|v|javascript
+	input
+5490366826b5fa2bf11f0c05a2b69a66|file:///home/bigdra/dev/testing/chart2/main.js|36|2|v|javascript
+	response.text()
+1cb251ec0d568de6a929b520c4aed8d1|file:///home/bigdra/dev/testing/chart2/main.js|34|30|v|javascript
+	text
+4d12497cf9f866c0de7c5de7d63953c5|file:///home/bigdra/dev/testing/chart2/main.js|41|1|V|javascript
+	//const xmlHttpRequest = new XMLHttpRequest();
+	//
+	//xmlHttpRequest.onloadstart = () => console.log("onloadstart");
+	//xmlHttpRequest.onprogress = () => console.log("onprogress");
+	////xmlHttpRequest.onload = () => console.log("onload");
+	//xmlHttpRequest.onreadystatechange = () => {
+	//  if (this.readyState == 4 && this.status == 200) {
+	//
+	//    console.log("onreadystatechange: " + "state: " + this.readyState + "status: " + this.status + "responseText: " + this.responseText);
+	//    const jsonObj = JSON.parse(this.response);
+	//    console.log(jsonObj);
+	//    for (let item of jsonObj) {
+	//      console.log("id: " + item.activity);
+	//    }
+	//
+	//  }
+	//}
+	//
+	//xmlHttpRequest.open('GET', ouraActivity);
+	//xmlHttpRequest.responseType = 'json';
+	//xmlHttpRequest.send();
+21de2ab2a014f8d9ebcd431477276fe1|file:///home/bigdra/dev/testing/chart2/main.js|43|21|v|javascript
+	result[0];
+14643c162cba82199e2ab691c55c5425|file:///home/bigdra/dev/testing/chart2/main.js|43|3|V|javascript
+	  const data = json.activity
+de69baa3a86be81d44f784fa216df81b|file:///home/bigdra/dev/testing/chart2/main.js|36|1|V|javascript
+	    console.log(json);
+0b225c67d917553d3304db50ab304d98|file:///home/bigdra/dev/testing/chart2/main.js|40|3|V|javascript
+	  return json;
+02428b510fcb77f00bafcaa406c3175d|file:///home/bigdra/dev/testing/chart2/main.js|39|20|v|javascript
+	results[0]
+99ff6491ce89b0a37c90b6ea083c0266|file:///home/bigdra/dev/testing/chart2/main.js|40|3|V|javascript
+	  const data
+5b93625023a1c2180221257849744b59|file:///home/bigdra/dev/testing/chart2/main.js|38|7|v|javascript
+	decode
+a6a053a3cca18df5ad0834ea8d6e5df5|file:///home/bigdra/dev/testing/chart2/main.js|44|5|V|javascript
+	    data)
+f1f33049486d357de49e721313e7b4ba|file:///home/bigdra/dev/testing/chart2/main.js|42|19|v|javascript
+	summary_date
+cdef1dad8026fcc3e7273dcbe7a14385|file:///home/bigdra/dev/testing/chart2/main.js|42|18|v|javascript
+	.summary_date
+8baf851266c188eb9ae6f77cea911ef8|file:///home/bigdra/dev/testing/chart2/main.js|42|5|v|javascript
+	console.log(
+23f7c7e6bd935102de0aa90cdcb38037|file:///home/bigdra/dev/testing/chart2/main.js|43|5|V|javascript
+	    console.log(label[label.length - 1]);
+da668125ccb520e8cc0b7c6e85e4b827|file:///home/bigdra/dev/testing/chart2/main.js|52|13|v|javascript
+	['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange']
+69a256025f66e4ce5d15c9dd7225d357|file:///home/bigdra/dev/testing/chart2/main.js|29|37|v|javascript
+	activity
+4a6d125be96cc2e291de624cb49f6ba1|file:///home/bigdra/dev/testing/chart2/main.js|29|1|V|javascript
+	const ouraActivity = URLJoin(host, "activity", startDate, endDate, accessToken);
+e9a6782a02188b461496187bbc62a806|file:///home/bigdra/dev/testing/chart2/main.js|30|7|v|javascript
+	ouraActivity
+be878adf03c4bc61a7e26aed86c307eb|file:///home/bigdra/dev/testing/chart2/main.js|40|1|V|javascript
+	const activityObject = json => {
+	  console.log(json.activity);
+	  for (let i in json.activity) {
+	    label.push(json.activity[i].summary_date);
+	  }
+	}
+40c9e9af2d67fdad0d1ab33222c927ba|file:///home/bigdra/dev/testing/chart2/main.js|47|7|v|javascript
+	activityObject
+32c456c5e3e4a993dc6f014932f0fc87|file:///home/bigdra/dev/testing/chart2/main.js|50|16|v|javascript
+	json.readiness[i].
+67942503875c1ae74e4b5b80a0dade01|file:///home/bigdra/dev/testing/chart2/main.js|51|49|v|javascript
+	rate
+5ecdbbad4978cf36e8b7239100095f27|file:///home/bigdra/dev/testing/chart2/main.js|51|41|v|javascript
+	resting_hr
+f38e77f0b86bfd7d7d029a720c234ba0|file:///home/bigdra/dev/testing/chart2/main.js|47|1|V|javascript
+	const readinessObject = json => {
+	  console.log(json.readiness);
+	  for (let i in json.readiness) {
+	    label.push(json.readiness[i].summary_date);
+	    console.log(json.readiness[i].score_hrv_balance);
+	  }
+	}
+cee059a84dc4bd66b41dbec1a7047a2f|file:///home/bigdra/dev/testing/chart2/main.js|54|7|v|javascript
+	readiness
+74abc29802225a0e5a67d62e64befc35|file:///home/bigdra/dev/testing/chart2/main.js|58|16|v|javascript
+	json.sleep[i].summary_date
+6beb0328f9957fa63ae2d4765917d55d|file:///home/bigdra/dev/testing/chart2/main.js|59|31|v|javascript
+	score_hrv_balance
+61177ef478d48638da3c2ba5e137a180|file:///home/bigdra/dev/testing/chart2/main.js|39|4|v|javascript
+	readinessObject(json)
+7906fb4f49247271e001f89d5d3b1372|file:///home/bigdra/dev/testing/chart2/main.js|61|1|V|javascript
+	    const date = json.sleep[i].summary_date;
+	    label.push(date);
+a972864dbf00b8910a8effe78a5a3120|file:///home/bigdra/dev/testing/chart2/main.js|47|5|V|javascript
+	    label.push(json.activity[i].summary_date);
+c9fab33e9458412c527c3fe8a13ee37d|file:///home/bigdra/dev/testing/chart2/main.js|47|23|v|javascript
+	sleep
+2d8e1aab841d4e7046028e35637349dc|file:///home/bigdra/dev/testing/chart2/main.js|57|5|V|javascript
+	    label.push(json.readiness[i].summary_date);
+bc51e539e3bf7ae808f49b0076a3a656|file:///home/bigdra/dev/testing/chart2/main.js|33|1|V|javascript
+	fetch(ouraReadiness, {
+	  method: "GET",
+	}).then(response => response.json())
+	  .then(json => {
+	    readinessObject(json);
+	    sleepObject(json);
+	    activityObject(json);
+	  })
+	  .catch(e => console.log(e));
+5f978391ff96a0037d8974dbcaf32e74|file:///home/bigdra/dev/testing/chart2/main.js|43|7|v|javascript
+	ouraReadiness
+e3e83d679f468cb1de90e7f674c40f62|file:///home/bigdra/dev/testing/chart2/main.js|30|1|V|javascript
+	const ouraReadiness = URLJoin(host, "readiness", startDate, endDate, accessToken);
+400eec8ff5f2637c0b8b98173142793f|file:///home/bigdra/dev/testing/chart2/main.js|31|11|v|javascript
+	Readiness 
+47012be361c0f0589af883e0971c44ea|file:///home/bigdra/dev/testing/chart2/main.js|39|5|V|javascript
+	    sleepObject(json);
+4c67a52ad3890fb676ec3cde2287e8ad|file:///home/bigdra/dev/testing/chart2/main.js|39|5|V|javascript
+	    activityObject(json);
+3ea67c987a259bbf49204045d6fd5e5e|file:///home/bigdra/dev/testing/chart2/main.js|44|5|V|javascript
+	    readinessObject(json);
+9e716542d408cd05c79e0feebb9a37a1|file:///home/bigdra/dev/testing/chart2/main.js|88|13|v|javascript
+	[12, 19, 3, 5, 2, 3],
+2be766bb6ff61f7cfc5f0ac4566edd20|file:///home/bigdra/dev/testing/chart2/main.js|87|15|v|javascript
+	# of Votes
+9a343cf16d449f1bf9a91701cf51fe04|file:///home/bigdra/dev/testing/chart2/main.js|80|1|V|javascript
+	const ctx2 = document.getElementById('chart2');
+3cf36513d99b90280ca42d32507e5136|file:///home/bigdra/dev/testing/chart2/main.js|108|1|V|javascript
+	const data = {
+	  labels: ["4", "5", "6", "7", "8"],
+	  datasets: [{
+	    label: "Nintendo",
+	    data: [11433, 23510, 15943, 34212, 19841],
+	    borderColor: 'rgba(255, 0, 0, 1)',
+	    backgroundColor: 'rgba(0,0,0,0)'
+	  }]
+	};
+	
+	const options = {};
+	
+	const chart2 = new Chart(ctx2, {
+	  type: 'line',
+	  data: data,
+	  options: options
+	});
+28708c1f78635ff429a8e0d5a647380b|file:///home/bigdra/dev/testing/chart2/main.js|89|1|V|javascript
+	    datasets: [{
+	      label: 'HR_Averages',
+	      data: hr_averages,
+	      backgroundColor: [
+	        'rgba(255, 99, 132, 0.2)',
+	        'rgba(54, 162, 235, 0.2)',
+	        'rgba(255, 206, 86, 0.2)',
+	        'rgba(75, 192, 192, 0.2)',
+	        'rgba(153, 102, 255, 0.2)',
+	        'rgba(255, 159, 64, 0.2)'
+	      ],
+	      borderColor: [
+	        'rgba(255, 99, 132, 1)',
+	        'rgba(54, 162, 235, 1)',
+	        'rgba(255, 206, 86, 1)',
+	        'rgba(75, 192, 192, 1)',
+	        'rgba(153, 102, 255, 1)',
+	        'rgba(255, 159, 64, 1)'
+	      ],
+	      borderWidth: 1
+	    }]
+fb43da3442d8519db6a7d8817fd2d1ee|file:///home/bigdra/dev/testing/chart2/main.js|82|3|V|javascript
+	  datasets: 
+f0b02de327f80d7bd0c0054ffe1d7885|file:///home/bigdra/dev/testing/chart2/main.js|81|3|V|javascript
+	  labels: labels,
+51b04937211f1281b4cb709d6678df95|file:///home/bigdra/dev/testing/chart2/main.js|107|5|V|javascript
+	    labels: labels,
+afd35fc10e9e53611f12fc439d27a0a6|file:///home/bigdra/dev/testing/chart2/main.js|106|9|v|javascript
+	{
+	  }
+	
+712da0e55106e560ff80a0ae4cc6a5e7|file:///home/bigdra/dev/testing/chart2/main.js|78|5|V|javascript
+	    console.log(json.sleep[i].hr_average);
+e0790e183e3c54fb9685e1155d6f55d6|file:///home/bigdra/dev/testing/chart2/main.js|75|18|v|javascript
+	json.sleep[i]
+526605c6a1eb5a204ef4cc46c520d0e8|file:///home/bigdra/dev/testing/chart2/main.js|108|5|V|javascript
+	    ,
+b81227aa8b08fd3382ab31295909e705|file:///home/bigdra/dev/testing/chart2/main.js|87|1|V|javascript
+	      'rgba(255, 99, 132, 0.2)',
+	      'rgba(54, 162, 235, 0.2)',
+	      'rgba(255, 206, 86, 0.2)',
+	      'rgba(75, 192, 192, 0.2)',
+	      'rgba(153, 102, 255, 0.2)',
+	      'rgba(255, 159, 64, 0.2)'
+	    ],
+e814677a331cab141441dd88dcc3c335|file:///home/bigdra/dev/testing/chart2/main.js|71|1|V|javascript
+	const sleepObject = sleepInfoArray => {
+cc2f1b44b93fe7e778491463341ac358|file:///home/bigdra/dev/testing/chart2/main.js|46|1|V|javascript
+	const sleepInfoArray = await fetch(ouraSleep, {
+	  method: "GET",
+	}).then(response => response.json());
+	//.then(json => sleepObject(json))
+	//.catch(e => console.log(e));
+34a7de860dc1036661f7520877a87d57|file:///home/bigdra/dev/testing/chart2/main.js|46|1|v|javascript
+	await 
+ae37714d3c40bba391227d180349a059|file:///home/bigdra/dev/testing/chart2/index.html|13|1|V|html
+	    <canvas id="chart2" width="400px" height="400px"></canvas>
+e727f041ab10b038661529bf0ef400f0|file:///home/bigdra/dev/testing/chart2/index.html|12|25|v|html
+	width="400px" height="400px"
+a5f93540463324ea08e956befded6cbf|file:///home/bigdra/dev/testing/chart2/index.html|7|64|v|html
+	2.9.3
+016ce9c253263ef5284af10300b538b1|file:///home/bigdra/dev/testing/chart2/main.js|50|1|V|javascript
+	.then(_=>)
+d29e0e0ba9478ecee963de48258301e2|file:///home/bigdra/dev/testing/chart2/index.html|12|21|v|html
+	400px
+8971778a9cc0ad74eeea6d9ed8a7b87f|file:///home/bigdra/dev/testing/chart2/main.js|1|1|V|javascript
+	"use strict";
+eca401fb58dc5e9521f76a75130b0bc6|file:///home/bigdra/dev/testing/chart2/main.js|1|1|V|javascript
+	require('dotenv').config()
+	const {OURA_TOKEN} = process.env
+	console.log(OURA_TOKEN);
+c5eb1d19c70e32560a7389b64053f483|file:///home/bigdra/dev/testing/chart2/src/index.html|7|1|V|html
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+	  <script src="main.js"></script>
+b29da65337c4682d41f82b8ab11ba79f|file:///home/bigdra/dev/testing/chart2/src/index.html|14|17|v|html
+	chart1
+976ced57498076b2b88b7c166dc45b81|file:///home/bigdra/dev/testing/chart2/src/main.js|1|1|V|javascript
+	const URLJoin = (...args) =>
+	  args.join('/')
+	    .replace(/[\/]+/g, '/')
+	    .replace(/^(.+):\//, '$1://')
+	    .replace(/^file:/, 'file:/')
+	    .replace(/\/(\?|&|#[^!])/g, '$1')
+	    .replace(/\?/g, '&')
+	    .replace('&', '?');
+	
+	const toYYYYMMDD = dt => {
+	  var y = dt.getFullYear();
+	  var m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	  var d = ("00" + dt.getDate()).slice(-2);
+	  var result = y + "-" + m + "-" + d;
+	  return result;
+	}
+	
+	const host = "https://api.ouraring.com/v1/";
+	var today = new Date();
+	var lastMonth = new Date();
+	lastMonth.setDate(today.getDate() - 30);
+	const startDate = "?start=" + toYYYYMMDD(lastMonth);
+	const endDate = "?end=" + toYYYYMMDD(new Date());
+	const accessToken = "?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP";
+	
+	const ouraActivity = URLJoin(host, "activity", startDate, endDate, accessToken);
+	const ouraReadiness = URLJoin(host, "readiness", startDate, endDate, accessToken);
+	const ouraSleep = URLJoin(host, "sleep", startDate, endDate, accessToken);
+	console.log(ouraActivity);
+	
+	//fetch(ouraReadiness, {
+	//  method: "GET",
+	//}).then(response => response.json())
+	//  .then(json => readinessObject(json))
+	//  .catch(e => console.log(e));
+	//
+	//fetch(ouraActivity, {
+	//  method: "GET",
+	//}).then(response => response.json())
+	//  .then(json => activityObject(json))
+	//  .catch(e => console.log(e));
+1a11cdc8f26e26ecb2786f943410a54a|file:///home/bigdra/dev/testing/chart2/src/oura.js|9|1|V|javascript
+	// update: 
+4e502408f3c427fa49116a7c4a08a483|file:///home/bigdra/dev/testing/chart2/src/oura.js|4|1|V|javascript
+	  labels: [],
+	  hr_averages: [],
+	  hr_lowers: [],
+20a0e32eb57cc68d19837d1f2f0df2dd|file:///home/bigdra/dev/testing/chart2/src/oura.js|3|1|V|javascript
+	var model = {
+	}
+56c96ff0a784fc755b11d8a349ee8142|file:///home/bigdra/dev/testing/chart2/src/oura.js|7|1|V|javascript
+	hr_averages: [],
+a48328bf78bb8870e26adcd77fb3f457|file:///home/bigdra/dev/testing/chart2/src/oura.js|7|1|V|javascript
+	hr_lowers: [],
+a1fa27779242b4902f7ae3bdd5c6d508|file:///home/bigdra/dev/testing/chart2/src/oura.js|17|18|v|javascript
+	Type
+9921b6cca1bf436bf0dd9ceac3305055|file:///home/bigdra/dev/testing/chart2/src/main.js|29|1|V|javascript
+	  console.log(json.sleep);
+	  for (let i in json.sleep) {
+	    const sleep = json.sleep[i];
+	    const date = sleep.summary_date;
+	    labels.push(date);
+	    hr_averages.push(sleep.hr_average);
+	    hr_lowest.push(sleep.hr_lowest);
+	  }
+7ab16b69dd3dd57b9ce2d647027efc2c|file:///home/bigdra/dev/testing/chart2/src/main.js|10|1|V|javascript
+	const hr_averages = [];
+d7263eee560f578ccd7bb09e458cd4af|file:///home/bigdra/dev/testing/chart2/src/main.js|10|1|V|javascript
+	const hr_lowest = [];
+27fcc98bbeb3a9143312737d3d5570d8|file:///home/bigdra/dev/testing/chart2/src/main.js|9|1|V|javascript
+	const labels = [];
+a0ae7c921e2a44466b659738fd3af170|file:///home/bigdra/dev/testing/chart2/src/main.js|9|1|V|javascript
+	const activityObject = json => {
+	  console.log(json.activity);
+	  for (let i in json.activity) {
+	    const date = json.activity[i].summary_date;
+	    //label.push(date);
+	  }
+	}
+	
+	const readinessObject = json => {
+	  console.log(json.readiness);
+	  for (let i in json.readiness) {
+	    const date = json.readiness[i].summary_date;
+	    //label.push(date);
+	    //console.log(json.readiness[i].score_hrv_balance);
+	  }
+	}
+	const sleepObject = json => {
+	}
+eb7723a671fec225e0a1f3d76b606f44|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|1|V|javascript
+	  console.log(json.activity);
+	  for (let i in json.activity) {
+	    const date = json.activity[i].summary_date;
+	    //label.push(date);
+	  }
+c93709d9e22f85b644c4ddd673358877|file:///home/bigdra/dev/testing/chart2/src/oura.js|47|1|V|javascript
+	  console.log(json.readiness);
+	  for (let i in json.readiness) {
+	    const date = json.readiness[i].summary_date;
+	    //label.push(date);
+	    //console.log(json.readiness[i].score_hrv_balance);
+	  }
+9c7021625933dc5f799a1683fa7e3cd4|file:///home/bigdra/dev/testing/chart2/src/oura.js|49|1|V|javascript
+	const activityObject = json => {
+	}
+	
+	const readinessObject = json => {
+	}
+	const sleepObject = json => {
+	}
+42aefbae01d2dfd981f7da7d823d689e|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|41|v|javascript
+	target
+36cd38f49b9afa08222c0dc9ebfe35eb|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|45|v|javascript
+	source
+28865ec185f2f1a61f5dbc3b45963a00|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|15|v|javascript
+	new Model
+e19ddceabe9a2630e71c9196f6c18442|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|9|V|javascript
+	        const nextModel = Object.assign({}, model);
+141cbeee2541a5d476b81f613e559c54|file:///home/bigdra/dev/testing/chart2/src/oura.js|40|9|V|javascript
+	        nextModel.Sleep.labels.push
+8af5d87ee9940e092eb499c341041ee3|file:///home/bigdra/dev/testing/chart2/src/oura.js|37|28|v|javascript
+	.labels
+28e617aec5b18198c3798a9e47aacbe5|file:///home/bigdra/dev/testing/chart2/src/oura.js|37|1|V|javascript
+	      const nextModel.Sleep.labels = json.sleep.map(x => x.summary_date);
+42cecfeff00cc916fef4f64e7b921079|file:///home/bigdra/dev/testing/chart2/src/oura.js|38|29|v|javascript
+	labels
+7c53e3bd0d78a45f4eb5c5b097765c12|file:///home/bigdra/dev/testing/chart2/src/oura.js|38|1|V|javascript
+	      const nextModel.Sleep.hr_averages = json.sleep.map(x => x.hr_averages);
+47b66acda95bd091ab1dbc3a50ea6b08|file:///home/bigdra/dev/testing/chart2/src/oura.js|39|29|v|javascript
+	hr_averages
+2c394b8f85df15b1de260d55aba15ef3|file:///home/bigdra/dev/testing/chart2/src/oura.js|40|1|V|javascript
+	      for (let i in json.sleep) {
+	        const sleep = json.sleep[i];
+	        const date = sleep.summary_date;
+	        labels.push(date);
+	        hr_averages.push(sleep.hr_average);
+	        hr_lowest.push(sleep.hr_lowest);
+	      }
+a98a390393a2f7f2f69837ddfe9d0f75|file:///home/bigdra/dev/testing/chart2/src/oura.js|20|24|v|javascript
+	hr_lowers
+fddf2648155bd263d51476e920d6ca5f|file:///home/bigdra/dev/testing/chart2/src/oura.js|23|3|v|javascript
+	get 
+2958d5c0877505e3b8008dbfa7d5a590|file:///home/bigdra/dev/testing/chart2/src/oura.js|17|1|V|javascript
+	class Model = {
+	
+	}
+11d99c3c98feccef585c65513df23282|file:///home/bigdra/dev/testing/chart2/src/oura.js|10|10|v|javascript
+	{
+	    labels: [],
+	    hr_averages: [],
+	    hr_lowers: [],
+	  }
+	
+8d0b1776c2b8eb910dfcea544f55af1a|file:///home/bigdra/dev/testing/chart2/src/oura.js|49|1|V|javascript
+	        .Sleep
+f0632035af0aff35384eef2c7abe9df4|file:///home/bigdra/dev/testing/chart2/src/oura.js|47|7|V|javascript
+	      const nextModel = Object.assign({}, model);
+67ccd48e5a16515e8f817151888971ac|file:///home/bigdra/dev/testing/chart2/src/oura.js|51|7|V|javascript
+	      return nextModel;
+243924bfd56a682be235638b53961e09|file:///home/bigdra/dev/testing/chart2/src/oura.js|48|17|v|javascript
+	Sleep
+a3be9d4bfd5662a878a9ca8dd82ef5b2|file:///home/bigdra/dev/testing/chart2/src/oura.js|17|1|V|javascript
+	class Sleep {
+	  constructor(labels, hr_averages, hr_lowers) {
+	    this._labels = labels;
+	    this._hr_averages = hr_averages;
+	    this._hr_lowers = hr_lowers;
+	  }
+	  Labels = () => [...this._labels];
+	  HR_Averages = () => [...this._hr_averages];
+	  HR_Lowest = () => [...this._hr_lowers];
+	}
+dfa318847893d64e9ff0208c837f7c5d|file:///home/bigdra/dev/testing/chart2/src/oura.js|30|1|V|javascript
+	      for (let i in json.readiness) {
+	        const date = json.readiness[i].summary_date;
+	        //label.push(date);
+	        //console.log(json.readiness[i].score_hrv_balance);
+	      }
+926bb03ec39c09b713c0531407171b88|file:///home/bigdra/dev/testing/chart2/src/oura.js|23|1|V|javascript
+	      for (let i in json.activity) {
+	        const date = json.activity[i].summary_date;
+	        //label.push(date);
+	      }
+982c69eae95eec2f68aca9e79349d81b|file:///home/bigdra/dev/testing/chart2/src/main.js|16|1|V|javascript
+	    backgroundColor: 'rgba(0,0,0,0)',
+	    borderColor: [
+	      'rgba(255, 99, 132, 1)',
+	      'rgba(54, 162, 235, 1)',
+	      'rgba(255, 206, 86, 1)',
+	      'rgba(75, 192, 192, 1)',
+	      'rgba(153, 102, 255, 1)',
+	      'rgba(255, 159, 64, 1)'
+	    ],
+	    borderWidth: 1
+948dc89ad34351ace84a4f7820c03bda|file:///home/bigdra/dev/testing/chart2/src/main.js|20|1|V|javascript
+	    backgroundColor: 'rgba(0,0,0,0)',
+	    borderColor: [
+	      'rgba(54,162,236,1)'
+	    ]
+3609e3c3fb998e9a7113b0fdcb2dbf8f|file:///home/bigdra/dev/testing/chart2/src/main.js|14|13|v|javascript
+	HR_Averages
+58c488830e4b0672056a393c77310eb0|file:///home/bigdra/dev/testing/chart2/src/main.js|19|13|v|javascript
+	HR_Lowest
+3f009b9db1b992a3434509888c9b1084|file:///home/bigdra/dev/testing/chart2/src/main.js|3|1|V|javascript
+	import './oura'
+8e5bfabffa3a1918780033bb5d1d3885|file:///home/bigdra/dev/testing/chart2/src/main.js|3|1|V|javascript
+	require('./oura.js');
+b33e509353d377441bb77d55b2e402ed|file:///home/bigdra/dev/testing/chart2/src/main.js|7|1|V|javascript
+	fetch(ouraSleep, {
+	  method: "GET",
+	}).then(response => response.json())
+	  .then(json => sleepObject(json))
+	  .then(_ => sleepChart.update())
+	  .catch(e => console.log(e));
+	
+	const ctx1 = document.getElementById('heartRateChart');
+	const graphData = {
+	  labels: labels,
+	  datasets: [{
+	    label: '平均心拍数(bpm)',
+	    data: hr_averages,
+	    fill: false,
+	  },
+	  {
+	    label: '最低心拍数(bpm)',
+	    data: hr_lowest,
+	    fill: false,
+	  }]
+	};
+	
+	const options = {
+	  plugins: {
+	    colorschemes: {
+	      scheme: 'brewer.Paired12'
+	    }
+	  }
+	};
+	const sleepChart = new Chart(ctx1, {
+	  type: 'line',
+	  data: graphData,
+	  options: options
+	});
+af49e040739619bf0cdc75241e6a21b4|file:///home/bigdra/dev/testing/chart2/src/oura.js|3|1|V|javascript
+	const model = {
+	  Activity: {
+	    labels: [],
+	  },
+	  Readiness: {
+	    labels: [],
+	  },
+	  Sleep: {
+	    labels: [],
+	    hr_averages: [],
+	    hr_lowers: [],
+	  },
+	};
+	
+	const update = (msg, json, model) => {
+	  const nextModel = Object.assign({}, model);
+	  switch (msg) {
+	    case 'Activity':
+	      console.log(json.activity);
+	      nextModel[Activity].labels = json.activity.map(x => x.summary_date);
+	      break;
+	    case 'Readiness':
+	      console.log(json.readiness);
+	      nextModel[Readiness].labels = json.readiness.map(x => x.summary_date);
+	      break;
+	    case 'Sleep':
+	      console.log(json.sleep);
+	      nextModel[Sleep].labels = json.sleep.map(x => x.summary_date);
+	      nextModel[Sleep].hr_averages = json.sleep.map(x => x.hr_averages);
+	      nextModel[Sleep].hr_lowest = json.sleep.map(x => x.hr_lowers);
+	      break;
+	    default:
+	      break;
+	  }
+	  return nextModel;
+	}
+	
+	const URLJoin = (...args) =>
+	  args.join('/')
+	    .replace(/[\/]+/g, '/')
+	    .replace(/^(.+):\//, '$1://')
+	    .replace(/^file:/, 'file:/')
+	    .replace(/\/(\?|&|#[^!])/g, '$1')
+	    .replace(/\?/g, '&')
+	    .replace('&', '?');
+	
+	const toYYYYMMDD = dt => {
+	  var y = dt.getFullYear();
+	  var m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	  var d = ("00" + dt.getDate()).slice(-2);
+	  var result = y + "-" + m + "-" + d;
+	  return result;
+	}
+	
+	const host = "https://api.ouraring.com/v1/";
+	var today = new Date();
+	var lastMonth = new Date();
+	lastMonth.setDate(today.getDate() - 30);
+	const startDate = "?start=" + toYYYYMMDD(lastMonth);
+	const endDate = "?end=" + toYYYYMMDD(new Date());
+	const accessToken = "?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP";
+	
+	const ouraActivity = URLJoin(host, "activity", startDate, endDate, accessToken);
+	const ouraReadiness = URLJoin(host, "readiness", startDate, endDate, accessToken);
+	const ouraSleep = URLJoin(host, "sleep", startDate, endDate, accessToken);
+	console.log(ouraActivity);
+	
+	//fetch(ouraReadiness, {
+	//  method: "GET",
+	//}).then(response => response.json())
+	//  .then(json => readinessObject(json))
+	//  .catch(e => console.log(e));
+	//
+	//fetch(ouraActivity, {
+	//  method: "GET",
+	//}).then(response => response.json())
+	//  .then(json => activityObject(json))
+	//  .catch(e => console.log(e));
+c129b5e3e5111c0785cfb5218188e4a3|file:///home/bigdra/dev/testing/chart2/src/main.js|52|7|^v|javascript
+	var
+	var
+	var
+	var
+5b7a5eff5e24dc4e4233fbcfff04e807|file:///home/bigdra/dev/testing/chart2/src/main.js|56|7|V|javascript
+	      return result;
+377f19aeb2de2882a6d51b26aac3bcce|file:///home/bigdra/dev/testing/chart2/src/main.js|55|7|v|javascript
+	const result =
+30b16e3e1c83c8c49def446ac6bd0da1|file:///home/bigdra/dev/testing/chart2/src/main.js|52|7|V|javascript
+	      const y = dt.getFullYear();
+a8092e6611b1186fd61d2e5ef128706f|file:///home/bigdra/dev/testing/chart2/src/main.js|72|8|V|javascript
+	       fmt
+3e5092cc4a25583f5b97fa830844c731|file:///home/bigdra/dev/testing/chart2/src/main.js|58|1|V|javascript
+	    const host = "https://api.ouraring.com/v1/";
+	    var today = new Date();
+	    var lastMonth = new Date();
+	    lastMonth.setDate(today.getDate() - 30);
+	    const startDate = "?start=" + toYYYYMMDD(lastMonth);
+	    const endDate = "?end=" + toYYYYMMDD(new Date());
+	    const accessToken = "?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP";
+e44c7c8ad561c9dc6ef521b528e61b88|file:///home/bigdra/dev/testing/chart2/src/main.js|59|5|V|javascript
+	    const ouraActivity = joinUrl(host, "activity", startDate, endDate, accessToken);
+620a8e11798399ce690c1a0499d8df60|file:///home/bigdra/dev/testing/chart2/src/main.js|59|5|V|javascript
+	    const ouraReadiness = joinUrl(host, "readiness", startDate, endDate, accessToken);
+43677743d54fa0d81d53f46ead91c0d7|file:///home/bigdra/dev/testing/chart2/src/main.js|59|5|V|javascript
+	    const ouraSleep = joinUrl(host, "sleep", startDate, endDate, accessToken);
+f887711a449079881cbb828d7f64f434|file:///home/bigdra/dev/testing/chart2/src/main.js|59|5|V|javascript
+	    console.log(ouraActivity);
+b405609d5b0078e0f5a2eb3c13806b7c|file:///home/bigdra/dev/testing/chart2/src/main.js|70|11|v|javascript
+	const ouraActivity =
+7d9c4cb8832169ed7360a4d21d9ee0ba|file:///home/bigdra/dev/testing/chart2/src/main.js|71|11|V|javascript
+	          break;
+ebfcffa33c63ded599444f7207d96f51|file:///home/bigdra/dev/testing/chart2/src/main.js|72|11|v|javascript
+	const ouraReadiness =
+01dd2182ecd9784bea6dd415b14782a7|file:///home/bigdra/dev/testing/chart2/src/main.js|74|11|v|javascript
+	const ouraSleep = joi
+f053215beee6b1e47fa423ae496e2872|file:///home/bigdra/dev/testing/chart2/src/main.js|74|11|v|javascript
+	const ouraSleep =
+4e415c683fa0326bfaf0dbe04801a28b|file:///home/bigdra/dev/testing/chart2/src/main.js|78|7|V|javascript
+	      console.log(ouraActivity);
+d9b8bf901161a250798d556e0530afa5|file:///home/bigdra/dev/testing/chart2/src/main.js|42|18|v|javascript
+	model =>
+f8b75b7efbff6a6a5c5f359fcc53bdea|file:///home/bigdra/dev/testing/chart2/src/main.js|17|7|V|javascript
+	      update 
+b764a043d7f2040ddc58bb56fbf74d4f|file:///home/bigdra/dev/testing/chart2/src/main.js|20|1|V|javascript
+	    const update = (msg, json, model) => {
+	      const nextModel = Object.assign({}, model);
+	      switch (msg) {
+	        case 'Activity':
+	          console.log(json.activity);
+	          nextModel[Activity].labels = json.activity.map(x => x.summary_date);
+	          break;
+	        case 'Readiness':
+	          console.log(json.readiness);
+	          nextModel[Readiness].labels = json.readiness.map(x => x.summary_date);
+	          break;
+	        case 'Sleep':
+	          console.log(json.sleep);
+	          nextModel[Sleep].labels = json.sleep.map(x => x.summary_date);
+	          nextModel[Sleep].hr_averages = json.sleep.map(x => x.hr_averages);
+	          nextModel[Sleep].hr_lowest = json.sleep.map(x => x.hr_lowers);
+	          break;
+	        default:
+	          break;
+	      }
+	      return nextModel;
+	    }
+0d3c9e141ade65cc6d9e1965ee0d0802|file:///home/bigdra/dev/testing/chart2/src/main.js|23|42|v|javascript
+	json.activity.map(x => x.summary_date);
+9b3353a54f0106a1ea064b67f35a47dd|file:///home/bigdra/dev/testing/chart2/src/main.js|23|13|V|javascript
+	            nextModel[Activity].labels = 
+adf4af2d68437587c658048191b8bba7|file:///home/bigdra/dev/testing/chart2/src/main.js|26|13|v|javascript
+	nextModel[
+40a0741d28063a0bc6db3a7930d68edd|file:///home/bigdra/dev/testing/chart2/src/main.js|32|17|v|javascript
+	Model[Slee
+eb84f75e1b98e0dc8984a265dcd2bf32|file:///home/bigdra/dev/testing/chart2/src/main.js|37|9|V|javascript
+	        return nextModel;
+52f8497b9333a9582a63693f657249f6|file:///home/bigdra/dev/testing/chart2/src/main.js|17|25|v|javascript
+	, model
+412369cc4d81f80a72f6ae6c19f3eab3|file:///home/bigdra/dev/testing/chart2/src/main.js|99|1|V|javascript
+	    const ctx1 = document.getElementById('heartRateChart');
+	    const graphData = {
+	      labels: labels,
+	      datasets: [{
+	        label: '平均心拍数(bpm)',
+	        data: hr_averages,
+	        fill: false,
+	      },
+	      {
+	        label: '最低心拍数(bpm)',
+	        data: hr_lowest,
+	        fill: false,
+	      }]
+	    };
+	
+	    const options = {
+	      plugins: {
+	        colorschemes: {
+	          scheme: 'brewer.Paired12'
+	        }
+	      }
+	    };
+	    const sleepChart = new Chart(ctx1, {
+	      type: 'line',
+	      data: graphData,
+	      options: options
+	    });
+185f90e54c918b6a6d88d5ad22555db9|file:///home/bigdra/dev/testing/chart2/src/main.js|45|5|V|javascript
+	    const heartRateChart = document.getElementById('heartRateChart');
+24ab870444c34a07f97a3bc4240a2cd7|file:///home/bigdra/dev/testing/chart2/src/main.js|46|1|V|javascript
+	    const graphData = {
+	      labels: labels,
+	      datasets: [{
+	        label: '平均心拍数(bpm)',
+	        data: hr_averages,
+	        fill: false,
+	      },
+	      {
+	        label: '最低心拍数(bpm)',
+	        data: hr_lowest,
+	        fill: false,
+	      }]
+	    };
+	
+	    const options = {
+	      plugins: {
+	        colorschemes: {
+	          scheme: 'brewer.Paired12'
+	        }
+	      }
+	    };
+	    const sleepChart = new Chart(heartRateChart, {
+	      type: 'line',
+	      data: graphData,
+	      options: options
+	    });
+	    const joinUrl = (...args) =>
+	      args.join('/')
+	        .replace(/[\/]+/g, '/')
+	        .replace(/^(.+):\//, '$1://')
+	        .replace(/^file:/, 'file:/')
+	        .replace(/\/(\?|&|#[^!])/g, '$1')
+	        .replace(/\?/g, '&')
+	        .replace('&', '?');
+	
+	    const toYYYYMMDD = dt => {
+	      const y = dt.getFullYear();
+	      const m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	      const d = ("00" + dt.getDate()).slice(-2);
+	      return y + "-" + m + "-" + d;
+	    }
+	
+	    const getOuraData = type => {
+	      const host = "https://api.ouraring.com/v1/";
+	      const today = new Date();
+	      const lastMonth = new Date();
+	      lastMonth.setDate(today.getDate() - 30);
+	      const startDate = "?start=" + toYYYYMMDD(lastMonth);
+	      const endDate = "?end=" + toYYYYMMDD(new Date());
+	      const accessToken = "?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP";
+	      switch (type) {
+	        case 'activity':
+	          return joinUrl(host, "activity", startDate, endDate, accessToken);
+	        case 'readiness':
+	          return joinUrl(host, "readiness", startDate, endDate, accessToken);
+	        case 'sleep':
+	          return joinUrl(host, "sleep", startDate, endDate, accessToken);
+	        default:
+	          break;
+	      }
+	    }
+9604630f9ac35e64d69bb30b6d420d2b|file:///home/bigdra/dev/testing/chart2/src/main.js|69|9|V|javascript
+	        const joinUrl = (...args) =>
+	          args.join('/')
+	            .replace(/[\/]+/g, '/')
+	            .replace(/^(.+):\//, '$1://')
+	            .replace(/^file:/, 'file:/')
+	            .replace(/\/(\?|&|#[^!])/g, '$1')
+	            .replace(/\?/g, '&')
+	            .replace('&', '?');
+	
+	        const toYYYYMMDD = dt => {
+	          const y = dt.getFullYear();
+	          const m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	          const d = ("00" + dt.getDate()).slice(-2);
+	          return y + "-" + m + "-" + d;
+	        }
+	
+	        const getOuraData = type => {
+	          const host = "https://api.ouraring.com/v1/";
+	          const today = new Date();
+	          const lastMonth = new Date();
+	          lastMonth.setDate(today.getDate() - 30);
+	          const startDate = "?start=" + toYYYYMMDD(lastMonth);
+	          const endDate = "?end=" + toYYYYMMDD(new Date());
+	          const accessToken = "?access_token=E7VCEPQMJKI73OMWZ5BYLLIILRVKTFNP";
+	          switch (type) {
+	            case 'activity':
+	              return joinUrl(host, "activity", startDate, endDate, accessToken);
+	            case 'readiness':
+	              return joinUrl(host, "readiness", startDate, endDate, accessToken);
+	            case 'sleep':
+	              return joinUrl(host, "sleep", startDate, endDate, accessToken);
+	            default:
+	              break;
+	          }
+	        }
+3ad6cb6100190c8f81e99fd52debf7ef|file:///home/bigdra/dev/testing/chart2/src/main.js|44|25|v|javascript
+	Labels
+e6efed6284ae34fb3ca22757560b650c|file:///home/bigdra/dev/testing/chart2/src/main.js|52|19|v|javascript
+	hr_lowest
+e82f3e56d2a6718da3f068e5e6f91343|file:///home/bigdra/dev/testing/chart2/src/main.js|43|7|V|javascript
+	      }
+f7addab62ba5d98c1f3cf046ca7bec92|file:///home/bigdra/dev/testing/chart2/src/main.js|41|7|V|javascript
+	      sleepGraphPref: model =>{
+92c578a53e002c18100636b188dbee45|file:///home/bigdra/dev/testing/chart2/src/main.js|91|1|V|javascript
+	() =>{
+	
+	}
+299fa6926eabbfd7fc401bda355a95bb|file:///home/bigdra/dev/testing/chart2/src/main.js|88|32|v|javascript
+	sleepChart.update()
+bccad6664ebd2b1cc441d0e22a4079d4|file:///home/bigdra/dev/testing/chart2/src/main.js|87|21|v|javascript
+	sleepObject
+a635f48c8a1543ade7ef09415c826999|file:///home/bigdra/dev/testing/chart2/src/main.js|37|5|V|javascript
+	    };
+ea5a1cbe764918679997181a3ea281d3|file:///home/bigdra/dev/testing/chart2/src/main.js|127|5|V|javascript
+	    }
+15821314cb72144bc1df7f26740fa4ce|file:///home/bigdra/dev/testing/chart2/src/main.js|85|5|V|javascript
+	      method: "GET",
+b84e6d2b42c0d123bf701c4301e3283d|file:///home/bigdra/dev/testing/chart2/src/main.js|89|3|V|javascript
+	  })
+9196fb9ab0da958c572f98bd2b6d8a95|file:///home/bigdra/dev/testing/chart2/src/main.js|90|1|V|javascript
+	    const joinUrl = (...args) =>
+	      args.join('/')
+	        .replace(/[\/]+/g, '/')
+	        .replace(/^(.+):\//, '$1://')
+	        .replace(/^file:/, 'file:/')
+	        .replace(/\/(\?|&|#[^!])/g, '$1')
+	        .replace(/\?/g, '&')
+	        .replace('&', '?');
+	
+	    const toYYYYMMDD = dt => {
+	      const y = dt.getFullYear();
+	      const m = ("00" + (dt.getMonth() + 1)).slice(-2);
+	      const d = ("00" + dt.getDate()).slice(-2);
+	      return y + "-" + m + "-" + d;
+	    }
+66a7919d35220e6cb230caf8b9e44f48|file:///home/bigdra/dev/testing/chart2/src/main.js|73|1|V|javascript
+	    //fetch(ouraReadiness, {
+	    //  method: "GET",
+	    //}).then(response => response.json())
+	    //  .then(json => readinessObject(json))
+	    //  .catch(e => console.log(e));
+	    //
+	    //fetch(ouraActivity, {
+	    //  method: "GET",
+	    //}).then(response => response.json())
+	    //  .then(json => activityObject(json))
+	    //  .catch(e => console.log(e));
+	    fetch(ouraSleep)
+	      .then(response => response.json())
+	      .then(json => model.update(json))
+	      .then(_ => view.render())
+	      .catch(e => console.log(e));
+de4d0a6f84747ebfb00e18504d34e993|file:///home/bigdra/dev/testing/chart2/src/main.js|16|13|v|javascript
+	ouraSleep
+14fdea46e9db1d309845a95848357e80|file:///home/bigdra/dev/testing/chart2/src/main.js|6|1|V|javascript
+	      //fetch(ouraReadiness, {
+	      //  method: "GET",
+	      //}).then(response => response.json())
+	      //  .then(json => readinessObject(json))
+	      //  .catch(e => console.log(e));
+	      //
+	      //fetch(ouraActivity, {
+	      //  method: "GET",
+	      //}).then(response => response.json())
+	      //  .then(json => activityObject(json))
+	      //  .catch(e => console.log(e));
+361b95491608e64b9a4b6a80bc64ca60|file:///home/bigdra/dev/testing/chart2/src/main.js|1|1|V|javascript
+	'use strict'
+899d6a350e5f5a6f052ee105089d157d|file:///home/bigdra/dev/testing/chart2/src/main.js|1|1|V|javascript
+	(() => {
+202ea42a055038a54f54dfabf456c09f|file:///home/bigdra/dev/testing/chart2/src/main.js|2|1|V|javascript
+	() => {
+9445001fc4ba09731a47bfcbe5b0c236|file:///home/bigdra/dev/testing/chart2/src/main.js|3|1|V|javascript
+	console.log("start");
+	fetch(getOuraApiUrl('Sleep'))
+	  .then(response => response.json())
+	  .then(json => model.update(json))
+	  .then(_ => view.render())
+	  .catch(e => console.log(e));
+0b8eb261942c2b8a085cbd8004bc421a|file:///home/bigdra/dev/testing/chart2/src/main.js|1|1|V|javascript
+	const heartRateChart = document.getElementById('heartRateChart');
+7f72d0d7e78a2e77f03f5499e3249c6b|file:///home/bigdra/dev/testing/chart2/src/main.js|38|5|V|javascript
+	    model;
+262e904641b7772671bc7de7ddfc4c56|file:///home/bigdra/dev/testing/chart2/src/main.js|25|1|V|javascript
+	        console.log(this);
+9e925e9341b490bfd3b4c4ca3b0c1ef2|file:///home/bigdra/dev/testing/chart2/src/main.js|26|21|v|javascript
+	this
+7d760623d11d0a8cdb322d2dc93f5e16|file:///home/bigdra/dev/testing/chart2/src/main.js|106|1|V|javascript
+	console.log("start");
+c61aa8b7d5e32663df197da273a3fd7b|file:///home/bigdra/dev/testing/chart2/src/main.js|24|1|V|javascript
+	        console.log(json.sleep);
+	        console.log(model);
+	        console.log(model.Sleep);
+2f8730e3179a9d9c604a70a442a2b3f6|file:///home/bigdra/dev/testing/chart2/src/main.js|20|9|V|javascript
+	        console.log(json.readiness);
+07c21b9b6ac6c037fc150c7d7e41cc7a|file:///home/bigdra/dev/testing/chart2/src/main.js|16|9|V|javascript
+	        console.log(json.activity);
+f60b5ce4a02e8a3422da380b8439f1fc|file:///home/bigdra/dev/testing/chart2/src/main.js|34|5|V|javascript
+	    console.log(model);
+175887f2979163f126681775a2eb872c|file:///home/bigdra/dev/testing/chart2/src/main.js|38|1|V|javascript
+	    const graphData = {
+	      labels: model.Sleep.labels,
+	      datasets: [{
+	        label: '平均心拍数(bpm)',
+	        data: model.Sleep.hr_averages,
+	        fill: false,
+	      },
+	      {
+	        label: '最低心拍数(bpm)',
+	        data: model.Sleep.hr_lowest,
+	        fill: false,
+	      }]
+	    };
+	
+	    const options = {
+	      plugins: {
+	        colorschemes: {
+	          scheme: 'brewer.Paired12'
+	        }
+	      }
+	    };
+	    const heartRateChart = document.getElementById('heartRateChart');
+	    const sleepChart = new Chart(heartRateChart, {
+	      type: 'line',
+	      data: graphData,
+	      options: options
+	    });
+7867d5c0b9edf42da22f36bfe0440aa3|file:///home/bigdra/dev/testing/chart2/src/main.js|103|1|V|javascript
+	      return joinUrl(host, "sleep", startDate, endDate, accessToken);
+e6bc2a9f5b41e14cf7b0777b4a89e6c7|file:///home/bigdra/dev/testing/chart2/src/main.js|107|7|v|javascript
+	return 
+3f8898416a011500824ad36c4cd3a39d|file:///home/bigdra/dev/testing/chart2/src/main.js|107|28|v|javascript
+	"sleep"
+599dcce2998a6b40b1e38e8c6006cb0a|file:///home/bigdra/dev/testing/chart2/src/main.js|107|24|v|javascript
+	type
+eba2b0dbcd036bd29caac6bd140003e1|file:///home/bigdra/dev/testing/chart2/src/main.js|70|1|V|javascript
+	    sleepChart.update();
+204a2a717476a9ade30c0e3e6210a38d|file:///home/bigdra/dev/testing/chart2/src/main.js|25|9|V|javascript
+	        console.log(model.Sleep);
+e0c86bc731a4209b9414cf676fcbe459|file:///home/bigdra/dev/testing/chart2/src/main.js|67|9|V|javascript
+	        console.log(model);
+20f35e630daf44dbfa4c3f68f5399d8c|file:///home/bigdra/dev/testing/chart2/src/main.js|34|21|v|javascript
+	model
+c0887223dc736a7c4a2229df07c871b4|file:///home/bigdra/dev/testing/chart2/src/main.js|34|5|V|javascript
+	    console.log(type);
+a6051f2be03a35566b43976c22d37a69|file:///home/bigdra/dev/testing/chart2/src/main.js|97|22|V|javascript
+	  //  switch (type) {
+	  //    case 'Activity':
+	  //      return joinUrl(host, "activity", startDate, endDate, accessToken);
+	  //    case 'Readiness':
+	  //      return joinUrl(host, "readiness", startDate, endDate, accessToken);
+	  //    case 'Sleep':
+	  //      return joinUrl(host, "sleep", startDate, endDate, accessToken);
+	  //    default:
+	  //      break;
+	  //  }
+594cbbb9bb5804fa72effd7c1e38df0c|file:///home/bigdra/dev/testing/chart2/src/main.js|95|40|v|javascript
+	new Date()
+369f18198fb83b1f8a3e8bf62c56f398|file:///home/bigdra/dev/testing/chart2/src/main.js|95|40|v|javascript
+	toDay
+671a34f677b2295c20efbb71687965ad|file:///home/bigdra/dev/testing/chart2/src/index.html|7|10|v|html
+	Chart.js
+2c57cbd98777472b2ed869b7e21cb1c9|file:///home/bigdra/dev/testing/chart2/src/index.html|7|10|v|html
+	生存確認
+c44ecaf0032e047e08b4584af581d0a5|file:///home/bigdra/.zshrc|9|1|V|zsh
+	export PATH=$PATH:/usr/local/go/bin
+4a475d3f334af8d8f584f400a8ee7e0a|file:///home/bigdra/dev/tmpHelper/main.go|1|1|V|go
+	package 
+2204cfc04cda26fd6deddf96b3fb68e4|file:///home/bigdra/dev/tmpHelper/main.go|5|1|V|go
+	  "os"
