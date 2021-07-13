@@ -1,7 +1,9 @@
 {
+  "suggest.triggerAfterInsertEnter":true,
   "suggest.enablePreview": true,
   "suggest.timeout": 5000,
   "suggest.preferCompleteThanJumpPlaceholder": true,
+
   "diagnostic.checkCurrentLine": true,
   "diagnostic.signOffset": 100,
   "diagnostic.warningSign": "--",
@@ -41,7 +43,7 @@
   "java.jdt.ls.vmargs": "-noverify -Xmx6G -XX:+UseG1GC -XX:+UseStringDeduplication",
   "languageserver": {
     "elmLS": {
-      "command": "~/.config/yarn/global/node_modules/.bin/elm-language-server",
+      "command": "elm-language-server",
       "args": [
         "--stdio"
       ],
@@ -51,13 +53,11 @@
       "rootPatterns": [
         "elm.json"
       ],
-      "trace.server": "verbose",
       "initializationOptions": {
         "runtime": "node",
-        "elmPath": "~/.config/yarn/global/node_modules/.bin/elm",
-        "elmFormatPath": "~/.config/yarn/global/node_modules/.bin/elm-format",
-        "elmTestPath": "~/.config/yarn/global/node_modules/.bin/elm-test",
-        "elmAnalyseTrigger": "change"
+        "elmPath": "elm",
+        "elmFormatPath": "elm-format",
+        "elmTestPath": "elm-test",
       }
     },
     "go": {

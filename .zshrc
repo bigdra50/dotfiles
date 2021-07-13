@@ -15,14 +15,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# goenv
-#export GOENV_ROOT=$HOME/.goenv
-#export PATH=$GOENV_ROOT/bin:$PATH
-#export GO114MODULE=on
-# eval "$(goenv init -)"
-# end goenv
-
-
 case ${OSTYPE} in
   darwin*)
     ;;
@@ -30,6 +22,14 @@ case ${OSTYPE} in
     eval $(dircolors -b ~/.colorrc)
     ;;
 esac
+
+# go
+export GOENV_ROOT=$HOME/.goenv
+export PATH=$GOENV_ROOT/bin:$PATH
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
+export GOPATH=$HOME/go
 
 # vimキーバインドへ
 bindkey -v
@@ -193,9 +193,9 @@ case ${OSTYPE} in
     # pyenv
     export PYENV_ROOT="$HOME/.pyenv"
     export PATH="$PYENV_ROOT/bin:$PATH"
-    if command -v pyenv 1>/dev/null 2>&1; then
-      eval "$(pyenv init -)"
-    fi
+    #if command -v pyenv 1>/dev/null 2>&1; then
+      eval "$(pyenv init --path)"
+    #fi
     # end pyenv
     
     export XDG_CONFIG_HOME="$HOME/.config"

@@ -1,3 +1,5 @@
+let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
+
 " dein Scripts-----------------------------
  if &compatible
    set nocompatible
@@ -31,6 +33,7 @@
  endif
 
 " End dein Scripts-------------------------
+
 
 colorscheme molokai
 
