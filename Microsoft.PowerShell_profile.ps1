@@ -1,8 +1,4 @@
 $HOMEDRIVE = "D:\"
-$HOMEPATH = "Dev\"
-# タイトルを変更
-$a = (Get-Host).UI.RawUI
-$a.WindowTitle = "三( `・ω・)＼＼|| Powershell//／／(・ω・´ )三"
 
 # 開始ディレクトリの指定
 Set-Location "$HOMEDRIVE$HOMEPATH"
@@ -13,12 +9,15 @@ Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
 # oh-my-posh
 Import-Module posh-git
 Import-Module oh-my-posh
-Set-Theme Material
+#Set-Theme Material
+Set-PoshPrompt -Theme Zash
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 
 # alias
 set-alias vim 'C:\Program Files\Vim\vim82\vim.exe' 
-#set-alias v 'C:\Program Files\Vim\vim82\vim.exe' 
 set-alias v nvim 
+set-alias open explorer
 function ToCDriveHome {cd C:\Users\ryudai\}
 sal c ToCDriveHome
 
