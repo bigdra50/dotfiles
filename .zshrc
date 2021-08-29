@@ -114,9 +114,8 @@ zstyle ':completion:*' use-cache true
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 
 # load prompt settings
-source ./prompt.zsh
+source ~/.zsh/prompt.zsh
 # load alias
-source ./alias.zsh
+source ~/.zsh/alias.zsh
 # load functions
-source ./func.zsh
-
+source ~/.zsh/func.zsh
