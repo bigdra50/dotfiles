@@ -10,7 +10,7 @@ function isWinDir {
 function git {
   if isWinDir
   then
-    git.exe "$@"
+    /mnt/c/Program\ Files/Git/mingw64/bin/git.exe "$@"
   else
     /usr/bin/git "$@"
   fi
