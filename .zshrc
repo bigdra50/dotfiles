@@ -27,9 +27,6 @@ esac
 export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
 eval "$(goenv init -)"
-export PATH="$GOROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
-export GOPATH=$HOME/go
 
 # vimキーバインドへ
 bindkey -v
@@ -233,6 +230,7 @@ alias vv='nvim ~/.config/nvim/init.vim'
 alias h='history'
 alias sshz='ssh s1260133@sshgate.u-aizu.ac.jp'
 alias sshzy='ssh -Y s1260133@sshgate.u-aizu.ac.jp'
+alias sshpi='ssh bigdra@raspberrypi -p 22 -i ~/.ssh/id_ed25519'
 alias sftpz='sftp s1260133@sshgate.u-aizu.ac.jp'
 alias scpz='scp s1260133@sshgate.u-aizu.ac.jp:/home/student/s1260133/'
 alias so='source'
