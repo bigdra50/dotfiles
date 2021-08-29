@@ -6,6 +6,7 @@ export QT_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
 export LIBGL_ALWAYS_INDIRECT=1
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 
 if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -27,6 +28,11 @@ esac
 export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
 eval "$(goenv init -)"
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
 
 # vimキーバインドへ
 bindkey -v
@@ -107,134 +113,10 @@ zstyle ':completion:*' use-cache true
 # カレントディレクトリに候補がない場合のみcdpath上のディレクトリを候補に出す
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 
+# load prompt settings
+source ./prompt.zsh
+# load alias
+source ./alias.zsh
+# load functions
+source ./func.zsh
 
-# mkdir後にcd
-# function mkcd() {
-#   if [[ -d $1 ]]; then
-#     echo "$1 already exists!"
-#     cd $1
-#   else
-#     mkdir -p $1 && cd $1
-#   fi
-# }
-
-# kawaii
-## 色設定
-autoload -U colors; colors
-## PCRE 互換の正規表現を使う
-setopt re_match_pcre
-## プロンプトが表示されるたびプロンプト文字列を評価,置換する
-setopt prompt_subst
-## プロンプト指定
-PROMPT="
-[%n] %{${fg[yellow]}%}%~%{${reset_color}%}
-%(?.%{$fg[green]%}.%{$fg[blue]%})%(?!(*'-') <!(*;-;%)? <)%{${reset_color}%} "
-## プロンプト指定(コマンドの続き)
-PROMPT2='[%n]> '
-## もしかして時のプロンプト指定
-SPROMPT="%{$fg[red]%}%{$suggest%}(*'~'%)? < もしかして %B%r%b %{$fg[red]%}かな? [そう!(y), 違う!(n),a,e]:${reset_color} "
-#
-#autoload -Uz colors; colors
-#autoload -Uz add-zsh-hook
-#autoload -Uz terminfo
-#
-#terminfo_down_sc=$terminfo[cud1]$terminfo[cuu1]$terminfo[sc]$terminfo[cud1]
-#left_down_prompt_preexec() {
-#    print -rn -- $terminfo[el]
-#}
-#
-#
-#add-zsh-hook preexec left_down_prompt_preexec
-#function zle-keymap-select zle-line-init zle-line-finish
-#{
-#  case $KEYMAP in
-#    main|viins)
-#      PROMPT_2="$fg[cyan]-- INSERT --$reset_color"
-#        ;;
-#    vicmd)
-#      PROMPT_2="$fg[white]-- NORMAL --$reset_color"
-#        ;;
-#    vivis|vivli)
-#      PROMPT_2="$fg[yellow]-- VISUAL --$reset_color"
-#        ;;
-#  esac
-#
-#  PROMPT="%{$terminfo_down_sc$PROMPT_2$terminfo[rc]%}[%(?.%{${fg[green]}%}.%{${fg[red]}%})%n%{${reset_color}%}]%# "
-#  zle reset-prompt
-#}
-#
-#zle -N zle-line-init
-#zle -N zle-line-finish
-#zle -N zle-keymap-select
-#zle -N edit-command-line
-
-
-autoload -Uz vcs_info
-#setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
-precmd () { vcs_info }
-RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
-
-# OS別の設定
-case ${OSTYPE} in
-  darwin*)
-    # Mac
-    alias ls="LC_COLLATE=C gls --group-directories-first"
-    ;;
-  linux*)
-    # Linux(wsl)
-    # pyenv
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    #if command -v pyenv 1>/dev/null 2>&1; then
-      eval "$(pyenv init --path)"
-    #fi
-    # end pyenv
-    
-    export XDG_CONFIG_HOME="$HOME/.config"
-    export XDG_CACHE_HOME="$HOME/.cache"
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-    export PATH="{$PATH}:/c/Program Files/Git LFS"
-    export PATH=$PATH:/opt/gradle/gradle-6.3/bin  # gradleのパス
-    export PATH=$PATH:/mnt/c/Program\ Files\ \(x86\)/Microsoft\ Visual\ Studio/2019/Community/Common7/IDE/CommonExtensions/Microsoft/FSharp/
-
-
-    alias c='/mnt/c'
-    alias d='/mnt/d'
-    alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
-    alias exp='explorer.exe'
-    alias open='cmd.exe /c start'
-    alias clip='clip.exe'
-    alias adb='adb.exe'
-    alias uni='cd /mnt/d/Workspace/src/Unityprojects'
-    alias w~='cd /mnt/d/Workspace'
-    #cd /mnt/d/Workspace
-    cd ~
-    ;;
-esac
-
-alias ll="ls -lh"
-alias la="ls -a"
-alias lal='ls -al'
-# cd後にls
-chpwd() { ls }
-
-alias v='nvim'
-alias vz='nvim ~/.zshrc'
-alias vp='nvim ~/.zpreztorc'
-alias vv='nvim ~/.config/nvim/init.vim'
-alias h='history'
-alias sshz='ssh s1260133@sshgate.u-aizu.ac.jp'
-alias sshzy='ssh -Y s1260133@sshgate.u-aizu.ac.jp'
-alias sshpi='ssh bigdra@raspberrypi -p 22 -i ~/.ssh/id_ed25519'
-alias sftpz='sftp s1260133@sshgate.u-aizu.ac.jp'
-alias scpz='scp s1260133@sshgate.u-aizu.ac.jp:/home/student/s1260133/'
-alias so='source'
-alias soz='source ~/.zshenv && source ~/.zshrc'
-#alias mkdir='(){mkdir $1;cd $1}'
-#export DISPLAY=localhost:0.0
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
