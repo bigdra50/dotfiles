@@ -15,15 +15,16 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 
 # alias
-set-alias vim 'C:\Program Files\Vim\vim82\vim.exe' 
+set-alias vim '$env:USERPROFILE\Vim\vim82\vim.exe' 
+set-alias nvim 'C:\Program Files\Neovim\bin\nvim.exe'
 set-alias v nvim 
 set-alias open explorer
-function ToCDriveHome {cd C:\Users\ryudai\}
+function ToCDriveHome {cd $env:USERPROFILE\}
 sal c ToCDriveHome
 
 function EditPoshRc {nvim $profile}
 sal vp EditPoshRc
-function EditVimRc {nvim C:\Users\ryudai\.config\nvim\init.vim}
+function EditVimRc {nvim $env:USERPROFILE\.config\nvim\init.vim}
 sal vv EditVimRc
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 sal ll CustomListChildItems
