@@ -1,18 +1,9 @@
 # 見た目
 [[plugins]]
 repo = 'tomasr/molokai'
-hook_add = 'colorscheme molokai'
-merged = false
-overwrite = true
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_add = 'source ~/.config/nvim/plugins/airline.vim'
-merged = false
-overwrite = true
-
-[[plugins]]
-repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+au MyAutoCmd VimEnter * nested colorscheme molokai
+'''
 merged = false
 overwrite = true
 
@@ -98,8 +89,15 @@ merged = false
 overwrite = true
 
 
+# [[plugins]]
+# repo = 'andys8/vim-elm-syntax'
+# on_ft = ['elm']
+# merged = false
+# overwrite = true
+
 [[plugins]]
-repo = 'andys8/vim-elm-syntax'
-on_ft = ['elm']
-merged = false
-overwrite = true
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
