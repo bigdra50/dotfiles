@@ -1,4 +1,11 @@
-let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
+if has('unix')
+  let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
+endif
+if has('mac')
+endif
+if has('win32') || has('win64')
+  let g:python3_host_prog = 'C:\Users\ryu19\.pyenv\pyenv-win\shims\python.bat'
+endif
 
 " dein Scripts-----------------------------
  if &compatible
@@ -25,17 +32,15 @@ let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
    call dein#save_state()
  endif
 
- filetype plugin indent on
- syntax enable
 
  if has('vim_starting') && dein#check_install()
    call dein#install()
  endif
 
+ filetype plugin indent on
+ syntax enable
+
 " End dein Scripts-------------------------
-
-
-colorscheme molokai
 
 set fenc=utf-8
 set noswapfile
