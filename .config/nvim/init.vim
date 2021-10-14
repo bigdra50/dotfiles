@@ -1,5 +1,3 @@
-let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
-
 " dein Scripts-----------------------------
  if &compatible
    set nocompatible
@@ -17,10 +15,11 @@ let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
  let &runtimepath = s:dein_repo_dir .",". &runtimepath
 
  let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+ let s:lazy_toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
  if dein#load_state(s:dein_dir)
    call dein#begin(s:dein_dir)
    call dein#load_toml(s:toml_file, {'lazy': 0})
-   call dein#load_toml(s:toml_file, {'lazy': 1})
+   "call dein#load_toml(s:lazy_toml_file, {'lazy': 1})
    call dein#end()
    call dein#save_state()
  endif
@@ -32,10 +31,17 @@ let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
    call dein#install()
  endif
 
+
 " End dein Scripts-------------------------
 
-
-colorscheme molokai
+if has('unix')
+  let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
+endif
+if has('mac')
+endif
+if has('win32') || has('win64')
+  let g:python3_host_prog = 'C:\Users\ryu19\.pyenv\pyenv-win\shims\python.bat'
+endif
 
 set fenc=utf-8
 set noswapfile
