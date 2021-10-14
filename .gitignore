@@ -1,2 +1,5 @@
 node_modules/*
 *.lock
+.config/configstore/*
+.config/coc/*
+.vim/*
