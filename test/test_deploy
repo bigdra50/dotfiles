@@ -1,5 +1,6 @@
-#/bin/sh
+#/bin/bash
 
+DOTPATH=~/dotfiles
 
-. $DOTFILES/install.sh
+. $DOTPATH/install.sh
 deploy
