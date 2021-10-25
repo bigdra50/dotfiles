@@ -3,22 +3,6 @@
 DOTPATH=~/dotfiles
 
 
-init(){
-  return 0
-}
-
-deploy(){
-  cd DOTPATH
-  if [$? -ne 0]; then
-    die "not found: $DOTPATH"
-  fi
-
-  for f in .??*
-  do
-    ["$f" = ".git" -o "$f" = ".gitignore" ] && continue
-    create_cymlink "$DOTPATH/$f" "$HOME/$f"
-  done
-}
 
 create_cymlink(){
   ln -snfv "$1" "$2"
@@ -105,3 +89,19 @@ die(){
   exit "${2:-1}"
 }
 
+init(){
+  return 0
+}
+
+deploy(){
+  cd DOTPATH
+  if [$? -ne 0]; then
+    die "not found: $DOTPATH"
+  fi
+
+  for f in .??*
+  do
+    ["$f" = ".git" -o "$f" = ".gitignore" ] && continue
+    create_cymlink "$DOTPATH/$f" "$HOME/$f"
+  done
+}
