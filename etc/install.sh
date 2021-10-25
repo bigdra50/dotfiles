@@ -4,7 +4,7 @@ DOTPATH=~/dotfiles
 
 
 init(){
-  
+  return 0
 }
 
 deploy(){
