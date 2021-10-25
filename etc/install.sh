@@ -17,8 +17,8 @@ deploy(){
   do
     [[ "$f" == ".git/" ]] && continue
     [[ "$f" == ".gitignore" ]] && continue
-    echo "$f"
-    create_cymlink "$DOTPATH/$f" "$HOME/$f"
+    echo "${f%/}"
+    create_cymlink "$DOTPATH/$f" "$HOME/${f%/}"
   done
 }
 
