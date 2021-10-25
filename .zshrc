@@ -1,20 +1,5 @@
 ZSH_THEME="gnzh"
 unset LIBGL_ALWAYS_INDIRECT
-export LANG=ja_JP.UTF-8
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
-export XMODIFIERS=@im=fcitx
-export DefaultIMModule=fcitx
-export LIBGL_ALWAYS_INDIRECT=1
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
-
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 case ${OSTYPE} in
   darwin*)
@@ -24,19 +9,8 @@ case ${OSTYPE} in
     ;;
 esac
 
-# go
-export GOENV_ROOT=$HOME/.goenv
-export PATH=$GOENV_ROOT/bin:$PATH
-eval "$(goenv init -)"
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
-
 # vimキーバインドへ
 bindkey -v
-
 
 # history設定
 HISTFILE=~/.zsh_history
@@ -53,9 +27,18 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+  printf "\e[31m%s\n\e[m" "~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh is not found"
+fi
 # 補完
 autoload -U compinit; compinit -C
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+  printf "\e[31m%s\n\e[m" "~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh is not found"
+fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 ## 補完候補ごとにグループ化
