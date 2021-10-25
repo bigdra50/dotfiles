@@ -1,10 +1,6 @@
 ZSH_THEME="gnzh"
 unset LIBGL_ALWAYS_INDIRECT
 
-if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
-
 case ${OSTYPE} in
   darwin*)
     ;;
@@ -15,7 +11,6 @@ esac
 
 # vimキーバインドへ
 bindkey -v
-
 
 # history設定
 HISTFILE=~/.zsh_history
@@ -32,9 +27,18 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
+if [ -f ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+  printf "\e[31m%s\n\e[m" "~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh is not found"
+fi
 # 補完
 autoload -U compinit; compinit -C
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+  printf "\e[31m%s\n\e[m" "~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh is not found"
+fi
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
 ## 補完候補ごとにグループ化
