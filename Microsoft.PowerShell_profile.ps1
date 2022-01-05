@@ -23,6 +23,7 @@ set-alias v nvim
 set-alias open explorer
 set-alias upm openupm
 set-alias gf ToGhqList
+set-alias -Name cd -Value pushd -Option AllScope
 
 function ToCDriveHome {pushd C:\Users\ryudai\}
 sal c ToCDriveHome
@@ -45,5 +46,5 @@ function CustomChildItemOnlyName {Get-ChildItem -Name}
 sal ls CustomChildItemOnlyName
 
 function ToGhqList {
-  pushd "$(ghq root)\$(ghq list | fzf)"
+  pushd "$(ghq root)\$(ghq list --vcs=git | fzf)"
 }
