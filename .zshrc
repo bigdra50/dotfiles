@@ -3,13 +3,13 @@ unset LIBGL_ALWAYS_INDIRECT
 
 if [ ! -e "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
   echo "install zsh-syntax-highlighting"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh/zsh-syntax-highlighting
   source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 if [ ! -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   echo "install zsh-autosuggestions"
-  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh
+  git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.zsh/zsh-autosuggestions
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
