@@ -10,6 +10,7 @@ fi
 if [ ! -d "$HOME/.zsh/zsh-autosuggestions" ]; then
   echo "install zsh-autosuggestions"
   git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh
+  souce ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 case ${OSTYPE} in
