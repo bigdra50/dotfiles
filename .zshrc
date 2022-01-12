@@ -1,13 +1,13 @@
 ZSH_THEME="gnzh"
 unset LIBGL_ALWAYS_INDIRECT
 
-if [ ! -d "$HOME/.zsh/zsh-syntax-highlighting" ]; then
+if [ ! -e "$HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
   echo "install zsh-syntax-highlighting"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git 
-  echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh
+  source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
-if [ ! -d "$HOME/.zsh/zsh-autosuggestions" ]; then
+if [ ! -e "$HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
   echo "install zsh-autosuggestions"
   git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh
   source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
