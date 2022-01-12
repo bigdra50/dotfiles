@@ -1,6 +1,17 @@
 ZSH_THEME="gnzh"
 unset LIBGL_ALWAYS_INDIRECT
 
+if [ ! -d "$HOME/.zsh/zsh-syntax-highlighting" ]; then
+  echo "install zsh-syntax-highlighting"
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
+  echo "source ${(q-)PWD}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" >> ${ZDOTDIR:-$HOME}/.zshrc
+fi
+
+if [ ! -d "$HOME/.zsh/zsh-autosuggestions" ]; then
+  echo "install zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/zsh-autosuggestions
+fi
+
 case ${OSTYPE} in
   darwin*)
     ;;
@@ -102,3 +113,7 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/alias.zsh
 # load functions
 source ~/.zsh/func.zsh
+source /home/bigdra/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/bigdra/dotfiles/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/bigdra/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/bigdra/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
