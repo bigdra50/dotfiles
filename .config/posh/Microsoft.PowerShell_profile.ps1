@@ -1,10 +1,4 @@
-$HOMEDRIVE = "E:\"
-
-# 開始ディレクトリの指定
-Set-Location "$HOMEDRIVE$HOMEPATH"
-Remove-Variable -Force HOME
-Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
-(get-psprovider 'FileSystem').Home = $HOMEDRIVE + $HOMEPATH
+cd E:
 
 # oh-my-posh
 Import-Module posh-git
@@ -15,36 +9,56 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 
 # fzf
-#Install-Module -Name PSFzf
+Import-Module PSFzf
+Enable-PsFzfAliases
+
+# ZLocation
+Import-Module ZLocation
 
 # alias
-set-alias vim 'C:\Program Files\Vim\vim82\vim.exe' 
 set-alias v nvim 
 set-alias open explorer
 set-alias upm openupm
 set-alias gf ToGhqList
 set-alias -Name cd -Value pushd -Option AllScope
 
-function ToCDriveHome {pushd C:\Users\ryudai\}
-sal c ToCDriveHome
-
-function EditPoshRc {nvim $profile}
-sal vp EditPoshRc
-function EditVimRc {nvim C:\Users\ryudai\.config\nvim\init.vim}
+function EditVimRc { nvim $USERPROFILE\.config\nvim\init.vim }
 sal vv EditVimRc
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 sal ll CustomListChildItems
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 sal ll CustomListChildItems
-function CustomSudo {Start-Process powershell.exe -Verb runas}
+function CustomSudo { Start-Process powershell.exe -Verb runas }
 sal sudo CustomSudo
-function CustomHosts {start notepad C:\Windows\System32\drivers\etc\hosts -verb runas}
+function CustomHosts { start notepad C:\Windows\System32\drivers\etc\hosts -verb runas }
 sal hosts CustomHosts
-function CustomUpdate {explorer ms-settings:windowsupdate}
+function CustomUpdate { explorer ms-settings:windowsupdate }
 sal update CustomUpdate
-function CustomChildItemOnlyName {Get-ChildItem -Name}
-sal ls CustomChildItemOnlyName
+function CustomChildItemOnlyName { Get-ChildItem -Name }
+function GetChildItemLikeLs([int]$columnCount = 6) {
+  Get-ChildItem | Format-Wide Name -Column $columnCount
+}
+sal ls GetChildItemLikeLs
 
 function ToGhqList {
   pushd "$(ghq root)\$(ghq list --vcs=git | fzf)"
+}
+function GetCurrentPath {
+  Convert-Path .
+}
+function GetCurrentPathAsLinux {
+
+}
+sal p GetCurrentPath
+function touch($filename) {
+  New-Item -type file $filename
+}
+
+function ReplaceHomePathNameToChilda {
+  $curPath = $ExecutionContext.SessionState.Path.CurrentLocation.Path
+  if ($curPath.ToLower().StartsWith($HOME.ToLower())) {
+    $curPath = "~" + $curPath.SubString($HOME.Length)
+  }
+  Write-Host $curPath -ForegroundColor Green
+
 }
