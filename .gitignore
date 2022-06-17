@@ -4,3 +4,4 @@
 .config/coc/*
 .vim/*
 .zsh/zsh-syntax-highlighting/
+.config/nvim/node_modules/
