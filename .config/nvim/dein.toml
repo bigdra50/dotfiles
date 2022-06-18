@@ -1,0 +1,103 @@
+# 見た目
+[[plugins]]
+repo = 'tomasr/molokai'
+hook_add = '''
+au MyAutoCmd VimEnter * nested colorscheme molokai
+'''
+merged = false
+overwrite = true
+
+# LSPとか
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = "release"
+hook_add = 'source ~/.config/nvim/plugins/coc.vim'
+merged = false
+overwrite = true
+
+# vim上でコンパイル･実行
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+hook_add = 'source ~/.config/nvim/plugins/quickrun.vim'
+merged = false
+overwrite = true
+
+# 非同期
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+merged = false
+overwrite = true
+
+# 非同期でsyntaxチェック
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = 'source ~/.config/nvim/plugins/ale.vim'
+merged = false
+overwrite = true
+
+# gitのdiffを表示したり差分を戻したり
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = 'source ~/.config/nvim/plugins/gitgutter.vim'
+merged = false
+overwrite = true
+
+
+# 括弧補完･削除
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+merged = false
+overwrite = true
+
+# vimからgitを呼べる
+# :Gstatus
+# :Gdiff
+# :Gblame
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = 'source ~/.config/nvim/plugins/fugitive.vim'
+merged = false
+overwrite = true
+
+#[[plugins]]
+#repo = 'Shougo/denite.nvim'
+#hook_add = 'source ~/.config/nvim/plugins/denite.vim'
+
+
+[[plugins]]
+repo = 'kassio/neoterm'
+hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
+merged = false
+overwrite = true
+
+# vimにファイルツリー表示
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+merged = false
+overwrite = true
+
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+merged = false
+overwrite = true
+
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+hook_add = 'source ~/.config/nvim/plugins/nerdtree-tab.vim'
+merged = false
+overwrite = true
+
+
+# [[plugins]]
+# repo = 'andys8/vim-elm-syntax'
+# on_ft = ['elm']
+# merged = false
+# overwrite = true
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'

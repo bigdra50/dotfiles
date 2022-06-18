@@ -1,0 +1,74 @@
+{
+  "suggest.triggerAfterInsertEnter":true,
+  "suggest.enablePreview": true,
+  "suggest.timeout": 5000,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.signOffset": 100,
+  "diagnostic.warningSign": "--",
+  "diagnostic.refreshOnInsertMode": true,
+  // auto format
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "javascript",
+    "graphql",
+    "html",
+    "yaml",
+    "json",
+    "python",
+    "java"
+  ],
+  "coc.preferences.hoverTarget": "float",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-1.8",
+      "path": "/usr/lib/jvm/java-8-openjdk-amd64"
+    },
+    {
+      "name": "JavaSE-11",
+      "path": "/usr/lib/jvm/java-11-openjdk-amd64"
+    },
+    {
+      "name": "JavaSE-14",
+      "path": "/usr/lib/jvm/java-14-oracle"
+    }
+  ],
+  // codeLens
+  "codeLens.enable": true,
+  "java.referencesCodeLens.enabled": true,
+  "java.implementationsCodeLens.enabled": true,
+  "java.completion.enabled": true,
+  "java.jdt.ls.vmargs": "-noverify -Xmx6G -XX:+UseG1GC -XX:+UseStringDeduplication",
+  "languageserver": {
+    "elmLS": {
+      "command": "elm-language-server",
+      "args": [
+        "--stdio"
+      ],
+      "filetypes": [
+        "elm"
+      ],
+      "rootPatterns": [
+        "elm.json"
+      ],
+      "initializationOptions": {
+        "runtime": "node",
+        "elmPath": "elm",
+        "elmFormatPath": "elm-format",
+        "elmTestPath": "elm-test",
+      }
+    },
+    "go": {
+      "command": "gopls",
+      "rootPatterns": [
+        "go.mod"
+      ],
+      "trace.server": "verbose",
+      "filetypes": [
+        "go"
+      ]
+    }
+  }
+}
