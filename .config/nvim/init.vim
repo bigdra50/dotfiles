@@ -35,7 +35,7 @@
 " End dein Scripts-------------------------
 
 if has('unix')
-  let g:python3_host_prog = '$PYENV_ROOT/versions/3.9.6/bin/python3'
+  let g:python3_host_prog = '$HOME/.config/nvim/nvim-python3/.venv/bin/python3.10'
 endif
 if has('mac')
 endif
