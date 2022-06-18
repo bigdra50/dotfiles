@@ -20,7 +20,7 @@
 /.config/**
 ## nvim
 !/.config/nvim/
-!/.config/nvim/**
+/.config/nvim/**
 !/.config/nvim/init.vim
 !/.config/nvim/dein.toml
 !/.config/nvim/dein_lazy.toml
