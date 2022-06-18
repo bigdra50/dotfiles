@@ -2,7 +2,7 @@
 case ${OSTYPE} in
   darwin*)
     # Mac
-    alias ls="LC_COLLATE=C gls --group-directories-first"
+    #alias ls="LC_COLLATE=C gls --group-directories-first"
     ;;
   linux*)
     # Linux(wsl)
