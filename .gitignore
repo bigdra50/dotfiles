@@ -31,4 +31,8 @@
 ## unity
 !/.config/unity/layout.wlt
 
+!/README.md
+!/LICENSE
+!.gitignore
+!.gitkeep
 ~/etc/install.sh
