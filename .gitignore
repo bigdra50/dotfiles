@@ -34,7 +34,7 @@
 !/.config/posh/
 /.config/posh/**
 !/.config/posh/Microsoft.PowerShell_profile.ps1
-!/.config/posh/profile.json
+!/.config/posh/profiles.json
 !/.config/posh/settings.json
 
 ## unity
