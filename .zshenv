@@ -5,6 +5,9 @@ export XMODIFIERS=@im=fcitx
 export DefaultIMModule=fcitx
 export LIBGL_ALWAYS_INDIRECT=1
 export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CACHE_HOME=$HOME/.cache
+export XDG_DATA_HOME=$HOME/.local/share
 
 # nvm
 #export NVM_DIR="$HOME/.nvm"
