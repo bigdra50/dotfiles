@@ -24,7 +24,7 @@
 !/.config/nvim/init.vim
 !/.config/nvim/dein.toml
 !/.config/nvim/dein_lazy.toml
-!/.config/nvim/plugins/
+!/.config/nvim/plugins/*
 !/.config/nvim/nvim-python3/
 /.config/nvim/nvim-python3/**
 
