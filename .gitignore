@@ -8,6 +8,8 @@
 ## zsh
 !/.zshrc
 !/.zshenv
+!/.zsh/
+/.zsh/**
 !/.zsh/func.zsh
 !/.zsh/prompt.zsh
 !/.zsh/alias.zsh
