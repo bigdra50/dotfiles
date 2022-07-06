@@ -1,6 +1,51 @@
-node_modules/*
-*.lock
-.config/configstore/*
-.config/coc/*
-.vim/*
-.zsh/zsh-syntax-highlighting/
+# all ignore
+/*
+/.**
+
+# white list
+## bash
+!/.bashrc
+## zsh
+!/.zshrc
+!/.zshenv
+!/.zsh/
+/.zsh/**
+!/.zsh/func.zsh
+!/.zsh/prompt.zsh
+!/.zsh/alias.zsh
+
+!/.vimrc
+!/.colorrc
+!/.ideavimrc
+
+!/.config/
+/.config/**
+## nvim
+!/.config/nvim/
+/.config/nvim/**
+!/.config/nvim/init.vim
+!/.config/nvim/dein.toml
+!/.config/nvim/dein_lazy.toml
+!/.config/nvim/plugins/
+/.config/nvim/plugins/**
+!/.config/nvim/plugins/*
+!/.config/nvim/nvim-python3/
+/.config/nvim/nvim-python3/**
+
+## powershell
+!/.config/posh/
+/.config/posh/**
+!/.config/posh/Microsoft.PowerShell_profile.ps1
+!/.config/posh/profiles.json
+!/.config/posh/settings.json
+
+## unity
+!/.config/unity/
+/.config/unity/**
+!/.config/unity/layout.wlt
+
+!/README.md
+!/LICENSE
+!.gitignore
+!.gitkeep
+~/etc/install.sh
