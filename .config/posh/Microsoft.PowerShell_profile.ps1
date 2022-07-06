@@ -14,6 +14,7 @@ Enable-PsFzfAliases
 
 # ZLocation
 Import-Module ZLocation
+$env:EDITOR='nvim'
 
 # alias
 set-alias v nvim 
@@ -24,8 +25,6 @@ set-alias -Name cd -Value pushd -Option AllScope
 
 function EditVimRc { nvim $USERPROFILE\.config\nvim\init.vim }
 sal vv EditVimRc
-function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
-sal ll CustomListChildItems
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 sal ll CustomListChildItems
 function CustomSudo { Start-Process powershell.exe -Verb runas }
