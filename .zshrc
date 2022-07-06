@@ -1,4 +1,3 @@
-
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -47,7 +46,8 @@ zinit light chrissicool/zsh-256color
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 
-#ZSH_THEME="gnzh"
+# wslのrcファイルでこの設定をするとGUI描画時に古いOpenGLが使われてしまうことがあるため､ unsetしている
+# wsl以外の環境ではいらない?
 unset LIBGL_ALWAYS_INDIRECT
 
 
@@ -142,7 +142,7 @@ zstyle ':autocomplete:*' add-space \
 
 #source /path/to/zsh-autocomplete.plugin.zsh
 ##
-# NOTE: All configuration below should come AFTER sourcing zsh-autocomplete!
+# ⚠️ NOTE: All configuration below should come AFTER sourcing zsh-autocomplete!
 #
 
 # Up arrow:
@@ -183,36 +183,6 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 zstyle ':completion:*' use-cache true
 
 # カレントディレクトリに候補がない場合のみcdpath上のディレクトリを候補に出す
-#source /path/to/zsh-autocomplete.plugin.zsh
-##
-# NOTE: All configuration below should come AFTER sourcing zsh-autocomplete!
-#
-
-# Up arrow:
-bindkey '\e[A' up-line-or-search
-bindkey '\eOA' up-line-or-search
-# up-line-or-search:  Open history menu.
-# up-line-or-history: Cycle to previous history line.
-
-# Down arrow:
-bindkey '\e[B' down-line-or-select
-bindkey '\eOB' down-line-or-select
-# down-line-or-select:  Open completion menu.
-# down-line-or-history: Cycle to next history line.
-
-# Control-Space:
-bindkey '\0' list-expand
-# list-expand:      Reveal hidden completions.
-# set-mark-command: Activate text selection.
-
-# Uncomment the following lines to disable live history search:
-# zle -A {.,}history-incremental-search-forward
-# zle -A {.,}history-incremental-search-backward
-
-# Return key in completion menu & history menu:
-bindkey -M menuselect '\r' .accept-line
-# .accept-line: Accept command line.
-# accept-line:  Accept selection and exit menu.style ':completion:*:cd:*' tag-order local-directories path-directories
 ## 補完候補ごとにグループ化
 # zstyle ':completion:*' format '%B%F{blue}%d%f%b'
 # zstyle ':completion:*' group-name ''
