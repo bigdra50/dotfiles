@@ -1,15 +1,14 @@
-# OS別の設定
 case ${OSTYPE} in
   darwin*)
     # Mac
-    alias ls="ls -FG"
+    alias ls="gls -FGS --group-directories-first"
     ;;
   linux*)
     # Linux(wsl)
     alias c='/mnt/c'
     alias d='/mnt/d'
     alias e='/mnt/e'
-    alias ls='LC_COLLATE=C ls --color=auto --human-readable --group-directories-first'
+    alias ls='LC_COLLATE=C ls --color=auto --group-directories-first'
     alias exp='explorer.exe'
     alias open='cmd.exe /c start'
     alias clip='clip.exe'
