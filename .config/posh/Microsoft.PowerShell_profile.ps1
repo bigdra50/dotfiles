@@ -4,7 +4,7 @@ cd E:
 Import-Module posh-git
 Import-Module oh-my-posh
 #Set-Theme Material
-Set-PoshPrompt -Theme Zash
+Set-PoshPrompt -Theme powerlevel10k_rainbow
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 
@@ -23,7 +23,7 @@ set-alias upm openupm
 set-alias gf ToGhqList
 set-alias -Name cd -Value pushd -Option AllScope
 
-function EditVimRc { nvim $USERPROFILE\.config\nvim\init.vim }
+function EditVimRc { nvim $UserProfile\.config\nvim\init.vim }
 sal vv EditVimRc
 function CustomListChildItems { Get-ChildItem $args[0] -force | Sort-Object -Property @{ Expression = 'LastWriteTime'; Descending = $true }, @{ Expression = 'Name'; Ascending = $true } | Format-Table -AutoSize -Property Mode, Length, LastWriteTime, Name }
 sal ll CustomListChildItems
