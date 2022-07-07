@@ -26,6 +26,7 @@
 !/.config/nvim/init.vim
 !/.config/nvim/dein.toml
 !/.config/nvim/dein_lazy.toml
+!/.config/nvim/coc-settings.json
 !/.config/nvim/plugins/
 /.config/nvim/plugins/**
 !/.config/nvim/plugins/*
