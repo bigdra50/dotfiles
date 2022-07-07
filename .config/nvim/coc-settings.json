@@ -1,0 +1,7 @@
+{
+  "jedi": {
+    "enable": true,
+    "StartupMessage": false,
+    "excecutable.command": "$PYENV/versions/3.10.5/python.exe"
+  }
+}

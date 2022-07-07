@@ -40,7 +40,7 @@ endif
 if has('mac')
 endif
 if has('win32') || has('win64')
-  let g:python3_host_prog = 'C:\Users\ryu19\.pyenv\pyenv-win\shims\python.bat'
+  let g:python3_host_prog = '$PYENV\versions\3.10.5\python.exe'
 endif
 
 set fenc=utf-8
@@ -99,3 +99,6 @@ nnoremap - <C-x>
 
 " terminal insertモードからESCでterminal normalモードへ戻る
 tnoremap <silent> <ESC> <C-\><C-n>
+
+" タブ操作
+nnoremap gr :tabprevious
