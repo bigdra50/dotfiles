@@ -8,6 +8,7 @@ export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
+export PATH=$HOME/opt:$PATH
 
 # nvm
 #export NVM_DIR="$HOME/.nvm"
