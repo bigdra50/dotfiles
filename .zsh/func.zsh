@@ -24,6 +24,15 @@ function ghq-fzf() {
   zle -R -c
 }
 
+function u-version(){
+  cat ProjectSettings/ProjectVersion.txt | grep "m_EditorVersion:" | awk -F" " '{print $2 }'
+}
+
+function uadb(){
+  eval "/Applications/Unity/Hub/Editor/$(u-version)/PlaybackEngines/AndroidPlayer/SDK/platform-tools/adb" $@
+}
+
+
 # cd後にls
 chpwd() { ls }
 
