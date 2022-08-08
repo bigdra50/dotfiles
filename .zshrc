@@ -167,7 +167,7 @@ bindkey '\0' list-expand
 # zle -A {.,}history-incremental-search-backward
 
 # Return key in completion menu & history menu:
-bindkey -M menuselect '\r' .accept-line
+#bindkey -M menuselect '\r' .accept-line
 # .accept-line: Accept command line.
 # accept-line:  Accept selection and exit menu.
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
