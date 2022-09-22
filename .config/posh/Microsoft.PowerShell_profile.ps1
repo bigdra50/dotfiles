@@ -12,6 +12,8 @@ Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 Import-Module PSFzf
 Enable-PsFzfAliases
 
+Import-Module PSEverything
+
 # ZLocation
 Import-Module ZLocation
 $env:EDITOR='nvim'
@@ -41,6 +43,9 @@ sal ls GetChildItemLikeLs
 
 function ToGhqList {
   pushd "$(ghq root)\$(ghq list --vcs=git | fzf)"
+}
+function q{
+  pushd $(ghq list -p | fzf)
 }
 function GetCurrentPath {
   Convert-Path .

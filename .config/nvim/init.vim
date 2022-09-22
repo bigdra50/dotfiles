@@ -1,3 +1,4 @@
+
 " dein Scripts-----------------------------
  if &compatible
    set nocompatible
@@ -34,6 +35,9 @@
 
 " End dein Scripts-------------------------
 
+" load vimrc
+source $HOME/.vimrc
+
 if has('unix')
   let g:python3_host_prog = '$XDG_CONFIG_HOME/nvim/nvim-python3/.venv/bin/python3.10'
 endif
@@ -43,59 +47,11 @@ if has('win32') || has('win64')
   let g:python3_host_prog = '$PYENV\versions\3.10.5\python.exe'
 endif
 
-set fenc=utf-8
-set noswapfile
-set autoread
-set hidden
-set showcmd
-set title
-set number
-set cursorline
-set cursorcolumn
-set virtualedit=onemore
-set visualbell
-set smartindent
-set showmatch
-set matchtime=1
-set laststatus=2
-set statusline=2
-set wildmode=list:longest
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set ignorecase
-set smartcase
-set incsearch
-set wrapscan
-set hlsearch
-" 長い行でも表示"
-set display=lastline
-" 補完メニューの高さ"
-set pumheight=10
-" tabを可視化"
-set list listchars=tab:\▶\-
 
 " 補完時の挙動
 inoremap <expr><CR> pumvisible() ? "<C-y>" : "<CR>"
 inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
 inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
-" inoremap { {}<LEFT>
-" inoremap ( ()<LEFT>
-" inoremap < <><LEFT>
-" inoremap " ""<LEFT>
-" inoremap ' ''<LEFT>
-" inoremap [ []<LEFT>
-
-nmap <Esc><Esc> :nohlsearch<CR><Esc>
-
-" Yを行末までのヤンクに"
-nnoremap Y y$
-nnoremap j gj
-nnoremap k gk
-inoremap <silent> jj <ESC>
-" 数値に対してインクリメント･デクリメント"
-nnoremap + <C-a>
-nnoremap - <C-x>
 
 " terminal insertモードからESCでterminal normalモードへ戻る
 tnoremap <silent> <ESC> <C-\><C-n>
