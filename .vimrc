@@ -1,19 +1,32 @@
-" setting
-"文字コードをUFT-8に設定
 set encoding=utf-8
-" バックアップファイルを作らない
+set fileencodings=utf=8,cp932,sjis,euc-jp
 set nobackup
-" スワップファイルを作らない
-set noswapfile
 " 編集中のファイルが変更されたら自動で読み直す
 set autoread
 " バッファが編集中でもその他のファイルを開けるように
 set hidden
 " 入力中のコマンドをステータスに表示する
 set showcmd
+set noswapfile
+set title
+set matchtime=1
+set laststatus=2
+set statusline=2
 
+" 長い行でも表示"
+set display=lastline
+" 補完メニューの高さ"
+set pumheight=10
+" tabを可視化"
+set list listchars=tab:\▶\-
+if has('win64')
+  set fileformats=dos,unix,mac
+else
+  set fileformats=unix,dos,mac
+endif
 
 " 見た目系
+syntax on
 " 行番号を表示
 set number
 " 現在の行を強調表示
@@ -34,21 +47,6 @@ set laststatus=2
 " コマンドラインの補完
 set wildmode=list:longest
 
-" 移動系
-" 折り返し時に表示行単位での移動できるようにする
-nnoremap j gj
-nnoremap k gk
-" カーソル
-inoremap <C-e> <Esc>$i
-inoremap <C-a> <Esc>^i
-noremap <C-e> <Esc>$i
-noremap <C-a> <Esc>^i
-
-syntax on
-colorscheme molokai
-let g:molokai_original = 1
-let g:rehash256 = 1
-" set background = dark
 
 " Tab系
 " 不可視文字を可視化(タブが「▸-」と表示される)
@@ -59,7 +57,6 @@ set expandtab
 set tabstop=2
 " 行頭でのTab文字の表示幅
 set shiftwidth=2
-
 
 " 検索系
 " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -74,3 +71,24 @@ set wrapscan
 set hlsearch
 " ESC連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
+" 移動系
+" 折り返し時に表示行単位での移動できるようにする
+nnoremap j gj
+nnoremap k gk
+" カーソル
+inoremap <C-e> <Esc>$i
+inoremap <C-a> <Esc>^i
+noremap <C-e> <Esc>$i
+noremap <C-a> <Esc>^i
+" Yを行末までのヤンクに"
+nnoremap Y y$
+inoremap <silent> jj <ESC>
+" 数値に対してインクリメント･デクリメント"
+nnoremap + <C-a>
+nnoremap - <C-x>
+" inoremap { {}<LEFT>
+" inoremap ( ()<LEFT>
+" inoremap < <><LEFT>
+" inoremap " ""<LEFT>
+" inoremap ' ''<LEFT>
+" inoremap [ []<LEFT>

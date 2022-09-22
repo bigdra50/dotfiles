@@ -3,5 +3,14 @@
     "enable": true,
     "StartupMessage": false,
     "excecutable.command": "$PYENV/versions/3.10.5/python.exe"
-  }
+  },
+  "rust-analyzer.diagnostics.enable": true,
+  "rust-analyzer.inlayHints.enable": true,
+  "rust-analyzer.inlayHints.typeHints": true,
+  "rust-analyzer.inlayHints.chainingHints": true,
+  "rust-analyzer.inlayHints.parameterHints": true,
+  "rust-analyzer.checkOnSave.enable": true,
+  "rust-analyzer.assist.importMergeBehavior": "module",
+  "rust-analyzer.diagnostics.enableExperimental": true,
+  "rust-analyzer.diagnostics.disabled": ["macro-error"]
 }
