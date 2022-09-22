@@ -50,3 +50,4 @@
 !.gitignore
 !.gitkeep
 ~/etc/install.sh
+!/.yabairc
