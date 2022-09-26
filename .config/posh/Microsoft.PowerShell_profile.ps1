@@ -7,6 +7,7 @@ Import-Module oh-my-posh
 Set-PoshPrompt -Theme powerlevel10k_rainbow
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
+Set-PSReadLineKeyHandler -Key Tab -ScriptBlock {Invoke-FzfTabCompletion}
 
 # fzf
 Import-Module PSFzf
