@@ -1,4 +1,14 @@
 {
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.enablePreview": true,
+  "suggest.timeout": 5000,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "suggest.noselect": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.signOffset": 100,
+  "diagnostic.warningSign": "--",
+  "diagnostic.refreshOnInsertMode": true,
+  "coc.preferences.hoverTarget": "float",
   "jedi": {
     "enable": true,
     "StartupMessage": false,
