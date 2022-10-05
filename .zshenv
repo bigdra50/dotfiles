@@ -10,22 +10,11 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export PATH=$HOME/opt:$PATH
 
-# nvm
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-#
-## go
-#if [ ! -e "$HOME/.goenv" ]; then
-#  git clone https://github.com/syndbg/goenv.git ~/.goenv
-#fi
-#export GOENV_ROOT=$HOME/.goenv
-#export PATH=$GOENV_ROOT/bin:$PATH
-#eval "$(goenv init -)"
-
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh \
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'; \
+  export FZF_DEFAULT_OPTS='--height 40% --reverse --border';
 
 . /opt/homebrew/opt/asdf/asdf.sh
+
+[[ -e ~/.zshenv_local ]] && source ~/.zshenv_local
