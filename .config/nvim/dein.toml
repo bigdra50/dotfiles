@@ -7,6 +7,24 @@ au MyAutoCmd VimEnter * nested colorscheme molokai
 merged = false
 overwrite = true
 
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --bin'
+merged = '0'
+
+[[plugins]]
+repo = 'junegunn/fzf.vim'
+depends = 'fzf'
+hook_add = '''
+  command! -bang -nargs=* Rg
+    \ call fzf#vim#grep(
+    \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+    \   fzf#vim#with_preview({'options': '--exact --reverse'}, 'right:50%:wrap'))
+'''
+
 # LSPとか
 [[plugins]]
 repo = 'neoclide/coc.nvim'
@@ -36,17 +54,13 @@ hook_add = 'source ~/.config/nvim/plugins/ale.vim'
 merged = false
 overwrite = true
 
-# gitのdiffを表示したり差分を戻したり
+############################
+# For Git
+############################
+
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = 'source ~/.config/nvim/plugins/gitgutter.vim'
-merged = false
-overwrite = true
-
-
-# 括弧補完･削除
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
 merged = false
 overwrite = true
 
@@ -59,6 +73,13 @@ repo = 'tpope/vim-fugitive'
 hook_add = 'source ~/.config/nvim/plugins/fugitive.vim'
 merged = false
 overwrite = true
+
+# 括弧補完･削除
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+merged = false
+overwrite = true
+
 
 
 #[[plugins]]
@@ -110,5 +131,3 @@ depends = ['vim-airline-themes']
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 
-[[plugins]]
-repo = 'junegunn/fzf'
