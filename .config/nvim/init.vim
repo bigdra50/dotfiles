@@ -1,4 +1,3 @@
-
 " dein Scripts-----------------------------
  if &compatible
    set nocompatible

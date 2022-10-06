@@ -60,33 +60,41 @@ hook_add = 'source ~/.config/nvim/plugins/fugitive.vim'
 merged = false
 overwrite = true
 
+
 #[[plugins]]
 #repo = 'Shougo/denite.nvim'
 #hook_add = 'source ~/.config/nvim/plugins/denite.vim'
 
 
-[[plugins]]
-repo = 'kassio/neoterm'
-hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
-merged = false
-overwrite = true
+# [[plugins]]
+# repo = 'kassio/neoterm'
+# hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
+# merged = false
+# overwrite = true
 
-# vimにファイルツリー表示
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-merged = false
-overwrite = true
 
+# Filer
 [[plugins]]
-repo = 'Xuyuanp/nerdtree-git-plugin'
+repo = 'lambdalisue/fern.vim'
+hook_add = 'source ~/.config/nvim/plugins/fern.vim'
 merged = false
 overwrite = true
 
 [[plugins]]
-repo = 'jistr/vim-nerdtree-tabs'
-hook_add = 'source ~/.config/nvim/plugins/nerdtree-tab.vim'
-merged = false
-overwrite = true
+repo = 'lambdalisue/fern-git-status.vim'
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+hook_add = '''
+let g:fern#renderer = 'nerdfont'
+'''
+
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
+hook_add = 'source ~/.config/nvim/plugins/glyph-palette.vim'
 
 
 # [[plugins]]
