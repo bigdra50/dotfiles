@@ -1,9 +1,18 @@
 set signcolumn=yes
-set updatetime=1000
+set updatetime=250
 
-nnoremap [gitgutter] <Nop>
-nmap <C-h> [gitgutter]
-nmap [gitgutter]j <Plug>GitGutterNextHunk
-nmap [gitgutter]k <Plug>GitGutterPrevHunk
-nmap [gitgutter]u <Plug>GitGutterUndoHunk
+"" git操作
+" g]で前の変更箇所へ移動する
+nnoremap g[ :GitGutterPrevHunk<CR>
+" g[で次の変更箇所へ移動する
+nnoremap g] :GitGutterNextHunk<CR>
+nnoremap gu :GitGutterUndoHunk<CR>
+" ghでdiffをハイライトする
+nnoremap gh :GitGutterLineHighlightsToggle<CR>
+" gpでカーソル行のdiffを表示する
+nnoremap gp :GitGutterPreviewHunk<CR>
 
+" 記号の色を変更する
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=blue
+highlight GitGutterDelete ctermfg=red
