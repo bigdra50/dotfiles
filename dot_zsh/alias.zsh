@@ -17,14 +17,25 @@ case ${OSTYPE} in
     ;;
 esac
 
+alias ls="ls -F"
 alias ll="ls -lh"
 alias la="ls -a"
 alias lal='ls -al'
 
-alias v='nvim'
-alias vz='nvim ~/.zshrc'
-alias vp='nvim ~/.zpreztorc'
-alias vv='nvim ~/.config/nvim/init.vim'
+alias rm='trash -rf'
+alias cp='cp -r'
+alias mkdir='mkdir -p'
+
+alias g='git'
+
+
+if hascmd nvim; then
+  alias vim='nvim'
+fi
+
+alias v='vim'
+alias vz='vim ~/.zshrc'
+alias vv='vim ~/.config/nvim/init.vim'
 alias h='history'
 alias so='source'
 alias soz='source ~/.zshenv && source ~/.zshrc'
