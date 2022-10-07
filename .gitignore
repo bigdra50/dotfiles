@@ -1,0 +1,54 @@
+# all ignore
+/*
+/.**
+
+# white list
+## bash
+!/dot_bashrc
+## zsh
+!/dot_zshrc
+!/dot_zshenv
+!/dot_zsh/
+/dot_zsh/**
+!/dot_zsh/func.zsh
+!/dot_zsh/prompt.zsh
+!/dot_zsh/alias.zsh
+
+!/executable_dot_vimrc
+!/dot_colorrc
+!/dot_ideavimrc
+
+!/dot_config/
+/dot_config/**
+## nvim
+!/dot_config/nvim/
+/dot_config/nvim/**
+!/dot_config/nvim/init.vim
+!/dot_config/nvim/dein.toml
+!/dot_config/nvim/dein_lazy.toml
+!/dot_config/nvim/coc-settings.json
+!/dot_config/nvim/plugins/
+/dot_config/nvim/plugins/**
+!/dot_config/nvim/plugins/*
+!/dot_config/nvim/nvim-python3/
+/dot_config/nvim/nvim-python3/**
+
+## powershell
+!/dot_config/posh/
+/dot_config/posh/**
+!/dot_config/posh/Microsoft.PowerShell_profile.ps1
+!/dot_config/posh/profiles.json
+!/dot_config/posh/settings.json
+
+## unity
+!/dot_config/unity/
+/dot_config/unity/**
+!/dot_config/unity/layout.wlt
+
+!/README.md
+!/LICENSE
+!.gitignore
+!.gitkeep
+~/etc/install.sh
+!/executable_dot_yabairc
+!/dot_skhdrc
