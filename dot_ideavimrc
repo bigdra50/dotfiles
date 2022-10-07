@@ -1,0 +1,22 @@
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set wrapscan
+set showmatch matchtime=1
+set cmdheight=2
+set laststatus=2
+set showcmd
+set display=lastline
+set clipboard+=unnamed
+set visualbell
+set noerrorbells
+nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
+set whichwrap=b,s,h,l,<,>,[,],~
+
+nnoremap Y y$
+nnoremap j gj
+nnoremap k gk
+nnoremap + <C-a>
+nnoremap - <C-x>
+inoremap <silent> jj <ESC>
