@@ -1,0 +1,48 @@
+{
+  "suggest.triggerAfterInsertEnter": true,
+  "suggest.enablePreview": true,
+  "suggest.timeout": 5000,
+  "suggest.preferCompleteThanJumpPlaceholder": true,
+  "suggest.noselect": true,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.signOffset": 100,
+  "diagnostic.warningSign": "--",
+  "diagnostic.refreshOnInsertMode": true,
+  "coc.preferences.hoverTarget": "float",
+  "jedi": {
+    "enable": true,
+    "StartupMessage": false,
+    "excecutable.command": "$PYENV/versions/3.10.5/python.exe"
+  },
+  "rust-analyzer.diagnostics.enable": true,
+  "rust-analyzer.inlayHints.enable": true,
+  "rust-analyzer.inlayHints.typeHints": true,
+  "rust-analyzer.inlayHints.chainingHints": true,
+  "rust-analyzer.inlayHints.parameterHints": true,
+  "rust-analyzer.checkOnSave.enable": true,
+  "rust-analyzer.assist.importMergeBehavior": "module",
+  "rust-analyzer.diagnostics.enableExperimental": true,
+  "rust-analyzer.diagnostics.disabled": [
+    "macro-error"
+  ],
+  "diagnostics-languageserver.filetypes": {
+    "vim": "vint",
+    "email": "languagetool",
+    "sh": "shellcheck",
+    "markdown": [
+      "write-good",
+      "markdownlint"
+    ],
+    "yaml": [
+      "yamllint"
+    ],
+    "cmake": [
+      "cmake-lint",
+      "cmakelint"
+    ],
+    "systemd": "systemd-analyze"
+  },
+  "diagnostics-languageserver.formatFiletypes": {
+    "sh": "shfmt"
+  }
+}
