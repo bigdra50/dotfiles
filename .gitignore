@@ -30,8 +30,6 @@
 !/dot_config/nvim/plugins/
 /dot_config/nvim/plugins/**
 !/dot_config/nvim/plugins/*
-!/dot_config/nvim/nvim-python3/
-/dot_config/nvim/nvim-python3/**
 
 ## powershell
 !/dot_config/posh/
