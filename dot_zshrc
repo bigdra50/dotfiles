@@ -235,12 +235,23 @@ setopt brace_ccl
 
 # load prompt settings
 #source ~/.zsh/prompt.zsh
-# load alias
-source ~/.zsh/alias.zsh
 # load functions
 source ~/.zsh/func.zsh
 
+# load alias
+source ~/.zsh/alias.zsh
+
+# load plugins config
+while read -r f; do
+  [[ -f ${f} ]] && . ${f}
+done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1)
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+
+if hascmd brew; then
+  [[ -f $(brew --prefix asdf)/libexec/asdf.sh ]] && . $(brew --prefix asdf)/libexec/asdf.sh
+fi
 
 [[ -f ~/.zshrc_local ]] && source ~/.zshrc_local
