@@ -18,6 +18,9 @@
 !/dot_colorrc
 !/dot_ideavimrc
 
+## brew
+!/dot_Brewfile
+
 !/dot_config/
 /dot_config/**
 ## nvim
@@ -45,7 +48,8 @@
 
 !/README.md
 !/LICENSE
-!.gitignore
+!/.gitconfig
+!dot_gitignore
 !.gitkeep
 ~/etc/install.sh
 !/executable_dot_yabairc
