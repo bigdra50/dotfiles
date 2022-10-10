@@ -17,19 +17,26 @@ case ${OSTYPE} in
     ;;
 esac
 
+alias .2=cd ../..
+alias .3=cd ../../..
+alias .4=cd ../../../..
+alias .5=cd ../../../../..
 alias cp='cp -r'
 alias mkdir='mkdir -p'
 alias rm='trash -rf'
 alias cut='choose'
 alias df='duf'
 alias du='dust'
+alias restart='exec $SHELL -l'
+alias top='btm'
+alias diff='delta'
 
 alias g='git'
 
 DOTFILES=$XDG_DATA_HOME/chezmoi
 alias v='nvim'
-alias vz='vim $DOTFILES/dot_zshrc'
-alias vv='vim $DOTFILES/dot_config/nvim/init.vim'
+alias vz='v $DOTFILES/dot_zshrc'
+alias vv='v $DOTFILES/dot_config/nvim/init.vim'
 alias h='history'
 alias so='source'
 alias soz='source $HOME/.zshenv && source $HOME/.zshrc'
