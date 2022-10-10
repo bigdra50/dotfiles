@@ -26,7 +26,7 @@ alias du='dust'
 
 alias g='git'
 
-DOTFILES=$XDG_DATA/chezmoi
+DOTFILES=$XDG_DATA_HOME/chezmoi
 alias v='nvim'
 alias vz='vim $DOTFILES/dot_zshrc'
 alias vv='vim $DOTFILES/dot_config/nvim/init.vim'
