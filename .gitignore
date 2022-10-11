@@ -10,9 +10,10 @@
 !/dot_zshenv
 !/dot_zsh/
 /dot_zsh/**
-!/dot_zsh/func.zsh
-!/dot_zsh/prompt.zsh
-!/dot_zsh/alias.zsh
+!/dot_zsh/*.zsh
+!/dot_zsh/plugins/
+/dot_zsh/plugins/**
+!/dot_zsh/plugins/*.zsh
 
 !/executable_dot_vimrc
 !/dot_colorrc
