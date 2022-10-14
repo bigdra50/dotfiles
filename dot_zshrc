@@ -41,17 +41,14 @@ setopt print_eight_bit  # 日本語ファイル名など8bitを通す
 # 例: mkdir {1-3}でフォルダ1, 2, 3を作れる
 setopt brace_ccl
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
-
-
 if hascmd brew; then
   [[ -f $(brew --prefix asdf)/libexec/asdf.sh ]] && . $(brew --prefix asdf)/libexec/asdf.sh
 fi
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
 # load plugins config
 while read -r f; do
   [[ -f ${f} ]] && . ${f}
 done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1)
-
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
