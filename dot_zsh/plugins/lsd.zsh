@@ -5,9 +5,9 @@ alias ll='ls -hl --total-size'
 alias la="ls -A"
 alias lal='ll -A'
 
-chpwd(){
-  lsd -F --group-dirs=first
-}
+# chpwd(){
+#   lsd -F --group-dirs=first
+# }
 
 # ツリー表示
 alias tree='lsd -A --tree --group-dirs=first'
