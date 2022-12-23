@@ -2,6 +2,8 @@
 # 補完
 # -------------------------------
 
+autoload -U compinit
+compinit
 setopt always_last_prompt # カーソル位置を保持したままファイル名一覧を順次その場で表示
 setopt auto_list  # 補完候補が複数ある時に、一覧表示
 setopt auto_menu  # 補完候補が複数あるときに自動的に一覧表示する
@@ -27,6 +29,7 @@ setopt rec_exact
 unsetopt menu_complete
 unsetopt list_beep
 
+zstyle ':completion:*:default' menu select=2
 zstyle ':autocomplete:*' default-context ''
 # '': Start each new command line with normal autocompletion.
 # history-incremental-search-backward: Start in live history search mode.
@@ -109,7 +112,7 @@ bindkey '\0' list-expand
 # accept-line:  Accept selection and exit menu.
 #ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=5'
 
-bindkey "^I" menu-complete  # 展開する前に補完候補を出させる(Ctrl-iで補完)
+bindkey "^N" menu-complete  # 展開する前に補完候補を出させる(Ctrl-iで補完)
 bindkey "^E" autosuggest-accept
 
 
