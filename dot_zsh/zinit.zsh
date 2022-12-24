@@ -28,7 +28,6 @@ zinit light-mode for \
 # plugin list
 # -------------------------------
 
-# zinit ice wait lucid
 # zinit light zsh-users/zsh-completions
 zinit ice wait lucid
 zinit light marlonrichert/zsh-autocomplete

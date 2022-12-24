@@ -35,8 +35,8 @@ alias g='git'
 
 DOTFILES=$XDG_DATA_HOME/chezmoi
 alias v='nvim'
-alias vz='v $DOTFILES/dot_zshrc'
-alias vv='v $DOTFILES/dot_config/nvim/init.vim'
+alias vz='v ~/.zshrc'
+alias vv='v ~/.config/nvim/init.vim'
 alias h='history'
 alias so='source'
 alias soz='source $HOME/.zshenv && source $HOME/.zshrc'
