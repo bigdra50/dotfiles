@@ -3,6 +3,9 @@
 /.**
 
 # white list
+## nix
+!*.nix
+
 ## bash
 !/dot_bashrc
 ## zsh
