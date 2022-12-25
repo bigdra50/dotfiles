@@ -44,5 +44,13 @@
   },
   "diagnostics-languageserver.formatFiletypes": {
     "sh": "shfmt"
+  },
+  "languageserver":{
+    "nix":{
+      "command": "rnix-lsp",
+      "filetypes":[
+        "nix"
+      ]
+    }
   }
 }
