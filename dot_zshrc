@@ -1,7 +1,5 @@
 [[ -f ~/.zsh/zinit.zsh ]] && . ~/.zsh/zinit.zsh
-[[ -f ~/.zsh/completion.zsh ]] && . ~/.zsh/completion.zsh
 [[ -f ~/.zsh/func.zsh ]] && . ~/.zsh/func.zsh
-[[ -f ~/.zsh/alias.zsh ]] && . ~/.zsh/alias.zsh
 
 # wslのrcファイルでこの設定をするとGUI描画時に古いOpenGLが使われてしまうことがあるため､ unsetしている
 # wsl以外の環境ではいらない?
@@ -49,6 +47,13 @@ while read -r f; do
 done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1)
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
 
+# Init nix
+[[ -e ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
+
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+
+
+[[ -f ~/.zsh/completion.zsh ]] && . ~/.zsh/completion.zsh
+[[ -f ~/.zsh/alias.zsh ]] && . ~/.zsh/alias.zsh
