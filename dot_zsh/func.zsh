@@ -24,16 +24,6 @@ isWinDir() {
   esac
 }
 
-# wrap the git command to either run windows git or linux
-git() {
-  if isWinDir
-  then
-    /mnt/c/Program\ Files/Git/mingw64/bin/git.exe "$@"
-  else
-    /usr/bin/git "$@"
-  fi
-}
-
 # 
 # for Unity
 #
