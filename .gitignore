@@ -3,11 +3,6 @@
 /.**
 
 # white list
-## nix
-!*.nix
-!/dot_config/nixpkgs/
-/dot_config/nixpkgs/**
-!/dot_config/nixpkgs/*.nix
 
 ## bash
 !/dot_bashrc
@@ -42,6 +37,11 @@
 !/dot_config/nvim/plugins/*
 !/dot_config/nixpkgs/   
 /dot_config/nixpkgs/**   
+
+## nix
+!/dot_config/nixpkgs/
+/dot_config/nixpkgs/**
+!/dot_config/nixpkgs/home.nix
 
 ## powershell
 !/dot_config/posh/

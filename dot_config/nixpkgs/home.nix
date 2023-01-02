@@ -1,39 +1,39 @@
-{ config, pkgs, ... }:
-let
-  editor = "vim";
+{ config, lib, pkgs, ... }:
 
-in {
-  #imports = [ ./vim.nix ];
 
+{
   home.packages = with pkgs; [
     # dev tools
     git  
+    git-lfs
     ghq
     rustup
+    delta
     
     # Python
-
+  
     # CLI tools
     fzf
     ripgrep
     tree
     bat
-
+  
     #cacheix
   ];
-
-  programs.home-manager.enable = true;
-
-  home.username = "bigdra";
-  home.homeDirectory = "/Users/bigdra";
+  
+  
+  home.username = builtins.getEnv "USER";
+  home.homeDirectory = builtins.getEnv "HOME";
+  home.language.base = "en_US.UTF-8";
   home.stateVersion = "22.11";
-
-
+  
+  
+  programs.home-manager.enable = true;
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
-
+  
   programs.git = {
     enable = true;
     userName = "bigdra";
@@ -42,32 +42,68 @@ in {
       st = "status";
       tree = "log --graph --all --format='%x09%C(cyan bold)%an%Creset%x09%C(yellow)%h%Creset %C(magenta reverse)%d%Creset %s'";
     };
+    delta = {
+      enable = true;
+      options = {
+        line-numbers = true;
+        navigate = true;
+        side-by-side = true;
+        light = false;
+      };
+    };
+    lfs = {
+      enable = true;
+
+    };
     extraConfig = {
       core = {
         whitespace = "trailing-space,space-before-tab";
         preloadindex = true;
+        editor = "vim";
+      };
+      add.interactive = {
+        useBuiltin = false;
       };
       color = {ui = "auto";};
-      merge = {ff = "only";};
+      merge = {
+        ff = "only";
+        conflictstyle = "diff3";
+      };
+      diff = {
+        colorMoved = "default";
+      };
       pull = {
         ff = "only";
         rebase = false;
       };
+      ghq = {
+        root = "~/dev";
+      };
+  
       init.defaultBranch = "master";
     };
     ignores = [
       ".DS_Store"
-
     ];
   };
-
-  programs.aria2.enable = true;
-  programs.fzf.enable = true;
+  
+  programs.gh = {
+    enable = true;
+  };
+  
+  programs.fzf = {
+    enable = true;
+    defaultOptions = [
+      "--bind=ctrl-k:kill-line"
+      "--bind=ctrl-space:toggle"
+      "--reverse" 
+    ];
+  };
   programs.bat.enable = true;
   programs.lsd.enable = true;
-
+  
   home.sessionVariables = {
-    EDITOR = "${editor}";
+    EDITOR = "nvim";
   };
-
+  
 }
