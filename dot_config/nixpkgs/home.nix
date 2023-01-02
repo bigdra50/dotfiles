@@ -3,22 +3,30 @@
 
 {
   home.packages = with pkgs; [
-    # dev tools
+    bat
+    chezmoi
+    curl
+    delta
+    fd
+    fzf
+    ghq
     git  
     git-lfs
-    ghq
-    rustup
-    delta
-    
-    # Python
-  
-    # CLI tools
-    fzf
+    graphviz
+    httpie
+    nodePackages.npm
+    nodejs
+    openjdk
+    python3
     ripgrep
+    rustup
+    tig
     tree
-    bat
-  
-    #cacheix
+    wezterm
+    wget
+    yarn
+    youtube-dl
+    zoxide
   ];
   
   
@@ -90,6 +98,14 @@
   programs.gh = {
     enable = true;
   };
+
+  programs.neovim = {
+    enable = true;
+    withRuby = true;
+    withNodeJs = true;
+    withPython3 = true;
+    extraConfig = lib.fileContents ~/.config/nvim/init.vim;
+  };
   
   programs.fzf = {
     enable = true;
@@ -101,6 +117,10 @@
   };
   programs.bat.enable = true;
   programs.lsd.enable = true;
+
+  programs.go = {
+    enable = true;
+  };
   
   home.sessionVariables = {
     EDITOR = "nvim";

@@ -9,11 +9,6 @@
   "diagnostic.warningSign": "--",
   "diagnostic.refreshOnInsertMode": true,
   "coc.preferences.hoverTarget": "float",
-  "jedi": {
-    "enable": true,
-    "StartupMessage": false,
-    "excecutable.command": "$PYENV/versions/3.10.5/python.exe"
-  },
   "rust-analyzer.diagnostics.enable": true,
   "rust-analyzer.inlayHints.enable": true,
   "rust-analyzer.inlayHints.typeHints": true,
