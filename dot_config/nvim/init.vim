@@ -37,11 +37,6 @@
 " load vimrc
 source $HOME/.vimrc
 
-if has('unix')
-  let g:python3_host_prog = '$XDG_CONFIG_HOME/nvim/nvim-python3/.venv/bin/python3.10'
-endif
-if has('mac')
-endif
 if has('win32') || has('win64')
   let g:python3_host_prog = '$PYENV\versions\3.10.5\python.exe'
 endif
