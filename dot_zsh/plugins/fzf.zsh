@@ -1,7 +1,5 @@
-#
 # for fzf
-#
-# 並び替え無しでプロンプトに'cd > 'を表示
+
 pop(){ 
   cd $(dirs -lp | bat -r 2: | fzf --no-sort --prompt='cd >') 
 }
