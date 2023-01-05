@@ -38,4 +38,3 @@ zinit ice wait lucid
 zinit light chrissicool/zsh-256color
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-
