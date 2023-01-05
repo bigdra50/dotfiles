@@ -104,7 +104,10 @@
     withRuby = true;
     withNodeJs = true;
     withPython3 = true;
-    extraConfig = lib.fileContents ~/.config/nvim/init.vim;
+    extraConfig = ''
+      source ~/.config/nvim/load-plugins.vim
+      source ~/.vimrc
+    '';
   };
   
   programs.fzf = {

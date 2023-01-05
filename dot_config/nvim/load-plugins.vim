@@ -34,21 +34,6 @@
 
 " End dein Scripts-------------------------
 
-" load vimrc
-source $HOME/.vimrc
-
-if has('win32') || has('win64')
-  let g:python3_host_prog = '$PYENV\versions\3.10.5\python.exe'
-endif
-
-
-" 補完時の挙動
-inoremap <expr><CR> pumvisible() ? "<C-y>" : "<CR>"
-inoremap <expr><C-n> pumvisible() ? "<Down>" : "<C-n>"
-inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
-
-" terminal insertモードからESCでterminal normalモードへ戻る
-tnoremap <silent> <ESC> <C-\><C-n>
-
-" タブ操作
-nnoremap gr :tabprevious
+" if has('win32') || has('win64')
+"   let g:python3_host_prog = '$PYENV\versions\3.10.5\python.exe'
+" endif
