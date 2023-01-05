@@ -4,12 +4,10 @@
 [[ -f ~/.zsh/zinit.zsh ]] && . ~/.zsh/zinit.zsh
 [[ -f ~/.zsh/func.zsh ]] && . ~/.zsh/func.zsh
 [[ -f ~/.zsh/history.zsh ]] && . ~/.zsh/history.zsh
+[[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
 
-# load plugins config
-while read -d $'\0' f; do
-  [[ -f ${f} ]] && . ${f}
-done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1 -print0)
- 
+[[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+
 # wslのrcファイルでこの設定をするとGUI描画時に古いOpenGLが使われてしまうことがあるため､ unsetしている
 # wsl以外の環境ではいらない?
 # unset LIBGL_ALWAYS_INDIRECT
@@ -40,12 +38,11 @@ setopt brace_ccl
 if hascmd brew; then
   [[ -f $(brew --prefix asdf)/libexec/asdf.sh ]] && . $(brew --prefix asdf)/libexec/asdf.sh
 fi
- 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-[[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+
+# load plugins config
+while read -d $'\0' f; do
+  [[ -f ${f} ]] && . ${f}
+done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1 -print0)
 
 [[ -f ~/.zsh/completion.zsh ]] && . ~/.zsh/completion.zsh
 [[ -f ~/.zsh/alias.zsh ]] && . ~/.zsh/alias.zsh          
