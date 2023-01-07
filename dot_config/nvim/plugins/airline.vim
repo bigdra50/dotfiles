@@ -1,4 +1,4 @@
-" タブバーをかっこよく
+let g:airline_theme = 'gruvbox_material'
 let g:airline#extensions#tabline#enabled = 1
 " 選択行列の表示をカスタム(デフォルトだと長くて横幅を圧迫するので最小限に)
 let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr', ':%3v'])

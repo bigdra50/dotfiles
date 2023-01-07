@@ -1,9 +1,6 @@
-# 見た目
 [[plugins]]
-repo = 'tomasr/molokai'
-hook_add = '''
-au MyAutoCmd VimEnter * nested colorscheme molokai
-'''
+repo = "sainnhe/gruvbox-material"
+hook_add = 'source ~/.config/nvim/plugins/gruvbox.vim'
 merged = false
 overwrite = true
 
