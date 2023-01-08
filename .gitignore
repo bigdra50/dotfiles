@@ -31,10 +31,13 @@
 !/dot_config/nvim/load-plugins.vim
 !/dot_config/nvim/dein.toml
 !/dot_config/nvim/dein_lazy.toml
+!/dot_config/nvim/dot_stylua.toml
 !/dot_config/nvim/coc-settings.json
 !/dot_config/nvim/plugins/
 /dot_config/nvim/plugins/**
 !/dot_config/nvim/plugins/*
+
+## nix
 !/dot_config/nixpkgs/   
 /dot_config/nixpkgs/**   
 

@@ -1,3 +1,4 @@
+" https://github.com/neoclide/coc.nvim
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -15,11 +16,11 @@ set signcolumn=yes
 " no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-"inoremap <silent><expr> <TAB>
-"      \ coc#pum#visible() ? coc#pum#next(1) :
-"      \ CheckBackspace() ? "\<Tab>" :
-"      \ coc#refresh()
-"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
@@ -38,10 +39,10 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+nmap <silent> <space>def <Plug>(coc-definition)
+nmap <silent> <space>type <Plug>(coc-type-definition)
+nmap <silent> <space>impl <Plug>(coc-implementation)
+nmap <silent> <space>ref <Plug>(coc-references)
 " Symbol renaming
 nmap <leader>rn <Plug>(coc-rename)
 " Formatting selected code.
@@ -122,6 +123,19 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}
+let g:lightline = {
+      \'active': {
+      \'right': [
+      \['coc']
+      \]
+      \},
+      \'component_function': {
+      \'coc': 'coc#status'
+      \}
+      \}
+highlight CocErrorSign ctermfg=15 ctermbg=196
+highlight CocWarnSign ctermfg=0 ctermbg=172
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -140,17 +154,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
-"set statusline^=%{coc#status()}
-"let g:lightline = {
-"      \'active': {
-"      \'right': [
-"      \['coc']
-"      \]
-"      \},
-"      \'component_function': {
-"      \'coc': 'coc#status'
-"      \}
-"      \}
-"highlight CocErrorSign ctermfg=15 ctermbg=196
-"highlight CocWarnSign ctermfg=0 ctermbg=172

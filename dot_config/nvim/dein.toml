@@ -7,20 +7,80 @@ overwrite = true
 [[plugins]]
 repo = 'vim-jp/vimdoc-ja'
 
+# Fuzzy Finder
+# ref https://dev.classmethod.jp/articles/nvim_telescope/
+
+# telescope.nvimが依存
 [[plugins]]
-repo = 'junegunn/fzf'
-build = './install --bin'
-merged = '0'
+repo = 'nvim-lua/plenary.nvim'
+
 
 [[plugins]]
-repo = 'junegunn/fzf.vim'
-depends = 'fzf'
+repo = 'nvim-telescope/telescope.nvim'
+depends = ['airblade/vim-rooter']
 hook_add = '''
-  command! -bang -nargs=* Rg
-    \ call fzf#vim#grep(
-    \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
-    \   fzf#vim#with_preview({'options': '--exact --reverse'}, 'right:50%:wrap'))
+" Search for Project root
+" Find files using Telescope command-line sugar.
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-g> <cmd>Telescope live_grep<cr>
+" プロジェクトルートではなく現在開いているファイルを起点にファイル検索
+nnoremap <M-p> <cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.expand('%:p:h') })<cr>
+nnoremap <M-g> <cmd>lua require('telescope.builtin').live_grep( { cwd = vim.fn.expand('%:p:h') })<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using Lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+lua <<EOF
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      n = {
+        ["<esc>"] = require('telescope.actions').close,
+      },
+      i = {
+        ["<esc>"] = require('telescope.actions').close,
+        ["<C-a>"] = require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist,
+        ["<C-q>"] = require('telescope.actions').send_selected_to_qflist + require('telescope.actions').open_qflist
+      }
+    }
+  }
+}
+EOF
 '''
+
+# telescope-frequencyが依存
+[[plugins]]
+repo = 'tami5/sqlite.lua'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-frecency.nvim'
+hook_add = '''
+nnoremap <C-j> <cmd>Telescope frecency<cr>
+lua << EOF
+require"telescope".load_extension("frecency")
+EOF
+'''
+
+[[plugins]]
+repo = 'fannheyward/telescope-coc.nvim'
+hook_add = '''
+lua << EOF
+require("telescope").setup({
+  extensions = {
+    coc = {
+        theme = 'ivy',
+        prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+    }
+  },
+})
+require('telescope').load_extension('coc')
+EOF
+'''
+
 
 # LSPとか
 [[plugins]]
@@ -45,11 +105,11 @@ merged = false
 overwrite = true
 
 # 非同期でsyntaxチェック
-[[plugins]]
-repo = 'w0rp/ale'
-hook_add = 'source ~/.config/nvim/plugins/ale.vim'
-merged = false
-overwrite = true
+#[[plugins]]
+#repo = 'w0rp/ale'
+#hook_add = 'source ~/.config/nvim/plugins/ale.vim'
+#merged = false
+#overwrite = true
 
 ############################
 # For Git
@@ -84,13 +144,6 @@ overwrite = true
 #hook_add = 'source ~/.config/nvim/plugins/denite.vim'
 
 
-# [[plugins]]
-# repo = 'kassio/neoterm'
-# hook_add = 'source ~/.config/nvim/plugins/neoterm.vim'
-# merged = false
-# overwrite = true
-
-
 # Filer
 [[plugins]]
 repo = 'lambdalisue/fern.vim'
@@ -115,18 +168,81 @@ repo = 'lambdalisue/glyph-palette.vim'
 hook_add = 'source ~/.config/nvim/plugins/glyph-palette.vim'
 
 
-# [[plugins]]
-# repo = 'andys8/vim-elm-syntax'
-# on_ft = ['elm']
-# merged = false
-# overwrite = true
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
+hook_add = 'source ~/.config/nvim/plugins/lualine.lua'
 
 [[plugins]]
-repo = 'vim-airline/vim-airline'
-depends = ['vim-airline-themes']
+repo = 'norcalli/nvim-colorizer.lua'
+on_event = 'BufEnter'
+hook_add = '''
+set termguicolors
+source ~/.config/nvim/plugins/colorizer.lua
+'''
 
 [[plugins]]
-repo = 'vim-airline/vim-airline-themes'
+repo = 'kyazdani42/nvim-web-devicons'
 
 [[plugins]]
 repo = 'LnL7/vim-nix'
+
+[[plugins]]
+repo = 'phaazon/hop.nvim'
+hook_add = '''
+lua << EOF
+  require'hop'.setup()
+EOF
+nmap <Leader><Leader> [hop]
+xmap <Leader><Leader> [hop]
+nnoremap <silent> [hop]w :HopWord<CR>
+nnoremap <silent> [hop]l :HopLine<CR>
+nnoremap <silent> [hop]f :HopChar1<CR>
+'''
+
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+
+[[plugins]]
+repo = 'folke/todo-comments.nvim'
+hook_add = 'source ~/.config/nvim/plugins/todo-comments.lua'
+
+[[plugins]]
+repo = 'petertriho/nvim-scrollbar'
+hook_add = 'source ~/.config/nvim/plugins/scrollbar.lua'
+
+[[plugins]]
+repo = 'lewis6991/gitsigns.nvim'
+hook_add = 'source ~/.config/nvim/plugins/gitsigns.lua'
+
+[[plugins]]
+repo = 'kevinhwang91/nvim-hlslens'
+hook_add = 'source ~/.config/nvim/plugins/hlslens.lua'
+
+[[plugins]]
+repo = 'kevinhwang91/nvim-ufo'
+depends = ['kevinhwang91/promise-async']
+hook_add = 'source ~/.config/nvim/plugins/ufo.lua'
+
+[[plugins]]
+repo = 'kevinhwang91/promise-async'
+[[plugins]]
+repo = 'famiu/bufdelete.nvim'
+
+[[plugins]]
+repo = 'stevearc/stickybuf.nvim'
+[[plugins]]
+repo = 'akinsho/toggleterm.nvim'
+hook_add = '''
+lua << EOF
+    require("toggleterm").setup()
+EOF
+" set
+autocmd TermEnter term://*toggleterm#*
+      \ tnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+
+" By applying the mappings this way you can pass a count to your
+" mapping to open a specific window.
+" For example: 2<C-t> will open terminal 2
+nnoremap <silent><c-t> <Cmd>exe v:count1 . "ToggleTerm"<CR>
+inoremap <silent><c-t> <Esc><Cmd>exe v:count1 . "ToggleTerm"<CR>
+'''

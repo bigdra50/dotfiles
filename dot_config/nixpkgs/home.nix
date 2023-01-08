@@ -106,8 +106,9 @@
     withPython3 = true;
     extraConfig = ''
       set runtimepath+=${../nvim}
-      source ~/.config/nvim/load-plugins.vim
       source ~/.vimrc
+      source ~/.config/nvim/load-plugins.vim
+      set laststatus=3
     '';
   };
   
