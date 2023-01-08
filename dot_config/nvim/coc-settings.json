@@ -36,6 +36,7 @@
       "vim": "vint",
       "email": "languagetool",
       "sh": "shellcheck",
+      "zsh": "shellcheck",
       "markdown": [
         "write-good",
         "markdownlint"
@@ -49,7 +50,18 @@
       ],
       "systemd": "systemd-analyze"
     },
-    "formatters": {},
+    "formatters": {
+      "shfmt": {
+        "command": "shfmt",
+        "args": [
+          "-i",
+          "2",
+          "-bn",
+          "-ci",
+          "-sr"
+        ]
+      }
+    },
     "formatFiletypes": {
       "dart": "dartfmt",
       "elixir": "mix_format",
@@ -61,7 +73,7 @@
       "lua": "lua-format",
       "sh": "shfmt",
       "blade": "blade-formatter",
-      "cmake": "cmake-format",
+      "cmake": "cmake-format"
     }
   },
   "languageserver": {
