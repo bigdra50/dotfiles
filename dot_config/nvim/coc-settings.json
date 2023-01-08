@@ -1,49 +1,73 @@
 {
-  "suggest.triggerAfterInsertEnter": true,
-  "suggest.enablePreview": true,
-  "suggest.timeout": 5000,
-  "suggest.preferCompleteThanJumpPlaceholder": true,
-  "suggest.noselect": true,
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.signOffset": 100,
-  "diagnostic.warningSign": "--",
-  "diagnostic.refreshOnInsertMode": true,
   "coc.preferences.hoverTarget": "float",
-  "rust-analyzer.diagnostics.enable": true,
-  "rust-analyzer.inlayHints.enable": true,
-  "rust-analyzer.inlayHints.typeHints": true,
-  "rust-analyzer.inlayHints.chainingHints": true,
-  "rust-analyzer.inlayHints.parameterHints": true,
-  "rust-analyzer.checkOnSave.enable": true,
-  "rust-analyzer.assist.importMergeBehavior": "module",
-  "rust-analyzer.diagnostics.enableExperimental": true,
-  "rust-analyzer.diagnostics.disabled": [
-    "macro-error"
+  "coc.preferences.formatOnSaveFiletypes": [
+    "lua"
   ],
-  "diagnostics-languageserver.filetypes": {
-    "vim": "vint",
-    "email": "languagetool",
-    "sh": "shellcheck",
-    "markdown": [
-      "write-good",
-      "markdownlint"
-    ],
-    "yaml": [
-      "yamllint"
-    ],
-    "cmake": [
-      "cmake-lint",
-      "cmakelint"
-    ],
-    "systemd": "systemd-analyze"
+  "suggest": {
+    "triggerAfterInsertEnter": true,
+    "enablePreview": true,
+    "timeout": 5000,
+    "preferCompleteThanJumpPlaceholder": true,
+    "noselect": true,
   },
-  "diagnostics-languageserver.formatFiletypes": {
-    "sh": "shfmt"
+  "diagnostic": {
+    "checkCurrentLine": true,
+    "signOffset": 100,
+    "warningSign": "--",
+    "refreshOnInsertMode": true,
   },
-  "languageserver":{
-    "nix":{
+  "stylua.checkUpdate": true,
+  "rust-analyzer": {
+    "diagnostics.enable": true,
+    "inlayHints.enable": true,
+    "inlayHints.typeHints": true,
+    "inlayHints.chainingHints": true,
+    "inlayHints.parameterHints": true,
+    "checkOnSave.enable": true,
+    "assist.importMergeBehavior": "module",
+    "diagnostics.enableExperimental": true,
+    "diagnostics.disabled": [
+      "macro-error"
+    ],
+  },
+  "diagnostics-languageserver": {
+    "linters": {},
+    "filetypes": {
+      "vim": "vint",
+      "email": "languagetool",
+      "sh": "shellcheck",
+      "markdown": [
+        "write-good",
+        "markdownlint"
+      ],
+      "yaml": [
+        "yamllint"
+      ],
+      "cmake": [
+        "cmake-lint",
+        "cmakelint"
+      ],
+      "systemd": "systemd-analyze"
+    },
+    "formatters": {},
+    "formatFiletypes": {
+      "dart": "dartfmt",
+      "elixir": "mix_format",
+      "eelixir": "mix_format",
+      "python": [
+        "black",
+        "isort"
+      ],
+      "lua": "lua-format",
+      "sh": "shfmt",
+      "blade": "blade-formatter",
+      "cmake": "cmake-format",
+    }
+  },
+  "languageserver": {
+    "nix": {
       "command": "rnix-lsp",
-      "filetypes":[
+      "filetypes": [
         "nix"
       ]
     }

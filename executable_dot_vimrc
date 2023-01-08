@@ -1,6 +1,7 @@
 set encoding=utf-8
 set fileencodings=utf=8,cp932,sjis,euc-jp
 set nobackup
+set modifiable
 " 編集中のファイルが変更されたら自動で読み直す
 set autoread
 " バッファが編集中でもその他のファイルを開けるように
@@ -101,3 +102,6 @@ inoremap <expr><C-p> pumvisible() ? "<Up>" : "<C-p>"
 nnoremap <silent> <ESC> <C-\><C-n>
 
 nnoremap gr :tabprevious
+nnoremap <silent> gT :bprev<CR>
+nnoremap <silent> gt :bnext<CR>
+nnoremap <silent> bd :bd<CR>
