@@ -1,11 +1,4 @@
 " dein Scripts-----------------------------
- if &compatible
-   set nocompatible
- endif
- augroup MyAutoCmd
-   autocmd!
- augroup END
-
  let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
  let s:dein_dir = s:cache_home . '/dein'
  let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
@@ -30,7 +23,6 @@
  if has('vim_starting') && dein#check_install()
    call dein#install()
  endif
-
 
 " End dein Scripts-------------------------
 

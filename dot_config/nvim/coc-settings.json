@@ -1,7 +1,9 @@
 {
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.formatOnSaveFiletypes": [
-    "lua"
+    "lua",
+    "html",
+    "js"
   ],
   "suggest": {
     "triggerAfterInsertEnter": true,
@@ -82,6 +84,11 @@
       "filetypes": [
         "nix"
       ]
+    },
+    "csharp-ls":{
+      "command": "csharp-ls",
+      "filetypes": ["cs"],
+      "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
     }
   }
 }
