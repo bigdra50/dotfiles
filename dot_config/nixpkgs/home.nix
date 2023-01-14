@@ -7,6 +7,7 @@
     chezmoi
     curl
     delta
+    du-dust
     fd
     fzf
     ghq
@@ -14,9 +15,11 @@
     git-lfs
     graphviz
     httpie
+    neofetch
     nodePackages.npm
     nodejs
     openjdk
+    procs
     python3
     ripgrep
     rustup
@@ -25,7 +28,6 @@
     wezterm
     wget
     yarn
-    youtube-dl
     zoxide
   ];
   

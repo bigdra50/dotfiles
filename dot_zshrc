@@ -48,3 +48,4 @@ done < <(find ~/.zsh/plugins -mindepth 1 -maxdepth 1 -print0)
 [[ -f ~/.zsh/alias.zsh ]] && . ~/.zsh/alias.zsh          
 
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
+neofetch
