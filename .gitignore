@@ -4,8 +4,11 @@
 
 # white list
 
+!/install.sh
+!/justfile
+ 
 ## bash
-!/dot_bashrc
+! dot_bashrc
 ## zsh
 !/dot_zshrc
 !/dot_zshenv
