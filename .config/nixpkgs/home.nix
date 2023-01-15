@@ -4,6 +4,7 @@
 {
   home.packages = with pkgs; [
     bat
+    bottom
     curl
     delta
     du-dust
