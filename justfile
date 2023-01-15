@@ -18,7 +18,7 @@ home-manager-install:
 # nix-env install
 nix-install:
   #!/usr/bin/env bash
-  mkdir -p ~/.config
+  #mkdir -p ~/.config
   ln -sf ~/dotfiles/dot_config ~/.config
 
   if [[ $(uname -s) == "Darwin" ]]; then
