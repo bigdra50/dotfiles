@@ -22,7 +22,7 @@ nix-install:
   ln -sf ~/dotfiles/dot_config ~/.config
 
   if [[ $(uname -s) == "Darwin" ]]; then
-    sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --no-daemon
+    sh <(curl -L https://nixos.org/nix/install) 
   else
     sh <(curl -L https://nixos.org/nix/install) --no-daemon
   fi
