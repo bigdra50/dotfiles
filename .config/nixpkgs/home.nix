@@ -4,7 +4,6 @@
 {
   home.packages = with pkgs; [
     bat
-    chezmoi
     curl
     delta
     du-dust
@@ -35,6 +34,7 @@
     wget
     yarn
     zoxide
+    zsh
   ];
 
 

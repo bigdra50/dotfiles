@@ -8,66 +8,68 @@
 !/justfile
  
 ## bash
-! dot_bashrc
+! .bashrc
 ## zsh
-!/dot_zshrc
-!/dot_zshenv
-!/dot_zsh/
-/dot_zsh/**
-!/dot_zsh/*.zsh
-!/dot_zsh/plugins/
-/dot_zsh/plugins/**
-!/dot_zsh/plugins/*.zsh
+!/.zshrc
+!/.zshenv
+!/.zsh/
+/.zsh/**
+!/.zsh/*.zsh
+!/.zsh/plugins/
+/.zsh/plugins/**
+!/.zsh/plugins/*.zsh
 
-!/executable_dot_vimrc
-!/dot_colorrc
-!/dot_ideavimrc
+!/.vimrc
+!/.colorrc
+!/.ideavimrc
 
 ## brew
-!/dot_Brewfile
+!/.Brewfile
 
-!/dot_config/
-/dot_config/**
+!/.config/
+/.config/**
 ## nvim
-!/dot_config/nvim/
-/dot_config/nvim/**
-!/dot_config/nvim/load-plugins.vim
-!/dot_config/nvim/dein.toml
-!/dot_config/nvim/dein_lazy.toml
-!/dot_config/nvim/dot_stylua.toml
-!/dot_config/nvim/coc-settings.json
-!/dot_config/nvim/plugins/
-/dot_config/nvim/plugins/**
-!/dot_config/nvim/plugins/*
+!/.config/nvim/
+/.config/nvim/**
+!/.config/nvim/load-plugins.vim
+!/.config/nvim/dein.toml
+!/.config/nvim/dein_lazy.toml
+!/.config/nvim/.stylua.toml
+!/.config/nvim/coc-settings.json
+!/.config/nvim/plugins/
+/.config/nvim/plugins/**
+!/.config/nvim/plugins/*.vim
+!/.config/nvim/plugins/*.lua
 
 ## nix
-!/dot_config/nixpkgs/   
-/dot_config/nixpkgs/**   
+!/.config/nixpkgs/   
+/.config/nixpkgs/**   
 
 ## nix
-!/dot_config/nixpkgs/
-/dot_config/nixpkgs/**
-!/dot_config/nixpkgs/home.nix
+!/.config/nixpkgs/
+/.config/nixpkgs/**
+!/.config/nixpkgs/home.nix
 
 ## powershell
-!/dot_config/posh/
-/dot_config/posh/**
-!/dot_config/posh/Microsoft.PowerShell_profile.ps1
-!/dot_config/posh/profiles.json
-!/dot_config/posh/settings.json
+!/.config/posh/
+/.config/posh/**
+!/.config/posh/Microsoft.PowerShell_profile.ps1
+!/.config/posh/profiles.json
+!/.config/posh/settings.json
 
 ## unity
-!/dot_config/unity/
-/dot_config/unity/**
-!/dot_config/unity/layout.wlt
+!/.config/unity/
+/.config/unity/**
+!/.config/unity/layout.wlt
 
 !/README.md
 !/LICENSE
 !/.gitconfig
-!dot_gitignore
+!.gitignore
 !.gitkeep
 ~/etc/install.sh
-!/executable_dot_yabairc
-!/dot_skhdrc
-!/dot_wezterm.lua
-!/dot_p10k.zsh
+!/.yabairc
+!/.skhdrc
+!/.wezterm.lua
+!/.p10k.zsh
+!/.bashrc
