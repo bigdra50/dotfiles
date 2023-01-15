@@ -19,7 +19,7 @@ home-manager-install:
 nix-install:
   #!/usr/bin/env bash
   mkdir -p ~/.config
-  ln -sf ~/dotfiles/nix-home ~/.config/nixpkgs
+  ln -sf ~/dotfiles/dot_config ~/.config
 
   if [[ $(uname -s) == "Darwin" ]]; then
     sh <(curl -L https://nixos.org/nix/install) --darwin-use-unencrypted-nix-store-volume --no-daemon
