@@ -104,4 +104,3 @@ nnoremap <silent> <ESC> <C-\><C-n>
 nnoremap gr :tabprevious
 nnoremap <silent> gT :bprev<CR>
 nnoremap <silent> gt :bnext<CR>
-nnoremap <silent> bd :bd<CR>
