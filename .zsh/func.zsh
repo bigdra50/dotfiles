@@ -24,6 +24,15 @@ isWinDir() {
   esac
 }
 
+mkcd(){
+  [ $# -gt 0 ] || {
+    echo "Usage: mkcd [option] dirname" 1>&2; return 1;
+  };
+  mkdir "$@" && {
+    while [ $# -gt 1 ]; do shift; done; cd "$1";
+  };
+}
+
 
 # 
 # for Unity
