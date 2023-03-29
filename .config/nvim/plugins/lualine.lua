@@ -4,7 +4,7 @@ require("lualine").setup({
     icons_enabled = true,
     theme = "auto",
     component_separators = { left = "рт", right = "рф" },
-    section_separators = { left = "рс", right = "ру" },
+    section_separators = { left = ">", right = "<" },
     disabled_filetypes = {},
     always_divide_middle = true,
     colored = true,
