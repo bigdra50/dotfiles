@@ -121,103 +121,111 @@
         set nocompatible
       endif
 
-      source ~/.config/nvim/load-plugins.vim
+      lua << EOF
+      require "plugins"
+      vim.opt.termguicolors = true
+      EOF
+
+      "source ~/.config/nvim/load-plugins.vim
       set laststatus=3
     '';
     plugins = [
       {
-        plugin = pkgs.vimPlugins.auto-pairs;
+        plugin = pkgs.vimPlugins.packer-nvim;
       }
-      {
-        plugin = pkgs.vimPlugins.vimproc;
-      }
-      {
-        plugin = pkgs.vimPlugins.nvim-web-devicons;
-      }
-      {
-        plugin = pkgs.vimPlugins.vim-nix;
-      }
-      {
-        plugin = pkgs.vimPlugins.nvim-notify;
-      }
-      {
-        plugin = pkgs.vimPlugins.zoxide-vim;
-      }
-      {
-        plugin = pkgs.vimPlugins.plenary-nvim;
-      }
-      {
-        plugin = pkgs.vimPlugins.gruvbox-material;
-        config = "source ~/.config/nvim/plugins/gruvbox.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.toggleterm-nvim;
-        config = "source ~/.config/nvim/plugins/toggleterm.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.coc-nvim;
-        config = "source ~/.config/nvim/plugins/coc.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.sqlite-lua;
-        config = "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.dylib'";
-        # OSX: libsqlite3.dylib, other: libsqlite3.so
-      }
-      {
-        plugin = pkgs.vimPlugins.telescope-nvim;
-        config = "source ~/.config/nvim/plugins/telescope.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.telescope-frecency-nvim;
-        config = "source ~/.config/nvim/plugins/telescope-frecency.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.telescope-coc-nvim;
-        config = "source ~/.config/nvim/plugins/telescope-coc.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.fern-vim;
-        config = "source ~/.config/nvim/plugins/fern.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.lualine-nvim;
-        config = "source ~/.config/nvim/plugins/lualine.lua";
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.auto-pairs;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.vimproc;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.nvim-web-devicons;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.vim-nix;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.nvim-notify;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.zoxide-vim;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.plenary-nvim;
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.gruvbox-material;
+      #   config = "source ~/.config/nvim/plugins/gruvbox.vim";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.toggleterm-nvim;
+      #   config = "source ~/.config/nvim/plugins/toggleterm.vim";
+      # }
+      # # {
+      # #   plugin = pkgs.vimPlugins.coc-nvim;
+      # #   config = "source ~/.config/nvim/plugins/coc.vim";
+      # # }
+      # # {
+      # #   plugin = pkgs.vimPlugins.sqlite-lua;
+      # #   config = "let g:sqlite_clib_path = '${pkgs.sqlite.out}/lib/libsqlite3.dylib'";
+      # #   # OSX: libsqlite3.dylib, other: libsqlite3.so
+      # # }
+      # # {
+      # #   plugin = pkgs.vimPlugins.telescope-nvim;
+      # #   config = "source ~/.config/nvim/plugins/telescope.vim";
+      # # }
+      # # {
+      # #   plugin = pkgs.vimPlugins.telescope-frecency-nvim;
+      # #   config = "source ~/.config/nvim/plugins/telescope-frecency.vim";
+      # # }
+      # # {
+      # #   plugin = pkgs.vimPlugins.telescope-coc-nvim;
+      # #   config = "source ~/.config/nvim/plugins/telescope-coc.vim";
+      # # }
+      # {
+      #   plugin = pkgs.vimPlugins.fern-vim;
+      #   config = "source ~/.config/nvim/plugins/fern.vim";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.lualine-nvim;
+      #   config = "source ~/.config/nvim/plugins/lualine.lua";
+      # }
 
-      {
-        plugin = pkgs.vimPlugins.hop-nvim;
-        config = "source ~/.config/nvim/plugins/hop.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.vim-quickrun;
-        config = "source ~/.config/nvim/plugins/quickrun.vim";
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.hop-nvim;
+      #   config = "source ~/.config/nvim/plugins/hop.vim";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.vim-quickrun;
+      #   config = "source ~/.config/nvim/plugins/quickrun.vim";
+      # }
 
-      {
-        plugin = pkgs.vimPlugins.vim-gitgutter;
-        config = "source ~/.config/nvim/plugins/gitgutter.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.vim-fugitive;
-        config = "source ~/.config/nvim/plugins/fugitive.vim";
-      }
-      {
-        plugin = pkgs.vimPlugins.todo-comments-nvim;
-        config = "source ~/.config/nvim/plugins/todo-comments.lua";
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.vim-gitgutter;
+      #   config = "source ~/.config/nvim/plugins/gitgutter.vim";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.vim-fugitive;
+      #   config = "source ~/.config/nvim/plugins/fugitive.vim";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.todo-comments-nvim;
+      #   config = "source ~/.config/nvim/plugins/todo-comments.lua";
+      # }
 
-      {
-        plugin = pkgs.vimPlugins.gitsigns-nvim;
-        config = "source ~/.config/nvim/plugins/gitsigns.lua";
-      }
-      {
-        plugin = pkgs.vimPlugins.nvim-hlslens;
-        config = "source ~/.config/nvim/plugins/hlslens.lua";
-      }
-      {
-        plugin = pkgs.vimPlugins.nvim-scrollbar;
-        config = "source ~/.config/nvim/plugins/scrollbar.lua";
-      }
+      # {
+      #   plugin = pkgs.vimPlugins.gitsigns-nvim;
+      #   config = "source ~/.config/nvim/plugins/gitsigns.lua";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.nvim-hlslens;
+      #   config = "source ~/.config/nvim/plugins/hlslens.lua";
+      # }
+      # {
+      #   plugin = pkgs.vimPlugins.nvim-scrollbar;
+      #   config = "source ~/.config/nvim/plugins/scrollbar.lua";
+      # }
 
     ];
   };
