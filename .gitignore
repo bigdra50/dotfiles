@@ -86,3 +86,6 @@
 !.config/nvim/plugin/*
 !.config/nvim/plugins/
 !.config/nvim/plugins/*
+!.config/nvim/after/plugin/
+.config/nvim/after/plugin/**
+!.config/nvim/after/plugin/*
