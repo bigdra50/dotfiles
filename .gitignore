@@ -73,3 +73,16 @@
 !/.wezterm.lua
 !/.p10k.zsh
 !/.bashrc
+!.zsh/plugins/
+!.zsh/plugins/*
+!.config/nvim/after/
+.config/nvim/after/**
+!.config/nvim/after/*
+!.config/nvim/lua/
+.config/nvim/lua/**
+!.config/nvim/lua/*
+!.config/nvim/plugin/
+.config/nvim/plugin/**
+!.config/nvim/plugin/*
+!.config/nvim/plugins/
+!.config/nvim/plugins/*
