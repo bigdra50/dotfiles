@@ -1,10 +1,10 @@
 
-local opts = { noremap=true, silent=true }
+ local opts = { noremap=true, silent=true }
 
 local on_attach = function(client, bufnr)
 
   -- LSPのフォーマットを無効
-  client.server_capabilities.documentFormattingProvider = false
+  --client.server_capabilities.documentFormattingProvider = false;
 
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   -- -- Mappings.

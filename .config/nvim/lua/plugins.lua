@@ -7,10 +7,9 @@ end
 vim.cmd [[packadd packer.nvim]]
 
 packer.startup(function(use)
-
   use 'wbthomason/packer.nvim'
 
-  use 'nvim-lua/plenary.nvim' -- Common 
+  use 'nvim-lua/plenary.nvim' -- Common
 
   -- use { "catppuccin/nvim", as = "catppuccin" } -- colorscheme
   -- use "EdenEast/nightfox.nvim" -- Packer
@@ -38,7 +37,7 @@ packer.startup(function(use)
   use 'lambdalisue/fern-renderer-nerdfont.vim'
   use 'kyazdani42/nvim-web-devicons'
   use 'lambdalisue/glyph-palette.vim'
-  
+
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -61,7 +60,7 @@ packer.startup(function(use)
   use({
     "glepnir/lspsaga.nvim",
     branch = "main",
-    })
+  })
   use 'j-hui/fidget.nvim'
 
   use {
@@ -76,10 +75,15 @@ packer.startup(function(use)
     requires = { "nvim-lua/plenary.nvim" },
   })
 
+  use({
+    "jay-babu/mason-null-ls.nvim",
+    requires = { "jose-elias-alvarez/null-ls.nvim" },
+  })
+
   use 'nvim-telescope/telescope.nvim'
   use {
     "nvim-telescope/telescope-frecency.nvim",
-    requires = {"kkharji/sqlite.lua"}
+    requires = { "kkharji/sqlite.lua" }
   }
 
   use 'windwp/nvim-autopairs'
@@ -101,7 +105,7 @@ packer.startup(function(use)
   use 'github/copilot.vim'
 
   use({
-  "jackMort/ChatGPT.nvim",
+    "jackMort/ChatGPT.nvim",
     config = function()
       require("chatgpt").setup({
         -- optional configuration
@@ -113,5 +117,4 @@ packer.startup(function(use)
       "nvim-telescope/telescope.nvim"
     }
   })
-
 end)
