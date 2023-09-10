@@ -21,3 +21,4 @@ augroup fern-settings
   autocmd FileType fern call s:fern_settings()
 augroup END
 ]])
+

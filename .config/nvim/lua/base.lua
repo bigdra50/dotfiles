@@ -1,10 +1,11 @@
+vim.cmd('source ~/.vimrc')
 vim.cmd("autocmd!")
 
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
+vim.opt.compatible = false
 vim.opt.number = true
-vim.wo.relativenumber = false
 vim.opt.mouse = 'a'
 vim.opt.title = true
 vim.opt.autoindent = true
@@ -34,6 +35,8 @@ vim.opt.hidden = true
 vim.opt.swapfile = false
 vim.opt.wrap = true
 vim.opt.pumblend = 7
+vim.wo.relativenumber = false
+
 -- Python3
 vim.cmd([[
     let g:python3_host_prog = '/usr/bin/python3'
