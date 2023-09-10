@@ -1,12 +1,12 @@
 local wezterm = require 'wezterm';
 
-
 local config = {
   check_for_updates = true,
   font = wezterm.font("Hack Nerd Font", {weight="Regular", stretch="Normal", style="Normal"}),
   font_size = 11.0,
   hide_tab_bar_if_only_one_tab = true,
   window_decorations = "RESIZE",
+  window_background_opacity = 0.85,
   launch_menu = {  },
   default_prog = {  },
   leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 },
