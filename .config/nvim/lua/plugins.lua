@@ -114,4 +114,11 @@ packer.startup(function(use)
     }
   })
 
+
+  -- require deno(https://deno.com/manual@v1.33.4/getting_started/installation)
+  use({
+    'toppair/peek.nvim', run = 'deno task --quiet build:fast'
+  })
+
+
 end)

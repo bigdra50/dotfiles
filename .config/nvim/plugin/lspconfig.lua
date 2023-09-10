@@ -27,6 +27,12 @@ require("mason-lspconfig").setup_handlers {
   end,
 }
 
+-- deno
+vim.g.markdown_fenced_languages={
+  "ts=typescript"
+}
+require('lspconfig').denols.setup({on_attach=on_attach})
+
 -- Diagnostic symbols in the sign column 
 local signs = { Error = " ", Warn = ">>", Hint = ">", Info = ">" }
 for type, icon in pairs(signs) do
