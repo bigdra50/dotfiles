@@ -1,6 +1,3 @@
-
- local opts = { noremap=true, silent=true }
-
 local on_attach = function(client, bufnr)
 
   -- LSPのフォーマットを無効

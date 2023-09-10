@@ -1,5 +1,7 @@
 set encoding=utf-8
-set fileencodings=utf=8,cp932,sjis,euc-jp
+set fileencodings=utf-8
+"set fileencodings=utf=8,cp932,sjis,euc-jp
+set termencoding=utf-8
 set nobackup
 set modifiable
 " 編集中のファイルが変更されたら自動で読み直す
@@ -13,6 +15,9 @@ set title
 set matchtime=1
 set laststatus=2
 set statusline=2
+if &compatible
+  set nocompatible
+endif
 
 " 長い行でも表示"
 set display=lastline
@@ -47,6 +52,7 @@ set showmatch
 set laststatus=2
 " コマンドラインの補完
 set wildmode=list:longest
+set termguicolors
 
 
 " Tab系
