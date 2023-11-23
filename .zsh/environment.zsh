@@ -1,8 +1,6 @@
 # environment.zsh
 [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]] && . ~/.nix-profile/etc/profile.d/nix.sh
-echo ${ASDF_DIR}
 . "$HOME/.asdf/asdf.sh"
-echo ${ASDF_DIR}
 # append completions to fpath
 fpath=(${ASDF_DIR}/completions $fpath)
 # initialise completions with ZSH's compinit
