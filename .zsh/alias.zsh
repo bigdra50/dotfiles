@@ -33,10 +33,10 @@ alias diff='delta'
 
 alias g='git'
 
-DOTFILES=$XDG_DATA_HOME/chezmoi
+DOTFILES=$HOME/.dotfiles
 alias v='nvim'
 alias vz='v ~/.zshrc'
-alias vv='v ~/.config/nvim/init.vim'
+alias vv='v ~/.config/nvim/init.lua'
 alias vn='v ~/.config/nixpkgs/home.nix'
 alias h='history'
 alias so='source'
