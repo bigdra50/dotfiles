@@ -1,2 +1,2 @@
-alias grep='rg -S'
-alias -g G='|rg -S'
+# alias grep='rg -S'
+# alias -g G='|rg -S'
