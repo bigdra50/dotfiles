@@ -1,0 +1,41 @@
+[core]
+  pager = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[add]
+  interactiveUseBuiltin = false
+
+[delta]
+  navigate = true
+  light = false
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+
+[ghq]
+  root = ~/dev
+
+[user]
+  name = bigdra
+  email = bigdra50@gmail.com
+
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+
+[init]
+  defaultBranch = master
+
+[http]
+  postBuffer = 524288000
+
+[pull]
+  rebase = false
+

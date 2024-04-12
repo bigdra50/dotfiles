@@ -4,7 +4,7 @@ local config = {
   font = wezterm.font("Hack Nerd Font", {weight="Regular", stretch="Normal", style="Normal"}),
   font_size = 11.0,
   launch_menu = {},
-  hide_tab_bar_if_onely_one_tab = false,
+  --hide_tab_bar_if_onely_one_tab = false,
   leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 },
   keys = {
     { key = '"', mods = 'LEADER', action = wezterm.action.SplitVertical { domain = 'CurrentPaneDomain' } },
