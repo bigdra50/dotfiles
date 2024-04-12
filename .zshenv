@@ -27,12 +27,11 @@ mkdir -p $HOME/.local/bin
 mkdir -p $HOME/.local/src
 
 # fzf
-if [[ -f ~/.zsh/plugins/fzf.zsh ]] then
-  . ~/.zsh/plugins/fzf.zsh
+if [ -e ~/.zsh/plugins/fzf.zsh ]; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'; \
   export FZF_DEFAULT_OPTS='--height 40% --reverse --border';
 fi
 
 [[ -e ~/.zshenv_local ]] && . ~/.zshenv_local
 
-if [ -e /home/bigdra/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bigdra/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+# if [ -e /home/bigdra/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bigdra/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

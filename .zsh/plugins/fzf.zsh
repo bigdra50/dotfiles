@@ -1,5 +1,7 @@
 # for fzf
 
+export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line --bind=ctrl-space:toggle --reverse"
+
 pop(){ 
   cd $(dirs -lp | bat -r 2: | fzf --no-sort --prompt='cd >') 
 }

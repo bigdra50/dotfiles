@@ -130,3 +130,4 @@ nnoremap gr :tabprevious
 nnoremap <silent> gT :bprev<CR>
 nnoremap <silent> gt :bnext<CR>
 "nnoremap <silent> bd :bd<CR>
+nnoremap <Space>rn :action RenameElement<CR>
