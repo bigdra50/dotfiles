@@ -15,6 +15,7 @@ export XDG_STATE_HOME=$HOME/.local/state
 
 export PATH=$HOME/opt:$PATH
 export CHEAT_CONFIG_PATH=$XDG_CONFIG_HOME/cheat/conf.yml
+export PATH=$HOME/.local/bin:$PATH
 
 
 # mkdir XDG Base Directories

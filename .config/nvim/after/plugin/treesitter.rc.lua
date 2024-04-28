@@ -1,7 +1,7 @@
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
 if (not status) then return end
 
-require 'nvim-treesitter.install'.compilers = { "clang" }
+require 'nvim-treesitter.install'.compilers = { "/usr/bin/gcc" }
 treesitter.setup {
   ensure_installed = {"vim","dockerfile","fish","typescript","tsx","javascript","json","lua","gitignore","bash","astro","markdown","markdown_inline","css","scss","yaml","toml","vue","php","html"},
   -- ignore_install = { "html" },
