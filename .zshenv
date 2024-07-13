@@ -33,5 +33,6 @@ if [ -e ~/.zsh/plugins/fzf.zsh ]; then
 fi
 
 [[ -e ~/.zshenv_local ]] && . ~/.zshenv_local
+[[ -e ~/.rye/env ]] && . ~/.rye/env
 
 # if [ -e /home/bigdra/.nix-profile/etc/profile.d/nix.sh ]; then . /home/bigdra/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
