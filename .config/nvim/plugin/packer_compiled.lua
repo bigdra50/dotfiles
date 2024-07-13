@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1693350652/share/lua/5.1/?.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1693350652/share/lua/5.1/?/init.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1693350652/lib/luarocks/rocks-5.1/?.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1693350652/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1693350652/lib/lua/5.1/?.so"
+local package_path_str = "/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1713484068/share/lua/5.1/?/init.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?.lua;/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1713484068/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/bigdra/.cache/nvim/packer_hererocks/2.1.1713484068/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -74,12 +74,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["ChatGPT.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fchatgpt\frequire\0" },
-    loaded = true,
-    path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/ChatGPT.nvim",
-    url = "https://github.com/jackMort/ChatGPT.nvim"
-  },
   ["FixCursorHold.nvim"] = {
     loaded = true,
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/FixCursorHold.nvim",
@@ -207,6 +201,12 @@ _G.packer_plugins = {
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
+  ["mini.nvim"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/bigdra/.local/share/nvim/site/pack/packer/opt/mini.nvim",
+    url = "https://github.com/echasnovski/mini.nvim"
+  },
   neovim = {
     loaded = true,
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/neovim",
@@ -216,11 +216,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/nerdfont.vim",
     url = "https://github.com/lambdalisue/nerdfont.vim"
-  },
-  ["nui.nvim"] = {
-    loaded = true,
-    path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/nui.nvim",
-    url = "https://github.com/MunifTanjim/nui.nvim"
   },
   ["null-ls.nvim"] = {
     loaded = true,
@@ -287,6 +282,14 @@ _G.packer_plugins = {
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["render-markdown"] = {
+    config = { "\27LJ\2\nA\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\20render-markdown\frequire\0" },
+    load_after = {},
+    loaded = true,
+    needs_bufread = false,
+    path = "/Users/bigdra/.local/share/nvim/site/pack/packer/opt/render-markdown",
+    url = "https://github.com/MeanderingProgrammer/markdown.nvim"
+  },
   ["sqlite.lua"] = {
     loaded = true,
     path = "/Users/bigdra/.local/share/nvim/site/pack/packer/start/sqlite.lua",
@@ -349,10 +352,15 @@ time([[Defining packer_plugins]], false)
 time([[Setup for markdown-preview.nvim]], true)
 try_loadstring("\27LJ\2\n=\0\0\2\0\4\0\0056\0\0\0009\0\1\0005\1\3\0=\1\2\0K\0\1\0\1\2\0\0\rmarkdown\19mkdp_filetypes\6g\bvim\0", "setup", "markdown-preview.nvim")
 time([[Setup for markdown-preview.nvim]], false)
--- Config for: ChatGPT.nvim
-time([[Config for ChatGPT.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\fchatgpt\frequire\0", "config", "ChatGPT.nvim")
-time([[Config for ChatGPT.nvim]], false)
+-- Load plugins in order defined by `after`
+time([[Sequenced loading]], true)
+vim.cmd [[ packadd nvim-treesitter ]]
+vim.cmd [[ packadd render-markdown ]]
+
+-- Config for: render-markdown
+try_loadstring("\27LJ\2\nA\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\20render-markdown\frequire\0", "config", "render-markdown")
+
+time([[Sequenced loading]], false)
 vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Filetype lazy-loads
