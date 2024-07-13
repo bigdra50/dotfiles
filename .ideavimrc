@@ -1,3 +1,4 @@
+source ~/.vimrc
 set ignorecase
 set smartcase
 set incsearch
@@ -13,6 +14,9 @@ set visualbell
 set noerrorbells
 nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
 set whichwrap=b,s,h,l,<,>,[,],~
+
+" interface実装へジャンプ
+nmap gi <Action>(GotoImplementation)
 
 nnoremap Y y$
 nnoremap j gj
@@ -131,3 +135,8 @@ nnoremap <silent> gT :bprev<CR>
 nnoremap <silent> gt :bnext<CR>
 "nnoremap <silent> bd :bd<CR>
 nnoremap <Space>rn :action RenameElement<CR>
+
+
+let mapleader = ' '
+nnoremap <Leader>ev :<C-u>vsplit ~/.ideavimrc<CR>
+nnoremap <Leader>sv :<C-u>source ~/.ideavimrc<CR>
