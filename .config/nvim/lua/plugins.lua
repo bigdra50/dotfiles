@@ -63,12 +63,24 @@ packer.startup(function(use)
 
   -- ファイルタイプ固有のプラグイン
   use 'digitaltoad/vim-pug'
+   use({
+     "iamcco/markdown-preview.nvim",
+     run = "cd app && npm install",
+     setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+     ft = { "markdown" },
+   })
+
   use({
-    "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-    ft = { "markdown" },
-  })
+    'MeanderingProgrammer/markdown.nvim',
+    as = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    after = { 'nvim-treesitter' },
+    requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+    -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+    -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+    config = function()
+        require('render-markdown').setup({})
+    end,
+})
 
   -- Linterとフォーマッター
   use({
@@ -107,19 +119,4 @@ packer.startup(function(use)
 
   -- その他のプラグイン
   use 'github/copilot.vim'
-
-  -- ChatGPTの統合
-  use({
-    "jackMort/ChatGPT.nvim",
-    config = function()
-      require("chatgpt").setup({
-        -- optional configuration
-      })
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-  })
 end)
