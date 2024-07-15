@@ -1,24 +1,36 @@
-vim.cmd([[
-let g:fern#renderer = "nerdfont"
+-- Fern の基本設定
+vim.g['fern#renderer'] = "nerdfont"
+vim.g['fern#default_hidden'] = 1
 
-let g:fern#default_hidden=1
+-- キーマッピング
+local function set_keymap(mode, lhs, rhs, opts)
+    vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", { noremap = true }, opts or {}))
+end
 
-nnoremap <silent><C-n> :Fern . -reveal=%<CR>
-map <Space>dir :Fern . -reveal=% -drawer -toggle -width=30<CR>
+set_keymap('n', '<C-n>', ':Fern . -reveal=%<CR>', { silent = true })
+set_keymap('n', '<Space>dir', ':Fern . -reveal=% -drawer -toggle -width=30<CR>')
 
-augroup my-glyph-palette
-  autocmd! *
-  autocmd FileType fern call glyph_palette#apply()
-  autocmd FileType nerdtree,startify call glyph_palette#apply()
-augroup END
+-- Fern 固有の設定
+local function setup_fern_buffer()
+    set_keymap('n', 'dd', '<Plug>(fern-action-remove)', { buffer = true, silent = true })
+end
 
-function! s:fern_settings() abort
-  nmap <silent> <buffer> dd <Plug>(fern-action-remove)
-endfunction
+-- Fern のバッファ固有の設定を適用
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "fern",
+    callback = setup_fern_buffer
+})
 
-augroup fern-settings
-  autocmd!
-  autocmd FileType fern call s:fern_settings()
-augroup END
-]])
+-- Glyph Palette の設定
+local function setup_glyph_palette()
+    local group = vim.api.nvim_create_augroup("my-glyph-palette", { clear = true })
+    vim.api.nvim_create_autocmd("FileType", {
+        group = group,
+        pattern = {"fern", "nerdtree", "startify"},
+        callback = function()
+            vim.fn['glyph_palette#apply']()
+        end,
+    })
+end
 
+setup_glyph_palette()
