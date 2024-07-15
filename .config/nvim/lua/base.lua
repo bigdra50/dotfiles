@@ -16,7 +16,7 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 2
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
-vim.opt.shell = 'fish'
+--vim.opt.shell = 'zsh'
 vim.opt.inccommand = 'split'
 vim.opt.ignorecase = true
 vim.opt.smarttab = true
@@ -28,17 +28,20 @@ vim.opt.updatetime = 300
 vim.opt.showtabline = 2
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.termguicolors = true
+vim.opt.winblend = 0
+vim.opt.pumblend = 0
 vim.opt.signcolumn = 'yes'
 vim.opt.hidden = true
 vim.opt.swapfile = false
 vim.opt.pumblend = 7
-vim.wo.relativenumber = false
+vim.wo.relativenumber = true
+vim.opt.conceallevel = 1
 
 -- 不可視文字を非表示(colorscheme用)
 vim.opt.list = false
 
 -- Leder Key
-vim.g.mapleader = ','
+vim.g.mapleader = ' '
 
 local keymap = vim.keymap
 
