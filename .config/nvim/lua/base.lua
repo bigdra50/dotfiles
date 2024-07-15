@@ -50,10 +50,10 @@ local keymap = vim.keymap
 keymap.set('n', 'ss', ':split<Return><C-w>w')
 keymap.set('n', 'sv', ':vsplit<Return><C-w>w')
 -- アクティブウィンドウの移動
-keymap.set('', 'sh', '<C-w>h')
-keymap.set('', 'sk', '<C-w>k')
-keymap.set('', 'sj', '<C-w>j')
-keymap.set('', 'sl', '<C-w>l')
+--keymap.set('', 'sh', '<C-w>h')
+--keymap.set('', 'sk', '<C-w>k')
+--keymap.set('', 'sj', '<C-w>j')
+--keymap.set('', 'sl', '<C-w>l')
 
 -- Emacs like keybinding
 keymap.set('i', '<C-f>', '<Right>')
