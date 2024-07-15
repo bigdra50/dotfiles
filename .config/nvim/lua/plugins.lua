@@ -34,7 +34,12 @@ packer.startup(function(use)
   use("lambdalisue/fern.vim")
   use("lambdalisue/nerdfont.vim")
   use("lambdalisue/fern-renderer-nerdfont.vim")
-  use("kyazdani42/nvim-web-devicons")
+  use({
+    "TheLeoP/fern-renderer-web-devicons.nvim",
+    requires = {
+      "nvim-tree/nvim-web-devicons",
+    },
+  })
   use("lambdalisue/glyph-palette.vim")
 
   -- LSPと補完
@@ -81,8 +86,6 @@ packer.startup(function(use)
     requires = {
       "nvim-telescope/telescope.nvim",
       "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-tree.lua", -- (オプション) プロジェクトファイルの管理用
-      "stevearc/oil.nvim", -- (オプション) プロジェクトファイルの管理用
       "nvim-treesitter/nvim-treesitter", -- (オプション) クイックテストサポート用（Swiftパーサーが必要）
     },
     config = function()
