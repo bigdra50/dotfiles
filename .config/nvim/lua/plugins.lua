@@ -53,7 +53,39 @@ packer.startup(function(use)
   use 'hrsh7th/vim-vsnip'
   use 'onsails/lspkind.nvim'
   use 'glepnir/lspsaga.nvim'
-  use 'j-hui/fidget.nvim'
+  use {
+    'folke/trouble.nvim',
+    requires = {
+      'nvim-tree/nvim-web-devicons'
+    },
+    event = { 'BufReadPre', 'BufNewFile' }
+  }
+
+  use 'mfussenegger/nvim-dap'
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {
+      'mfussenegger/nvim-dap',
+      'nvim-neotest/nvim-nio'
+    }
+  }
+
+  use {
+    'wojciech-kulik/xcodebuild.nvim',
+    requires = {
+      'nvim-telescope/telescope.nvim',
+      'MunifTanjim/nui.nvim',
+      'nvim-tree/nvim-tree.lua',       -- (オプション) プロジェクトファイルの管理用
+      'stevearc/oil.nvim',             -- (オプション) プロジェクトファイルの管理用
+      'nvim-treesitter/nvim-treesitter', -- (オプション) クイックテストサポート用（Swiftパーサーが必要）
+    },
+    config = function()
+      require("xcodebuild").setup({
+        -- ここにオプションを追加するか、デフォルト設定を使用する場合は空のままにします
+      })
+    end
+  }
+
 
   -- Treesitter
   use {
@@ -63,34 +95,41 @@ packer.startup(function(use)
 
   -- ファイルタイプ固有のプラグイン
   use 'digitaltoad/vim-pug'
-   use({
-     "iamcco/markdown-preview.nvim",
-     run = "cd app && npm install",
-     setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
-     ft = { "markdown" },
-   })
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
+    ft = { "markdown" },
+  })
 
   use({
     'MeanderingProgrammer/markdown.nvim',
-    as = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    as = 'render-markdown',                             -- Only needed if you have another plugin named markdown.nvim
     after = { 'nvim-treesitter' },
     requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
     -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
     -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
     config = function()
-        require('render-markdown').setup({})
+      require('render-markdown').setup({})
     end,
-})
+  })
 
   -- Linterとフォーマッター
   use({
-    "jose-elias-alvarez/null-ls.nvim",
-    requires = { "nvim-lua/plenary.nvim" },
+    'nvimtools/none-ls.nvim',
+    requires = { 'nvim-lua/plenary.nvim' }
   })
-  use({
-    "jay-babu/mason-null-ls.nvim",
-    requires = { "jose-elias-alvarez/null-ls.nvim" },
-  })
+
+  use {
+    'jay-babu/mason-null-ls.nvim',
+    requires = {
+      'williamboman/mason.nvim',
+      'nvimtools/none-ls.nvim',
+    },
+    event = { 'BufReadPre', 'BufNewFile' }
+  }
+
+  use "j-hui/fidget.nvim"
 
   -- ファジーファインダーと拡張機能
   use 'nvim-telescope/telescope.nvim'
