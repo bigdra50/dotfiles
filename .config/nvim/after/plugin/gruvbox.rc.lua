@@ -6,6 +6,7 @@ vim.cmd([[
   let g:gruvbox_material_diagnostic_virtual_text = 'colored'
   let g:gruvbox_material_current_word = 'underline'
   let g:gruvbox_material_statusline_style = 'mix'
+  let g:gruvbox_material_transparent_background=2
   
   augroup vim_entered_cmd
     autocmd!
