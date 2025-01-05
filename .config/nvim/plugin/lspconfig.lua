@@ -1,11 +1,11 @@
-local mason = require('mason')
+local mason = require("mason")
 mason.setup()
 
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local opts = { noremap = true, silent = true }
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   opts.buffer = bufnr
 
   opts.desc = "Show line diagnostics"
@@ -14,8 +14,11 @@ local on_attach = function(_, bufnr)
   opts.desc = "Show documentation for what is under cursor"
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.keymap.set('n', 'rn', vim.lsp.buf.rename, opts)
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+  vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts)
+  vim.keymap.set("n", "<leader>i", function()
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
+  end, opts)
 end
 
 lspconfig["sourcekit"].setup({
@@ -54,6 +57,6 @@ end
 
 -- nvim-lsp-file-operations の設定
 local status, lsp_file_operations = pcall(require, "lsp-file-operations")
-if (status) then
+if status then
   lsp_file_operations.setup()
 end
