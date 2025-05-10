@@ -1,28 +1,28 @@
-[core]
-  pager = delta
+[user]
+  name = bigdra
+  email = bigdra50@gmail.com
 
-[interactive]
-  diffFilter = delta --color-only
+[core]
+  editor = vim
+  excludesfile = ~/.gitignore
+  pager = delta
+	symlinks = true
+
+[init]
+  defaultBranch = main
 
 [add]
   interactiveUseBuiltin = false
 
-[delta]
-  navigate = true
-  light = false
+[mergetool "neovimdiff"]
+  cmd = nvim -d $LOCAL $MERGED $REMOTE -c 'wincmd l' -c 'wincmd J'
 
 [merge]
+  tool = neovimdiff
   conflictstyle = diff3
 
 [diff]
   colorMoved = default
-
-[ghq]
-  root = ~/.ghq
-
-[user]
-  name = bigdra
-  email = bigdra50@gmail.com
 
 [filter "lfs"]
   process = git-lfs filter-process
@@ -30,12 +30,41 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
 
-[init]
-  defaultBranch = master
-
 [http]
   postBuffer = 524288000
 
 [pull]
-  rebase = false
+	rebase = true
+
+[rebase]
+	autosquash = true
+
+[rerere]
+	enabled = true
+
+[include]
+  path = ~/.gitconfig_local
+
+[github]
+	user = bigdra50
+
+[ghq]
+  root = ~/dev
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[delta]
+  plus-style = "syntax #012800"
+  minus-style = "syntax #340001"
+  syntax-theme = Monokai Extended
+  side-by-side = true
+  navigate = true
+  light = false
+
+[interactive]
+  diffFilter = delta --color-only
 
