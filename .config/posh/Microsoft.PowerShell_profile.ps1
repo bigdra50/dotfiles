@@ -88,6 +88,43 @@ function Load10kConfig{
   }
 }
 
+Register-ArgumentCompleter -CommandName adb -ScriptBlock {
+    param($wordToComplete, $commandAst, $cursorPosition)
+    
+    # コマンドの引数を解析
+    $commandElements = $commandAst.CommandElements
+    
+    # "adb shell ls" の場合のみ処理
+    if ($commandElements.Count -ge 3 -and 
+        $commandElements[1].Value -eq "shell" -and 
+        $commandElements[2].Value -eq "ls") {
+        
+        # Android端末からディレクトリ一覧を取得
+        $directories = adb shell "find / -type d 2>/dev/null" | 
+                      Where-Object { $_ -like "$wordToComplete*" } |
+                      ForEach-Object {
+                          # 補完候補を作成
+                          [System.Management.Automation.CompletionResult]::new(
+                              $_, 
+                              $_, 
+                              'ParameterValue', 
+                              $_
+                          )
+                      }
+        
+        return $directories
+    }
+}
+
+# より使いやすいエイリアス版（fzfを使用）
+function Get-AdbLsDirectory {
+    $directory = adb shell "find / -type d 2>/dev/null" | Out-GridView -Title "Select Directory" -OutputMode Single
+    if ($directory) {
+        adb shell ls $directory
+    }
+}
+Set-Alias adbls Get-AdbLsDirectory
+
 
 # ----------------------------------------------------------
 
@@ -118,7 +155,9 @@ oh-my-posh init pwsh --config ~/pwsh10k.omp.json | Invoke-Expression
 Enable-PsFzfAliases
 
 
-Set-PoshPrompt -Theme powerlevel10k_rainbow
+
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\easy-term.omp.json" | Invoke-Expression
+#Set-PoshPrompt -Theme powerlevel10k_rainbow
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineKeyHandler -Key "Ctrl+n" -Function ForwardWord
 # replace 'Ctrl+t' and 'Ctrl+r' with your preferred bindings:
@@ -142,3 +181,5 @@ sal hosts CustomHosts
 sal update CustomUpdate
 sal ls gci_lsd
 sal p GetCurrentPath
+
+
