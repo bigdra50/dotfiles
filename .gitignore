@@ -28,9 +28,16 @@
 
 !/.config/
 /.config/**
+
+
+## gitui
+!/.config/gitui/
+!/.config/gitui/**
+
 ## nvim
 !/.config/nvim/
 /.config/nvim/**
+!/.config/nvim/init.lua
 !/.config/nvim/load-plugins.vim
 !/.config/nvim/dein.toml
 !/.config/nvim/dein_lazy.toml

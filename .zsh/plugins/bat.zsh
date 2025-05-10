@@ -3,7 +3,7 @@ export BAT_THEME=zenburn
 
 alias less='bat'
 # pagingを無効
-alias cat='bat --paging=never'
+alias bat='bat --paging=never'
 # そのままのplain表示
 alias -g L='|bat --style=plain'
 # シンタックスハイライトの言語を指定
