@@ -61,6 +61,9 @@
 !/.config/posh/
 /.config/posh/**
 !/.config/posh/Microsoft.PowerShell_profile.ps1
+!/.config/posh/functions/
+!/.config/posh/functions/*
+!/.config/posh/link.ps1
 !/.config/posh/profiles.json
 !/.config/posh/settings.json
 
