@@ -117,5 +117,9 @@ if ! shopt -oq posix; then
 fi
 export DISPLAY=localhost:0.0
 
-[ -f "$HOME/.asdf/asdf.sh" ] && . "$HOME/.asdf/asdf.sh"
-[ -f "$HOME/.asdf/completions/asdf.bash" ] && . "$HOME/.asdf/completions/asdf.bash"
+# mise (formerly rtx) - Development tools version manager
+if command -v mise &> /dev/null; then
+  eval "$(mise activate bash)"
+elif [ -f "$HOME/.local/bin/mise" ]; then
+  eval "$($HOME/.local/bin/mise activate bash)"
+fi

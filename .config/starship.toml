@@ -1,0 +1,113 @@
+# Starship configuration
+# https://starship.rs/config/
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Replace the '❯' symbol in the prompt with '➜'
+[character]
+success_symbol = '[➜](bold green)'
+error_symbol = '[➜](bold red)'
+
+# Configure the format of the prompt
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$c\
+$golang\
+$nodejs\
+$rust\
+$ruby\
+$python\
+$java\
+$kotlin\
+$swift\
+$terraform\
+$docker_context\
+$package\
+$buf\
+$cmake\
+$dart\
+$elixir\
+$elm\
+$erlang\
+$haskell\
+$julia\
+$nim\
+$scala\
+$zig\
+$memory_usage\
+$env_var\
+$cmd_duration\
+$line_break\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = "🌱 "
+truncation_length = 20
+truncation_symbol = "…"
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+[golang]
+format = "via [$symbol($version )]($style)"
+symbol = "🐹 "
+
+[nodejs]
+format = "via [$symbol($version )]($style)"
+symbol = "⬢ "
+
+[rust]
+format = "via [$symbol($version )]($style)"
+symbol = "🦀 "
+
+[package]
+format = "via [$symbol$version]($style) "
+
+[python]
+format = 'via [${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = "🐍 "
+
+[ruby]
+format = "via [$symbol($version )]($style)"
+symbol = "💎 "
+
+[cmd_duration]
+min_time = 3_000
+format = "took [$duration]($style) "
+
+[memory_usage]
+disabled = false
+threshold = 75
+format = "via $symbol [${ram_pct}]($style) "
+
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = "%T"

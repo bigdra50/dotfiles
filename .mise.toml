@@ -1,0 +1,19 @@
+# mise configuration
+# https://mise.jdx.dev/
+
+[tools]
+# Development tools
+go = "latest"
+rust = "latest"
+node = "latest"
+neovim = "nightly"
+
+[settings]
+# Enable experimental features
+experimental = true
+
+# Use .nvmrc, .node-version files
+legacy_version_file = true
+
+# Show mise in shell prompt (handled by starship)
+disable_default_shorthands = false
