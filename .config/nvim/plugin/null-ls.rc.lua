@@ -16,36 +16,37 @@ local function setup_mason_null_ls()
   })
 end
 
--- Formatter Sourceの設定
+-- Formatter Sourceの設定（フォーマッター関連をコメントアウト）
 local function get_null_ls_sources()
   return {
     null_ls.builtins.completion.spell,
-    null_ls.builtins.formatting.prettier,
-    null_ls.builtins.formatting.stylua,
-    null_ls.builtins.formatting.swiftformat.with({
-      args = { "--stdinpath", "$FILENAME" },
-    }),
+    -- null_ls.builtins.formatting.prettier, -- フォーマッターをコメントアウト
+    -- null_ls.builtins.formatting.stylua,   -- フォーマッターをコメントアウト
+    --null_ls.builtins.formatting.swiftformat.with({
+    --  args = { "--stdinpath", "$FILENAME" },
+    --}),
     require("none-ls.diagnostics.eslint"),
   }
 end
 
--- 保存時の自動フォーマット設定
+-- 保存時の自動フォーマット設定をコメントアウト
 local function on_attach(client, bufnr)
-  if not client.supports_method("textDocument/formatting") then
-    return
-  end
-
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    buffer = bufnr,
-    callback = function()
-      vim.lsp.buf.format({
-        bufnr = bufnr,
-        filter = function(client)
-          return client.name == "null-ls"
-        end,
-      })
-    end,
-  })
+  -- フォーマット関連の設定をコメントアウト
+  -- if not client.supports_method("textDocument/formatting") then
+  --   return
+  -- end
+  -- 
+  -- vim.api.nvim_create_autocmd("BufWritePre", {
+  --   buffer = bufnr,
+  --   callback = function()
+  --     vim.lsp.buf.format({
+  --       bufnr = bufnr,
+  --       filter = function(client)
+  --         return client.name == "null-ls"
+  --       end,
+  --     })
+  --   end,
+  -- })
 end
 
 -- None-lsの設定
@@ -57,13 +58,13 @@ local function setup_null_ls()
   })
 end
 
--- フォーマットのキーマップ設定
+-- フォーマットのキーマップ設定をコメントアウト
 local function setup_format_keymap()
-  vim.keymap.set("n", "<Space>fmt", function()
-    vim.lsp.buf.format({ async = true })
-  end)
+  -- vim.keymap.set("n", "<Space>fmt", function()
+  --   vim.lsp.buf.format({ async = true })
+  -- end)
 end
 
 setup_mason_null_ls()
 setup_null_ls()
-setup_format_keymap()
+-- setup_format_keymap() 
