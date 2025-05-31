@@ -56,47 +56,38 @@ link_dotfiles:
         fi
     done
 
-install_asdf:
+install_mise:
     #!/usr/bin/env bash
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
-    . "$HOME/.asdf/asdf.sh"
-    . "$HOME/.asdf/completions/asdf.bash"
+    if command -v mise &> /dev/null; then
+        echo "mise is already installed at $(which mise)"
+    else
+        curl https://mise.run | sh
+        echo 'mise installed successfully!'
+    fi
 
-add_asdf_plugins:
+setup_mise_tools:
     #!/usr/bin/env bash
-    asdf update
-    asdf plugin add ghq
-    asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
-    asdf plugin-add rust https://github.com/asdf-community/asdf-rust.git
-    asdf plugin add neovim
-    asdf plugin add fzf https://github.com/kompiro/asdf-fzf.git
-    asdf plugin add delta
-    asdf plugin add nodejs
-    asdf plugin add ripgrep
-    asdf plugin add shfmt
-    asdf plugin add lsd https://github.com/ossareh/asdf-lsd.git
+    # Install tools using mise
+    mise use --global go@latest
+    mise use --global rust@latest
+    mise use --global node@latest
+    mise use --global neovim@nightly
+    
+    # Install cargo/go tools
+    mise exec -- cargo install ghq
+    mise exec -- cargo install delta
+    mise exec -- cargo install ripgrep
+    mise exec -- cargo install lsd
+    mise exec -- go install mvdan.cc/sh/v3/cmd/shfmt@latest
+    
+    # Install fzf separately
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all --no-bash --no-fish
 
-    asdf install ghq latest
-    asdf install golang latest
-    asdf install rust latest
-    asdf install neovim nightly
-    asdf install fzf latest
-    asdf install delta latest
-    asdf install nodejs latest
-    asdf install ripgrep latest
-    asdf install shfmt latest
-    asdf install lsd latest
-
-    asdf global ghq latest
-    asdf global golang latest
-    asdf global rust latest
-    asdf global neovim nightly
-    asdf global fzf latest
-    asdf global delta latest
-    asdf global nodejs latest
-    asdf global ripgrep latest
-    asdf global shfmt latest
-    asdf global lsd latest
+install_starship:
+    #!/usr/bin/env bash
+    curl -sS https://starship.rs/install.sh | sh -s -- -y
+    echo 'starship installed successfully!'
 
 install: clone link_dotfiles
     #!/usr/bin/env bash

@@ -34,6 +34,9 @@
 !/.config/gitui/
 !/.config/gitui/**
 
+## starship
+!/.config/starship.toml
+
 ## nvim
 !/.config/nvim/
 /.config/nvim/**
@@ -75,6 +78,7 @@
 !/README.md
 !/LICENSE
 !/.gitconfig
+!/.mise.toml
 !.gitignore
 !.gitkeep
 ~/etc/install.sh

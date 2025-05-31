@@ -1,6 +1,6 @@
 # interface.zsh
-[[ -f ~/.p10k.zsh ]] && . ~/.p10k.zsh
-[[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] && . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# Starship prompt
+eval "$(starship init zsh)"
 
 # vimキーバインドへ
 bindkey -v
