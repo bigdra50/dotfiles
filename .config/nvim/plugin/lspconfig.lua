@@ -21,10 +21,41 @@ local on_attach = function(client, bufnr)
   end, opts)
 end
 
-lspconfig["sourcekit"].setup({
-  capabilities = capabilities,
+lspconfig.sourcekit.setup({
+  filetypes = { "swift", "objective-c", "objective-cpp", "c", "cpp" },
   on_attach = on_attach,
-  --root_dir = lspconfig.util.root_pattern("Package.swift", ".git"),
+  -- ref: https://www.swift.org/documentation/articles/zero-to-swift-nvim.html
+  capabilities = capabilities,
+  --capabilities = {
+  --  workspace = {
+  --    didChangeWatchedFiles = {
+  --      dynamicRegistration = true,
+  --    },
+  --  },
+  --},
+  root_dir = lspconfig.util.root_pattern("Package.swift", ".git"),
+  -- Use visionOS SDK (UIKit etc.)
+  -- ref: https://qiita.com/niusounds/items/5a39b65b54939814a9f9
+  -- TODO: Make version dynamic
+  --cmd = {
+  --  --"/Applications/Xcode-16.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+  --  --"`xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
+  --  "sourcekit-lsp",
+  --  "-Xswiftc",
+  --  "-sdk",
+  --  "-Xswiftc",
+  --  -- '`xcrun --sdk iphonesimulator --show-sdk-path`',
+  --  --"`xcrun --sdk xrsimulator --show-sdk-path`",
+  --  "/Applications/Xcode-16.0.0.app/Contents/Developer/Platforms/XRSimulator.platform/Developer/SDKs/XRSimulator2.0.sdk",
+  --  --"/Applications/Xcode-16.0.0.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator17.5.sdk",
+  --  "-Xswiftc",
+  --  "-target",
+  --  "-Xswiftc",
+  --  -- 'x86_64-apple-ios`xcrun --sdk iphonesimulator --show-sdk-platform-version`-simulator',
+  --  --"arm64-apple-xros`xcrun --sdk xrsimulator --show-sdk-platform-version`-simulator",
+  --  --"x86_64-apple-ios18.0-simulator",
+  --  "arm64-apple-xros2.0-simulator",
+  --},
 })
 
 -- nice icons

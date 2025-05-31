@@ -1,6 +1,8 @@
 -- nvim-treesitterの設定
 local status, treesitter = pcall(require, "nvim-treesitter.configs")
-if (not status) then return end
+if not status then
+  return
+end
 
 treesitter.setup({
   incremental_selection = {
@@ -14,7 +16,7 @@ treesitter.setup({
     enable = true,
   },
   indent = { enable = true },
-  autotag = { enable = true },
+  -- autotag = { enable = true },
   ensure_installed = {
     "json",
     "yaml",
@@ -37,7 +39,7 @@ end
 vim.cmd([[TSUpdate]])
 
 -- イベントに基づいてTreesitterを読み込む
-vim.api.nvim_create_autocmd({"BufReadPre", "BufNewFile"}, {
+vim.api.nvim_create_autocmd({ "BufReadPre", "BufNewFile" }, {
   callback = function()
     -- ここに必要な追加の設定やコマンドを記述できます
   end,

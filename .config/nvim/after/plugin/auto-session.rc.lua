@@ -6,3 +6,4 @@ auto_session.setup({
   auto_session_suppress_dirs = { "~/Downloads", "~/Documents", "~/Desktop" },
   auto_save_enabled = true,
 })
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

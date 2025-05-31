@@ -16,6 +16,7 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 2
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
+vim.opt.laststatus = 3
 --vim.opt.shell = 'zsh'
 vim.opt.inccommand = "split"
 vim.opt.ignorecase = true
