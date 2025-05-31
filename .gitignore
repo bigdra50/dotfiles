@@ -1,105 +1,92 @@
-# all ignore
-/*
-/.**
+# Dotfiles repository - blacklist approach
+# Only ignore specific files/patterns that shouldn't be tracked
 
-# white list
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
 
-!/install.sh
-!/justfile
- 
-## bash
-! .bashrc
-## zsh
-!/.zshrc
-!/.zshenv
-!/.zsh/
-/.zsh/**
-!/.zsh/*.zsh
-!/.zsh/plugins/
-/.zsh/plugins/**
-!/.zsh/plugins/*.zsh
+# IDE/Editor files
+.vscode/
+.idea/
+*.iml
 
-!/.vimrc
-!/.colorrc
-!/.ideavimrc
+# Build artifacts and dependencies
+node_modules/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-## brew
-!/.Brewfile
+# OS specific
+.Trash/
+.fuse_hidden*
 
-!/.config/
-/.config/**
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.temp/
 
+# Neovim specific ignores
+.config/nvim/plugin/packer_compiled.lua
+.config/nvim/.netrwhist
+.config/nvim/undodir/
+.config/nvim/spell/
 
-## gitui
-!/.config/gitui/
-!/.config/gitui/**
+# Config directories to exclude (tools that auto-generate)
+.config/configstore/
+.config/yarn/
+.config/gh/
+.config/git/
+.config/mise/
+.config/op/
+.config/raycast/
+.config/shell_gpt/
+.config/swiftpm/
+.config/coc/
+.config/.android/
+.config/.mono/
+.config/GitHub/
+.config/gh-copilot/
+.config/github-copilot/
+.config/jgit/
+.config/mume/
+.config/neofetch/
+.config/nix/
+.config/iterm2/
+.config/ios-dev-starter-nvim/
+.config/direnv/
+.config/result
+.config/dot_config
 
-## starship
-!/.config/starship.toml
+# Utility directories
+.bin/
+.claude/
 
-## nvim
-!/.config/nvim/
-/.config/nvim/**
-!/.config/nvim/init.lua
-!/.config/nvim/load-plugins.vim
-!/.config/nvim/dein.toml
-!/.config/nvim/dein_lazy.toml
-!/.config/nvim/.stylua.toml
-!/.config/nvim/coc-settings.json
-!/.config/nvim/plugins/
-/.config/nvim/plugins/**
-!/.config/nvim/plugins/*.vim
-!/.config/nvim/plugins/*.lua
+# Shell history (if accidentally placed in dotfiles)
+.*_history
 
-## nix
-!/.config/nixpkgs/   
-/.config/nixpkgs/**   
+# Local configuration overrides
+*_local
+*.local
 
-## nix
-!/.config/nixpkgs/
-/.config/nixpkgs/**
-!/.config/nixpkgs/home.nix
+# Backup files
+*.bak
+*.backup
 
-## powershell
-!/.config/posh/
-/.config/posh/**
-!/.config/posh/Microsoft.PowerShell_profile.ps1
-!/.config/posh/functions/
-!/.config/posh/functions/*
-!/.config/posh/link.ps1
-!/.config/posh/profiles.json
-!/.config/posh/settings.json
+# Package manager files that change frequently
+package-lock.json
+yarn.lock
+Cargo.lock
 
-## unity
-!/.config/unity/
-/.config/unity/**
-!/.config/unity/layout.wlt
+# Environment specific files
+.env
+.env.local
 
-!/README.md
-!/LICENSE
-!/.gitconfig
-!/.mise.toml
-!.gitignore
-!.gitkeep
-~/etc/install.sh
-!/.yabairc
-!/.skhdrc
-!/.wezterm.lua
-!/.p10k.zsh
-!/.bashrc
-!.zsh/plugins/
-!.zsh/plugins/*
-!.config/nvim/after/
-.config/nvim/after/**
-!.config/nvim/after/*
-!.config/nvim/lua/
-.config/nvim/lua/**
-!.config/nvim/lua/*
-!.config/nvim/plugin/
-.config/nvim/plugin/**
-!.config/nvim/plugin/*
-!.config/nvim/plugins/
-!.config/nvim/plugins/*
-!.config/nvim/after/plugin/
-.config/nvim/after/plugin/**
-!.config/nvim/after/plugin/*
+# Archive files
+*.zip
+*.tar.gz
+*.rar
