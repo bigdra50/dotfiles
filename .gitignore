@@ -39,12 +39,9 @@ yarn-error.log*
 # Config directories to exclude (tools that auto-generate)
 .config/configstore/
 .config/yarn/
-.config/gh/
 .config/git/
-.config/mise/
 .config/op/
 .config/raycast/
-.config/shell_gpt/
 .config/swiftpm/
 .config/coc/
 .config/.android/
@@ -61,6 +58,10 @@ yarn-error.log*
 .config/direnv/
 .config/result
 .config/dot_config
+
+# Specific files to exclude within tracked config directories
+.config/gh/hosts.yml
+.config/mise/*.lock
 
 # Utility directories
 .bin/
