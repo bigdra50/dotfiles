@@ -49,7 +49,7 @@
 	user = bigdra50
 
 [ghq]
-  root = ~/.ghq
+  root = ~/dev
 
 [pager]
   diff = delta

@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  ubuntu-dotfiles:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        USERNAME: dotuser
+        USER_UID: 1001
+        USER_GID: 1001
+    image: dotfiles-ubuntu:latest
+    container_name: dotfiles-ubuntu
+    stdin_open: true
+    tty: true
+    volumes:
+      # Mount the dotfiles directory for live editing
+      - .:/home/dotuser/.ghq/github.com/bigdra50/dotfiles:cached
+      # Persist home directory changes
+      - dotfiles-home:/home/dotuser
+    environment:
+      - TERM=xterm-256color
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    command: /bin/zsh
+
+  # Ubuntu 22.04 LTS version for compatibility testing
+  ubuntu-22-dotfiles:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UBUNTU_VERSION: 22.04
+        USERNAME: dotuser
+        USER_UID: 1001
+        USER_GID: 1001
+    image: dotfiles-ubuntu22:latest
+    container_name: dotfiles-ubuntu22
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/home/dotuser/.ghq/github.com/bigdra50/dotfiles:cached
+      - dotfiles22-home:/home/dotuser
+    environment:
+      - TERM=xterm-256color
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+    command: /bin/zsh
+
+volumes:
+  dotfiles-home:
+  dotfiles22-home:

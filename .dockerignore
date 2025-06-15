@@ -1,0 +1,28 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+README.md
+CLAUDE.md
+
+# Docker files themselves
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# macOS
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
