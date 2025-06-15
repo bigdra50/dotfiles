@@ -1,0 +1,150 @@
+# Tool Management Configuration
+# Supports: macOS, WSL-Ubuntu, PowerShell (Windows)
+# Priority: Cross-platform tools > Platform-specific tools
+
+[cargo]
+# Rust-based CLI tools (works on all platforms)
+# These tools work on Mac, WSL, and Windows (PowerShell)
+tools = [
+    { name = "bat", version = "latest", description = "cat with syntax highlighting" },
+    { name = "git-delta", version = "latest", description = "git diff viewer" },
+    { name = "du-dust", version = "latest", description = "disk usage analyzer" },
+    { name = "eza", version = "latest", description = "modern ls replacement" },
+    { name = "fd-find", version = "latest", description = "find replacement" },
+    { name = "gitui", version = "0.26.3", description = "git TUI" },
+    { name = "hyperfine", version = "latest", description = "benchmarking tool" },
+    { name = "just", version = "latest", description = "command runner" },
+    { name = "lsd", version = "latest", description = "ls deluxe" },
+    { name = "procs", version = "latest", description = "ps replacement" },
+    { name = "ripgrep", version = "latest", description = "grep replacement" },
+    { name = "sd", version = "latest", description = "sed replacement" },
+    { name = "starship", version = "latest", description = "cross-shell prompt" },
+    { name = "tokei", version = "latest", description = "code statistics" },
+    { name = "zoxide", version = "latest", description = "smarter cd command" },
+]
+
+[go_tools]
+# Go-based CLI tools
+tools = [
+    { name = "github.com/x-motemen/ghq@latest", description = "git repository manager" },
+]
+
+[mise]
+# Runtime version management (works on all platforms)
+# mise supports Windows through Git Bash/WSL
+runtimes = [
+    { name = "go", version = "latest" },
+    { name = "rust", version = "latest" },
+    { name = "node", version = "latest" },
+    { name = "python", version = "3.12" },
+    { name = "neovim", version = "nightly" },
+]
+
+[platform.macos]
+# macOS-specific tools (Homebrew)
+brew = [
+    # Window Management
+    "koekeishiya/formulae/yabai",
+    "koekeishiya/formulae/skhd",
+    
+    # macOS utilities
+    "trash",
+    "mas",  # Mac App Store CLI
+]
+
+brew_cask = [
+    "wezterm",
+    "font-hack-nerd-font",
+    "font-jetbrains-mono-nerd-font",
+]
+
+[platform.wsl]
+# WSL-specific tools (apt)
+apt = [
+    "build-essential",
+    "curl",
+    "git",
+    "zsh",
+    "dircolors",
+    "wslu",  # WSL utilities for Windows integration
+]
+
+[platform.windows]
+# Windows PowerShell environment
+# Tools installed via scoop (https://scoop.sh/)
+scoop_buckets = [
+    "extras",
+    "nerd-fonts",
+]
+
+scoop = [
+    # Core tools
+    "git",
+    "gh",
+    "fzf",
+    "jq",
+    "yq",
+    
+    # Terminal & Shell
+    "windows-terminal",
+    "oh-my-posh",
+    
+    # Development
+    "neovim",
+    "vscode",
+    
+    # Utilities
+    "sudo",
+    "which",
+    "touch",
+    "grep",
+]
+
+# Windows-specific cargo tools that work better on Windows
+cargo_windows = [
+    { name = "nu", version = "latest", description = "modern shell (great on Windows)" },
+]
+
+# PowerShell modules
+powershell_modules = [
+    "PSReadLine",
+    "posh-git",
+    "Terminal-Icons",
+    "z",  # zoxide alternative for PowerShell
+]
+
+[fallback]
+# Special installations for tools that need custom setup
+special = [
+    { 
+        name = "fzf", 
+        condition = "!command -v fzf",
+        install_unix = "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all --no-bash --no-fish --no-update-rc",
+        install_windows = "scoop install fzf"
+    },
+    {
+        name = "wezterm",
+        condition = "!command -v wezterm",
+        install_macos = "brew install --cask wezterm",
+        install_windows = "scoop install wezterm",
+        install_wsl = "echo 'WezTerm runs on Windows host, not in WSL'"
+    }
+]
+
+[shared]
+# Configuration for tools that work differently across platforms
+config = [
+    {
+        tool = "ghq",
+        settings = {
+            root = "~/.ghq",  # Same on all platforms
+            git_protocol = "https"  # HTTPS works everywhere
+        }
+    },
+    {
+        tool = "starship",
+        settings = {
+            config_path = "~/.config/starship.toml"  # Works on all platforms
+        }
+    }
+]
