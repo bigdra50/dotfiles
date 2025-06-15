@@ -14,10 +14,24 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
-  spec = {
-    { import = "plugins" },
-  },
+-- Load plugins
+local plugins = {}
+
+-- Load all plugin modules
+local plugin_modules = {
+  require("plugins.ui"),
+  require("plugins.lsp"),
+  require("plugins.editor"),
+  require("plugins.ai"),
+}
+
+for _, module in ipairs(plugin_modules) do
+  for _, plugin in ipairs(module) do
+    table.insert(plugins, plugin)
+  end
+end
+
+require("lazy").setup(plugins, {
   checker = { enabled = true },
   performance = {
     rtp = {
