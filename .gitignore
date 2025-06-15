@@ -65,7 +65,6 @@ yarn-error.log*
 
 # Utility directories
 .bin/
-.claude/
 
 # Shell history (if accidentally placed in dotfiles)
 .*_history
@@ -97,3 +96,4 @@ TODO.md
 
 # Claude Code instructions (personal notes)
 CLAUDE.md
+.claude/settings.local.json

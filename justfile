@@ -319,6 +319,15 @@ _link-config:
         target="$HOME/.config/$basename"
         just _create-symlink "$config" "$target"
     done
+    
+    # Link .claude directory
+    if [[ -d "{{ DOTFILES_DIR }}/.claude" ]]; then
+        mkdir -p "$HOME/.claude"
+        target="$HOME/.claude/commands"
+        if [[ -d "{{ DOTFILES_DIR }}/.claude/commands" ]]; then
+            just _create-symlink "{{ DOTFILES_DIR }}/.claude/commands" "$target"
+        fi
+    fi
 
 # Create a single symlink with confirmation
 _create-symlink source target:
