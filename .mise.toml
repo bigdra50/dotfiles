@@ -6,7 +6,7 @@
 go = "latest"
 rust = "latest"
 node = "latest"
-# neovim = "nightly"  # Temporarily disabled due to rate limit
+neovim = "nightly"
 
 [settings]
 # Enable experimental features
