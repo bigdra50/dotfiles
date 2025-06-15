@@ -323,9 +323,17 @@ _link-config:
     # Link .claude directory
     if [[ -d "{{ DOTFILES_DIR }}/.claude" ]]; then
         mkdir -p "$HOME/.claude"
+        
+        # Link commands directory
         target="$HOME/.claude/commands"
         if [[ -d "{{ DOTFILES_DIR }}/.claude/commands" ]]; then
             just _create-symlink "{{ DOTFILES_DIR }}/.claude/commands" "$target"
+        fi
+        
+        # Link docs directory
+        target="$HOME/.claude/docs"
+        if [[ -d "{{ DOTFILES_DIR }}/.claude/docs" ]]; then
+            just _create-symlink "{{ DOTFILES_DIR }}/.claude/docs" "$target"
         fi
     fi
 
