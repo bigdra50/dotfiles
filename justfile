@@ -13,7 +13,7 @@ default:
 
 # Repository configuration
 export REPO_URL := "https://github.com/bigdra50/dotfiles.git"
-export DOTFILES_DIR := env_var_or_default("DOTFILES_DIR", "$HOME/.ghq/github.com/bigdra50/dotfiles")
+export DOTFILES_DIR := env_var_or_default("DOTFILES_DIR", "$HOME/dev/github.com/bigdra50/dotfiles")
 
 # Interactive mode flag (set to "false" for non-interactive)
 export INTERACTIVE := env_var_or_default("INTERACTIVE", "true")
