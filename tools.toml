@@ -27,6 +27,7 @@ tools = [
 # Go-based CLI tools
 tools = [
     { name = "github.com/x-motemen/ghq@latest", description = "git repository manager" },
+    { name = "github.com/jesseduffield/lazygit@latest", description = "simple terminal UI for git commands" },
 ]
 
 [mise]
@@ -50,6 +51,9 @@ brew = [
     # macOS utilities
     "trash",
     "mas",  # Mac App Store CLI
+    
+    # Development tools
+    "imagemagick",
 ]
 
 brew_cask = [

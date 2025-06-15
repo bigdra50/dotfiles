@@ -85,6 +85,7 @@ install-tools: check-platform
     @just _install-base-tools
     @just _install-platform-tools
     @just _install-common-tools
+    @just setup-nvim
 
 # 🗑️  Remove all symlinks
 unlink:
@@ -371,6 +372,44 @@ _create-symlink source target:
     # Create symlink
     ln -s "{{ source }}" "{{ target }}"
     echo -e "${GREEN}✓${NC} {{ target }}"
+
+# =====================================================
+# Neovim Setup
+# =====================================================
+
+# 🔧 Setup Neovim Python environment
+setup-nvim:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    
+    echo -e "${BLUE}🔧 Setting up Neovim Python environment...${NC}"
+    
+    # Create venv directory if it doesn't exist
+    mkdir -p "$HOME/.venvs"
+    
+    # Check if nvim venv already exists
+    if [[ -d "$HOME/.venvs/nvim" ]]; then
+        echo -e "${YELLOW}📂 Neovim venv already exists, updating packages...${NC}"
+    else
+        echo -e "${GREEN}🐍 Creating Neovim Python environment...${NC}"
+        uv venv "$HOME/.venvs/nvim"
+    fi
+    
+    # Install neovim package
+    echo -e "${YELLOW}📦 Installing neovim Python package...${NC}"
+    cd "$HOME/.venvs/nvim"
+    uv pip install neovim
+    
+    echo -e "${GREEN}✅ Neovim Python environment ready${NC}"
+    
+    # Install Node.js provider
+    echo -e "${YELLOW}📦 Installing Neovim Node.js provider...${NC}"
+    if command -v npm &>/dev/null; then
+        npm install -g neovim@latest
+        echo -e "${GREEN}✅ Neovim Node.js provider installed${NC}"
+    else
+        echo -e "${RED}❌ npm not found. Node.js provider not installed${NC}"
+    fi
 
 # =====================================================
 # Development and Testing Commands
