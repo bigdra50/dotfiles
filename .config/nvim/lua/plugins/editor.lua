@@ -47,7 +47,9 @@ return {
   {
     "terrortylor/nvim-comment",
     keys = { "gc", "gcc" },
-    config = true,
+    config = function()
+      require("nvim_comment").setup()
+    end,
   },
   {
     "kylechui/nvim-surround",
