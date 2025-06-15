@@ -1,9 +1,7 @@
 local status, conform = pcall(require, "conform")
 if not status then
-    print("Conform is not installed")
   return
 end
-print("Conform is installed")
 
 conform.setup({
   formatters_by_ft = {

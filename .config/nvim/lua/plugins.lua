@@ -15,7 +15,6 @@ packer.startup(function(use)
 
   -- カラースキーム
   use("sainnhe/gruvbox-material")
-  use("rose-pine/neovim")
   use("sainnhe/everforest")
   use("folke/lsp-colors.nvim")
 
@@ -63,7 +62,7 @@ packer.startup(function(use)
   use("hrsh7th/cmp-cmdline")
   use("hrsh7th/cmp-nvim-lsp-signature-help")
   use("hrsh7th/vim-vsnip")
-  use("glepnir/lspsaga.nvim")
+  use("nvimdev/lspsaga.nvim")
   use({
     "folke/trouble.nvim",
     requires = {
@@ -178,7 +177,7 @@ packer.startup(function(use)
   use({ "airblade/vim-gitgutter", branch = "main" })
 
   -- その他のプラグイン
-  use("github/copilot.vim")
+  -- use("github/copilot.vim") -- 使用停止
 
   --  -- avante.nvim
 
@@ -272,7 +271,7 @@ packer.startup(function(use)
       "hrsh7th/nvim-cmp", -- avante commandsとmentions用のオートコンプリート
       "ibhagwan/fzf-lua", -- file_selector provider fzf用
       "nvim-tree/nvim-web-devicons", -- または echasnovski/mini.icons
-      "zbirenbaum/copilot.lua", -- providers='copilot'用
+      -- "zbirenbaum/copilot.lua", -- providers='copilot'用（使用停止）
       {
         -- 画像貼り付けサポート
         "HakonHarnes/img-clip.nvim",
@@ -305,9 +304,7 @@ packer.startup(function(use)
     -- Windows用: run = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
     config = function()
       require("avante").setup({
-        -- provider = "copilot",
         provider = "claude",
-        -- provider = "openai",
         auto_suggestions_provider = "claude",
         behaviour = {
           auto_suggestions = true,
@@ -330,22 +327,25 @@ packer.startup(function(use)
           },
         },
         -- providers-setting
-        claude = {
-          model = "claude-3-7-sonnet-20250219", --
-          -- model = "claude-3-5-sonnet-20240620", -- $3/$15, maxtokens=8000
-          -- model = "claude-3-opus-20240229",  -- $15/$75
-          -- model = "claude-3-haiku-20240307", -- $0.25/1.25
-          max_tokens = 8000,
-        },
-        copilot = {
-          model = "gpt-4o-2024-05-13",
-          -- model = "gpt-4o-mini",
-          max_tokens = 4096,
-        },
-        openai = {
-          model = "gpt-4o", -- $2.5/$10
-          -- model = "gpt-4o-mini", -- $0.15/$0.60
-          max_tokens = 4096,
+        providers = {
+          claude = {
+            model = "claude-3-7-sonnet-20250219", --
+            -- model = "claude-3-5-sonnet-20240620", -- $3/$15, maxtokens=8000
+            -- model = "claude-3-opus-20240229",  -- $15/$75
+            -- model = "claude-3-haiku-20240307", -- $0.25/1.25
+            timeout = 30000,
+            extra_request_body = {
+              max_tokens = 8000,
+            },
+          },
+          openai = {
+            model = "gpt-4o", -- $2.5/$10
+            -- model = "gpt-4o-mini", -- $0.15/$0.60
+            timeout = 30000,
+            extra_request_body = {
+              max_tokens = 4096,
+            },
+          },
         },
       })
     end,
