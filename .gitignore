@@ -91,3 +91,6 @@ Cargo.lock
 *.zip
 *.tar.gz
 *.rar
+
+# Personal TODO files
+TODO.md
