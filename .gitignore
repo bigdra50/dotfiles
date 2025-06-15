@@ -94,3 +94,6 @@ Cargo.lock
 
 # Personal TODO files
 TODO.md
+
+# Claude Code instructions (personal notes)
+CLAUDE.md
