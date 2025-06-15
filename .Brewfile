@@ -1,7 +1,7 @@
 tap "homebrew/bundle"
-tap "homebrew/cask"
+# tap "homebrew/cask"  # No longer needed in recent Homebrew
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
+# tap "homebrew/core"  # No longer needed in recent Homebrew
 tap "homebrew/services"
 tap "koekeishiya/formulae"
 brew "coreutils"
@@ -25,8 +25,5 @@ brew "koekeishiya/formulae/skhd"
 brew "koekeishiya/formulae/yabai"
 cask "clipy"
 cask "font-hack-nerd-font"
-cask "notion"
 cask "scroll-reverser"
-cask "skitch"
-cask "tweeten"
 cask "xcodes"
