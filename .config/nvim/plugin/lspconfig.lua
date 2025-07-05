@@ -1,8 +1,8 @@
-local mason = require("mason")
-mason.setup()
+-- Mason setup is now handled in lua/plugins/lsp.lua
 
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local path_utils = require('utils.path')
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local opts = { noremap = true, silent = true }
 local on_attach = function(client, bufnr)
@@ -36,7 +36,12 @@ lspconfig.sourcekit.setup({
   root_dir = lspconfig.util.root_pattern("Package.swift", ".git"),
   -- Use visionOS SDK (UIKit etc.)
   -- ref: https://qiita.com/niusounds/items/5a39b65b54939814a9f9
-  -- TODO: Make version dynamic
+  -- Example: Dynamic Xcode path resolution
+  -- local xcode_path = path_utils.xcode_path()
+  -- if xcode_path then
+  --   local sourcekit_lsp = path_utils.join(xcode_path, "Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp")
+  --   -- Use sourcekit_lsp if it exists
+  -- end
   --cmd = {
   --  --"/Applications/Xcode-16.0.0.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
   --  --"`xcode-select -p`/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp",
@@ -58,12 +63,9 @@ lspconfig.sourcekit.setup({
   --},
 })
 
--- nice icons
-local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+-- 診断サインの設定
+local signs = require('utils.signs')
+signs.setup_diagnostics()
 
 ---- 以前の設定から追加: LSP-Diagnostic Settings
 --vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

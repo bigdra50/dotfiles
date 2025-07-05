@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# adb devicesからIPアドレスを取得するコマンド
+adb devices | grep -E '^\s*[0-9]+\.' | awk '{print $1}' | cut -d':' -f1 | head -1

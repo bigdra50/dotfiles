@@ -9,26 +9,9 @@ if vim.fn.filereadable(vimrc_path) == 1 then
   end
 end
 --vim.opt.runtimepath:append("~/.config/nvim")
--- Use dedicated nvim venv, then uv project, then system python
-local function find_python_executable()
-  -- First try dedicated nvim venv
-  local nvim_venv_python = vim.fn.expand('~/.venvs/nvim/bin/python')
-  if vim.fn.filereadable(nvim_venv_python) == 1 then
-    return nvim_venv_python
-  end
-  
-  -- Then try uv's project python
-  local uv_python = vim.fn.system('uv run --quiet which python 2>/dev/null'):gsub('\n', '')
-  if vim.v.shell_error == 0 and vim.fn.filereadable(uv_python) == 1 then
-    return uv_python
-  end
-  
-  -- Fallback to system python
-  local system_python = vim.fn.exepath('python3') or vim.fn.exepath('python')
-  return system_python
-end
-
-vim.g.python3_host_prog = find_python_executable()
+-- Use path utility for Python executable detection
+local path_utils = require('utils.path')
+vim.g.python3_host_prog = path_utils.find_python_venv()
 
 
 if vim.api.nvim_get_option('compatible') then

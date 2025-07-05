@@ -7,10 +7,6 @@ cmp.setup({
       vim.fn["vsnip#anonymous"](args.body)
     end,
   },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
   sources = cmp.config.sources({
     { name = "nvim_lsp" },
     { name = "vsnip" },
@@ -28,6 +24,10 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   formatting = {
     format = lspkind.cmp_format({
       mode = 'symbol',
@@ -44,13 +44,36 @@ cmp.setup.cmdline('/', {
   }
 })
 
-cmp.setup.cmdline(":", {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = "path" },
-    { name = "cmdline" },
-  },
-})
+-- コマンドライン補完の設定
+local success = pcall(function()
+  cmp.setup.cmdline(":", {
+    mapping = {
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.confirm({ select = true })
+        else
+          cmp.complete()
+        end
+      end, {'c'}),
+      ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), {'c'}),
+      ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'c'}),
+    },
+    sources = {
+      { name = "cmdline", keyword_length = 1 },
+      { name = "path", keyword_length = 1 },
+    },
+    completion = {
+      autocomplete = false,  -- 自動補完を無効化
+    },
+    preselect = cmp.PreselectMode.Item,  -- 最初の項目を自動選択
+  })
+  
+  -- CmdlineChangedによる自動補完は削除（遅延の原因となるため）
+end)
+
+if not success then
+  vim.notify("cmp-cmdline setup failed", vim.log.levels.WARN)
+end
 
 -- vim-vsnip用
 vim.cmd([[
@@ -60,6 +83,6 @@ let g:vsnip_filetypes.typescript = ['typescriptreact']
 ]])
 
 vim.cmd [[
-  set completeopt=menuone,noinsert,noselect
+  set completeopt=menu,menuone,noselect
   highlight! default link CmpItemKind CmpItemMenuDefault
 ]]

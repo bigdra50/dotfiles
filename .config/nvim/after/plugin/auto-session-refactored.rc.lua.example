@@ -1,0 +1,24 @@
+-- リファクタリング後の例（auto-session）
+local plugin = require('utils.plugin')
+local config = require('utils.config')
+local path_utils = require('utils.path')
+
+-- デフォルト設定
+local default_config = {
+  log_level = "error",
+  auto_session_suppress_dirs = {
+    path_utils.home(),
+    path_utils.join(path_utils.home(), "Projects"),
+    path_utils.join(path_utils.home(), "Downloads"),
+    "/"
+  },
+  auto_save_enabled = true,
+  auto_restore_enabled = true,
+}
+
+-- ユーザー設定を読み込んでマージ
+local user_config = config.from_global('auto_session_config', {})
+local final_config = config.merge(default_config, user_config)
+
+-- プラグインをセットアップ
+plugin.safe_setup('auto-session', final_config)

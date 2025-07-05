@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# adb connect $(adbip):5555 を実行するコマンド
+
+# adbipコマンドからIPアドレスを取得
+IP=$(adbip)
+
+# IPアドレスが取得できない場合のエラーハンドリング
+if [ -z "$IP" ]; then
+    echo "Error: IP address not found. Make sure device is connected via USB and USB debugging is enabled."
+    exit 1
+fi
+
+echo "Found device IP: $IP"
+echo "Connecting to $IP:5555..."
+
+# adb connectを実行
+adb connect "$IP:5555"

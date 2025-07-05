@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@textlint-ja/textlint-rule-preset-ai-writing": "^1.4.0",
+    "textlint": "^15.1.0"
+  }
+}

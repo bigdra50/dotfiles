@@ -11,7 +11,7 @@ tools = [
     { name = "du-dust", version = "latest", description = "disk usage analyzer" },
     { name = "eza", version = "latest", description = "modern ls replacement" },
     { name = "fd-find", version = "latest", description = "find replacement" },
-    { name = "gitui", version = "0.26.3", description = "git TUI" },
+    { name = "gitui", version = "latest", description = "git TUI", flags = "--locked" },
     { name = "hyperfine", version = "latest", description = "benchmarking tool" },
     { name = "just", version = "latest", description = "command runner" },
     { name = "lsd", version = "latest", description = "ls deluxe" },
