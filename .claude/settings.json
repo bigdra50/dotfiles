@@ -1,0 +1,54 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(say *)",
+      "Bash(date *)",
+      "Bash(gh status)",
+      "Bash(gh repo view *)",
+      "Bash(gh issue list *)",
+      "Bash(gh pr list *)",
+      "Bash(gh pr view *)",
+      "Bash(gh issue view *)",
+      "Bash(gh run list *)",
+      "Bash(gh run view *)",
+      "Bash(gh api repos/*/pulls/*/comments)",
+      "Bash(gh api repos/*/issues/*/comments)",
+      "Bash(gh browse --no-browser *)",
+      "Bash(gh auth status)",
+      "Bash(git status)",
+      "Bash(git log *)",
+      "Bash(git show *)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(git remote *)",
+      "Bash(git config --get *)",
+      "Bash(git config --list)",
+      "Bash(git rev-parse *)",
+      "Bash(git ls-files *)",
+      "Bash(git ls-remote *)",
+      "Bash(git describe *)",
+      "Bash(git tag --list *)",
+      "Bash(git blame *)",
+      "Bash(git shortlog *)",
+      "Bash(git reflog --no-walk *)"
+    ]
+  },
+  "model": "sonnet",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/bin/claude-task-complete.sh"
+          },
+          {
+            "type": "command",
+            "command": "~/bin/stop-event-debug.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

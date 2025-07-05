@@ -3,6 +3,8 @@ if not status then
   return
 end
 
+local path_utils = require('utils.path')
+
 conform.setup({
   formatters_by_ft = {
     lua = { "stylua" },
@@ -20,7 +22,7 @@ conform.setup({
   },
   formatters = {
     swift_format = {
-      command = "xcrun swift-format",
+      command = path_utils.get_tool_path("swift-format"),
       args = { "--mode", "format" },
     },
     -- 他にカスタム設定が必要なフォーマッターがあれば追加

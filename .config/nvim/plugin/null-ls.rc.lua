@@ -1,5 +1,6 @@
 -- mason-null-ls.lua
-
+-- Temporarily disabled due to mason-null-ls compatibility issues
+--[[
 local mason_null_ls = require("mason-null-ls")
 local null_ls = require("null-ls")
 
@@ -68,3 +69,4 @@ end
 setup_mason_null_ls()
 setup_null_ls()
 -- setup_format_keymap()
+--]]

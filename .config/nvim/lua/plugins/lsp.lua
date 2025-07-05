@@ -3,19 +3,34 @@ return {
   {
     "williamboman/mason.nvim",
     build = ":MasonUpdate",
-    config = true,
+    cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUpdate", "MasonLog" },
+    config = function()
+      require("mason").setup({
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+          }
+        }
+      })
+    end,
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = { "mason.nvim" },
+    dependencies = { "williamboman/mason.nvim" },
+    event = { "BufReadPre", "BufNewFile" },
     config = function()
-      -- 設定は plugin/lspconfig.lua で管理
+      require("mason-lspconfig").setup({
+        ensure_installed = {},  -- LSP servers to auto-install
+        automatic_installation = false,  -- Disable automatic installation
+      })
     end,
   },
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
-    dependencies = { "mason-lspconfig.nvim" },
+    dependencies = { "williamboman/mason-lspconfig.nvim" },
   },
 
   -- LSP UI強化
@@ -34,22 +49,22 @@ return {
   },
 
   -- Linterとフォーマッター
-  {
-    "nvimtools/none-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = { 
-      "nvim-lua/plenary.nvim",
-      "nvimtools/none-ls-extras.nvim",
-    },
-  },
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "mason.nvim",
-      "none-ls.nvim",
-    },
-  },
+  -- {
+  --   "nvimtools/none-ls.nvim",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = { 
+  --     "nvim-lua/plenary.nvim",
+  --     "nvimtools/none-ls-extras.nvim",
+  --   },
+  -- },
+  -- {
+  --   "jay-babu/mason-null-ls.nvim",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   dependencies = {
+  --     "mason.nvim",
+  --     "none-ls.nvim",
+  --   },
+  -- },
   {
     "stevearc/conform.nvim",
     event = { "BufWritePre" },
@@ -57,8 +72,12 @@ return {
   },
   {
     "zapling/mason-conform.nvim",
-    dependencies = { "mason.nvim", "conform.nvim" },
-    config = true,
+    dependencies = { "williamboman/mason.nvim", "stevearc/conform.nvim" },
+    config = function()
+      require("mason-conform").setup({
+        ignore_install = {"swift-format"}, -- Mac組み込みのswift-formatを使用するため
+      })
+    end,
   },
 
   -- 補完システム
@@ -69,13 +88,19 @@ return {
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lsp-signature-help",
       "hrsh7th/cmp-vsnip",
       "hrsh7th/vim-vsnip",
       "saadparwaiz1/cmp_luasnip",
       "onsails/lspkind.nvim",
     },
+  },
+  
+  -- コマンドライン補完（独立設定）
+  {
+    "hrsh7th/cmp-cmdline",
+    lazy = false,  -- 起動時に読み込み
+    dependencies = { "hrsh7th/nvim-cmp" },
   },
 
   -- スニペット

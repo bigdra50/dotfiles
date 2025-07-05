@@ -1,50 +1,45 @@
+local keymap = require('utils.keymap')
+
 local function setupListeners()
   local dap = require("dap")
-  local areSet = false
-
-  dap.listeners.after["event_initialized"]["me"] = function()
-    if not areSet then
-      areSet = true
-      vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Continue", noremap = true })
-      vim.keymap.set("n", "<leader>dC", dap.run_to_cursor, { desc = "Run To Cursor" })
-      vim.keymap.set("n", "<leader>ds", dap.step_over, { desc = "Step Over" })
-      vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into" })
-      vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "Step Out" })
-      vim.keymap.set({ "n", "v" }, "<Leader>dh", require("dap.ui.widgets").hover, { desc = "Hover" })
-      vim.keymap.set({ "n", "v" }, "<Leader>de", require("dapui").eval, { desc = "Eval" })
+  
+  -- DAPの基本キーマップを直接設定
+  vim.keymap.set("n", "<leader>dc", dap.continue, { desc = "Continue" })
+  vim.keymap.set("n", "<leader>dC", dap.run_to_cursor, { desc = "Run To Cursor" })
+  vim.keymap.set("n", "<leader>ds", dap.step_over, { desc = "Step Over" })
+  vim.keymap.set("n", "<leader>di", dap.step_into, { desc = "Step Into" })
+  vim.keymap.set("n", "<leader>do", dap.step_out, { desc = "Step Out" })
+  vim.keymap.set({ "n", "v" }, "<Leader>dh", require("dap.ui.widgets").hover, { desc = "Hover" })
+  vim.keymap.set({ "n", "v" }, "<Leader>de", function()
+    local dapui_ok, dapui = pcall(require, "dapui")
+    if dapui_ok then
+      dapui.eval()
     end
-  end
-
-  dap.listeners.after["event_terminated"]["me"] = function()
-    if areSet then
-      areSet = false
-      vim.keymap.del("n", "<leader>dc")
-      vim.keymap.del("n", "<leader>dC")
-      vim.keymap.del("n", "<leader>ds")
-      vim.keymap.del("n", "<leader>di")
-      vim.keymap.del("n", "<leader>do")
-      vim.keymap.del({ "n", "v" }, "<Leader>dh")
-      vim.keymap.del({ "n", "v" }, "<Leader>de")
-    end
-  end
+  end, { desc = "Eval" })
 end
 
-local status, dap = pcall(require, "dap")
-if not status then return end
+local plugin = require('utils.plugin')
+local path_utils = require('utils.path')
 
-local status, xcodebuild = pcall(require, "xcodebuild.integrations.dap")
-if not status then return end
+local dap = plugin.safe_require('dap')
+if not dap then return end
 
--- TODO: make sure to set path to your codelldb
-local codelldbPath = os.getenv("HOME") .. "/tools/codelldb-aarch64-darwin/extension/adapter/codelldb"
-xcodebuild.setup(codelldbPath)
+local xcodebuild = plugin.safe_require('xcodebuild.integrations.dap')
+if not xcodebuild then return end
 
-local define = vim.fn.sign_define
-define("DapBreakpoint", { text = "", texthl = "DiagnosticError", linehl = "", numhl = "" })
-define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError", linehl = "", numhl = "" })
-define("DapStopped", { text = "", texthl = "DiagnosticOk", linehl = "", numhl = "" })
-define("DapLogPoint", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
-define("DapLogPoint", { text = "", texthl = "DiagnosticInfo", linehl = "", numhl = "" })
+-- Use path utility to find codelldb
+local codelldbPath = path_utils.get_tool_path("codelldb")
+
+if codelldbPath ~= "" and codelldbPath ~= nil then
+  xcodebuild.setup(codelldbPath)
+  -- CodeLLDB設定完了（メッセージを非表示）
+else
+  vim.notify("CodeLLDB not found. Please install VS Code LLDB extension.", vim.log.levels.WARN)
+end
+
+-- DAPサインの設定
+local signs = require('utils.signs')
+signs.setup_dap()
 
 setupListeners()
 

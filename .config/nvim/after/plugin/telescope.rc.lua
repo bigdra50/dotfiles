@@ -1,7 +1,8 @@
-local status, telescope = pcall(require, "telescope")
-if not status then
-  return
-end
+local plugin = require('utils.plugin')
+local keymap = require('utils.keymap')
+
+local telescope = plugin.safe_require('telescope')
+if not telescope then return end
 
 telescope.setup({
   defaults = {
@@ -15,8 +16,12 @@ telescope.setup({
 })
 
 -- キーマッピング
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+local builtin = plugin.safe_require('telescope.builtin')
+if builtin then
+  keymap.bulk_set({
+    { 'n', '<leader>ff', builtin.find_files, { desc = 'Find files' } },
+    { 'n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' } },
+    { 'n', '<leader>fb', builtin.buffers, { desc = 'Buffers' } },
+    { 'n', '<leader>fh', builtin.help_tags, { desc = 'Help tags' } },
+  })
+end

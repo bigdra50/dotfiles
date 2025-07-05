@@ -1,5 +1,14 @@
 vim.cmd("autocmd!")
 
+-- 特定の非推奨警告のみを無効化
+local original_notify = vim.notify
+vim.notify = function(msg, level, opts)
+  if msg and msg:match("vim%.tbl_flatten is deprecated") then
+    return -- tbl_flattenの警告のみを無視
+  end
+  return original_notify(msg, level, opts)
+end
+
 vim.scriptencoding = "utf-8"
 vim.opt.encoding = "utf-8"
 vim.opt.fileencoding = "utf-8"
@@ -13,7 +22,8 @@ vim.opt.breakindent = true
 vim.opt.hlsearch = true
 vim.opt.backup = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 2
+vim.opt.cmdheight = 1
+vim.opt.shortmess:append("I")  -- 起動メッセージを短縮
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
 vim.opt.laststatus = 3
@@ -37,14 +47,23 @@ vim.opt.swapfile = false
 vim.opt.pumblend = 7
 vim.wo.relativenumber = true
 
+-- nvim-cmp補完メニューの設定
+vim.opt.pumheight = 15  -- 補完メニューの最大高さ
+vim.opt.pumwidth = 30   -- 補完メニューの最小幅
+
 -- 不可視文字を非表示(colorscheme用)
 vim.opt.list = false
 
 -- auto-session設定
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
--- Leder Key
+-- Leader Key
 vim.g.mapleader = " "
+
+-- キーマップのタイムアウト設定
+vim.opt.timeout = true
+vim.opt.timeoutlen = 300  -- リーダーキーのタイムアウト（ミリ秒）
+vim.opt.ttimeoutlen = 10  -- キーコードのタイムアウト
 
 local keymap = vim.keymap
 
@@ -66,3 +85,4 @@ keymap.set("i", "jj", "<Esc>")
 
 -- 設定ファイルを開く
 keymap.set("n", "<F1>", ":edit $MYVIMRC<CR>")
+
