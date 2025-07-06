@@ -8,9 +8,26 @@
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
-# 音声読み上げ設定
+# 音声読み上げ設定（settings.jsonから読み込み）
+SETTINGS_FILE="$HOME/.claude/settings.json"
+VOICE_ENABLED=true
 SPEECH_RATE_EN=160
 SPEECH_RATE_JA=180
+
+# settings.jsonから設定を読み込み
+if [ -f "$SETTINGS_FILE" ]; then
+    VOICE_ENABLED=$(jq -r '.voice.enabled' "$SETTINGS_FILE" 2>/dev/null)
+    SPEECH_RATE_EN=$(jq -r '.voice.rate_en // 160' "$SETTINGS_FILE" 2>/dev/null)
+    SPEECH_RATE_JA=$(jq -r '.voice.rate_ja // 180' "$SETTINGS_FILE" 2>/dev/null)
+    
+    # nullや空文字の場合のフォールバック
+    [ "$VOICE_ENABLED" = "null" ] && VOICE_ENABLED=true
+    [ "$SPEECH_RATE_EN" = "null" ] && SPEECH_RATE_EN=160
+    [ "$SPEECH_RATE_JA" = "null" ] && SPEECH_RATE_JA=180
+fi
+
+# デバッグ用ログ
+echo "DEBUG: VOICE_ENABLED=$VOICE_ENABLED" >> ~/.claude-task-complete.log
 
 # 基本情報を取得
 current_dir=$(pwd)
@@ -102,7 +119,7 @@ else
 fi
 
 # 音声メッセージを構築と読み上げ
-if command -v say >/dev/null 2>&1; then
+if command -v say >/dev/null 2>&1 && [ "$VOICE_ENABLED" = "true" ]; then
     # 1. 完了メッセージ
     completion_message="Task completed. Project: ${project_name}"
     say -r "$SPEECH_RATE_EN" "$completion_message"

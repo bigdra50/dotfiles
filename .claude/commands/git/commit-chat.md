@@ -30,9 +30,7 @@ Follow these rules:
 
 4. **Write commit message in Japanese**
 
-5. **DO NOT include "Generated with Anthropic" or similar footer text**
-
-6. **Analyze conversation context for appropriate commit message**
+5. **Analyze conversation context for appropriate commit message**
 
 Workflow:
 

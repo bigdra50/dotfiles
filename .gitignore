@@ -96,3 +96,4 @@ TODO.md
 
 # Claude Code instructions (personal notes)
 .claude/settings.local.json
+.config/nvim/.claude/settings.local.json
