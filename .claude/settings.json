@@ -1,9 +1,8 @@
 {
-  "env": {
-    "MAX_THINKING_TOKENS": "31999"
-  },
+  "env": {},
   "permissions": {
     "allow": [
+      "WebFetch(domain:github.com)",
       "Bash(say *)",
       "Bash(date *)",
       "Bash(gh status)",
@@ -33,33 +32,39 @@
       "Bash(git tag --list *)",
       "Bash(git blame *)",
       "Bash(git shortlog *)",
-      "Bash(git reflog --no-walk *)"
+      "Bash(git reflog --no-walk *)",
+      "mcp__unity-natural-mcp"
     ],
     "deny": [
-      "permissions": {
-        "Bash (sudo:*)",
-        "Bash (rm--rf: *)",
-        "Bash (git push:*) ",
-        "Bash (git reset:*)",
-        "Bash (git rebase:*)",
-        "Read (.env.*)",
-        "Read (id_rsa)",
-        "Read (id_ed25519)",
-        "Read (**/*token*) ",
-        "Write(.env*)",
-        "Write (**/secrets/**)",
-        "Bash (curl:*) ",
-        "Bash (wget :*) ",
-        "Bash (nc:*) ",
-        "Bash (npm uninstall:*)",
-        "Bash (npm remove: *)",
-        "Bash(psql: *) ",
-        "Bash (mysql:*)",
-        "Bash (mongod:*) ",
-        "mcp_supabase__execute_sql"
+      "Bash (sudo:*)",
+      "Bash (rm--rf: *)",
+      "Bash (git push:*) ",
+      "Bash (git reset:*)",
+      "Bash (git rebase:*)",
+      "Read (.env.*)",
+      "Read (id_rsa)",
+      "Read (id_ed25519)",
+      "Read (**/*token*) ",
+      "Write(.env*)",
+      "Write (**/secrets/**)",
+      "Bash (curl:*) ",
+      "Bash (wget :*) ",
+      "Bash (nc:*) ",
+      "Bash (npm uninstall:*)",
+      "Bash (npm remove: *)",
+      "Bash(psql: *) ",
+      "Bash (mysql:*)",
+      "Bash (mongod:*) ",
+      "mcp_supabase__execute_sql"
     ]
   },
+  "includeCoAuthoredBy": false,
   "model": "sonnet",
+  "voice": {
+    "enabled": true,
+    "rate_en": 160,
+    "rate_ja": 180
+  },
   "hooks": {
     "Stop": [
       {
