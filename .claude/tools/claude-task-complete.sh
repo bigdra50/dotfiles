@@ -8,18 +8,26 @@
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 
+# 音声読み上げ設定
+SPEECH_RATE_EN=160
+SPEECH_RATE_JA=180
+
 # 基本情報を取得
 current_dir=$(pwd)
 project_name=$(basename "$current_dir")
 current_time=$(date '+%H:%M:%S')
 
-# 最新のdebug JSONファイルからtranscript_pathを取得
-latest_debug_json=$(ls -t ~/bin/.stop-event-debug-*.json 2>/dev/null | head -1)
+# stdinからhook JSONを読み取り
+hook_json=$(cat)
+transcript_path=""
+session_id=""
 last_user_content=""
 last_assistant_content=""
 
-if [ -n "$latest_debug_json" ] && [ -f "$latest_debug_json" ]; then
-    transcript_path=$(jq -r '.transcript_path' "$latest_debug_json" 2>/dev/null)
+# hook JSONから情報を抽出
+if [ -n "$hook_json" ]; then
+    transcript_path=$(echo "$hook_json" | jq -r '.transcript_path // empty' 2>/dev/null)
+    session_id=$(echo "$hook_json" | jq -r '.session_id // empty' 2>/dev/null)
     
     if [ -n "$transcript_path" ] && [ -f "$transcript_path" ]; then
         # 最後のuser messageのcontentを抽出（文字列のみ、スラッシュコマンド対応）
@@ -34,6 +42,7 @@ if [ -n "$latest_debug_json" ] && [ -f "$latest_debug_json" ]; then
         last_assistant_content=$(jq -r 'select(.type == "assistant" and .message.role == "assistant") | .message.content[]? | select(.type == "text") | .text' "$transcript_path" 2>/dev/null | tail -1)
         
         # デバッグ情報をログに出力
+        echo "DEBUG: session_id=$session_id" >> ~/.claude-task-complete.log
         echo "DEBUG: transcript_path=$transcript_path" >> ~/.claude-task-complete.log
         echo "DEBUG: last_user_content=$last_user_content" >> ~/.claude-task-complete.log
         echo "DEBUG: last_assistant_content=$last_assistant_content" >> ~/.claude-task-complete.log
@@ -92,21 +101,33 @@ else
 場所: ${current_dir}"
 fi
 
-# 音声メッセージを構築（escaped_titleを使用）
-if [ -n "$last_user_content" ] && [ "$last_user_content" != "null" ]; then
-    # ユーザーメッセージが長い場合は先頭50文字に切り詰める
-    truncated_for_audio=$(echo "$last_user_content" | head -c 50)
-    if [ ${#last_user_content} -gt 50 ]; then
-        truncated_for_audio="${truncated_for_audio}..."
-    fi
-    audio_message="完了しました。${truncated_for_audio}"
-else
-    audio_message="タスクが完了しました。プロジェクト: ${project_name}"
-fi
-
-# 1. 音声通知（CLAUDE.mdの基本方針に従う）
+# 音声メッセージを構築と読み上げ
 if command -v say >/dev/null 2>&1; then
-    say -v Kyoko "$audio_message"
+    # 1. 完了メッセージ
+    completion_message="Task completed. Project: ${project_name}"
+    say -r "$SPEECH_RATE_EN" "$completion_message"
+    
+    # 2. ユーザーの問いかけを読み上げ
+    if [ -n "$last_user_content" ] && [ "$last_user_content" != "null" ]; then
+        # ユーザーメッセージが長い場合は先頭140文字に切り詰める
+        truncated_user_content=$(echo "$last_user_content" | head -c 140)
+        if [ ${#last_user_content} -gt 140 ]; then
+            truncated_user_content="${truncated_user_content}..."
+        fi
+        user_audio_message="質問: ${truncated_user_content}"
+        say -v Kyoko -r "$SPEECH_RATE_JA" "$user_audio_message"
+    fi
+    
+    # 3. エージェントの回答を読み上げ
+    if [ -n "$last_assistant_content" ] && [ "$last_assistant_content" != "null" ]; then
+        # アシスタントメッセージが長い場合は先頭280文字に切り詰める
+        truncated_assistant_content=$(echo "$last_assistant_content" | head -c 280)
+        if [ ${#last_assistant_content} -gt 280 ]; then
+            truncated_assistant_content="${truncated_assistant_content}..."
+        fi
+        assistant_audio_message="回答: ${truncated_assistant_content}"
+        say -v Kyoko -r "$SPEECH_RATE_JA" "$assistant_audio_message"
+    fi
 fi
 
 # 2. WezTerm通知（bell）

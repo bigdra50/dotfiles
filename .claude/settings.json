@@ -1,4 +1,7 @@
 {
+  "env": {
+    "MAX_THINKING_TOKENS": "31999"
+  },
   "permissions": {
     "allow": [
       "Bash(say *)",
@@ -31,6 +34,29 @@
       "Bash(git blame *)",
       "Bash(git shortlog *)",
       "Bash(git reflog --no-walk *)"
+    ],
+    "deny": [
+      "permissions": {
+        "Bash (sudo:*)",
+        "Bash (rm--rf: *)",
+        "Bash (git push:*) ",
+        "Bash (git reset:*)",
+        "Bash (git rebase:*)",
+        "Read (.env.*)",
+        "Read (id_rsa)",
+        "Read (id_ed25519)",
+        "Read (**/*token*) ",
+        "Write(.env*)",
+        "Write (**/secrets/**)",
+        "Bash (curl:*) ",
+        "Bash (wget :*) ",
+        "Bash (nc:*) ",
+        "Bash (npm uninstall:*)",
+        "Bash (npm remove: *)",
+        "Bash(psql: *) ",
+        "Bash (mysql:*)",
+        "Bash (mongod:*) ",
+        "mcp_supabase__execute_sql"
     ]
   },
   "model": "sonnet",
@@ -41,11 +67,55 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/bin/claude-task-complete.sh"
+            "command": "~/.claude/tools/claude-task-complete.sh"
           },
           {
             "type": "command",
-            "command": "~/bin/stop-event-debug.sh"
+            "command": "~/.claude/tools/debug-hook.sh Stop"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/tools/debug-hook.sh PreToolUse"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/tools/debug-hook.sh PostToolUse"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/tools/debug-hook.sh Notification"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/tools/debug-hook.sh SubagentStop"
           }
         ]
       }
