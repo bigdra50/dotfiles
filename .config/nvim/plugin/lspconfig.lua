@@ -9,17 +9,51 @@ local on_attach = function(client, bufnr)
   opts.buffer = bufnr
 
   opts.desc = "Show line diagnostics"
-  vim.keymap.set("n", "<leader>d", vim.diagnostic.open_float, opts)
+  vim.keymap.set("n", "gl", vim.diagnostic.open_float, opts)
 
   opts.desc = "Show documentation for what is under cursor"
   vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
   vim.keymap.set("n", "rn", vim.lsp.buf.rename, opts)
+  
+  -- Inlay hints toggle keybind
   vim.keymap.set("n", "<leader>i", function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
   end, opts)
+  
+  -- Enable inlay hints by default for Go files
+  if client.name == "gopls" then
+    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+  end
 end
+
+-- Go LSP configuration
+lspconfig.gopls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
+      usePlaceholders = true,
+      completeUnimported = true,
+      vulncheck = "Imports",
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+    },
+  },
+})
 
 lspconfig.sourcekit.setup({
   filetypes = { "swift", "objective-c", "objective-cpp", "c", "cpp" },

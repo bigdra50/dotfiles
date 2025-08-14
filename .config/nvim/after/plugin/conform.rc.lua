@@ -18,6 +18,7 @@ conform.setup({
     yaml = { "prettier" },
     markdown = { "prettier" },
     swift = { "swift_format" },
+    -- Go formatting handled by go.nvim
     -- 他の言語設定
   },
   formatters = {
@@ -28,7 +29,7 @@ conform.setup({
     -- 他にカスタム設定が必要なフォーマッターがあれば追加
   },
   format_on_save = function(bufnr)
-    local ignore_filetypes = { "oil" }
+    local ignore_filetypes = { "oil", "go" } -- Go handled by go.nvim
     if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
       return
     end
