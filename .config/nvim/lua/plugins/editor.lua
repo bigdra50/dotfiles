@@ -108,11 +108,11 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = true,
   },
-  {
-    "airblade/vim-gitgutter",
-    branch = "main",
-    event = { "BufReadPre", "BufNewFile" },
-  },
+  -- {
+  --   "airblade/vim-gitgutter",
+  --   branch = "main",
+  --   event = { "BufReadPre", "BufNewFile" },
+  -- },
 
   -- ファイルタイプ固有のプラグイン
   {
