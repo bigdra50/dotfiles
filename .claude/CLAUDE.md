@@ -4,12 +4,12 @@
 
 ## 基本方針
 
-@docs/basics/basic.md
+@~/.claude/docs/basics/basic.md
 
-@docs/basics/coding.md
+@~/.claude/docs/basics/coding.md
 
-@docs/basics/git.md
+@~/.claude/docs/basics/git.md
 
 ## ドキュメント作成
 
-@docs/documentation/guidelines.md
+@~/.claude/docs/documentation/guidelines.md
