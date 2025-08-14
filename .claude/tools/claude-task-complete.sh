@@ -27,7 +27,7 @@ if [ -f "$SETTINGS_FILE" ]; then
 fi
 
 # デバッグ用ログ
-echo "DEBUG: VOICE_ENABLED=$VOICE_ENABLED" >> ~/.claude-task-complete.log
+#echo "DEBUG: VOICE_ENABLED=$VOICE_ENABLED" >> ~/.claude-task-complete.log
 
 # 基本情報を取得
 current_dir=$(pwd)
@@ -118,6 +118,15 @@ else
 場所: ${current_dir}"
 fi
 
+
+# macOS通知
+if command -v osascript >/dev/null 2>&1; then
+    # 特殊文字をエスケープして通知
+    escaped_title=$(printf '%s' "$title" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    escaped_message=$(printf '%s' "$message" | sed 's/\\/\\\\/g; s/"/\\"/g')
+    osascript -e "display notification \"${escaped_message}\" with title \"${escaped_title}\" sound name \"Glass\"" 2>/dev/null
+fi
+
 # 音声メッセージを構築と読み上げ
 if command -v say >/dev/null 2>&1 && [ "$VOICE_ENABLED" = "true" ]; then
     # 1. 完了メッセージ
@@ -148,15 +157,5 @@ if command -v say >/dev/null 2>&1 && [ "$VOICE_ENABLED" = "true" ]; then
 fi
 
 # 2. WezTerm通知（bell）
-printf '\a'
+# printf '\a'
 
-# 3. macOS通知
-if command -v osascript >/dev/null 2>&1; then
-    # 特殊文字をエスケープして通知
-    escaped_title=$(printf '%s' "$title" | sed 's/\\/\\\\/g; s/"/\\"/g')
-    escaped_message=$(printf '%s' "$message" | sed 's/\\/\\\\/g; s/"/\\"/g')
-    osascript -e "display notification \"${escaped_message}\" with title \"${escaped_title}\" sound name \"Glass\"" 2>/dev/null
-fi
-
-# 4. ログ出力
-echo "$(date '+%Y-%m-%d %H:%M:%S') - [TASK_COMPLETE] ${project_name} in ${current_dir}" >> ~/.claude-task-complete.log
