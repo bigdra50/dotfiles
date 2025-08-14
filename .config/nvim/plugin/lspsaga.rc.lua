@@ -76,12 +76,12 @@ saga.setup({
   },
 })
 
-keymap("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+keymap("n", "gf", "<cmd>Lspsaga finder<CR>", { silent = true })
 keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
 keymap("n", "<C-]>", "<cmd>Lspsaga goto_definition<CR>", { silent = true })  -- Ctrl+] for goto definition
 keymap("n", "<C-T>", "<C-o>", { silent = true })  -- Ctrl+T for jump back
 keymap("n", "rn", "<cmd>Lspsaga rename<CR>", { silent = true })
-keymap("n", "K", "<cmd>Lspsaga hover_doc ++quiet<CR>", { silent = true })
+keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
 keymap("n", "<space>e", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
 -- keymap({"n","v"}, "ma", "<cmd>Lspsaga code_action<CR>", { silent = true })
 keymap("n", "g[", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })

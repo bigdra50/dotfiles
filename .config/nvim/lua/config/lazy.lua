@@ -23,6 +23,7 @@ local plugin_modules = {
   require("plugins.lsp"),
   require("plugins.editor"),
   require("plugins.ai"),
+  require("plugins.go"),
 }
 
 for _, module in ipairs(plugin_modules) do

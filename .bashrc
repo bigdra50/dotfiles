@@ -123,3 +123,5 @@ if command -v mise &> /dev/null; then
 elif [ -f "$HOME/.local/bin/mise" ]; then
   eval "$($HOME/.local/bin/mise activate bash)"
 fi
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"

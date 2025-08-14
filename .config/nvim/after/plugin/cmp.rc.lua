@@ -63,7 +63,7 @@ local success = pcall(function()
       { name = "path", keyword_length = 1 },
     },
     completion = {
-      autocomplete = false,  -- 自動補完を無効化
+      autocomplete = { cmp.TriggerEvent.TextChanged },  -- 自動補完を有効化
     },
     preselect = cmp.PreselectMode.Item,  -- 最初の項目を自動選択
   })

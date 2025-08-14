@@ -22,7 +22,9 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = {},  -- LSP servers to auto-install
+        ensure_installed = {
+          "gopls",  -- Go LSP server
+        },
         automatic_installation = false,  -- Disable automatic installation
       })
     end,
@@ -44,7 +46,7 @@ return {
   },
   {
     "folke/trouble.nvim",
-    cmd = { "Trouble", "TroubleToggle" },
+    cmd = { "Trouble" },
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
