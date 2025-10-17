@@ -26,6 +26,12 @@ This is a personal dotfiles repository that manages configuration files for vari
 - `just setup-nvim` - Setup Neovim Python environment
 - `INTERACTIVE=false just init` - Non-interactive installation (for CI/automation)
 
+### Skills Management
+- `just init-skills` - Initialize anthropics/skills submodule
+- `just update-skills` - Update skills to latest version
+- `just link-skills` - Create symlink to personal skills directory (~/.claude/skills)
+- `just skills-status` - Show skills submodule status and available skills
+
 ## Architecture
 
 The repository follows a modular structure:
@@ -61,6 +67,21 @@ The repository follows a modular structure:
    - Platform-specific tool exclusions
    - Non-interactive mode support (`INTERACTIVE=false`)
 
+6. **Claude Code Skills** (`.claude/skills/`)
+   - Organized structure for skill management:
+     - `.claude/skills/anthropics/` - Official Anthropic skills (git submodule)
+     - `.claude/skills/custom/` - Custom/local skills (optional)
+   - Git submodule: [anthropics/skills](https://github.com/anthropics/skills)
+   - Nested directory structure supported (e.g., `document-skills/pdf/`, `document-skills/xlsx/`)
+   - Key skills included:
+     - `mcp-builder` - MCP server development guide
+     - `skill-creator` - Custom skill creation guide
+     - `webapp-testing` - Playwright-based web app testing
+     - `document-skills/{pdf,docx,xlsx,pptx}` - Document processing
+     - `artifacts-builder` - React artifact creation
+     - `algorithmic-art` - p5.js generative art
+     - See `.claude/skills/anthropics/README.md` for full list
+
 ## Important Notes
 
 - Repository location: `~/dev/github.com/bigdra50/dotfiles` (ghq root: `~/dev`)
@@ -93,3 +114,72 @@ The repository follows a modular structure:
 - .config directory handling improvements
 - Cross-platform installation scripts
 - Bootstrap script for one-liner installation
+- Anthropic skills integration via git submodule
+
+## Skills Integration
+
+The repository includes the official Anthropic skills collection organized in a nested structure at `.claude/skills/`. These skills extend Claude Code's capabilities with specialized workflows and tools.
+
+### Directory Structure
+```
+.claude/skills/
+├── anthropics/          # Official Anthropic skills (git submodule)
+│   ├── mcp-builder/
+│   ├── skill-creator/
+│   ├── document-skills/
+│   │   ├── pdf/
+│   │   ├── docx/
+│   │   ├── xlsx/
+│   │   └── pptx/
+│   └── ...
+└── custom/              # Your custom skills (optional)
+    └── my-skill/
+        └── SKILL.md
+```
+
+### Setup
+```bash
+# Initialize submodule (automatically done during just init)
+just init-skills
+
+# Create symlink to personal directory
+just link-skills
+```
+
+### Usage
+Skills are automatically detected by Claude Code when:
+- Located in `.claude/skills/` (project-specific)
+- Symlinked to `~/.claude/skills/` (available in all projects)
+- **Nested directories are fully supported** (e.g., `skills/anthropics/mcp-builder/`)
+
+### Creating Custom Skills
+```bash
+# Create custom skills directory
+mkdir -p .claude/skills/custom/my-skill
+
+# Add SKILL.md with proper frontmatter
+cat > .claude/skills/custom/my-skill/SKILL.md <<'EOF'
+---
+name: my-skill
+description: Description of when to use this skill
+---
+
+# My Skill
+Instructions for Claude...
+EOF
+```
+
+### Updates
+```bash
+# Check for updates and status
+just skills-status
+
+# Update Anthropic skills to latest version
+just update-skills
+```
+
+### Submodule Management
+The skills submodule tracks the main branch of anthropics/skills repository:
+- Manual updates: `git submodule update --remote --merge .claude/skills/anthropics`
+- Status check: `cd .claude/skills/anthropics && git status`
+- Reset to tracked commit: `git submodule update .claude/skills/anthropics`
