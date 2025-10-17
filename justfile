@@ -495,3 +495,138 @@ validate:
 # 📝 Format justfile
 fmt:
     @just --fmt --unstable
+
+# =====================================================
+# Skills Management (Git Submodule)
+# =====================================================
+
+# 🎓 Initialize skills submodule
+init-skills:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo -e "${BLUE}🎓 Initializing anthropics/skills submodule...${NC}"
+    cd "{{ DOTFILES_DIR }}"
+
+    if [[ ! -f .claude/skills/anthropics/.git ]] && [[ ! -d .claude/skills/anthropics/.git ]]; then
+        echo -e "${YELLOW}📥 Initializing submodule for the first time...${NC}"
+        git submodule update --init --recursive .claude/skills/anthropics
+    else
+        echo -e "${GREEN}✓${NC} Skills submodule already initialized"
+    fi
+
+# 🔄 Update skills to latest version
+update-skills:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo -e "${BLUE}🔄 Updating anthropics/skills submodule...${NC}"
+    cd "{{ DOTFILES_DIR }}"
+
+    git submodule update --remote --merge .claude/skills/anthropics
+    echo -e "${GREEN}✅ Skills updated to latest version${NC}"
+
+    # Show what changed
+    echo -e "${BLUE}📊 Skills status:${NC}"
+    cd .claude/skills/anthropics
+    git log -1 --oneline
+
+# 🔗 Link skills to personal directory
+link-skills:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo -e "${BLUE}🔗 Creating symlink for personal skills directory...${NC}"
+
+    # Ensure personal .claude directory exists
+    mkdir -p "$HOME/.claude"
+
+    # Create symlink to skills submodule
+    target="$HOME/.claude/skills"
+    source="{{ DOTFILES_DIR }}/.claude/skills"
+
+    if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
+        echo -e "${GREEN}✓${NC} Skills already linked to $target"
+    elif [[ -e "$target" ]]; then
+        echo -e "${YELLOW}⚠️  $target already exists${NC}"
+        if [[ "${INTERACTIVE:-true}" == "true" ]]; then
+            read -p "  Replace with symlink? [y/N] " -n 1 -r
+            echo
+            if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+                echo -e "${YELLOW}⏭️  Skipping skills link${NC}"
+                exit 0
+            fi
+        fi
+
+        # Backup if it's not a symlink
+        if [[ ! -L "$target" ]]; then
+            backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
+            mv "$target" "$backup"
+            echo -e "${BLUE}📋 Backed up to $backup${NC}"
+        else
+            rm "$target"
+        fi
+    fi
+
+    ln -s "$source" "$target"
+    echo -e "${GREEN}✅ Skills linked to $target${NC}"
+
+    # List available skills
+    echo -e "${BLUE}📚 Available skills:${NC}"
+    ls -1 "$source" | grep -v "^\." | grep -v "README.md" | grep -v "THIRD_PARTY"
+
+# 📊 Show skills status
+skills-status:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo -e "${BLUE}📊 Skills Submodule Status:${NC}"
+    cd "{{ DOTFILES_DIR }}"
+
+    echo ""
+    echo -e "${BLUE}📁 Skills Directory Structure:${NC}"
+    echo "  .claude/skills/"
+    if [[ -d .claude/skills/anthropics ]]; then
+        echo "  ├── anthropics/ (submodule)"
+    fi
+    if [[ -d .claude/skills/custom ]]; then
+        echo "  └── custom/ (local)"
+    fi
+
+    echo ""
+    if [[ -f .claude/skills/anthropics/.git ]] || [[ -d .claude/skills/anthropics/.git ]]; then
+        echo -e "${BLUE}🏢 Anthropic Skills:${NC}"
+        cd .claude/skills/anthropics
+        echo "  Branch:  $(git branch --show-current)"
+        echo "  Commit:  $(git log -1 --oneline)"
+        echo "  Remote:  $(git remote get-url origin)"
+
+        # Check for updates
+        git fetch origin main --quiet
+        local_commit=$(git rev-parse HEAD)
+        remote_commit=$(git rev-parse origin/main)
+
+        if [[ "$local_commit" != "$remote_commit" ]]; then
+            echo -e "${YELLOW}  Status:  Updates available (run 'just update-skills')${NC}"
+        else
+            echo -e "${GREEN}  Status:  Up to date${NC}"
+        fi
+
+        echo ""
+        echo -e "${BLUE}  Available Skills:${NC}"
+        ls -1 | grep -v "^\." | grep -v "README.md" | grep -v "THIRD_PARTY" | sed 's/^/    - /'
+    else
+        echo -e "${RED}  Anthropic skills submodule not initialized${NC}"
+        echo -e "${YELLOW}  Run 'just init-skills' to initialize${NC}"
+    fi
+
+    echo ""
+    echo -e "${BLUE}🛠️  Custom Skills:${NC}"
+    if [[ -d "{{ DOTFILES_DIR }}/.claude/skills/custom" ]]; then
+        cd "{{ DOTFILES_DIR }}/.claude/skills/custom"
+        count=$(find . -maxdepth 2 -name "SKILL.md" | wc -l | tr -d ' ')
+        echo "  Count: $count skill(s)"
+        find . -maxdepth 2 -name "SKILL.md" -exec dirname {} \; | sed 's|^\./||' | sed 's/^/    - /'
+    else
+        echo "  No custom skills directory (create at .claude/skills/custom/)"
+    fi
