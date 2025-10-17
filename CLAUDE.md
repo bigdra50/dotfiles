@@ -26,6 +26,10 @@ This is a personal dotfiles repository that manages configuration files for vari
 - `just setup-nvim` - Setup Neovim Python environment
 - `INTERACTIVE=false just init` - Non-interactive installation (for CI/automation)
 
+### Skills Management
+- Skills are directly committed to `.claude/skills/` (flat structure required by Claude Code)
+- Symlinked to `~/.claude/skills/` for all projects via `just link`
+
 ## Architecture
 
 The repository follows a modular structure:
@@ -61,6 +65,19 @@ The repository follows a modular structure:
    - Platform-specific tool exclusions
    - Non-interactive mode support (`INTERACTIVE=false`)
 
+6. **Claude Code Skills** (`.claude/skills/`)
+   - Flat directory structure (required by Claude Code)
+   - Sourced from [anthropics/skills](https://github.com/anthropics/skills)
+   - Key skills included:
+     - `mcp-builder` - MCP server development guide
+     - `skill-creator` - Custom skill creation guide
+     - `webapp-testing` - Playwright-based web app testing
+     - `document-skills` - PDF, DOCX, XLSX, PPTX processing
+     - `artifacts-builder` - React artifact creation
+     - `algorithmic-art` - p5.js generative art
+     - See `.claude/skills/README.md` for full list
+   - **Note**: Must use flat structure - nested directories (e.g., `skills/category/skill`) are not recognized by Claude Code
+
 ## Important Notes
 
 - Repository location: `~/dev/github.com/bigdra50/dotfiles` (ghq root: `~/dev`)
@@ -93,3 +110,4 @@ The repository follows a modular structure:
 - .config directory handling improvements
 - Cross-platform installation scripts
 - Bootstrap script for one-liner installation
+- Anthropic skills integration (flat structure)
