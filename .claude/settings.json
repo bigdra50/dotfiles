@@ -1,45 +1,24 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "env": {},
+  "env": {
+    "CLAUDE_CODE_AUTO_CONNECT_IDE": "0",
+    "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
+    "CLAUDE_CODE_IDE_SKIP_VALID_CHECK": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "DISABLE_ERROR_REPORTING": "1",
+    "DISABLE_TELEMETRY": "1",
+    "DISABLE_MICROCOMPACT": "1",
+    "ENABLE_BACKGROUND_TASKS": "1",
+    "FORCE_AUTO_BACKGROUND_TASKS": "1",
+    "DISABLE_INTERLEAVED_THINKING": "1"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
-    "allow": [
-      "WebFetch(domain:github.com)",
-      "Bash(say *)",
-      "Bash(date *)",
-      "Bash(gh status)",
-      "Bash(gh repo view *)",
-      "Bash(gh issue list *)",
-      "Bash(gh pr list *)",
-      "Bash(gh pr view *)",
-      "Bash(gh issue view *)",
-      "Bash(gh run list *)",
-      "Bash(gh run view *)",
-      "Bash(gh api repos/*/pulls/*/comments)",
-      "Bash(gh api repos/*/issues/*/comments)",
-      "Bash(gh browse --no-browser *)",
-      "Bash(gh auth status)",
-      "Bash(git status)",
-      "Bash(git log *)",
-      "Bash(git show *)",
-      "Bash(git diff *)",
-      "Bash(git branch *)",
-      "Bash(git remote *)",
-      "Bash(git config --get *)",
-      "Bash(git config --list)",
-      "Bash(git rev-parse *)",
-      "Bash(git ls-files *)",
-      "Bash(git ls-remote *)",
-      "Bash(git describe *)",
-      "Bash(git tag --list *)",
-      "Bash(git blame *)",
-      "Bash(git shortlog *)",
-      "Bash(git reflog --no-walk *)",
-      "mcp__unity-natural-mcp"
-    ],
+    "allow": [],
     "deny": [
       "Bash (sudo:*)",
-      "Bash (rm--rf: *)",
+      "Bash (rm--rf: :*)",
       "Bash (git push:*) ",
       "Bash (git reset:*)",
       "Bash (git rebase:*)",
@@ -53,14 +32,13 @@
       "Bash (wget :*) ",
       "Bash (nc:*) ",
       "Bash (npm uninstall:*)",
-      "Bash (npm remove: *)",
-      "Bash(psql: *) ",
+      "Bash (npm remove: :*)",
+      "Bash(psql: :*) ",
       "Bash (mysql:*)",
-      "Bash (mongod:*) ",
-      "mcp_supabase__execute_sql"
-    ]
+      "Bash (mongod:*) "
+    ],
+    "defaultMode": "acceptEdits"
   },
-  "model": "opus",
   "hooks": {
     "Stop": [
       {
@@ -89,6 +67,7 @@
     "type": "command",
     "command": "bun x ccusage statusline"
   },
+  "alwaysThinkingEnabled": false,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   }

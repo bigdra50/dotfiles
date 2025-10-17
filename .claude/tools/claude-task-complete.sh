@@ -127,35 +127,40 @@ if command -v osascript >/dev/null 2>&1; then
     osascript -e "display notification \"${escaped_message}\" with title \"${escaped_title}\" sound name \"Glass\"" 2>/dev/null
 fi
 
-# 音声メッセージを構築と読み上げ
-if command -v say >/dev/null 2>&1 && [ "$VOICE_ENABLED" = "true" ]; then
-    # 1. 完了メッセージ
-    completion_message="Task completed. Project: ${project_name}"
-    say -r "$SPEECH_RATE_EN" "$completion_message"
-    
-    # 2. ユーザーの問いかけを読み上げ
-    if [ -n "$last_user_content" ] && [ "$last_user_content" != "null" ]; then
-        # ユーザーメッセージが長い場合は先頭140文字に切り詰める
-        truncated_user_content=$(echo "$last_user_content" | head -c 140)
-        if [ ${#last_user_content} -gt 140 ]; then
-            truncated_user_content="${truncated_user_content}..."
-        fi
-        user_audio_message="質問: ${truncated_user_content}"
-        say -v Kyoko -r "$SPEECH_RATE_JA" "$user_audio_message"
-    fi
-    
-    # 3. エージェントの回答を読み上げ
-    if [ -n "$last_assistant_content" ] && [ "$last_assistant_content" != "null" ]; then
-        # アシスタントメッセージが長い場合は先頭280文字に切り詰める
-        truncated_assistant_content=$(echo "$last_assistant_content" | head -c 280)
-        if [ ${#last_assistant_content} -gt 280 ]; then
-            truncated_assistant_content="${truncated_assistant_content}..."
-        fi
-        assistant_audio_message="回答: ${truncated_assistant_content}"
-        say -v Kyoko -r "$SPEECH_RATE_JA" "$assistant_audio_message"
-    fi
-fi
+# 音声メッセージを構築と読み上げ（バックグラウンド実行）
+# if command -v say >/dev/null 2>&1 && [ "$VOICE_ENABLED" = "true" ]; then
+#     # すべての音声読み上げを1つのバックグラウンドプロセスとして実行
+#     {
+#         # 1. 完了メッセージ
+#         completion_message="Task completed. Project: ${project_name}"
+#         say -r "$SPEECH_RATE_EN" "$completion_message"
+#         
+#         # 2. ユーザーの問いかけを読み上げ
+#         if [ -n "$last_user_content" ] && [ "$last_user_content" != "null" ]; then
+#             # ユーザーメッセージが長い場合は先頭140文字に切り詰める
+#             truncated_user_content=$(echo "$last_user_content" | head -c 140)
+#             if [ ${#last_user_content} -gt 140 ]; then
+#                 truncated_user_content="${truncated_user_content}..."
+#             fi
+#             user_audio_message="質問: ${truncated_user_content}"
+#             say -v Kyoko -r "$SPEECH_RATE_JA" "$user_audio_message"
+#         fi
+#         
+#         # 3. エージェントの回答を読み上げ
+#         if [ -n "$last_assistant_content" ] && [ "$last_assistant_content" != "null" ]; then
+#             # アシスタントメッセージが長い場合は先頭280文字に切り詰める
+#             truncated_assistant_content=$(echo "$last_assistant_content" | head -c 280)
+#             if [ ${#last_assistant_content} -gt 280 ]; then
+#                 truncated_assistant_content="${truncated_assistant_content}..."
+#             fi
+#             assistant_audio_message="回答: ${truncated_assistant_content}"
+#             say -v Kyoko -r "$SPEECH_RATE_JA" "$assistant_audio_message"
+#         fi
+#     } &
+#     
+#     # バックグラウンドプロセスのPIDを記録（デバッグ用）
+#     echo "DEBUG: Voice process started with PID=$!" >> ~/.claude-task-complete.log
+#fi
 
 # 2. WezTerm通知（bell）
-# printf '\a'
-
+ printf '\a'
