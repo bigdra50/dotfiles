@@ -14,8 +14,7 @@ curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | 
 1. プラットフォーム検出 (macOS/Linux/WSL)
 2. gitのインストール（必要な場合）
 3. dotfilesリポジトリのクローン
-4. `just`コマンドランナーのインストール
-5. ツールのインストールとシンボリックリンクの作成
+4. ツールのインストールとシンボリックリンクの作成
 
 #### カスタムディレクトリを指定する場合
 
@@ -25,21 +24,18 @@ DOTFILES_DIR=$HOME/custom/path curl -fsSL https://raw.githubusercontent.com/bigd
 
 ### 手動インストール
 
-すでにgitとjustがインストールされている場合：
+すでにgitがインストールされている場合：
 
 ```bash
 # リポジトリをクローン
 git clone https://github.com/bigdra50/dotfiles.git ~/dev/github.com/bigdra50/dotfiles
 cd ~/dev/github.com/bigdra50/dotfiles
 
-# サブモジュールの初期化（Anthropic skills含む）
-git submodule update --init --recursive
-
 # インストール実行
-just init
+./install.sh
 
-# （オプション）スキルのシンボリックリンク作成
-just link-skills
+# 非インタラクティブモード
+INTERACTIVE=false ./install.sh
 ```
 
 ## Docker環境でのテスト
@@ -48,8 +44,8 @@ just link-skills
 # containerを起動してセットアップ実行
 docker-compose up -d ubuntu-dotfiles
 docker exec -e INTERACTIVE=false dotfiles-ubuntu /bin/bash -c "
-  cd ~/.ghq/github.com/bigdra50/dotfiles &&
-  just init
+  cd ~/dev/github.com/bigdra50/dotfiles &&
+  ./install.sh
 "
 
 # containerに接続
@@ -58,55 +54,27 @@ docker exec -it dotfiles-ubuntu /bin/zsh
 
 ## 主要コマンド
 
-### 基本コマンド
+### インストール
 
 ```bash
-# 利用可能なコマンド表示
-just
+# インタラクティブインストール
+./install.sh
 
-# 初期セットアップ（ツールインストール + シンボリックリンク作成）
-just init
+# 非インタラクティブインストール（自動承認）
+INTERACTIVE=false ./install.sh
 
-# ツールのインストール/更新のみ
-just install-tools
+# カスタムディレクトリ指定
+DOTFILES_DIR=~/custom/path ./install.sh
 
-# シンボリックリンク作成のみ
-just link
-
-# プラットフォーム情報表示
-just info
-
-# 設定を削除（シンボリックリンクを削除）
-just unlink
+# ヘルプ表示
+./install.sh --help
 ```
 
-### Skills管理コマンド
+### ツール管理
 
 ```bash
-# Anthropic skillsサブモジュールを初期化
-just init-skills
-
-# スキルを最新バージョンに更新
-just update-skills
-
-# ~/.claude/skillsにシンボリックリンクを作成
-just link-skills
-
-# スキルの状態とリストを表示
-just skills-status
-```
-
-### テスト・開発コマンド
-
-```bash
-# Dockerコンテナでテスト
-just docker-test
-
-# Dockerコンテナのシェルに入る
-just docker-shell
-
-# justfileの構文チェック
-just validate
+# 開発ツールのインストール/更新
+./scripts/install-tools.sh
 ```
 
 ## カスタマイズ
@@ -139,9 +107,8 @@ tools = [
 
 ### 自動インストール
 
-bootstrap/justが自動的にインストールします：
+bootstrap/install.shが自動的にインストールします：
 
-- `just` (command runner)
 - `mise` (runtime manager)
 - `starship` (prompt)
 - Rust/Go/Node.js (mise経由)
@@ -160,23 +127,8 @@ bootstrap/justが自動的にインストールします：
 - プラットフォーム自動検出
 - パッケージマネージャー抽象化（Homebrew/apt/dnf/pacman）
 - WSL特有の設定サポート
-- ネットワークエラー時の自動リトライ（指数バックオフ）
-
-### Skills統合
-
-[Anthropic Skills](https://github.com/anthropics/skills)がgitサブモジュールとして統合されています：
-
-```
-.claude/skills/
-├── anthropics/          # 公式スキル (サブモジュール)
-│   ├── mcp-builder/
-│   ├── skill-creator/
-│   ├── document-skills/
-│   └── ...
-└── custom/              # カスタムスキル（オプション）
-```
-
-詳細は`CLAUDE.md`を参照してください。
+- ネットワークエラー時の自動リトライ（指数バックオフ、bootstrap時）
+- シンプルなBashスクリプトベース（外部依存なし）
 
 ## 注意事項
 
