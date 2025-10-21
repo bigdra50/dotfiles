@@ -6,26 +6,39 @@
 
 新しいマシンで最も簡単な方法：
 
+**macOS / Linux / WSL:**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
 ```
 
+**Windows (PowerShell):**
+```powershell
+irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
+```
+
 このコマンドは以下を自動的に実行します：
-1. プラットフォーム検出 (macOS/Linux/WSL)
+1. プラットフォーム検出 (macOS/Linux/WSL/Windows)
 2. gitのインストール（必要な場合）
 3. dotfilesリポジトリのクローン
 4. ツールのインストールとシンボリックリンクの作成
 
 #### カスタムディレクトリを指定する場合
 
+**macOS / Linux / WSL:**
 ```bash
 DOTFILES_DIR=$HOME/custom/path curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
+```
+
+**Windows (PowerShell):**
+```powershell
+$env:DOTFILES_DIR='C:\custom\path'; irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 ```
 
 ### 手動インストール
 
 すでにgitがインストールされている場合：
 
+**macOS / Linux / WSL:**
 ```bash
 # リポジトリをクローン
 git clone https://github.com/bigdra50/dotfiles.git ~/dev/github.com/bigdra50/dotfiles
@@ -36,6 +49,19 @@ cd ~/dev/github.com/bigdra50/dotfiles
 
 # 非インタラクティブモード
 INTERACTIVE=false ./install.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+# リポジトリをクローン
+git clone https://github.com/bigdra50/dotfiles.git ~\dev\github.com\bigdra50\dotfiles
+cd ~\dev\github.com\bigdra50\dotfiles
+
+# インストール実行（管理者権限推奨）
+.\install.ps1
+
+# 非インタラクティブモード
+$env:INTERACTIVE='false'; .\install.ps1
 ```
 
 ## Docker環境でのテスト
@@ -56,6 +82,7 @@ docker exec -it dotfiles-ubuntu /bin/zsh
 
 ### インストール
 
+**macOS / Linux / WSL:**
 ```bash
 # インタラクティブインストール
 ./install.sh
@@ -70,11 +97,35 @@ DOTFILES_DIR=~/custom/path ./install.sh
 ./install.sh --help
 ```
 
+**Windows (PowerShell):**
+```powershell
+# インタラクティブインストール（管理者権限推奨）
+.\install.ps1
+
+# 非インタラクティブインストール
+$env:INTERACTIVE='false'; .\install.ps1
+# or
+.\install.ps1 -NonInteractive
+
+# カスタムディレクトリ指定
+$env:DOTFILES_DIR='C:\custom\path'; .\install.ps1
+
+# ヘルプ表示
+.\install.ps1 -Help
+```
+
 ### ツール管理
 
+**macOS / Linux / WSL:**
 ```bash
 # 開発ツールのインストール/更新
 ./scripts/install-tools.sh
+```
+
+**Windows (PowerShell):**
+```powershell
+# 開発ツールのインストール/更新
+.\scripts\Install-Tools.ps1
 ```
 
 ## カスタマイズ
@@ -119,21 +170,33 @@ bootstrap/install.shが自動的にインストールします：
 - **macOS** (Intel & Apple Silicon)
 - **Linux** (Ubuntu/Debian, Fedora, Arch Linux)
 - **WSL** (Windows Subsystem for Linux)
+- **Windows** (PowerShell 5.1+, Scoop package manager)
 
 ## 機能
 
 ### マルチプラットフォーム対応
 
 - プラットフォーム自動検出
-- パッケージマネージャー抽象化（Homebrew/apt/dnf/pacman）
+- パッケージマネージャー抽象化（Homebrew/apt/dnf/pacman/Scoop）
 - WSL特有の設定サポート
 - ネットワークエラー時の自動リトライ（指数バックオフ、bootstrap時）
 - シンプルなBashスクリプトベース（外部依存なし）
+- Windows: PowerShellスクリプト、Scoop統合、シンボリックリンクサポート
 
 ## 注意事項
 
 - デフォルトでリポジトリは `~/dev/github.com/bigdra50/dotfiles` に配置されます
+  - Windows: `%USERPROFILE%\dev\github.com\bigdra50\dotfiles`
 - 既存ファイルはインストール時に自動的にバックアップされます（`.backup.YYYYMMDD_HHMMSS`）
 - `INTERACTIVE=false`でCI/自動環境に対応しています
-- インストール後は`source ~/.zshrc`でシェルを再起動してください
+- インストール後は以下でシェルを再起動してください：
+  - macOS/Linux: `source ~/.zshrc`
+  - Windows: `. $PROFILE`
+
+### Windows固有の注意事項
+
+- シンボリックリンク作成のため、**管理者権限での実行を推奨**します
+- Developer Modeを有効にすると、管理者権限なしでもシンボリックリンクが作成可能です
+  - 設定 → 更新とセキュリティ → 開発者向け → 開発者モード
+- Scoopパッケージマネージャーが自動的にインストールされます
 
