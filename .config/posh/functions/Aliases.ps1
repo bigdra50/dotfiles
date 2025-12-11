@@ -1,12 +1,8 @@
 # Aliases.ps1
-# エイリアス設定の実装
 
 Write-ProfileLog "エイリアス設定を読み込みます" "Info"
 
 try {
-    # 基本エイリアス - 短いコマンド名で長いコマンドを実行するためのもの
-    # 頻繁に使用するコマンドの入力を簡略化するために設定
-    
     # nvimをvで呼び出せるように設定
     # エディタへの素早いアクセスを提供
     Set-Alias v nvim
@@ -46,7 +42,7 @@ try {
     Set-Alias -Name update -Value CustomUpdate
     
     # lsdコマンドを使用したディレクトリリスト表示
-    Set-Alias -Name ls -Value gci_lsd
+    Set-Alias -Name ls -Value lsd
     
     # 現在のパス取得用エイリアス
     Set-Alias -Name p -Value GetCurrentPath

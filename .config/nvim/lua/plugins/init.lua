@@ -4,4 +4,5 @@ return {
   { import = "plugins.lsp" },
   { import = "plugins.editor" },
   { import = "plugins.ai" },
+  { import = "plugins.go" },
 }

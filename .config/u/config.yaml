@@ -1,0 +1,19 @@
+# u/uni コマンドの設定ファイル
+# Unity プロジェクト管理ツール設定
+
+# Unity エディタが見つからない場合の動作
+# 選択肢: "error" | "unity_hub" | "prompt"
+editor_not_found_action: "error"
+
+# Unity Hub のカスタムパス (空文字列の場合は自動検出)
+unity_hub_path: ""
+
+# 追加の Unity インストールパス
+custom_unity_paths: []
+
+# ログレベル
+# 選択肢: "debug" | "info" | "warn" | "error"
+log_level: "info"
+
+# デフォルトのプロジェクトパス
+default_project_path: "."
