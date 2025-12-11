@@ -1,3 +1,10 @@
+---
+allowed-tools: [Read, Edit, Write, Bash, Grep, Glob, TodoWrite]
+argument-hint: [project-name] [update-content]
+description: Update project information manually or automatically from daily reports
+model: sonnet
+---
+
 # プロジェクト情報を更新する
 
 指定されたプロジェクトの情報を更新します。

@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Write, Edit, Grep, Glob, TodoWrite]
+description: Generate documentation for code files and projects with practical examples
+model: sonnet
+---
+
 Generate documentation for code files and projects.
 
 Workflow:

@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Write, Bash, Grep]
+description: Create new Obsidian memo based on conversation context with proper structure and tags
+model: sonnet
+---
+
 # memo:new
 
 Obsidian用のメモを会話の文脈やプロンプトに応じて新規作成します。

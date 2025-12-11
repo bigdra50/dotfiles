@@ -1,3 +1,10 @@
+---
+allowed-tools: [Read, Write, Edit, Bash, TodoWrite]
+argument-hint: <task-name> <command> [--toml]
+description: Create mise task with specified name and command for global or project scope
+model: haiku
+---
+
 # miseタスクを作成
 
 指定した名前とコマンドでmiseタスクを作成し、グローバルまたはプロジェクト固有のタスクとして設定します。

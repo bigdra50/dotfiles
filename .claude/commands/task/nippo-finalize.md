@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Edit, Write, Bash, TodoWrite]
+description: Finalize today's daily report by completing sections and carrying over incomplete tasks
+model: sonnet
+---
+
 # 日報を完成させる
 
 本日の日報（~/Documents/Obsidian\ Vault/daily/$(date +%Y-%m-%d(%a)).md）を完成させます。

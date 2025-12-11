@@ -1,3 +1,10 @@
+---
+allowed-tools: [Read, Bash]
+argument-hint: [YYYY-MM-DD|week]
+description: Display today's daily report or specified date's report
+model: haiku
+---
+
 # 今日の日報を表示する
 
 現在の日報ファイル(~/Documents/Obsidian\ Vault/daily/$(date +%Y-%m-%d(%a)).md)の内容を表示してください。

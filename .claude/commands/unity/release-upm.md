@@ -1,3 +1,10 @@
+---
+allowed-tools: [Bash, Read, Edit, Write, Grep, Glob, TodoWrite]
+argument-hint: [--auto|version] [--dry-run]
+description: Automate Unity Package Manager release with versioning and changelog generation
+model: sonnet
+---
+
 # release-upm
 
 Unity Package Manager向けパッケージの自動リリース管理コマンド。任意のUPMリポジトリで前回リリースからの変更を分析し、適切なバージョニングとリリース作成を自動化します。

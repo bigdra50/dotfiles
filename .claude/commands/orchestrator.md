@@ -1,3 +1,8 @@
+---
+allowed-tools: [Task, TodoWrite, Read, Bash, Grep, Glob]
+description: Split complex tasks into sequential steps with parallel subtasks execution
+---
+
 # Orchestrator
 
 Split complex tasks into sequential steps, where each step can contain multiple parallel subtasks (or subagents).

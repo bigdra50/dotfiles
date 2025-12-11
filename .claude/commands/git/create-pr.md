@@ -1,3 +1,9 @@
+---
+allowed-tools: [Bash, Read, TodoWrite]
+description: Create GitHub PR from pushed commits only, ignoring uncommitted changes
+model: sonnet
+---
+
 現在のブランチの**プッシュ済み内容**でPRを作成するコマンド。未コミット変更は無視し、既存のコミット履歴のみを対象とします。
 
 Follow these rules:

@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, TodoWrite]
+description: Review document quality based on specified guidelines and suggest improvements
+model: sonnet
+---
+
 # 文書レビュー
 
 指定されたガイドラインに基づいて文書の品質をレビューし、改善点を提案します。

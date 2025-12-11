@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Edit, Write, Bash, TodoWrite]
+description: Display and update this week's work plan with priority-based task organization
+model: sonnet
+---
+
 # 今週の作業計画を表示・更新する
 
 今週の作業計画を表示し、必要に応じて更新します。

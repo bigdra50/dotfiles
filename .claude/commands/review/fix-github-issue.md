@@ -1,3 +1,10 @@
+---
+allowed-tools: [Bash, Read, Write, Edit, Grep, Glob, TodoWrite]
+argument-hint: <issue-number>
+description: Analyze and fix GitHub issue with testing, linting, and PR creation
+model: sonnet
+---
+
 Please analyze and fix the GitHub issue: $ARGUMENTS.
 
 Follow these steps:

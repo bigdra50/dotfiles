@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Edit, Write, Bash, Grep, Glob, TodoWrite]
+description: Execute incremental code tidying based on Kent Beck's TidyFirst methodology
+model: sonnet
+---
+
 # tidy-first
 
 Kent BeckのTidyFirstメソドロジーに基づいて、コードの小さな整理作業を段階的に実行します。構造的変更と行動的変更を分離し、安全で漸進的なリファクタリングを実践します。
