@@ -12,7 +12,7 @@ trouble.setup({
 })
 
 -- キーマッピングの設定
-vim.keymap.set("n", "<leader>tt", "<cmd>TroubleToggle quickfix<cr>", { desc = "Open a quickfix" })
+vim.keymap.set("n", "<leader>tt", "<cmd>Trouble quickfix toggle<cr>", { desc = "Open a quickfix" })
 
 -- Xcodebuildイベントに対するautocmdの設定
 vim.api.nvim_create_autocmd("User", {

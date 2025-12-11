@@ -60,7 +60,7 @@ return {
 	},
 	{
 		"folke/trouble.nvim",
-		cmd = { "Trouble", "TroubleToggle" },
+		cmd = { "Trouble" },
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
@@ -121,4 +121,3 @@ return {
 		build = "make install_jsregexp",
 	},
 }
-

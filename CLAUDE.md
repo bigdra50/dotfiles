@@ -9,22 +9,14 @@ This is a personal dotfiles repository that manages configuration files for vari
 ## Key Commands
 
 ### Installation and Setup
-- `just init` - Main installation command (clones repo, installs tools, creates symlinks)
-- `just install-tools` - Installs platform-specific tools from tools.toml
-- `just link` - Creates symlinks from dotfiles to home directory
-- `just clone` - Clones or updates dotfiles repository
+- `./install.sh` - Main installation command (installs tools, creates symlinks)
+- `INTERACTIVE=false ./install.sh` - Non-interactive installation (for CI/automation)
+- `./install.sh --help` - Show help message
+- `./scripts/install-tools.sh` - Install platform-specific tools from tools.toml
 
-### Development and Testing
-- `just docker-test` - Test installation in Ubuntu container
-- `just docker-shell` - Enter Ubuntu container shell
-- `just info` - Show platform information
-- `just unlink` - Remove all symlinks
-
-### Debugging and Maintenance
-- `just validate` - Validate justfile syntax
-- `just fmt` - Format justfile
-- `just setup-nvim` - Setup Neovim Python environment
-- `INTERACTIVE=false just init` - Non-interactive installation (for CI/automation)
+### Bootstrap (for new machines)
+- `curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash` - One-liner bootstrap
+- Downloads repo, installs git if needed, runs install.sh automatically
 
 ### Skills Management
 - Skills are directly committed to `.claude/skills/` (flat structure required by Claude Code)
@@ -54,7 +46,9 @@ The repository follows a modular structure:
    - Development tools: `.mise.toml` (mise configuration)
 
 4. **Installation System**
-   - Uses `just` command runner
+   - Bash-based installation scripts (no external dependencies)
+   - `install.sh` - Main installer with platform detection
+   - `bootstrap` - Initial setup script for new machines
    - Automated tool installation via `tools.toml`
    - cargo-binstall for fast Rust tool installation
    - Platform detection (macOS, Linux, WSL)
@@ -65,18 +59,11 @@ The repository follows a modular structure:
    - Platform-specific tool exclusions
    - Non-interactive mode support (`INTERACTIVE=false`)
 
-6. **Claude Code Skills** (`.claude/skills/`)
-   - Flat directory structure (required by Claude Code)
-   - Sourced from [anthropics/skills](https://github.com/anthropics/skills)
-   - Key skills included:
-     - `mcp-builder` - MCP server development guide
-     - `skill-creator` - Custom skill creation guide
-     - `webapp-testing` - Playwright-based web app testing
-     - `document-skills` - PDF, DOCX, XLSX, PPTX processing
-     - `artifacts-builder` - React artifact creation
-     - `algorithmic-art` - p5.js generative art
-     - See `.claude/skills/README.md` for full list
-   - **Note**: Must use flat structure - nested directories (e.g., `skills/category/skill`) are not recognized by Claude Code
+6. **Claude Code Configuration** (`.claude/`)
+   - `.claude/commands/` - Custom slash commands
+   - `.claude/docs/` - Documentation and guides
+   - `.claude/skills/` - Skills (flat structure required by Claude Code)
+   - Symlinked to `~/.claude/` during installation
 
 ## Important Notes
 
@@ -104,10 +91,11 @@ The repository follows a modular structure:
 
 ## Recent Improvements
 
+- Removed just dependency - now pure Bash
+- Simplified installation with install.sh
 - Docker environment for testing and validation
 - Comprehensive tool management via tools.toml
 - Automatic cargo tools PATH integration
 - .config directory handling improvements
 - Cross-platform installation scripts
 - Bootstrap script for one-liner installation
-- Anthropic skills integration (flat structure)
