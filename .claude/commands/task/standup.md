@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Edit, Write, Bash, Grep, TodoWrite, AskUserQuestion]
+description: Conduct morning standup meeting with review, planning, and goal setting
+model: sonnet
+---
+
 # 朝のスタンドアップセッション
 
 ClaudeCodeとの対話形式で、スタンドアップミーティングを実施します。

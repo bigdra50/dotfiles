@@ -1,3 +1,10 @@
+---
+allowed-tools: [Read, Edit, Write, Bash]
+argument-hint: <log-entry>
+description: Add timestamped log entry to today's daily report
+model: haiku
+---
+
 # 分報（times）に記録する
 
 現在の日報ファイル(~/Documents/Obsidian\ Vault/daily/$(date +%Y-%m-%d(%a)).md)に分報スタイルで以下の内容を追記してください｡

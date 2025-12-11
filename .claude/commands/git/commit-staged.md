@@ -1,7 +1,7 @@
 ---
 allowed-tools: ["Bash(git:*)", "Read"]
 description: Create a git commit with gitmoji prefix and Japanese message for staged changes
-model: claude-sonnet-4-0
+model: haiku
 ---
 
 # Create a git commit with staged changes using gitmoji prefix and Japanese commit message

@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Grep, Glob, TodoWrite]
+description: Review project code for consistency, spelling, library usage, and business logic
+model: sonnet
+---
+
 # Lint
 
 プロジェクトのコードをレビューして以下の観点でチェックしてください：

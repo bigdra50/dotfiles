@@ -1,3 +1,10 @@
+---
+allowed-tools: [Bash, Read, Grep, TodoWrite, AskUserQuestion]
+argument-hint: [branch-name]
+description: Create new git branch and worktree simultaneously for parallel work environments
+model: sonnet
+---
+
 # create-worktree
 
 新しいGitブランチとWorktreeを同時に作成し、独立した作業環境を構築します。複数ブランチを並行して作業する際に便利です。

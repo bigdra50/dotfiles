@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, Bash, Grep, Glob]
+description: Display project dashboard with status, priorities, and progress overview
+model: sonnet
+---
+
 # プロジェクトダッシュボードを表示する
 
 全プロジェクトの概要と現在の状況を表示します。

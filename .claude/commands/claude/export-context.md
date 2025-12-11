@@ -1,6 +1,7 @@
 ---
 allowed-tools: [Read, TodoWrite]
 description: Generate a prompt to transfer current conversation context to another session
+model: sonnet
 ---
 
 # Export Conversation Context

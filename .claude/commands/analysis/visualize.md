@@ -1,3 +1,9 @@
+---
+allowed-tools: [Read, TodoWrite]
+description: Generate appropriate diagrams and visualizations in ASCII format based on context
+model: sonnet
+---
+
 # visualize
 
 文脈に応じて適切な図解・可視化を自動生成します。入力内容を理解し、最適なASCII図で表現します。

@@ -1,6 +1,7 @@
 ---
 allowed-tools: Write,Edit,Read,Grep,TodoWrite,Task
 description: Create a new slash command from natural language input with best practices
+model: sonnet
 ---
 
 # 新しいスラッシュコマンドをベストプラクティスに従って作成する

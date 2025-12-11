@@ -1,3 +1,10 @@
+---
+allowed-tools: [Bash, Read, TodoWrite, AskUserQuestion]
+argument-hint: [version]
+description: Create git tag, publish GitHub Release, and push to remote
+model: sonnet
+---
+
 # git-release
 
 Git tagを作成し、GitHub Releasesを公開してリモートにpushする統合リリースコマンド
