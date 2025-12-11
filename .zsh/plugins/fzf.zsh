@@ -21,3 +21,9 @@ ghq-fzf() {
 
 zle -N ghq-fzf
 bindkey '^]' ghq-fzf
+
+# fzf 標準キーバインドと補完を読み込み（Ctrl-T, Ctrl-R, Alt-C）
+# fzf 0.48.0+ の推奨方法: fzf --zsh を使用
+if command -v fzf &> /dev/null; then
+  source <(fzf --zsh)
+fi

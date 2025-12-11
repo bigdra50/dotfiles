@@ -76,7 +76,7 @@ saga.setup({
   },
 })
 
-keymap("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
+keymap("n", "gf", "<cmd>Lspsaga finder<CR>", { silent = true })
 keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>", { silent = true })
 keymap("n", "<C-]>", "<cmd>Lspsaga goto_definition<CR>", { silent = true })  -- Ctrl+] for goto definition
 keymap("n", "<C-T>", "<C-o>", { silent = true })  -- Ctrl+T for jump back
