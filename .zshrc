@@ -4,6 +4,3 @@
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
 [[ -f ~/.zsh/interface.zsh ]] && . ~/.zsh/interface.zsh
 [[ -f ~/.zsh/extensions.zsh ]] && . ~/.zsh/extensions.zsh
-
-
-[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
