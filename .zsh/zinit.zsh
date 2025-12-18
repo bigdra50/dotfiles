@@ -29,8 +29,7 @@ zinit light-mode for \
 # -------------------------------
 
 # zinit light zsh-users/zsh-completions
-zinit ice wait lucid
-zinit light marlonrichert/zsh-autocomplete
+# zsh-autocomplete は completion.zsh で zstyle 設定後に読み込み
 zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
