@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "cleanupPeriodDays": 1000,
   "env": {
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "0",
     "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
@@ -39,7 +40,6 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "sonnet",
   "hooks": {
     "Stop": [
       {
@@ -48,17 +48,10 @@
           {
             "type": "command",
             "command": "~/.claude/tools/claude-task-complete.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|MultiEdit|Write",
-        "hooks": [
+          },
           {
             "type": "command",
-            "command": "~/.claude/tools/activate-unity-on-cs-edit.sh"
+            "command": "~/.claude/hooks/unity-refresh-on-stop.sh"
           }
         ]
       }
@@ -66,9 +59,25 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bun x ccusage statusline"
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
   },
-  "alwaysThinkingEnabled": false,
+  "enabledPlugins": {
+    "frontend-design@claude-code-plugins": false,
+    "code-review@claude-code-plugins": true,
+    "feature-dev@claude-code-plugins": false,
+    "plugin-dev@claude-code-plugins": false,
+    "pr-review-toolkit@claude-code-plugins": false,
+    "security-guidance@claude-code-plugins": true,
+    "session@upfrontier-lab": true,
+    "git-workflow@bigdra50": true,
+    "session@bigdra50": true,
+    "csharp-lsp@claude-plugins-official": false,
+    "code-review@claude-plugins-official": true,
+    "unity-editor@upfrontier-lab": true,
+    "unity@upfrontier-lab": true
+  },
+  "alwaysThinkingEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   }
