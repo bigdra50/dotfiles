@@ -1,5 +1,11 @@
 ---
-allowed-tools: [Read, Write, Edit, Bash, TodoWrite]
+allowed-tools:
+  - Bash(ls:*)
+  - Bash(mise:*)
+  - Read
+  - Write
+  - Edit
+  - TodoWrite
 argument-hint: <task-name> <command> [--toml]
 description: Create mise task with specified name and command for global or project scope
 model: haiku

@@ -1,65 +1,57 @@
-# CLAUDE.md
+# 個人設定
 
 ## 基本方針
 
-@docs/basics/basic.md
+- Reasoningは英語、回答は日本語
+- 過度な称賛を避け、建設的なフィードバック
+- ディレクトリ名に特殊文字が含まれているならエスケープ
 
-@docs/basics/coding.md
+## 英語学習サポート
 
-@docs/basics/git.md
+ユーザーが英語学習中のため:
+- 日本語での指示に対して、応答とは別に簡潔な英文の模範例を提示
+- 例: ユーザーが日本語で指示を出した際に、その指示の英語の適切な表現を最初に示す
 
-Also, you may have codex mcp. codex is a ai agent. if you are stuck, you can ask codex for help. Codex is:
+## 実装完了時
 
-- capable of writing code in multiple programming languages
-- capable of analysing code and finding bugs
-- capable of searching the web for information (really good)
+レビュー負担を軽減するため:
+- 変更内容をASCII図で図解して説明（mermaid不可）
 
-@docs/documentation/guidelines.md
+## 複数の選択肢がある場合
 
-## コミュニケーションガイドライン
+1. まず選択肢を提示: すべての方法を説明し、メリット・デメリットを提示
+2. ユーザーの選択を待つ: AskUserQuestionツールを使用するか、明示的に選択を求める
+3. 承認後に実行: ユーザーが選択した方法のみを実行
 
-- ユーザーが英語学習中のため、日本語や英語での指示に対して、応答とは別に簡潔な英文の模範例を提示する
-  - 例: ユーザーが日本語で指示を出した際に、その指示の英語の適切な表現を最初に示す
-  - 目的は言語学習のサポートと、コミュニケーションの質の向上
-- レビュー負担を軽減するため､ 実装完了後は変更内容をASCII図（mermaid不可）で図解して説明すること。
+実行禁止:
+- ユーザーがまだ選択していない場合
+- 複数のツール呼び出しを並列で実行する可能性がある場合
 
-## AI臭さ除去・自然な文章作成
+## AI臭さ除去
 
-### 避けるべき表現パターン
+### 避けるべき表現
 
-**修飾語・形容詞の濫用**
-- "versatile", "comprehensive", "robust", "powerful", "seamless", "intuitive", "efficient", "intelligent", "advanced", "cutting-edge", "state-of-the-art"
-- "well-structured", "user-friendly", "feature-rich", "high-performance"
-
-**冗長・重複表現**
-- "while preserving/maintaining [something]"の重複使用
-- "allows you to", "enables you to", "helps you to"の連続
-- "easy to use", "simple and easy"
-
-**過度な強調**
-- 絵文字の装飾的使用（機能説明での🌐📚🎓など）
-- 太字・斜体の過度な使用
-- 感嘆符の多用
-
-**AI特有の定型句**
-- "Whether you're...", "From... to...", "Thanks to..."
-- "It's worth noting that", "It's important to understand"
-- "In conclusion", "To summarize"
+- 修飾語濫用: "versatile", "comprehensive", "robust", "seamless", "cutting-edge"
+- 冗長表現: "allows you to", "enables you to", "easy to use"
+- 過度な強調: 装飾的絵文字、太字・斜体の多用、感嘆符
+- 定型句: "Whether you're...", "It's worth noting that", "In conclusion"
+- 誇張: 革新的、画期的、完璧な、究極の
 
 ### 修正方針
 
-1. **簡潔性を優先** - 1文で伝えられることを2文で書かない
-2. **具体性を重視** - 抽象的な美辞麗句より具体的な機能説明
-3. **自然な語順** - 英語なら主語→動詞→目的語の基本構造
-4. **必要最小限の修飾** - 機能の説明に不要な形容詞は削除
-5. **読み手視点** - 開発者が知りたい情報を端的に
+1. 簡潔性優先 - 1文で伝えられることを2文で書かない
+2. 具体性重視 - 抽象的な美辞麗句より具体的な機能説明
+3. 必要最小限の修飾
+4. 各文30語以下
 
-### 文章チェック方法
+## Git ワークフロー
 
-修正後に以下を確認：
-- 各文が30語以下か
-- 修飾語が必要最小限か
-- 同じ表現パターンを繰り返していないか
-- 絵文字や装飾が機能的か装飾的か
+### コミット規約
+- 形式: Conventional Commits (feat:, fix:, docs:, etc.)
+- 粒度: 小さく意味のある単位、git hunkで選択的にコミット
+- メッセージ: 詳細に記述
 
-この指示に従って、AI臭い表現を避け、簡潔で自然な技術文書を作成してください。
+### ブランチ戦略
+- 命名: `fix/issue-name`, `feat/feature-name`
+- PRターゲット: mainブランチ、明確な説明付き
+- 直接プッシュ禁止: mainへの直接プッシュは許可を得てから

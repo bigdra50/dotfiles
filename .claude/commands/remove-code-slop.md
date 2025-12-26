@@ -1,5 +1,13 @@
 ---
-allowed-tools: [Task, Read, Edit, Glob, Grep, TodoWrite, Bash(git:*)]
+allowed-tools:
+  - Bash(git status:*)
+  - Bash(git diff:*)
+  - Task
+  - Read
+  - Edit
+  - Glob
+  - Grep
+  - TodoWrite
 description: Remove AI-generated code slop (redundant comments and XML documentation)
 ---
 

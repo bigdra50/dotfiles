@@ -269,17 +269,22 @@ link_config() {
 
     # Link .claude directory
     if [[ -d "$DOTFILES_DIR/.claude" ]]; then
+        info "Creating symlinks for .claude directory..."
         mkdir -p "$HOME/.claude"
 
-        # Link commands directory
-        if [[ -d "$DOTFILES_DIR/.claude/commands" ]]; then
-            create_symlink "$DOTFILES_DIR/.claude/commands" "$HOME/.claude/commands"
-        fi
+        # Link directories
+        for dir in commands rules agents skills tools; do
+            if [[ -d "$DOTFILES_DIR/.claude/$dir" ]]; then
+                create_symlink "$DOTFILES_DIR/.claude/$dir" "$HOME/.claude/$dir"
+            fi
+        done
 
-        # Link docs directory
-        if [[ -d "$DOTFILES_DIR/.claude/docs" ]]; then
-            create_symlink "$DOTFILES_DIR/.claude/docs" "$HOME/.claude/docs"
-        fi
+        # Link files
+        for file in CLAUDE.md settings.json; do
+            if [[ -f "$DOTFILES_DIR/.claude/$file" ]]; then
+                create_symlink "$DOTFILES_DIR/.claude/$file" "$HOME/.claude/$file"
+            fi
+        done
     fi
 }
 

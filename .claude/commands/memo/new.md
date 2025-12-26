@@ -1,5 +1,9 @@
 ---
-allowed-tools: [Read, Write, Bash, Grep]
+allowed-tools:
+  - Bash(date:*)
+  - Read
+  - Write
+  - Grep
 description: Create new Obsidian memo based on conversation context with proper structure and tags
 model: sonnet
 ---
