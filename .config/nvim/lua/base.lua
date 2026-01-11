@@ -60,6 +60,14 @@ vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,te
 -- Leader Key
 vim.g.mapleader = " "
 
+-- Razor/Blazor ファイルタイプ
+vim.filetype.add({
+	extension = {
+		razor = "razor",
+		cshtml = "razor",
+	},
+})
+
 -- キーマップのタイムアウト設定
 vim.opt.timeout = true
 vim.opt.timeoutlen = 300  -- リーダーキーのタイムアウト（ミリ秒）
@@ -85,4 +93,8 @@ keymap.set("i", "jj", "<Esc>")
 
 -- 設定ファイルを開く
 keymap.set("n", "<F1>", ":edit $MYVIMRC<CR>")
+
+-- Autocmd設定
+local autocmd = require("utils.autocmd")
+autocmd.common.setup_diagnostic_float()
 
