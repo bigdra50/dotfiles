@@ -13,6 +13,11 @@ return {
 						package_uninstalled = "✗",
 					},
 				},
+				-- Roslyn LSP用カスタムレジストリ
+				registries = {
+					"github:mason-org/mason-registry",
+					"github:Crashdummyy/mason-registry",
+				},
 			})
 		end,
 	},
@@ -49,6 +54,17 @@ return {
 		lazy = true,
 	},
 
+	-- Roslyn LSP (C#)
+	{
+		"seblyng/roslyn.nvim",
+		ft = { "cs", "razor" },
+		dependencies = { "williamboman/mason.nvim" },
+		opts = {
+			filewatching = "auto",
+			broad_search = true,
+		},
+	},
+
 	-- LSP UI強化
 	{
 		"nvimdev/lspsaga.nvim",
@@ -72,6 +88,15 @@ return {
 			require("conform").setup({
 				formatters_by_ft = {
 					go = { "goimports", "gofmt" },
+					python = { "ruff_format", "ruff_organize_imports" },
+					cs = { "csharpier" },
+				},
+				formatters = {
+					csharpier = {
+						command = vim.fn.expand("~/.dotnet/tools/csharpier"),
+						args = { "format", "--write-stdout" },
+						stdin = true,
+					},
 				},
 				format_on_save = {
 					timeout_ms = 500,

@@ -120,6 +120,23 @@ M.common = {
       }},
     })
   end,
+
+  -- CursorHold時に診断をfloatで自動表示
+  setup_diagnostic_float = function()
+    M.create_autocmd("CursorHold", {
+      group = M.create_augroup("DiagnosticFloat"),
+      callback = function()
+        vim.diagnostic.open_float(nil, {
+          focusable = false,
+          close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+          border = "rounded",
+          source = true,
+          prefix = " ",
+          scope = "cursor",
+        })
+      end,
+    })
+  end,
 }
 
 return M
