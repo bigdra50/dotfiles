@@ -59,17 +59,6 @@
   },
   "model": "opus",
   "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/log-tool-usage.py"
-          }
-        ]
-      }
-    ],
     "Stop": [
       {
         "matcher": "",
