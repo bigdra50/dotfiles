@@ -127,3 +127,28 @@ local status, lsp_file_operations = pcall(require, "lsp-file-operations")
 if status then
   lsp_file_operations.setup()
 end
+
+-- UPM LSP (Unity Package Manager manifest.json)
+local configs = require("lspconfig.configs")
+if not configs.upm_lsp then
+  configs.upm_lsp = {
+    default_config = {
+      cmd = { "npx", "github:bigdra50/upm-lsp", "--stdio" },
+      filetypes = { "json" },
+      root_dir = lspconfig.util.root_pattern("Packages/manifest.json", "Assets"),
+      single_file_support = true,
+    },
+  }
+end
+
+lspconfig.upm_lsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  -- Only activate for manifest.json files
+  root_dir = function(fname)
+    if fname:match("Packages/manifest%.json$") then
+      return lspconfig.util.root_pattern("Packages/manifest.json", "Assets")(fname)
+    end
+    return nil
+  end,
+})
