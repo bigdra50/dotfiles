@@ -1,0 +1,7 @@
+#compdef u
+
+_u() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _U_COMPLETE=complete_zsh u)
+}
+
+_u "$@"

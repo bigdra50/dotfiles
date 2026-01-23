@@ -1,4 +1,19 @@
 local wezterm = require("wezterm")
+
+-- ファイル存在チェック
+local function file_exists(path)
+	local f = io.open(path, "r")
+	if f then
+		f:close()
+		return true
+	end
+	return false
+end
+
+-- dotfiles内の画像パス（シンボリックリンク経由でも正しく解決）
+local dotfiles_dir = os.getenv("HOME") .. "/dev/github.com/bigdra50/dotfiles"
+local bg_image = dotfiles_dir .. "/wezterm/images/ztmy.jpg"
+
 local config = {
 	check_for_updates = true,
 	font = wezterm.font_with_fallback({
@@ -63,6 +78,23 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 else
 	table.insert(config.launch_menu, { label = "bash", args = { "bash", "-l" } })
 	table.insert(config.launch_menu, { label = "fish", args = { "fish", "-l" } })
+end
+
+-- 背景画像設定（画像が存在する場合のみ）
+if file_exists(bg_image) then
+	config.background = {
+		{
+			source = { File = bg_image },
+			opacity = 0.3,
+			hsb = { brightness = 0.1 },
+		},
+		{
+			source = { Color = "#1a1b26" },
+			width = "100%",
+			height = "100%",
+			opacity = 0.85,
+		},
+	}
 end
 
 return config

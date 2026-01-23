@@ -6,6 +6,7 @@
 go = "latest"
 rust = "latest"
 node = "latest"
+python = "3.12"
 neovim = "nightly"
 
 [settings]

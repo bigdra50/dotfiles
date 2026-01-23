@@ -15,7 +15,7 @@ services:
     tty: true
     volumes:
       # Mount the dotfiles directory for live editing
-      - .:/home/dotuser/.ghq/github.com/bigdra50/dotfiles:cached
+      - .:/home/dotuser/dev/github.com/bigdra50/dotfiles:cached
       # Persist home directory changes
       - dotfiles-home:/home/dotuser
     environment:
@@ -38,7 +38,7 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - .:/home/dotuser/.ghq/github.com/bigdra50/dotfiles:cached
+      - .:/home/dotuser/dev/github.com/bigdra50/dotfiles:cached
       - dotfiles22-home:/home/dotuser
     environment:
       - TERM=xterm-256color

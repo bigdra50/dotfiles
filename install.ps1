@@ -250,23 +250,30 @@ function Add-ConfigLinks {
     # Link .claude directory
     $claudeDir = Join-Path $Script:DotfilesDir ".claude"
     if (Test-Path $claudeDir) {
+        Write-Info "Creating symlinks for .claude directory..."
         $targetClaudeDir = Join-Path $env:USERPROFILE ".claude"
         if (-not (Test-Path $targetClaudeDir)) {
             New-Item -ItemType Directory -Path $targetClaudeDir -Force | Out-Null
         }
 
-        # Link commands directory
-        $commandsDir = Join-Path $claudeDir "commands"
-        if (Test-Path $commandsDir) {
-            $target = Join-Path $targetClaudeDir "commands"
-            New-SymbolicLink -Source $commandsDir -Target $target
+        # Link directories
+        $claudeDirs = @("commands", "rules", "agents", "skills", "tools")
+        foreach ($dir in $claudeDirs) {
+            $sourceDir = Join-Path $claudeDir $dir
+            if (Test-Path $sourceDir) {
+                $target = Join-Path $targetClaudeDir $dir
+                New-SymbolicLink -Source $sourceDir -Target $target
+            }
         }
 
-        # Link docs directory
-        $docsDir = Join-Path $claudeDir "docs"
-        if (Test-Path $docsDir) {
-            $target = Join-Path $targetClaudeDir "docs"
-            New-SymbolicLink -Source $docsDir -Target $target
+        # Link files
+        $claudeFiles = @("CLAUDE.md", "settings.json")
+        foreach ($file in $claudeFiles) {
+            $sourceFile = Join-Path $claudeDir $file
+            if (Test-Path $sourceFile) {
+                $target = Join-Path $targetClaudeDir $file
+                New-SymbolicLink -Source $sourceFile -Target $target
+            }
         }
     }
 }

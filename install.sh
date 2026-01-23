@@ -30,9 +30,9 @@ CYAN='\033[0;36m'
 NC='\033[0m'
 
 # File exclusion lists
-EXCLUDE_COMMON=".DS_Store .git .gitignore .gitmodules README.md CLAUDE.md install.sh bootstrap justfile Makefile whitelist.sh docker-compose.yml Dockerfile scripts"
-EXCLUDE_LINUX=".yabairc .skhdrc .Brewfile"
-EXCLUDE_WSL=".yabairc .skhdrc .Brewfile"
+EXCLUDE_COMMON=".DS_Store .git .gitignore .gitmodules README.md CLAUDE.md install.sh bootstrap docker-compose.yml Dockerfile scripts"
+EXCLUDE_LINUX=".yabairc .skhdrc"
+EXCLUDE_WSL=".yabairc .skhdrc"
 
 # =============================================================================
 # Helper Functions

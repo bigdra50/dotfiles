@@ -2,8 +2,11 @@
 # 補完
 # -------------------------------
 
-autoload -U compinit
-compinit
+# カスタム補完スクリプトを fpath に追加 (zsh-autocomplete より前に設定)
+fpath=(~/.zsh/completions $fpath)
+
+# NOTE: compinit は zsh-autocomplete が自動的に実行するため、
+# 手動での呼び出しは不要（むしろ競合の原因になる）
 setopt always_last_prompt # カーソル位置を保持したままファイル名一覧を順次その場で表示
 setopt auto_list  # 補完候補が複数ある時に、一覧表示
 setopt auto_menu  # 補完候補が複数あるときに自動的に一覧表示する
@@ -121,6 +124,9 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 
 # aptやdpkgコマンドをキャッシュ
 zstyle ':completion:*' use-cache true
+
+# unity-cli の補完は ~/.zsh/completions/_unity-cli, _u, _unity で定義
+# (fpath に追加済みなので zsh-autocomplete が自動的にロードする)
 
 # カレントディレクトリに候補がない場合のみcdpath上のディレクトリを候補に出す
 ## 補完候補ごとにグループ化
