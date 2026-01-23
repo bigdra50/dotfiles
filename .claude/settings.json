@@ -11,8 +11,7 @@
     "DISABLE_TELEMETRY": "1",
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
-    "FORCE_AUTO_BACKGROUND_TASKS": "1",
-    "DISABLE_INTERLEAVED_THINKING": "1"
+    "FORCE_AUTO_BACKGROUND_TASKS": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -67,7 +66,30 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/unity-refresh-on-stop.sh"
+            "command": "~/.claude/hooks/mac-notification.sh stop",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mac-notification.sh idle_prompt",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/mac-notification.sh permission_prompt",
+            "timeout": 5
           }
         ]
       }

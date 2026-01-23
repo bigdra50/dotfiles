@@ -36,13 +36,6 @@ paths: "**/*.cs"
 - LINQ優先（命令型ループより）
 - 式本体メンバーを適切に使用
 
-## Unity固有
-
-- MonoBehaviourは薄く保つ
-- ScriptableObjectで設定を外部化
-- Zenject/VContainerでDI
-- UniTask/UniRxで非同期処理
-
 ## 実装手順
 
 1. 型設計 - まずinterfaceとrecordを定義

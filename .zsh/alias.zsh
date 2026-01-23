@@ -42,6 +42,6 @@ alias h='history'
 alias so='source'
 alias soz='source $HOME/.zshenv && source $HOME/.zshrc'
 #alias mkdir='(){mkdir $1;cd $1}'
-alias u='~/bin/u.sh'
+
 alias yolo='claude --dangerously-skip-permissions'
 alias cccommit='~/bin/cccommit.sh'

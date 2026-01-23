@@ -30,16 +30,16 @@ tools = [
     { name = "github.com/jesseduffield/lazygit@latest", description = "simple terminal UI for git commands" },
 ]
 
-[mise]
-# Runtime version management (works on all platforms)
-# mise supports Windows through Git Bash/WSL
-runtimes = [
-    { name = "go", version = "latest" },
-    { name = "rust", version = "latest" },
-    { name = "node", version = "latest" },
-    { name = "python", version = "3.12" },
-    { name = "neovim", version = "nightly" },
-]
+# [mise]
+# NOTE: mise runtimes are defined in .mise.toml (primary) and .config/mise/config.toml
+# This section is for reference only - actual installation reads from .mise.toml
+# runtimes = [
+#     { name = "go", version = "latest" },
+#     { name = "rust", version = "latest" },
+#     { name = "node", version = "latest" },
+#     { name = "python", version = "3.12" },
+#     { name = "neovim", version = "nightly" },
+# ]
 
 [platform.macos]
 # macOS-specific tools (Homebrew)
@@ -137,14 +137,8 @@ special = [
 
 [shared]
 # Configuration for tools that work differently across platforms
+# NOTE: ghq root is environment-specific, configure via `git config --global ghq.root`
 config = [
-    {
-        tool = "ghq",
-        settings = {
-            root = "~/.ghq",  # Same on all platforms
-            git_protocol = "https"  # HTTPS works everywhere
-        }
-    },
     {
         tool = "starship",
         settings = {

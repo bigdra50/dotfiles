@@ -39,25 +39,15 @@ USER $USERNAME
 WORKDIR /home/$USERNAME
 
 # Copy dotfiles repository
-COPY --chown=$USERNAME:$USERNAME . /home/$USERNAME/.ghq/github.com/bigdra50/dotfiles/
+COPY --chown=$USERNAME:$USERNAME . /home/$USERNAME/dev/github.com/bigdra50/dotfiles/
 
 # Configure git safe directory for Docker environment
-RUN git config --global --add safe.directory /home/$USERNAME/.ghq/github.com/bigdra50/dotfiles
-
-# Install just command runner with fallback
-RUN mkdir -p ~/.local/bin && \
-    ARCH=$(uname -m | sed 's/x86_64/x86_64/;s/aarch64/aarch64/') && \
-    (curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/.local/bin || \
-     (curl -L "https://github.com/casey/just/releases/download/1.14.0/just-1.14.0-${ARCH}-unknown-linux-musl.tar.gz" | tar xz -C ~/.local/bin && chmod +x ~/.local/bin/just) || \
-     (wget -qO- "https://github.com/casey/just/releases/download/1.14.0/just-1.14.0-${ARCH}-unknown-linux-musl.tar.gz" | tar xz -C ~/.local/bin && chmod +x ~/.local/bin/just)) && \
-    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && \
-    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+RUN git config --global --add safe.directory /home/$USERNAME/dev/github.com/bigdra50/dotfiles
 
 # Set PATH for subsequent commands
 ENV PATH="/home/$USERNAME/.local/bin:$PATH"
 
-# Don't run installation in Dockerfile - will be done in container
-WORKDIR /home/$USERNAME/.ghq/github.com/bigdra50/dotfiles
+WORKDIR /home/$USERNAME/dev/github.com/bigdra50/dotfiles
 
 # Set zsh as the default shell for the container
 CMD ["/bin/zsh"]

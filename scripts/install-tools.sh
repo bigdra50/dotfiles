@@ -297,24 +297,42 @@ install_mise_runtimes() {
 # Install platform-specific tools
 install_platform_tools() {
     local platform="$1"
-    
+
     case "$platform" in
         macos)
             if command_exists brew; then
                 info "Installing macOS tools via Homebrew..."
                 # Extract brew packages
-                local brew_tools=($(awk '/\[platform.macos\]/,/brew_cask/ { 
+                local brew_tools=($(awk '/\[platform.macos\]/,/brew_cask/ {
                     if (/^[[:space:]]*"/ && !/brew_cask/) {
                         gsub(/[[:space:]]*"|".*/, "")
                         print
                     }
                 }' "$TOOLS_FILE"))
-                
+
                 for tool in "${brew_tools[@]}"; do
                     if brew list "$tool" &>/dev/null; then
                         success "$tool already installed"
                     else
                         brew install "$tool"
+                    fi
+                done
+
+                # Install brew cask packages
+                info "Installing macOS cask applications..."
+                local brew_casks=($(awk '/brew_cask = \[/,/\]/ {
+                    if (/^[[:space:]]*"/) {
+                        gsub(/[[:space:]]*"|".*/, "")
+                        print
+                    }
+                }' "$TOOLS_FILE"))
+
+                for cask in "${brew_casks[@]}"; do
+                    if brew list --cask "$cask" &>/dev/null; then
+                        success "$cask already installed (cask)"
+                    else
+                        info "Installing cask: $cask..."
+                        brew install --cask "$cask" || warning "Failed to install cask: $cask"
                     fi
                 done
             fi
@@ -364,6 +382,45 @@ install_platform_tools() {
     esac
 }
 
+# Install fallback tools (for environments without brew)
+install_fallback_tools() {
+    info "Checking fallback tools..."
+
+    # fzf - install if not available and brew is not present
+    if ! command_exists fzf; then
+        if command_exists brew; then
+            info "Installing fzf via Homebrew..."
+            brew install fzf
+        else
+            info "Installing fzf from git..."
+            if [[ -d "$HOME/.fzf" ]]; then
+                success "fzf directory exists, updating..."
+                cd "$HOME/.fzf" && git pull
+            else
+                git clone --depth 1 https://github.com/junegunn/fzf.git "$HOME/.fzf"
+            fi
+            "$HOME/.fzf/install" --all --no-bash --no-fish --no-update-rc
+        fi
+        success "fzf installed"
+    else
+        success "fzf already installed"
+    fi
+
+    # uv - install if not available
+    if ! command_exists uv; then
+        if command_exists brew; then
+            info "Installing uv via Homebrew..."
+            brew install uv
+        else
+            info "Installing uv via installer..."
+            curl -LsSf https://astral.sh/uv/install.sh | sh
+        fi
+        success "uv installed"
+    else
+        success "uv already installed"
+    fi
+}
+
 # Detect platform
 detect_platform() {
     case "$(uname -s)" in
@@ -392,10 +449,11 @@ main() {
     # Install in order of priority
     install_platform_tools "$platform"  # Install build tools first
     install_mise
-    install_mise_runtimes  
+    install_mise_runtimes
+    install_fallback_tools  # fzf, uv etc.
     install_go_tools
     install_cargo_tools
-    
+
     success "Tool installation completed!"
 }
 

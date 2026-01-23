@@ -20,7 +20,7 @@ This is a personal dotfiles repository that manages configuration files for vari
 
 ### Skills Management
 - Skills are directly committed to `.claude/skills/` (flat structure required by Claude Code)
-- Symlinked to `~/.claude/skills/` for all projects via `just link`
+- Symlinked to `~/.claude/skills/` during installation
 
 ## Architecture
 
@@ -67,8 +67,8 @@ The repository follows a modular structure:
 
 ## Important Notes
 
-- Repository location: `~/dev/github.com/bigdra50/dotfiles` (ghq root: `~/dev`)
-- Development tools are managed via `mise` (go, rust, neovim, nodejs, etc.)
+- Repository location: `~/dev/github.com/bigdra50/dotfiles`
+- Development tools are managed via `mise` (go, rust, node, python, neovim)
 - Cargo tools automatically available via `~/.cargo/bin` in PATH (.zshenv)
 - Local configuration overrides supported (`.zshrc_local`, `.gitconfig_local`, `.zshenv_local`)
 - Backup system: existing files are automatically backed up during installation

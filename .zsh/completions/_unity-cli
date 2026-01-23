@@ -1,0 +1,7 @@
+#compdef unity-cli
+
+_unity-cli() {
+  eval $(env _TYPER_COMPLETE_ARGS="${words[1,$CURRENT]}" _UNITY_CLI_COMPLETE=complete_zsh unity-cli)
+}
+
+_unity-cli "$@"
