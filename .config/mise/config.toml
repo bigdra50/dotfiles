@@ -1,2 +1,3 @@
 [tools]
 ghq = "latest"
+neovim = "nightly"

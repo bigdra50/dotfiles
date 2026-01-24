@@ -7,7 +7,7 @@ go = "latest"
 rust = "latest"
 node = "latest"
 python = "latest"
-neovim = "nightly"
+neovim = "latest"
 
 [settings]
 # Enable experimental features
