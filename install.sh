@@ -267,24 +267,11 @@ link_config() {
         create_symlink "$config" "$target"
     done
 
-    # Link .claude directory
-    if [[ -d "$DOTFILES_DIR/.claude" ]]; then
-        info "Creating symlinks for .claude directory..."
-        mkdir -p "$HOME/.claude"
-
-        # Link directories
-        for dir in commands rules agents skills tools hooks output-styles; do
-            if [[ -d "$DOTFILES_DIR/.claude/$dir" ]]; then
-                create_symlink "$DOTFILES_DIR/.claude/$dir" "$HOME/.claude/$dir"
-            fi
-        done
-
-        # Link files
-        for file in CLAUDE.md settings.json statusline.sh; do
-            if [[ -f "$DOTFILES_DIR/.claude/$file" ]]; then
-                create_symlink "$DOTFILES_DIR/.claude/$file" "$HOME/.claude/$file"
-            fi
-        done
+    # Link .claude directory (delegated to .claude/install.sh)
+    if [[ -x "$DOTFILES_DIR/.claude/install.sh" ]]; then
+        CLAUDE_DIR="$DOTFILES_DIR/.claude" INTERACTIVE="$INTERACTIVE" "$DOTFILES_DIR/.claude/install.sh"
+    elif [[ -d "$DOTFILES_DIR/.claude" ]]; then
+        warning ".claude/install.sh not found or not executable, skipping Claude configuration"
     fi
 }
 
