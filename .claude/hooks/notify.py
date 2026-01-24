@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claude Code notification hook."""
+"""Claude Code notification hook using OSC escape sequences."""
 
 import argparse
 import subprocess
@@ -32,22 +32,22 @@ DEFAULT_CONFIG = {
 
 
 def send_notification(notification_type: str) -> None:
-    """Send notification with terminal-notifier and play sound."""
+    """Send notification using osascript (macOS built-in)."""
     config = NOTIFICATION_CONFIG.get(notification_type, DEFAULT_CONFIG)
+    title = config["title"]
+    message = config["message"]
 
-    # Send notification with Claude icon
+    # Use osascript for reliable notification on macOS
     subprocess.run(
         [
-            "terminal-notifier",
-            "-title", config["title"],
-            "-message", config["message"],
-            "-group", f"claude-code-{notification_type}",
-            "-sender", "com.anthropic.claudefordesktop",
+            "osascript",
+            "-e",
+            f'display notification "{message}" with title "{title}"',
         ],
-        check=True,
+        check=False,
     )
 
-    # Play sound
+    # Play sound (afplay is macOS built-in)
     subprocess.Popen(
         ["afplay", f"/System/Library/Sounds/{config['sound']}.aiff"],
         stdout=subprocess.DEVNULL,
