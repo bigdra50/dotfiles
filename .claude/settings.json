@@ -17,6 +17,8 @@
   "permissions": {
     "allow": [
       "Read",
+      "Edit",
+      "Write",
       "Glob",
       "Grep",
       "WebFetch",
@@ -41,6 +43,8 @@
       "Bash (git push:*) ",
       "Bash (git reset:*)",
       "Bash (git rebase:*)",
+      "Bash(git add .:*)",
+      "Bash(git add -A:*)",
       "Read (.env.*)",
       "Read (id_rsa)",
       "Read (id_ed25519)",
@@ -54,7 +58,8 @@
       "Bash (npm remove: :*)",
       "Bash(psql: :*) ",
       "Bash (mysql:*)",
-      "Bash (mongod:*) "
+      "Bash (mongod:*) ",
+      "NotebookEdit"
     ],
     "defaultMode": "acceptEdits"
   },
@@ -66,7 +71,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/mac-notification.sh stop",
+            "command": "python3 ~/.claude/hooks/notify.py --type stop",
             "timeout": 5
           }
         ]
@@ -78,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/mac-notification.sh idle_prompt",
+            "command": "python3 ~/.claude/hooks/notify.py --type idle_prompt",
             "timeout": 5
           }
         ]
@@ -88,7 +93,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "~/.claude/hooks/mac-notification.sh permission_prompt",
+            "command": "python3 ~/.claude/hooks/notify.py --type permission_prompt",
             "timeout": 5
           }
         ]
