@@ -273,14 +273,14 @@ link_config() {
         mkdir -p "$HOME/.claude"
 
         # Link directories
-        for dir in commands rules agents skills tools; do
+        for dir in commands rules agents skills tools hooks output-styles; do
             if [[ -d "$DOTFILES_DIR/.claude/$dir" ]]; then
                 create_symlink "$DOTFILES_DIR/.claude/$dir" "$HOME/.claude/$dir"
             fi
         done
 
         # Link files
-        for file in CLAUDE.md settings.json; do
+        for file in CLAUDE.md settings.json statusline.sh; do
             if [[ -f "$DOTFILES_DIR/.claude/$file" ]]; then
                 create_symlink "$DOTFILES_DIR/.claude/$file" "$HOME/.claude/$file"
             fi
