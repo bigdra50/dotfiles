@@ -6,9 +6,10 @@
 
 - 修飾語濫用: "versatile", "comprehensive", "robust", "seamless", "cutting-edge"
 - 日本語版: "非常に優れた", "素晴らしい", "画期的な", "革新的な"
-- 冗長表現: "allows you to", "enables you to", "It's worth noting that"
-- 過度な強調: 装飾的絵文字、感嘆符の連続
+- 冗長表現: "allows you to", "enables you to", "easy to use", "It's worth noting that"
+- 過度な強調: 装飾的絵文字、太字・斜体の多用、感嘆符の連続
 - 定型句: "Whether you're...", "In conclusion", "総評として"
+- 誇張: 革新的、画期的、完璧な、究極の
 
 ### 修正方針
 
