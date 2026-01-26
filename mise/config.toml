@@ -1,0 +1,61 @@
+# mise global configuration
+# https://mise.jdx.dev/
+
+[tools]
+# Language runtimes
+go = "latest"
+rust = "latest"
+node = "latest"
+python = "latest"
+ruby = "latest"
+bun = "latest"
+deno = "latest"
+
+# CLI utilities
+bat = "latest"
+fd = "latest"
+ripgrep = "latest"
+fzf = "latest"
+jq = "latest"
+gron = "latest"
+dust = "latest"
+duf = "latest"
+bottom = "latest"
+lsd = "latest"
+glow = "latest"
+just = "latest"
+zoxide = "latest"
+delta = "latest"
+"cargo:procs" = "latest"
+"cargo:onefetch" = "latest"
+
+# Git/GitHub
+gh = "latest"
+lazygit = "latest"
+ghq = "latest"
+glab = "latest"
+
+# Development
+direnv = "latest"
+neovim = "latest"
+cmake = "latest"
+uv = "latest"
+
+# Cloud/Platform
+azure-cli = "latest"
+
+# iOS/Swift
+swiftlint = "latest"
+cocoapods = "latest"
+sourcery = "latest"
+xcodegen = "latest"
+xcbeautify = "latest"
+xcodes = "latest"
+
+# Network
+"pipx:speedtest-cli" = "latest"
+
+[settings]
+experimental = true
+legacy_version_file = true
+disable_default_shorthands = false

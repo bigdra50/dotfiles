@@ -1,6 +1,0 @@
-# Tool definitions are in ~/.config/mise/config.toml (XDG Base Directory)
-# This file is for project-specific overrides
-
-[settings]
-experimental = true
-legacy_version_file = true
