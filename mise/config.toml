@@ -37,7 +37,7 @@ glab = "latest"
 
 # Development
 direnv = "latest"
-neovim = "latest"
+"asdf:neovim" = "nightly"
 cmake = "latest"
 uv = "latest"
 
