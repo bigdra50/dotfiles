@@ -5,6 +5,7 @@ node = "latest"
 python = "latest"
 neovim = "nightly"
 ghq = "latest"
+gh = "latest"
 
 [settings]
 experimental = true
