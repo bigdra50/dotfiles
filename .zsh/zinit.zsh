@@ -29,7 +29,9 @@ zinit light-mode for \
 # -------------------------------
 
 # zinit light zsh-users/zsh-completions
-# zsh-autocomplete は completion.zsh で zstyle 設定後に読み込み
+# zsh-autocomplete: インストールのみ。source は completion.zsh で zstyle 設定後に行う
+zinit ice wait lucid nocd
+zinit light marlonrichert/zsh-autocomplete
 zinit light zsh-users/zsh-autosuggestions
 zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
