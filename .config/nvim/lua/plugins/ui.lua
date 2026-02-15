@@ -32,17 +32,25 @@ return {
     dependencies = { "zefei/vim-wintabs" },
   },
 
-  -- ファイルエクスプローラーとアイコン
+  -- ファイルエクスプローラー
   {
-    "lambdalisue/fern.vim",
-    cmd = "Fern",
-    dependencies = {
-      "lambdalisue/nerdfont.vim",
-      "lambdalisue/fern-renderer-nerdfont.vim",
-      "lambdalisue/glyph-palette.vim",
-      {
-        "TheLeoP/fern-renderer-web-devicons.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons" },
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+    keys = {
+      { "<Leader>dir", "<CMD>Oil<CR>", desc = "Open file explorer" },
+      { "-", "<CMD>Oil<CR>", desc = "Open parent directory" },
+    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      default_file_explorer = true,
+      delete_to_trash = true,
+      view_options = {
+        show_hidden = true,
+      },
+      keymaps = {
+        ["q"] = "actions.close",
+        ["<C-s>"] = false, -- 既存のキーマップと競合回避
+        ["<C-v>"] = "actions.select_vsplit",
       },
     },
   },

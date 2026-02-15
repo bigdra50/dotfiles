@@ -19,7 +19,6 @@ local function setupListeners()
 end
 
 local plugin = require('utils.plugin')
-local path_utils = require('utils.path')
 
 local dap = plugin.safe_require('dap')
 if not dap then return end
@@ -27,15 +26,8 @@ if not dap then return end
 local xcodebuild = plugin.safe_require('xcodebuild.integrations.dap')
 if not xcodebuild then return end
 
--- Use path utility to find codelldb
-local codelldbPath = path_utils.get_tool_path("codelldb")
-
-if codelldbPath ~= "" and codelldbPath ~= nil then
-  xcodebuild.setup(codelldbPath)
-  -- CodeLLDB設定完了（メッセージを非表示）
-else
-  vim.notify("CodeLLDB not found. Please install VS Code LLDB extension.", vim.log.levels.WARN)
-end
+-- Xcode 16+ではcodelldbは不要
+xcodebuild.setup()
 
 -- DAPサインの設定
 local signs = require('utils.signs')

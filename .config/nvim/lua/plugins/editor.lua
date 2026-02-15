@@ -139,7 +139,16 @@ return {
       "nvim-treesitter/nvim-treesitter",
     },
     config = function()
-      require("xcodebuild").setup({})
+      require("xcodebuild").setup({
+        integrations = {
+          oil_nvim = {
+            enabled = true,
+          },
+          pymobiledevice = {
+            enabled = true,
+          },
+        },
+      })
     end,
   },
 }

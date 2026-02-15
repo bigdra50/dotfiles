@@ -33,7 +33,11 @@ for _, module in ipairs(plugin_modules) do
 end
 
 require("lazy").setup(plugins, {
-  checker = { enabled = true },
+  checker = {
+    enabled = true,
+    frequency = 3600, -- 1時間ごとにチェック
+    notify = true,
+  },
   performance = {
     rtp = {
       disabled_plugins = {
@@ -48,4 +52,11 @@ require("lazy").setup(plugins, {
       },
     },
   },
+})
+
+-- 起動時に自動更新（バックグラウンド）
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    require("lazy").update({ show = false })
+  end,
 })
