@@ -24,10 +24,6 @@ NOTIFICATION_CONFIG = {
         "message": "完了",
         "sound": "Glass",
     },
-    "idle_prompt": {
-        "message": "入力待ち",
-        "sound": "Ping",
-    },
     "permission_prompt": {
         "message": "許可が必要",
         "sound": "Basso",
@@ -218,7 +214,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--type",
-        choices=["stop", "idle_prompt", "permission_prompt", "elicitation_dialog"],
+        choices=["stop", "permission_prompt", "elicitation_dialog"],
         required=True,
     )
     args = parser.parse_args()
