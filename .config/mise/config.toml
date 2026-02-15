@@ -1,14 +1,86 @@
+# mise global configuration
+# https://mise.jdx.dev/
+
 [tools]
+# Language runtimes
 go = "latest"
 rust = "latest"
 node = "latest"
 python = "latest"
-neovim = "nightly"
-ghq = "latest"
-gh = "latest"
-ffmpeg = "latest"
+ruby = "latest"
+bun = "latest"
+deno = "latest"
+
+# CLI utilities
+bat = "latest"
+fd = "latest"
+ripgrep = "latest"
 fzf = "latest"
+jq = "latest"
+gron = "latest"
+dust = "latest"
+duf = "latest"
+bottom = "latest"
+lsd = "latest"
+glow = "latest"
+just = "latest"
+zoxide = "latest"
+delta = "latest"
+starship = "latest"
+ffmpeg = "latest"
+"cargo:mcat" = "latest"
+"cargo:procs" = "latest"
+"cargo:onefetch" = "latest"
+
+# Git/GitHub
+gh = "latest"
+lazygit = "latest"
+ghq = "latest"
+glab = "latest"
+
+# Development
+direnv = "latest"
+"asdf:neovim" = "nightly"
+cmake = "latest"
+uv = "latest"
+
+# Cloud/Platform
+azure-cli = "latest"
+
+# iOS/Swift
+swiftlint = "latest"
+cocoapods = "latest"
+sourcery = "latest"
+xcodegen = "latest"
+xcbeautify = "latest"
+xcodes = "latest"
+
+# Network
+"pipx:speedtest-cli" = "latest"
+"ubi:sharkdp/hexyl" = "latest"
+"ubi:ducaale/xh" = "latest"
+
+# npm packages (formerly npm -g)
+"npm:gitmoji-cli" = "latest"
+"npm:jsonlint" = "latest"
+"npm:openupm-cli" = "latest"
+"npm:chrome-devtools-mcp" = "latest"
+"npm:cline" = "latest"
+"npm:difit" = "latest"
+
+# pipx packages
+"pipx:git-filter-repo" = "latest"
+"pipx:httpie" = "latest"
+"pipx:pymobiledevice3" = "latest"
+swiftformat = "latest"
+lefthook = "latest"
+# magi: fbprophet依存がビルド不可のためpipxで維持
+
+[tasks.runner]
+description = "Manage GitHub Actions self-hosted runners"
+run = "~/.config/mise/tasks/runner {{arg(name=\"args\", var=true)}}"
 
 [settings]
 experimental = true
 legacy_version_file = true
+disable_default_shorthands = false
