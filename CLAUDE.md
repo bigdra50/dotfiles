@@ -4,98 +4,90 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-This is a personal dotfiles repository that manages configuration files for various development tools and applications. The repository uses a symlink-based approach where dotfiles are stored in `~/dev/github.com/bigdra50/dotfiles` and symlinked to their expected locations in the home directory.
+個人用dotfilesリポジトリ。シンボリックリンクベースで設定ファイルを管理。
+
+- リポジトリ: `~/dev/github.com/bigdra50/dotfiles`
+- 対応OS: macOS, Linux, WSL, Windows (PowerShell)
 
 ## Key Commands
 
-### Installation and Setup
-- `./install.sh` - Main installation command (installs tools, creates symlinks)
-- `INTERACTIVE=false ./install.sh` - Non-interactive installation (for CI/automation)
-- `./install.sh --help` - Show help message
-- `./scripts/install-tools.sh` - Install platform-specific tools from tools.toml
+```bash
+# インストール
+./install.sh                      # インタラクティブ
+INTERACTIVE=false ./install.sh    # 非インタラクティブ（CI用）
 
-### Bootstrap (for new machines)
-- `curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash` - One-liner bootstrap
-- Downloads repo, installs git if needed, runs install.sh automatically
+# ツール更新
+./scripts/install-tools.sh
 
-### Skills Management
-- Skills are directly committed to `.claude/skills/` (flat structure required by Claude Code)
-- Symlinked to `~/.claude/skills/` during installation
+# 新規マシンセットアップ（ワンライナー）
+curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
+
+# Windows
+irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
+```
 
 ## Architecture
 
-The repository follows a modular structure:
+### Zsh設定 (`.zsh/`)
 
-1. **Zsh Configuration** (`.zsh/`)
-   - Main entry: `.zshrc` (loads environment, interface, and extensions)
-   - Modular structure: environment.zsh, interface.zsh, extensions.zsh
-   - Plugin system in `.zsh/plugins/` (bat, fzf, ripgrep, zoxide, etc.)
-   - Supports local overrides via `.zshrc_local`
+ロード順序:
+1. `.zshenv` - PATH、環境変数
+2. `.zshrc` - 以下を順にロード:
+   - `environment.zsh` - mise有効化、Go設定
+   - `interface.zsh` - Starship、viバインディング
+   - `extensions.zsh` - プラグインロード
+   - `.zshrc_local` - ローカルオーバーライド
 
-2. **Tool Management** (`tools.toml`)
-   - Cargo tools: Rust-based CLI tools (bat, eza, ripgrep, etc.)
-   - Go tools: Go-based tools (ghq)
-   - Platform-specific packages (Homebrew, apt, scoop)
-   - Runtime management via mise
+### ツール管理
 
-3. **Tool Configurations**
-   - Git: `.gitconfig` (with delta pager, neovim diff)
-   - Terminal: `.wezterm.lua`
-   - Window Manager: `.yabairc`, `.skhdrc` (macOS)
-   - PowerShell: `.config/posh/`
-   - Development tools: `.mise.toml` (mise configuration)
+| ファイル | 用途 |
+|---------|------|
+| `mise/config.toml` | ランタイム管理（go, rust, node, python, neovim等） |
+| `tools.toml` | Cargo/Go/プラットフォーム固有ツール |
 
-4. **Installation System**
-   - Bash-based installation scripts (no external dependencies)
-   - `install.sh` - Main installer with platform detection
-   - `bootstrap` - Initial setup script for new machines
-   - Automated tool installation via `tools.toml`
-   - cargo-binstall for fast Rust tool installation
-   - Platform detection (macOS, Linux, WSL)
-   - Docker environment for testing
+miseがプライマリのツール管理。`tools.toml`は補助的に使用。
 
-5. **Cross-platform Support**
-   - Automatic platform detection
-   - Platform-specific tool exclusions
-   - Non-interactive mode support (`INTERACTIVE=false`)
+### シンボリンク対象
 
-6. **Claude Code Configuration** (`.claude/`)
-   - `.claude/commands/` - Custom slash commands
-   - `.claude/docs/` - Documentation and guides
-   - `.claude/skills/` - Skills (flat structure required by Claude Code)
-   - Symlinked to `~/.claude/` during installation
+| ソース | リンク先 |
+|--------|----------|
+| `.*` (ルート) | `~/.*` |
+| `.config/*` | `~/.config/*` |
+| `.zsh/` | `~/.zsh/` |
+| `.claude/` | `~/.claude/` |
 
-## Important Notes
+プラットフォーム固有の除外:
+- Linux/WSL: `.yabairc`, `.skhdrc`（macOS専用）
 
-- Repository location: `~/dev/github.com/bigdra50/dotfiles`
-- Development tools are managed via `mise` (go, rust, node, python, neovim)
-- Cargo tools automatically available via `~/.cargo/bin` in PATH (.zshenv)
-- Local configuration overrides supported (`.zshrc_local`, `.gitconfig_local`, `.zshenv_local`)
-- Backup system: existing files are automatically backed up during installation
-- Docker testing environment available for validation
+### ローカルオーバーライド
 
-### Zsh Configuration Loading Order
-1. `.zshenv` - Environment variables and PATH setup
-2. `.zshrc` - Main configuration file that loads:
-   - `~/.zsh/environment.zsh` - mise activation, colors, Go setup
-   - `~/.zsh/interface.zsh` - Starship prompt, vi bindings, shell options
-   - `~/.zsh/extensions.zsh` - Plugin loading and tool integrations
-   - `~/.zshrc_local` - Local overrides (if exists)
+マシン固有の設定は以下に記述（gitignore済み）:
+- `~/.zshrc_local`
+- `~/.zshenv_local`
+- `~/.gitconfig_local`
 
-### Tool Installation Process
-1. Base tools installed via platform package managers (brew/apt)
-2. Rust tools installed via cargo-binstall for speed
-3. Go tools installed via `go install`
-4. Runtime environments managed via mise
-5. Special tools (fzf, wezterm) handled via fallback configurations
+## ツール監査
 
-## Recent Improvements
+```bash
+./scripts/audit-tools.sh  # 手動実行
+```
 
-- Removed just dependency - now pure Bash
-- Simplified installation with install.sh
-- Docker environment for testing and validation
-- Comprehensive tool management via tools.toml
-- Automatic cargo tools PATH integration
-- .config directory handling improvements
-- Cross-platform installation scripts
-- Bootstrap script for one-liner installation
+miseで管理すべきツールが他の場所（brew, cargo, npm -g, pipx）にインストールされていないかチェック。
+シェル起動時に週1回自動実行される（`.zsh/plugins/audit-tools.zsh`）。
+
+許可リスト（`scripts/audit-tools.sh`内で定義）:
+- brew: python, ruby（他パッケージの依存関係）
+- npm: MCP関連ツール
+- pipx: 特殊用途ツール
+
+## Claude Code設定 (`.claude/`)
+
+```
+.claude/
+├── commands/   # カスタムスラッシュコマンド
+├── docs/       # ドキュメント
+├── rules/      # コーディングルール（言語別）
+├── settings.json
+├── skills/     # スキル定義（フラット構造必須）
+└── install.sh  # ~/.claude へのシンボリンク作成
+```

@@ -29,6 +29,20 @@ paths: "**/*.cs"
 - `sealed`をデフォルトに
 - パターンマッチングを活用
 
+## 命名規則
+
+| 対象 | 規則 | 例 |
+|------|------|-----|
+| private instance フィールド | `_camelCase` | `_client` |
+| private static フィールド | `_camelCase` | `_instance` |
+| private static readonly / const | `PascalCase` | `Lock`, `DefaultTimeout` |
+| ローカル変数・引数 | `camelCase` | `result`, `hostName` |
+| プロパティ・メソッド | `PascalCase` | `IsConnected`, `SendAsync()` |
+
+- `s_`, `m_`, `t_` 等のハンガリアン接頭辞は使わない
+- `bool` を `== true` / `== false` で比較しない。直接評価する
+- `bool?` にはプロパティパターン (`is not { Prop: true }`) を使う
+
 ## コードスタイル
 
 - 早期リターンで条件分岐をフラット化
