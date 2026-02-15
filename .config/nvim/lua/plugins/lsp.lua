@@ -127,6 +127,7 @@ return {
 					python = { "ruff_format", "ruff_organize_imports" },
 					cs = { "csharpier" },
 					swift = { "swiftformat" },
+					haskell = { "fourmolu" },
 				},
 				formatters = {
 					csharpier = {
