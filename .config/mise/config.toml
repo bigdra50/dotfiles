@@ -6,6 +6,8 @@ python = "latest"
 neovim = "nightly"
 ghq = "latest"
 gh = "latest"
+ffmpeg = "latest"
+fzf = "latest"
 
 [settings]
 experimental = true
