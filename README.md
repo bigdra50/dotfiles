@@ -25,3 +25,7 @@ cd ~/dev/github.com/bigdra50/dotfiles
 INTERACTIVE=false ./install.sh    # non-interactive
 ./scripts/install-tools.sh        # update tools
 ```
+
+## Docs
+
+- [Bark通知セットアップ](docs/bark-notification.md) - Claude Code → iPhone プッシュ通知
