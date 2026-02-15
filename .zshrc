@@ -4,3 +4,5 @@
 [[ -f ~/.zshrc_local ]] && . ~/.zshrc_local
 [[ -f ~/.zsh/interface.zsh ]] && . ~/.zsh/interface.zsh
 [[ -f ~/.zsh/extensions.zsh ]] && . ~/.zsh/extensions.zsh
+
+[ -f "/Users/bigdra/.ghcup/env" ] && . "/Users/bigdra/.ghcup/env" # ghcup-env

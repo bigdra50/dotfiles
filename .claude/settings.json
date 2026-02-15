@@ -206,5 +206,8 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  }
 }
