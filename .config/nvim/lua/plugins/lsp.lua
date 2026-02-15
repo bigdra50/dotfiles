@@ -22,29 +22,45 @@ return {
 		end,
 	},
 	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		config = function()
+			require("mason-tool-installer").setup({
+				ensure_installed = {
+					"bash-language-server",
+					"csharpier",
+					"goimports",
+					"gopls",
+					"jsonlint",
+					"netcoredbg",
+					"prettier",
+					"pyright",
+					"ruff",
+					"stylua",
+				},
+				auto_update = true,
+				run_on_start = true,
+				start_delay = 3000, -- 3秒遅延
+				debounce_hours = 24, -- 24時間に1回
+			})
+		end,
+	},
+	{
 		"williamboman/mason-lspconfig.nvim",
 		dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
-			-- カスタム設定が必要なLSPのみ記述
-			local server_settings = {
-				gopls = {
-					settings = {
-						gopls = {
-							analyses = { unusedparams = true, shadow = true },
-							staticcheck = true,
-						},
-					},
-				},
-			}
-
 			require("mason-lspconfig").setup({
-				ensure_installed = {},
-				handlers = {
-					function(server_name)
-						local opts = server_settings[server_name] or {}
-						require("lspconfig")[server_name].setup(opts)
-					end,
+				automatic_enable = true, -- Masonでインストール済みのLSPを自動有効化
+			})
+
+			-- カスタム設定が必要なLSPのみ記述
+			vim.lsp.config("gopls", {
+				settings = {
+					gopls = {
+						analyses = { unusedparams = true, shadow = true },
+						staticcheck = true,
+					},
 				},
 			})
 		end,
@@ -80,6 +96,26 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
+	-- Linter
+	{
+		"mfussenegger/nvim-lint",
+		event = { "BufWritePost", "BufReadPost", "InsertLeave" },
+		config = function()
+			local lint = require("lint")
+			lint.linters_by_ft = {
+				json = { "jsonlint" },
+				swift = { "swiftlint" },
+			}
+			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+				group = vim.api.nvim_create_augroup("nvim-lint", { clear = true }),
+				callback = function()
+					lint.try_lint()
+				end,
+			})
+		end,
+	},
+
+	-- Formatter
 	{
 		"stevearc/conform.nvim",
 		event = { "BufWritePre" },
@@ -90,6 +126,7 @@ return {
 					go = { "goimports", "gofmt" },
 					python = { "ruff_format", "ruff_organize_imports" },
 					cs = { "csharpier" },
+					swift = { "swiftformat" },
 				},
 				formatters = {
 					csharpier = {
@@ -102,15 +139,6 @@ return {
 					timeout_ms = 500,
 					lsp_fallback = true,
 				},
-			})
-		end,
-	},
-	{
-		"zapling/mason-conform.nvim",
-		dependencies = { "williamboman/mason.nvim", "stevearc/conform.nvim" },
-		config = function()
-			require("mason-conform").setup({
-				ignore_install = { "swift-format" }, -- Mac組み込みのswift-formatを使用するため
 			})
 		end,
 	},

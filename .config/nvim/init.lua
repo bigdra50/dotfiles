@@ -1,3 +1,6 @@
+-- Neovim 0.12+ deprecated API警告を抑制（プラグイン対応待ち）
+vim.deprecate = function() end
+
 -- Load .vimrc but skip termencoding which is not supported in Neovim
 local vimrc_path = vim.fn.expand("~/.vimrc")
 if vim.fn.filereadable(vimrc_path) == 1 then
