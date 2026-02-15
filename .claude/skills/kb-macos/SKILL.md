@@ -59,6 +59,24 @@ sips -g pixelWidth -g pixelHeight file.png
 
 ---
 
+## ネットワーク
+
+### LocalHostName と mDNS (.local)
+
+macOS は Bonjour (mDNS) で `{LocalHostName}.local` というアドレスを自動公開する。同一 LAN 内の機器から IP アドレスを知らなくてもアクセスできる。
+
+```bash
+# ホスト名の確認
+scutil --get LocalHostName
+
+# 使用例: LAN内の別デバイスからアクセス
+curl http://MyMac.local:8080/ping
+```
+
+DHCP で IP が変わっても `.local` アドレスは維持される。iOS デバイスからも参照可能。ローカルサーバーの URL を固定したい場合に有用。
+
+---
+
 ## Homebrew/CLI
 
 <!-- Homebrew、macOS固有のCLIツール -->

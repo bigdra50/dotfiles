@@ -10,7 +10,43 @@ Claude CodeおよびAIツール全般に関する学びを記録する。
 
 ## Claude Code設定
 
-<!-- CLAUDE.md、settings.json、hooks等 -->
+### Hooks の stdin フォーマット
+
+hooks はイベント発火時に stdin で JSON を受け取る。共通フィールドと各イベント固有のフィールドがある。
+
+共通フィールド: `session_id`, `transcript_path`, `cwd`, `permission_mode`, `hook_event_name`
+
+Stop 固有:
+- `stop_hook_active` (bool): 前回の stop hook で継続中かどうか。無限ループ防止に使う
+
+Notification 固有:
+- `message`: 通知テキスト
+- `title`: 通知タイトル
+- `notification_type`: `permission_prompt` / `idle_prompt` / `auth_success` / `elicitation_dialog`
+
+`transcript_path` の JSONL を逆順に走査すれば、最後のアシスタント応答を取得できる。
+
+### -p モードでのシステムプロンプト上書き
+
+| フラグ | 効果 | 対応モード |
+|--------|------|-----------|
+| `--system-prompt` | デフォルト全体を置換 | Interactive + Print |
+| `--system-prompt-file` | ファイルで全体置換 | Print only |
+| `--append-system-prompt` | デフォルトに追記 | Interactive + Print |
+| `--append-system-prompt-file` | ファイルをデフォルトに追記 | Print only |
+
+`--system-prompt` でデフォルトを置換しても、Haiku は指示に従わず応答的な文（「理解しました」等）を返したり、文字数制限を守らないことがある。短文抽出・要約のような単純タスクでは LLM を介さずヒューリスティック処理の方が確実。
+
+### CLAUDECODE 環境変数とネスト実行
+
+Claude Code セッション内から `claude` コマンドを実行すると、`CLAUDECODE` 環境変数によりネスト検知でブロックされる。
+
+hooks の command から `claude -p` を呼ぶ場合も同様に失敗する。対策は subprocess 呼び出し時に `CLAUDECODE` を除外した env を渡すこと:
+
+```python
+env = {k: v for k, v in os.environ.items() if k != "CLAUDECODE"}
+subprocess.run(["claude", "-p", ...], env=env)
+```
 
 ---
 

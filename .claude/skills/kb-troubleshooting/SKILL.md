@@ -113,6 +113,36 @@ java -classpath "gradle-launcher.jar" org.gradle.launcher.GradleMain \
 
 ---
 
+## Docker
+
+### ポートが既に使用中で bind できない
+
+**症状**: `docker run -p 8080:8080` で `address already in use`
+
+**原因**: ホスト側の 8080 ポートが別プロセスで使用中
+
+**解決策**:
+```bash
+# 使用中のプロセスを確認
+lsof -i :8080
+
+# 別ポートにマッピング
+docker run -p 8090:8080 image-name
+```
+
+### コンテナ名の競合
+
+**症状**: `docker run --name foo` で `The container name "/foo" is already in use`
+
+**原因**: 起動失敗したコンテナが残っている
+
+**解決策**:
+```bash
+docker rm foo && docker run --name foo ...
+```
+
+---
+
 ## その他
 
 <!-- 上記カテゴリに当てはまらない問題 -->
