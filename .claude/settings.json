@@ -11,7 +11,8 @@
     "DISABLE_TELEMETRY": "1",
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
-    "FORCE_AUTO_BACKGROUND_TASKS": "1"
+    "FORCE_AUTO_BACKGROUND_TASKS": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -34,8 +35,83 @@
       "Bash(git diff:*)",
       "Bash(git branch:*)",
       "Bash(git show:*)",
+      "Bash(git remote:*)",
+      "Bash(git tag:*)",
+      "Bash(git stash list:*)",
       "Bash(codex:*)",
-      "Bash(codex exec:*)"
+      "Bash(codex exec:*)",
+      "Bash(fd:*)",
+      "Bash(rg:*)",
+      "Bash(bat:*)",
+      "Bash(lsd:*)",
+      "Bash(dust:*)",
+      "Bash(procs:*)",
+      "Bash(delta:*)",
+      "Bash(jq:*)",
+      "Bash(uname:*)",
+      "Bash(hostname:*)",
+      "Bash(whoami:*)",
+      "Bash(date:*)",
+      "Bash(env:*)",
+      "Bash(stat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(cat:*)",
+      "Bash(mise:*)",
+      "Bash(cargo --version:*)",
+      "Bash(go version:*)",
+      "Bash(node --version:*)",
+      "Bash(python --version:*)",
+      "Bash(ruby --version:*)",
+      "Bash(tokei:*)",
+      "Bash(hyperfine:*)",
+      "Bash(btm:*)",
+      "Bash(zoxide:*)",
+      "Bash(hexyl:*)",
+      "Bash(xh:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh issue list:*)",
+      "Bash(gh issue view:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr view:*)",
+      "Bash(gh api:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker images:*)",
+      "Bash(docker inspect:*)",
+      "Bash(ifconfig:*)",
+      "Bash(ip:*)",
+      "Bash(netstat:*)",
+      "Bash(ss:*)",
+      "Bash(dig:*)",
+      "Bash(nslookup:*)",
+      "Bash(df:*)",
+      "Bash(free:*)",
+      "Bash(top -l:*)",
+      "Bash(uptime:*)",
+      "Bash(id:*)",
+      "Bash(zipinfo:*)",
+      "Bash(unzip -l:*)",
+      "Bash(tar -tf:*)",
+      "Bash(tar -tvf:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(cut:*)",
+      "Bash(tr:*)",
+      "Bash(diff:*)",
+      "Bash(cmp:*)",
+      "Bash(realpath:*)",
+      "Bash(dirname:*)",
+      "Bash(basename:*)",
+      "Bash(readlink:*)",
+      "Bash(md5:*)",
+      "Bash(shasum:*)",
+      "Bash(sha256sum:*)",
+      "Bash(man:*)",
+      "Bash(type:*)",
+      "Bash(command -v:*)",
+      "Bash(echo:*)",
+      "Bash(printf:*)",
+      "Bash(write:/tmp/*)"
     ],
     "deny": [
       "Bash (sudo:*)",
@@ -77,6 +153,18 @@
         ]
       }
     ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/save-history-on-compact.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "matcher": "idle_prompt",
@@ -104,6 +192,14 @@
     "type": "command",
     "command": "~/.claude/statusline.sh",
     "padding": 0
+  },
+  "enabledPlugins": {
+    "unity@ORG-lab": false,
+    "session@bigdra50": true,
+    "git-workflow@bigdra50": true,
+    "document-skills@anthropic-agent-skills": true,
+    "unity-dev@bigdra50": false,
+    "unity-cli@unity-tools": true
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
