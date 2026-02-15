@@ -1,0 +1,10 @@
+export PATH=$PATH:/$HOME/bin
+export PATH=$HOME/.dotnet:$PATH
+export PYTHON3_HOST_PROG="$HOME/.rye/shims/python"
+export IMMERSAL_TOKEN=""
+export CLAUDE_CONFIG=""
+export DOCS=""
+export CLAUDE_CODE_OAUTH_TOKEN=""
+export FIGMA_PERSONAL_TOKEN=""
+# iosへ通知を送るため
+export BARK_KEY=""
