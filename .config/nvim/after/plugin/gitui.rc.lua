@@ -1,4 +1,7 @@
-require("gitui").setup({
+local status, gitui = pcall(require, "gitui")
+if not status then return end
+
+gitui.setup({
   -- Command Options
   command = {
     -- Enable :Gitui command

@@ -194,20 +194,14 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "unity@upfrontier-lab": false,
-    "session@bigdra50": true,
-    "git-workflow@bigdra50": true,
-    "document-skills@anthropic-agent-skills": true,
-    "unity-dev@bigdra50": false,
-    "unity-cli@unity-tools": true
+    "swift-lsp@claude-plugins-official": true,
+    "frontend-design@claude-code-plugins": true
   },
   "language": "Japanese",
   "alwaysThinkingEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "skipDangerousModePermissionPrompt": true,
-  "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true
-  }
+  "mcpServers": {}
 }

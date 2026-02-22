@@ -24,7 +24,6 @@ local plugin_modules = {
   require("plugins.editor"),
   require("plugins.ai"),
   require("plugins.go"),
-  require("plugins.haskell"),
 }
 
 for _, module in ipairs(plugin_modules) do
