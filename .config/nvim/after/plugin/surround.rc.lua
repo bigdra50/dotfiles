@@ -1,3 +1,4 @@
-require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-})
+local status, surround = pcall(require, "nvim-surround")
+if not status then return end
+
+surround.setup({})

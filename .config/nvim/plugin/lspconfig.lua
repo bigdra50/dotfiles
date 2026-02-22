@@ -1,7 +1,8 @@
 -- Mason setup is now handled in lua/plugins/lsp.lua
 
-local lspconfig = require("lspconfig")
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
+local status_lspconfig, lspconfig = pcall(require, "lspconfig")
+local status_cmp_lsp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not (status_lspconfig and status_cmp_lsp) then return end
 local path_utils = require('utils.path')
 local capabilities = cmp_nvim_lsp.default_capabilities()
 local opts = { noremap = true, silent = true }
