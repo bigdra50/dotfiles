@@ -79,10 +79,8 @@ function M.setup_diagnostics(custom_icons)
     underline = true,
     update_in_insert = false,
     severity_sort = true,
-    virtual_text = {
-      spacing = 2,
-      prefix = "●",
-    },
+    virtual_text = false,
+    virtual_lines = true,
     float = {
       source = "always",
       border = "rounded",
