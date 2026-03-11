@@ -21,27 +21,5 @@ alias .2=cd ../..
 alias .3=cd ../../..
 alias .4=cd ../../../..
 alias .5=cd ../../../../..
-alias cp='cp -r'
-alias mkdir='mkdir -p'
-#alias rm='trash -rf'
-alias cut='choose'
-alias df='duf'
-alias du='dust'
-alias restart='exec $SHELL -l'
-alias top='btm'
-alias diff='delta'
-
-alias g='git'
 
 DOTFILES=$HOME/.dotfiles
-alias v='nvim'
-alias vz='v ~/.zshrc'
-alias vv='v ~/.config/nvim/init.lua'
-alias vn='v ~/.config/nixpkgs/home.nix'
-alias h='history'
-alias so='source'
-alias soz='source $HOME/.zshenv && source $HOME/.zshrc'
-#alias mkdir='(){mkdir $1;cd $1}'
-
-alias yolo='claude --dangerously-skip-permissions'
-alias cccommit='~/bin/cccommit.sh'
