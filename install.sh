@@ -145,7 +145,7 @@ link_config() {
 
         case "$PLATFORM" in
             linux|wsl)
-                if [[ "$basename" == "posh" ]]; then
+                if [[ "$basename" == "posh" || "$basename" == "yashiki" ]]; then
                     warning "Skipping $basename (macOS only)"
                     continue
                 fi

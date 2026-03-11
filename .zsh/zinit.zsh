@@ -37,4 +37,5 @@ zinit ice wait lucid
 zinit light zsh-users/zsh-syntax-highlighting
 zinit ice wait lucid
 zinit light chrissicool/zsh-256color
+zinit light olets/zsh-abbr
 # Starship is loaded in interface.zsh instead of zinit

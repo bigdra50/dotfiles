@@ -5,4 +5,5 @@
 [[ -f ~/.zsh/interface.zsh ]] && . ~/.zsh/interface.zsh
 [[ -f ~/.zsh/extensions.zsh ]] && . ~/.zsh/extensions.zsh
 
-[ -f "/Users/bigdra/.ghcup/env" ] && . "/Users/bigdra/.ghcup/env" # ghcup-env
+
+[ -f "/Users/USER/.ghcup/env" ] && . "/Users/USER/.ghcup/env" # ghcup-env
