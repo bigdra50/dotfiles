@@ -44,6 +44,8 @@ BARK_PORT = "8090"
 BARK_ICON_URL = "https://raw.githubusercontent.com/bigdra50/dotfiles/master/icon.png"
 MAX_BODY_LENGTH = 200
 
+RELAY_SERVER_URL = os.environ.get("RELAY_SERVER_URL", "http://localhost:3000")
+
 
 def ensure_bark_server() -> bool:
     """Start bark-server Docker container if not running. Returns True if available."""
@@ -180,6 +182,26 @@ def send_bark_notification(title: str, body: str) -> None:
         logging.error("bark send failed: %s", e)
 
 
+def send_relay_notification(notification_type: str, title: str, body: str) -> None:
+    """Send notification to WebSocket relay server for G2 glass display."""
+    payload = json.dumps({
+        "type": notification_type,
+        "title": title,
+        "message": body if body else title,
+    }).encode()
+
+    req = urllib.request.Request(
+        f"{RELAY_SERVER_URL}/api/notify",
+        data=payload,
+        headers={"Content-Type": "application/json"},
+    )
+    try:
+        resp = urllib.request.urlopen(req, timeout=3)
+        logging.info("relay sent status=%s", resp.status)
+    except Exception as e:
+        logging.debug("relay send skipped: %s", e)
+
+
 def send_notification(notification_type: str, hook_input: dict) -> None:
     """Send notification using osascript (macOS built-in) and Bark push."""
     config = NOTIFICATION_CONFIG.get(notification_type, DEFAULT_CONFIG)
@@ -208,6 +230,7 @@ def send_notification(notification_type: str, hook_input: dict) -> None:
 
     logging.info("type=%s title=%s body=%s raw=%s", notification_type, message, body, raw_text[:200])
     send_bark_notification(message, body)
+    send_relay_notification(notification_type, message, body)
 
 
 def main() -> None:
