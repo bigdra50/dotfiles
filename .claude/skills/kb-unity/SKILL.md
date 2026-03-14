@@ -34,6 +34,91 @@ Unity開発に関する学びを記録する。
 
 ---
 
+## UIToolkit
+
+### text-overflow: ellipsis が効く条件
+
+テキスト省略（`...`）を機能させるには3つのプロパティをセットで指定する必要がある:
+
+```css
+white-space: nowrap;     /* 折り返し禁止 */
+overflow: hidden;        /* はみ出し非表示 */
+text-overflow: ellipsis; /* 省略記号表示 */
+```
+
+加えて、要素の幅が制約されていること（明示的な `width` 指定、または flex レイアウトによる制約）が必要。
+
+ID + タイトルのように省略したくない部分とさせたい部分がある場合、要素を分離して flex プロパティで制御する:
+
+```css
+.item__id {
+    flex-shrink: 0;          /* ID は縮小しない */
+    white-space: nowrap;
+}
+.item__title {
+    flex-grow: 1;
+    flex-shrink: 1;          /* タイトル側が縮小 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+```
+
+単一 Label に全テキストを入れると、どの部分が省略されるか制御できない。
+
+### テキストのマーキー（横スクロール）アニメーション
+
+ellipsis の代わりに、はみ出したテキストを横スクロールさせる手法。
+
+構造:
+
+```
+mask (VisualElement, overflow: hidden, 幅制約あり)
+  └─ label (Label, overflow: visible, flex-shrink: 0)
+```
+
+USS:
+
+```css
+.text-mask {
+    overflow: hidden;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+.text-mask > .text-label {
+    overflow: visible;
+    flex-shrink: 0;       /* テキスト幅で伸びる */
+    white-space: nowrap;
+    text-overflow: clip;
+}
+```
+
+C# でアニメーション:
+
+```csharp
+// レイアウト確定後に判定
+label.RegisterCallback<GeometryChangedEvent>(_ =>
+{
+    float overflow = label.resolvedStyle.width - mask.resolvedStyle.width;
+    if (overflow <= 0) return; // はみ出していなければ何もしない
+
+    // schedule で毎フレーム left を更新
+    float speed = 30f; // px/sec
+    label.schedule.Execute(() =>
+    {
+        float t = (float)(Time.timeAsDouble % ((overflow + pause) / speed));
+        label.style.left = -Mathf.Clamp(t * speed, 0, overflow);
+    }).Every(16); // ≈60fps
+});
+```
+
+注意点:
+- `resolvedStyle.width` はレイアウト確定後でないと 0 を返す。`GeometryChangedEvent` で待つ
+- テキストが変わるたびにアニメーションの再計算が必要
+- 端で一時停止させるには時間ベースのステートマシンが必要
+
+---
+
 ## エディタ拡張
 
 ### スクリプト再コンパイルを跨いだ処理の継続
@@ -242,17 +327,33 @@ XREAL 固有の制約:
 
 **症状**: `CommandInvokationFailure: Gradle build failed.` + `Remote host terminated the handshake`
 
-**原因**: Gradle の並列ワーカーによる `dl.google.com` への同時 TLS 接続過多。特に Gradle キャッシュが空の初回ビルド時に発生。
+**原因1 — gradle.properties の TLS 制限**: `~/.gradle/gradle.properties` に `systemProp.https.protocols` や `org.gradle.jvmargs` 内の `-Dhttps.protocols` 設定があると、JDK の TLS ネゴシエーションが制限されて Google Maven との接続が失敗する。キャッシュが存在する間は問題が顕在化しない。
 
-**解決策**: `Assets/Plugins/Android/gradleTemplate.properties` にワーカー数制限を追加:
+```properties
+# NG: 不要な TLS 制限（JDK 17+ はデフォルトで TLSv1.2/1.3 対応）
+systemProp.https.protocols=TLSv1.2,TLSv1.3
+systemProp.jdk.tls.client.protocols=TLSv1.2,TLSv1.3
+org.gradle.jvmargs=-Xmx4096m -Dhttps.protocols=TLSv1.2,TLSv1.3
+
+# OK: メモリ設定のみ
+org.gradle.jvmargs=-Xmx4096m
+```
+
+**原因2 — 並列接続過多**: Gradle の並列ワーカーが `dl.google.com` へ同時に多数の TLS 接続を張り、一部がサーバー側から拒否される。キャッシュが空の初回ビルド時に発生しやすい。
+
+**解決策**:
+1. `~/.gradle/gradle.properties` から TLS 制限設定を除去
+2. 並列接続が原因の場合、`Assets/Plugins/Android/gradleTemplate.properties` にワーカー数制限を追加:
 ```properties
 org.gradle.workers.max=1
 ```
-依存解決がキャッシュされた後は削除可能。
+3. Gradle デーモンの再起動（設定変更後は必須）
+4. 依存がキャッシュされた後は `workers.max=1` を外して並列ビルドに戻せる
 
-**補足**:
-- Gradle デーモンが古いネットワーク状態を保持している場合もある。デーモン停止 + `~/.gradle/daemon/` 削除で解消
-- Unity Hub 経由のプロセスは PATH が `/usr/bin:/bin:/usr/sbin:/sbin` に制限される。CLI での切り分けテストと結果が異なる場合がある
+**切り分け**:
+- `curl -sI <失敗URL>` → HTTP 200 なら Gradle 固有の問題
+- CLI から `--info` 付きで実行し `Searched in the following repositories` を確認
+- `-Djavax.net.debug=ssl:handshake` を `org.gradle.jvmargs` に追加して TLS 詳細を取得
 
 ---
 

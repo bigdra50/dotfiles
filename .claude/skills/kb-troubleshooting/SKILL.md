@@ -84,32 +84,42 @@ uvx --from git+https://github.com/bigdra50/unity-cli \
 
 `--childModules` を付けると Android SDK/NDK 等の依存モジュールも自動インストールされる。
 
-### Gradle 並列ダウンロードで TLS ハンドシェイクが失敗する
+### Gradle で TLS ハンドシェイクが失敗する
 
-**症状**: Unity Android ビルド（Gradle 8.13 + AGP 8.10.0）で `Remote host terminated the handshake` エラー。`dl.google.com` への HTTPS 接続がサーバー側から切断される。curl や Java の `HttpsURLConnection` では同じ URL に正常接続できる。
+**症状**: `Remote host terminated the handshake` + `The server may not support the client's requested TLS protocol versions`。`dl.google.com` への HTTPS 接続が失敗する。curl や Java の `HttpsURLConnection` では同じ URL に正常接続できる。
 
-**原因**: Gradle の並列ワーカーが `dl.google.com` へ同時に多数の TLS 接続を張ると、一部のハンドシェイクがサーバー側から拒否される。キャッシュが空の初回ビルド時に発生しやすい。
+**原因1 — gradle.properties の TLS 制限**: `~/.gradle/gradle.properties` に `systemProp.https.protocols` や `org.gradle.jvmargs` 内の `-Dhttps.protocols` 設定があると、JDK の TLS ネゴシエーションが制限される。Gradle キャッシュがある間はネットワークアクセスが不要なため問題が顕在化しない。キャッシュ削除後に初めて失敗する。
+
+```properties
+# NG: 不要な TLS 制限（JDK 17+ はデフォルトで TLSv1.2/1.3 対応）
+systemProp.https.protocols=TLSv1.2,TLSv1.3
+org.gradle.jvmargs=-Xmx4096m -Dhttps.protocols=TLSv1.2,TLSv1.3
+
+# OK: メモリ設定のみ
+org.gradle.jvmargs=-Xmx4096m
+```
+
+**原因2 — 並列接続過多**: Gradle の並列ワーカーが `dl.google.com` へ同時に多数の TLS 接続を張り、一部がサーバー側から拒否される。キャッシュが空の初回ビルド時に発生しやすい。
 
 **解決策**:
 
-1. Gradle ワーカー数を制限して依存解決を通す:
+1. `~/.gradle/gradle.properties` から TLS 制限設定を除去
+2. Gradle ワーカー数を制限して依存解決を通す:
 ```properties
-# gradle.properties / gradleTemplate.properties
 org.gradle.workers.max=1
 ```
-
-2. CLI から直接実行する場合:
+3. 設定変更後は Gradle デーモンの再起動が必須:
 ```bash
-java -classpath "gradle-launcher.jar" org.gradle.launcher.GradleMain \
-  "--no-daemon" "--max-workers=1" "assembleRelease"
+java -classpath "gradle-launcher.jar" org.gradle.launcher.GradleMain --stop
 ```
-
-3. 依存がキャッシュされた後は `workers.max=1` を外して並列ビルドに戻せる
+4. 依存がキャッシュされた後は `workers.max=1` を外して並列ビルドに戻せる
 
 **切り分け手順**:
-- `curl -sI <失敗URL>` で直接アクセス確認（HTTP 200 なら Gradle 固有の問題）
-- `--no-daemon` で途中まで成功するなら並列接続数の問題
-- Gradle デーモンが古いネットワーク状態をキャッシュしている場合は `--stop` + `~/.gradle/daemon/` 削除
+- `curl -sI <失敗URL>` で直接アクセス確認（HTTP 200 なら Gradle/JDK 固有の問題）
+- `~/.gradle/gradle.properties` に `systemProp.https.*` がないか確認
+- `-Djavax.net.debug=ssl:handshake` を `org.gradle.jvmargs` に追加して TLS 詳細を取得
+- 成功/失敗ハンドシェイクの比率を確認（3/43 程度の失敗なら並列接続数の問題）
+- デーモンが古い状態をキャッシュしている場合は `--stop` + `~/.gradle/daemon/` 削除
 
 ---
 
