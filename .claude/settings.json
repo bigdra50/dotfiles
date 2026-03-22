@@ -143,24 +143,38 @@
   "hooks": {
     "Stop": [
       {
-        "matcher": "",
         "hooks": [
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type stop",
-            "timeout": 5
+            "async": true
           }
         ]
       }
     ],
     "PreCompact": [
       {
-        "matcher": "",
         "hooks": [
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/save-history-on-compact.sh",
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/permission-relay.py",
+            "timeout": 60
+          },
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/notify.py --type permission_prompt",
+            "async": true
           }
         ]
       }
@@ -175,14 +189,16 @@
             "timeout": 5
           }
         ]
-      },
+      }
+    ],
+    "PreToolUse": [
       {
-        "matcher": "permission_prompt",
+        "matcher": "AskUserQuestion",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/notify.py --type permission_prompt",
-            "timeout": 5
+            "command": "python3 ~/.claude/hooks/notify.py --type elicitation_dialog",
+            "async": true
           }
         ]
       }
@@ -224,5 +240,6 @@
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "mcpServers": {}
+  "mcpServers": {},
+  "voiceEnabled": true
 }

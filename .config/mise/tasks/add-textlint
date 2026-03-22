@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+# AI用textlint環境自動セットアップタスク
+# このプロジェクトで設定されているtextlint設定を任意のプロジェクトに適用
+
+set -euo pipefail
+
+PROJECT_DIR="$(pwd)"
+echo "🔧 AI用textlint環境をセットアップ中: $PROJECT_DIR"
+
+# package.jsonの存在確認・作成
+if [[ ! -f "package.json" ]]; then
+    echo "📦 package.jsonを作成中..."
+    npm init -y > /dev/null
+    echo "✅ package.jsonを作成しました"
+fi
+
+# textlintとAI用ルールのインストール
+echo "📚 textlintとAI用ルールをインストール中..."
+npm install --save-dev \
+    textlint@^15.1.0 \
+    textlint-rule-preset-ja-technical-writing@^12.0.2 \
+    @textlint-ja/textlint-rule-preset-ai-writing@^1.4.0
+
+# .textlintrc.jsonの作成
+echo "⚙️ textlint設定ファイルを作成中..."
+cat > .textlintrc.json << 'EOF'
+{
+  "rules": {
+    "@textlint-ja/preset-ai-writing": true,
+    "preset-ja-technical-writing": true
+  }
+}
+EOF
+
+# package.jsonにscriptsを追加
+echo "📝 package.jsonにtextlintスクリプトを追加中..."
+node -e "
+const fs = require('fs');
+const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+pkg.scripts = pkg.scripts || {};
+pkg.scripts['lint:text'] = 'textlint \"docs/**/*.md\" \"*.md\"';
+pkg.scripts['lint:text:fix'] = 'textlint --fix \"docs/**/*.md\" \"*.md\"';
+fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
+"
+
+# .gitignoreにnode_modulesを追加（存在しない場合）
+if [[ ! -f ".gitignore" ]] || ! grep -q "node_modules" .gitignore; then
+    echo "📝 .gitignoreにnode_modulesを追加中..."
+    echo -e "\n# Dependencies\nnode_modules/\nnpm-debug.log*" >> .gitignore
+fi
+
+echo ""
+echo "🎉 AI用textlint環境のセットアップが完了しました！"
+echo ""
+echo "📋 利用方法:"
+echo "  npm run lint:text      # MarkdownファイルのLint実行"
+echo "  npm run lint:text:fix  # 自動修正付きLint実行"
+echo ""
+echo "📂 作成されたファイル:"
+echo "  ✅ .textlintrc.json (AI用textlint設定)"
+echo "  ✅ package.json (scriptsセクション追加)"
+echo "  ✅ node_modules/ (textlint関連パッケージ)"
+echo ""
+echo "💡 ヒント: VSCodeでtextlint拡張機能を使用すると、リアルタイムでLintが実行されます"
