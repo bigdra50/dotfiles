@@ -29,8 +29,10 @@ delta = "latest"
 starship = "latest"
 ffmpeg = "latest"
 "cargo:mcat" = "latest"
+"cargo:mdbook" = "latest"
 "cargo:procs" = "latest"
 "cargo:onefetch" = "latest"
+"cargo:tokei" = "latest"
 
 # Git/GitHub
 gh = "latest"
@@ -43,6 +45,10 @@ direnv = "latest"
 "asdf:neovim" = "nightly"
 cmake = "latest"
 uv = "latest"
+
+# Language runtimes (additional)
+java = "openjdk-22"
+julia = "1.10.4"
 
 # Cloud/Platform
 azure-cli = "latest"
@@ -58,7 +64,9 @@ xcodes = "latest"
 # Network
 "pipx:speedtest-cli" = "latest"
 "ubi:sharkdp/hexyl" = "latest"
+"ubi:sharkdp/hyperfine" = "latest"
 "ubi:ducaale/xh" = "latest"
+"aqua:charmbracelet/gum" = "latest"
 
 # npm packages (formerly npm -g)
 "npm:gitmoji-cli" = "latest"
@@ -67,6 +75,15 @@ xcodes = "latest"
 "npm:chrome-devtools-mcp" = "latest"
 "npm:cline" = "latest"
 "npm:difit" = "latest"
+"npm:@evenrealities/evenhub-cli" = "latest"
+"npm:@evenrealities/evenhub-simulator" = "latest"
+"npm:@github/copilot" = "latest"
+"npm:@marp-team/marp-cli" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:@playwright/cli" = "latest"
+"npm:markserv" = "latest"
+"npm:pptxgenjs" = "latest"
+"npm:sharp" = "latest"
 
 # pipx packages
 "pipx:git-filter-repo" = "latest"
@@ -84,4 +101,4 @@ run = "~/.config/mise/tasks/runner {{arg(name=\"args\", var=true)}}"
 experimental = true
 legacy_version_file = true
 disable_default_shorthands = false
-disable_backends = ["conda"]
+disable_backends = []

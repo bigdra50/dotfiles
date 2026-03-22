@@ -14,182 +14,8 @@ TOOLS_FILE="$DOTFILES_DIR/tools.toml"
 source "$SCRIPT_DIR/lib.sh"
 
 # =============================================================================
-# TOML Parser
-# =============================================================================
-
-parse_toml_array() {
-    local section="$1"
-    local file="$2"
-
-    awk -v section="$section" '
-        BEGIN { in_section = 0 }
-        /^\[/ { in_section = 0 }
-        $0 ~ "^\\[" section "\\]" { in_section = 1; next }
-        in_section && /name = / {
-            gsub(/.*name = "|".*/, "")
-            print
-        }
-    ' "$file"
-}
-
-# =============================================================================
 # Installation Functions
 # =============================================================================
-
-install_go_tools() {
-    info "Installing Go tools..."
-
-    local max_retries=5
-    local retry=0
-    while ! command_exists go && [ $retry -lt $max_retries ]; do
-        warning "Go not found. Waiting for Go installation... (attempt $((retry+1))/$max_retries)"
-        sleep 2
-        eval "$(mise activate bash)" 2>/dev/null || true
-        export PATH="$HOME/.local/bin:$PATH:$(go env GOPATH)/bin" 2>/dev/null || true
-        retry=$((retry+1))
-    done
-
-    if ! command_exists go; then
-        error "Go not found. Please install Go first."
-        return 1
-    fi
-
-    local tools=($(parse_toml_array "go_tools" "$TOOLS_FILE"))
-
-    if [[ ${#tools[@]} -eq 0 ]]; then
-        info "No go tools specified in tools.toml"
-        return 0
-    fi
-
-    export GOPATH="$(go env GOPATH)"
-    export PATH="$PATH:$GOPATH/bin"
-
-    for tool in "${tools[@]}"; do
-        local binary_name="${tool##*/}"
-        binary_name="${binary_name%@*}"
-
-        if command_exists "$binary_name"; then
-            success "$binary_name already installed"
-        else
-            info "Installing $tool..."
-            export GOPROXY="https://proxy.golang.org,direct"
-            export GOSUMDB="sum.golang.org"
-            export GOPRIVATE=""
-
-            local max_retries=3
-            local retry=0
-            while [ $retry -lt $max_retries ]; do
-                if go install "$tool"; then
-                    success "$binary_name installed successfully"
-                    break
-                else
-                    retry=$((retry+1))
-                    if [ $retry -lt $max_retries ]; then
-                        warning "Failed to install $tool, retrying... ($retry/$max_retries)"
-                        sleep 3
-                    else
-                        error "Failed to install $tool after $max_retries attempts"
-                    fi
-                fi
-            done
-        fi
-    done
-}
-
-install_cargo_tools() {
-    info "Installing Cargo tools..."
-
-    local max_retries=5
-    local retry=0
-    while ! command_exists cargo && [ $retry -lt $max_retries ]; do
-        warning "Cargo not found. Waiting for Rust installation... (attempt $((retry+1))/$max_retries)"
-        sleep 2
-        eval "$(mise activate bash)" 2>/dev/null || true
-        export PATH="$HOME/.local/bin:$PATH:$HOME/.cargo/bin"
-        retry=$((retry+1))
-    done
-
-    if ! command_exists cargo; then
-        error "Cargo not found. Please install Rust first."
-        return 1
-    fi
-
-    if ! command_exists cargo-binstall; then
-        info "Installing cargo-binstall for faster installations..."
-        cargo install cargo-binstall
-    fi
-
-    local tools=($(parse_toml_array "cargo" "$TOOLS_FILE"))
-
-    if [[ ${#tools[@]} -eq 0 ]]; then
-        info "No cargo tools specified in tools.toml"
-        return 0
-    fi
-
-    for tool in "${tools[@]}"; do
-        if command_exists "$tool"; then
-            success "$tool already installed"
-        else
-            info "Installing $tool..."
-            local tool_name="$tool"
-            local version_arg=""
-
-            local tool_version=$(awk -v tool="$tool" '
-                /name = "/ && $0 ~ ("\"" tool "\"") {
-                    if (/version = /) {
-                        match($0, /version = "[^"]*"/)
-                        version_part = substr($0, RSTART, RLENGTH)
-                        gsub(/version = "|"/, "", version_part)
-                        print version_part
-                        exit
-                    }
-                }
-            ' "$TOOLS_FILE")
-
-            if [[ -n "$tool_version" && "$tool_version" != "latest" ]]; then
-                version_arg="--version $tool_version"
-            fi
-
-            local install_success=false
-
-            if command_exists cargo-binstall; then
-                info "Trying fast binary installation for $tool_name..."
-
-                if [[ -n "${GITHUB_TOKEN:-}" ]] || [[ -n "${GH_TOKEN:-}" ]]; then
-                    export BINSTALL_GH_API_TOKEN="${GITHUB_TOKEN:-${GH_TOKEN}}"
-                fi
-
-                if [[ -z "$version_arg" ]]; then
-                    binstall_cmd="cargo binstall -y --no-confirm --log-level warn $tool_name"
-                else
-                    binstall_cmd="cargo binstall -y --no-confirm --log-level warn $tool_name $version_arg"
-                fi
-
-                if timeout 30s $binstall_cmd; then
-                    success "$tool_name installed successfully (binary)"
-                    install_success=true
-                else
-                    warning "Binary installation timed out or failed for $tool_name"
-                fi
-            fi
-
-            if [[ "$install_success" == false ]]; then
-                info "Binary installation failed, compiling from source..."
-                if [[ -z "$version_arg" ]]; then
-                    install_cmd="cargo install $tool_name"
-                else
-                    install_cmd="cargo install $tool_name $version_arg"
-                fi
-
-                if $install_cmd; then
-                    success "$tool_name installed successfully (compiled)"
-                else
-                    error "Failed to install $tool_name"
-                fi
-            fi
-        fi
-    done
-}
 
 install_mise() {
     if ! command_exists mise; then
@@ -222,7 +48,7 @@ install_mise_runtimes() {
     export PATH="$HOME/.local/bin:$PATH"
 
     # Install tools from config files
-    if [[ -f "$DOTFILES_DIR/.config/mise/config.toml" ]] || [[ -f "$DOTFILES_DIR/.mise.toml" ]]; then
+    if [[ -f "$DOTFILES_DIR/.config/mise/config.toml" ]]; then
         info "Installing mise tools..."
         cd "$DOTFILES_DIR"
 
@@ -375,8 +201,6 @@ main() {
     install_mise
     install_mise_runtimes
     install_fallback_tools
-    install_go_tools
-    install_cargo_tools
 
     success "Tool installation completed!"
 }
