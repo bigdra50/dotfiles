@@ -6,4 +6,4 @@
 [[ -f ~/.zsh/extensions.zsh ]] && . ~/.zsh/extensions.zsh
 
 
-[ -f "/Users/ryudai.kimura/.ghcup/env" ] && . "/Users/ryudai.kimura/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
