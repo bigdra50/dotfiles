@@ -2,44 +2,9 @@
 # Supports: macOS, WSL-Ubuntu, PowerShell (Windows)
 # Priority: Cross-platform tools > Platform-specific tools
 
-[cargo]
-# Rust-based CLI tools (works on all platforms)
-# These tools work on Mac, WSL, and Windows (PowerShell)
-tools = [
-    { name = "bat", version = "latest", description = "cat with syntax highlighting" },
-    { name = "git-delta", version = "latest", description = "git diff viewer" },
-    { name = "du-dust", version = "latest", description = "disk usage analyzer" },
-    { name = "eza", version = "latest", description = "modern ls replacement" },
-    { name = "fd-find", version = "latest", description = "find replacement" },
-    { name = "gitui", version = "latest", description = "git TUI", flags = "--locked" },
-    { name = "hyperfine", version = "latest", description = "benchmarking tool" },
-    { name = "just", version = "latest", description = "command runner" },
-    { name = "lsd", version = "latest", description = "ls deluxe" },
-    { name = "procs", version = "latest", description = "ps replacement" },
-    { name = "ripgrep", version = "latest", description = "grep replacement" },
-    { name = "sd", version = "latest", description = "sed replacement" },
-    { name = "starship", version = "latest", description = "cross-shell prompt" },
-    { name = "tokei", version = "latest", description = "code statistics" },
-    { name = "zoxide", version = "latest", description = "smarter cd command" },
-]
-
-[go_tools]
-# Go-based CLI tools
-tools = [
-    { name = "github.com/x-motemen/ghq@latest", description = "git repository manager" },
-    { name = "github.com/jesseduffield/lazygit@latest", description = "simple terminal UI for git commands" },
-]
-
-# [mise]
-# NOTE: mise runtimes are defined in .mise.toml (primary) and .config/mise/config.toml
-# This section is for reference only - actual installation reads from .mise.toml
-# runtimes = [
-#     { name = "go", version = "latest" },
-#     { name = "rust", version = "latest" },
-#     { name = "node", version = "latest" },
-#     { name = "python", version = "3.12" },
-#     { name = "neovim", version = "nightly" },
-# ]
+# NOTE: CLI tools (bat, fd, ripgrep, lsd, dust, etc.) and language runtimes
+# are managed by mise via .config/mise/config.toml.
+# This file only defines platform-specific tools that mise cannot handle.
 
 [platform.macos]
 # macOS-specific tools (Homebrew)
@@ -104,10 +69,8 @@ scoop = [
     "grep",
 ]
 
-# Windows-specific cargo tools that work better on Windows
-cargo_windows = [
-    { name = "nu", version = "latest", description = "modern shell (great on Windows)" },
-]
+# Windows-specific tools (nushell via scoop or cargo)
+# NOTE: On macOS/Linux, nushell can be added to mise config.toml if needed
 
 # PowerShell modules
 powershell_modules = [
