@@ -1,0 +1,547 @@
+#!/usr/bin/env bash
+#MISE description="Disk usage reporter"
+
+set -euo pipefail
+
+# --- config ---
+
+HOME_DIR="$HOME"
+DU="/usr/bin/du"
+
+# --- helpers ---
+
+hr() {
+  printf '%.0s─' {1..60}
+  echo
+}
+
+section() {
+  echo
+  hr
+  printf "  %s\n" "$1"
+  hr
+}
+
+fmt_size() {
+  local bytes="$1"
+  if (( bytes >= 1073741824 )); then
+    printf "%.1f GB" "$(echo "scale=1; $bytes / 1073741824" | bc)"
+  elif (( bytes >= 1048576 )); then
+    printf "%.1f MB" "$(echo "scale=1; $bytes / 1048576" | bc)"
+  elif (( bytes >= 1024 )); then
+    printf "%.1f KB" "$(echo "scale=1; $bytes / 1024" | bc)"
+  else
+    printf "%d B" "$bytes"
+  fi
+}
+
+du_bytes() {
+  local path="$1"
+  if [[ -e "$path" ]]; then
+    $DU -sk "$path" 2>/dev/null | awk '{print $1 * 1024}'
+  else
+    echo 0
+  fi
+}
+
+du_fmt() {
+  local path="$1"
+  local bytes
+  bytes="$(du_bytes "$path")"
+  fmt_size "$bytes"
+}
+
+print_row() {
+  local label="$1" value="$2"
+  printf "  %-44s %s\n" "$label" "$value"
+}
+
+print_row_if_exists() {
+  local label="$1" path="$2"
+  if [[ -e "$path" ]]; then
+    print_row "$label" "$(du_fmt "$path")"
+  fi
+}
+
+top_subdirs() {
+  local path="$1"
+  local count="${2:-10}"
+  if [[ -d "$path" ]]; then
+    $DU -sk "$path"/*/ 2>/dev/null | sort -rn | head -n "$count" | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      print_row "$name" "$(fmt_size "$bytes")"
+    done
+  fi
+}
+
+list_subdirs_all() {
+  local path="$1"
+  if [[ -d "$path" ]]; then
+    $DU -sk "$path"/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      if (( bytes > 0 )); then
+        print_row "$name" "$(fmt_size "$bytes")"
+      fi
+    done
+  fi
+}
+
+# --- report sections ---
+
+report_disk_overview() {
+  section "Disk Overview"
+  df -h / | awk 'NR==2 {printf "  Total: %s  Used: %s  Free: %s  Usage: %s\n", $2, $3, $4, $5}'
+}
+
+report_home_tree() {
+  section "~/  Top-level (dust)"
+  if command -v dust &>/dev/null; then
+    dust -d 1 -n 15 "$HOME_DIR" 2>/dev/null || echo "  (dust failed)"
+  else
+    $DU -sk "$HOME_DIR"/*/ 2>/dev/null | sort -rn | head -n 15 | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      print_row "$name" "$(fmt_size "$bytes")"
+    done
+  fi
+}
+
+report_docker() {
+  section "Docker"
+  if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
+    docker system df --format '{{.Type}}\t{{.Size}}' 2>/dev/null | while IFS=$'\t' read -r type size; do
+      print_row "$type" "$size"
+    done
+    echo
+    local docker_dir="$HOME_DIR/Library/Containers/com.docker.docker"
+    print_row_if_exists "Docker.app data" "$docker_dir"
+  else
+    echo "  Docker is not running or not installed."
+  fi
+}
+
+report_xcode() {
+  section "Xcode"
+  print_row_if_exists "DerivedData" "$HOME_DIR/Library/Developer/Xcode/DerivedData"
+  print_row_if_exists "iOS DeviceSupport" "$HOME_DIR/Library/Developer/Xcode/iOS DeviceSupport"
+  print_row_if_exists "watchOS DeviceSupport" "$HOME_DIR/Library/Developer/Xcode/watchOS DeviceSupport"
+  print_row_if_exists "CoreSimulator" "$HOME_DIR/Library/Developer/CoreSimulator"
+  print_row_if_exists "Archives" "$HOME_DIR/Library/Developer/Xcode/Archives"
+  print_row_if_exists "CommandLineTools" "/Library/Developer/CommandLineTools"
+}
+
+report_android() {
+  section "Android / Gradle"
+  print_row_if_exists ".gradle" "$HOME_DIR/.gradle"
+  print_row_if_exists ".android" "$HOME_DIR/.android"
+  if [[ -n "${ANDROID_HOME:-}" ]] && [[ -d "$ANDROID_HOME" ]]; then
+    print_row_if_exists "Android SDK" "$ANDROID_HOME"
+  else
+    print_row_if_exists "Android SDK" "$HOME_DIR/Library/Android/sdk"
+  fi
+}
+
+report_unity() {
+  section "Unity"
+  print_row_if_exists "Unity Hub Editors" "/Applications/Unity/Hub/Editor"
+  print_row_if_exists "Unity Asset Store Cache" "$HOME_DIR/Library/Unity/Asset Store-5.x"
+  print_row_if_exists "Unity cache" "$HOME_DIR/Library/Unity"
+  print_row_if_exists "Unity local cache" "$HOME_DIR/Library/Caches/com.unity3d.*"
+  # GI Cache
+  local gi_cache="$HOME_DIR/Library/Caches/com.unity3d.UnityEditor/GiCache"
+  print_row_if_exists "GI Cache" "$gi_cache"
+}
+
+report_package_caches() {
+  section "Package Manager Caches"
+  print_row_if_exists "npm" "$HOME_DIR/.npm"
+  print_row_if_exists "yarn" "$HOME_DIR/.yarn"
+  print_row_if_exists "pnpm store" "$HOME_DIR/Library/pnpm/store"
+  print_row_if_exists "go-build" "$HOME_DIR/Library/Caches/go-build"
+  print_row_if_exists "go mod" "$HOME_DIR/go"
+  print_row_if_exists "uv" "$HOME_DIR/Library/Caches/uv"
+  print_row_if_exists "pip" "$HOME_DIR/Library/Caches/pip"
+  print_row_if_exists "Homebrew cache" "$HOME_DIR/Library/Caches/Homebrew"
+  print_row_if_exists "CocoaPods" "$HOME_DIR/Library/Caches/CocoaPods"
+  print_row_if_exists "NuGet" "$HOME_DIR/.nuget"
+  print_row_if_exists "cargo registry" "$HOME_DIR/.cargo/registry"
+}
+
+report_runtimes() {
+  section "Runtime Version Managers"
+  print_row_if_exists "mise installs" "$HOME_DIR/.local/share/mise/installs"
+  print_row_if_exists "mise cache" "$HOME_DIR/.local/share/mise/cache"
+  print_row_if_exists "mise downloads" "$HOME_DIR/.local/share/mise/downloads"
+  print_row_if_exists "asdf" "$HOME_DIR/.asdf"
+  print_row_if_exists ".dotnet" "$HOME_DIR/.dotnet"
+  print_row_if_exists ".rustup" "$HOME_DIR/.rustup"
+}
+
+report_library_caches() {
+  section "~/Library/Caches  Top 10"
+  top_subdirs "$HOME_DIR/Library/Caches" 10
+}
+
+report_app_support() {
+  section "~/Library/Application Support  Top 10"
+  top_subdirs "$HOME_DIR/Library/Application Support" 10
+}
+
+report_containers() {
+  section "~/Library/Containers  Top 5"
+  top_subdirs "$HOME_DIR/Library/Containers" 5
+}
+
+report_ai_editors() {
+  section "AI / Editor Tools"
+  print_row_if_exists ".claude" "$HOME_DIR/.claude"
+  print_row_if_exists ".cursor" "$HOME_DIR/.cursor"
+  print_row_if_exists ".cline" "$HOME_DIR/.cline"
+  print_row_if_exists ".codeium" "$HOME_DIR/.codeium"
+  print_row_if_exists ".vscode" "$HOME_DIR/.vscode"
+  print_row_if_exists ".vscode-extensions" "$HOME_DIR/.vscode/extensions"
+  print_row_if_exists "Cursor app data" "$HOME_DIR/Library/Application Support/Cursor"
+  print_row_if_exists "VS Code app data" "$HOME_DIR/Library/Application Support/Code"
+}
+
+report_misc() {
+  section "Misc"
+  print_row_if_exists "Downloads" "$HOME_DIR/Downloads"
+  print_row_if_exists "Trash" "$HOME_DIR/.Trash"
+  print_row_if_exists "Logs" "$HOME_DIR/Library/Logs"
+
+  # node_modules total (timeout 30s to avoid blocking)
+  local nm_bytes
+  nm_bytes="$(timeout 30 sh -c '
+    fd -t d -HI --max-depth 5 "^node_modules$" "'"$HOME_DIR/dev"'" 2>/dev/null | while read -r d; do
+      /usr/bin/du -sk "$d" 2>/dev/null | awk "{print \$1}"
+    done | awk "{s+=\$1} END {print s * 1024}"
+  ')" 2>/dev/null || nm_bytes=0
+  if [[ -n "$nm_bytes" ]] && (( nm_bytes > 0 )); then
+    print_row "node_modules (total in ~/dev)" "$(fmt_size "$nm_bytes")"
+  fi
+}
+
+# --- subcommands ---
+
+cmd_report() {
+  echo "=== Disk Usage Report  $(date '+%Y-%m-%d %H:%M') ==="
+  report_disk_overview || true
+  report_home_tree || true
+  report_docker || true
+  report_xcode || true
+  report_android || true
+  report_unity || true
+  report_package_caches || true
+  report_runtimes || true
+  report_library_caches || true
+  report_app_support || true
+  report_containers || true
+  report_ai_editors || true
+  report_misc || true
+  echo
+  hr
+  echo "  Report complete."
+  hr
+}
+
+cmd_summary() {
+  echo "=== Disk Usage Summary  $(date '+%Y-%m-%d %H:%M') ==="
+  report_disk_overview
+
+  section "Top 10 Consumers in ~/"
+  $DU -d 1 -k "$HOME_DIR" 2>/dev/null | sort -rn | head -n 11 | tail -n 10 | while read -r kb dir; do
+    local name
+    name="$(basename "$dir")"
+    local bytes=$((kb * 1024))
+    print_row "$name" "$(fmt_size "$bytes")"
+  done
+}
+
+cmd_clean() {
+  echo "=== Cleanable Caches (dry-run) ==="
+  echo
+  echo "The following commands would free disk space."
+  echo "Review and run manually as needed."
+  echo
+
+  local total_kb=0
+
+  maybe_clean() {
+    local label="$1" path="$2" cmd="$3"
+    if [[ -e "$path" ]]; then
+      local kb
+      kb="$($DU -sk "$path" 2>/dev/null | awk '{print $1}')"
+      total_kb=$((total_kb + kb))
+      local bytes=$((kb * 1024))
+      printf "# %s (%s)\n" "$label" "$(fmt_size "$bytes")"
+      printf "%s\n\n" "$cmd"
+    fi
+  }
+
+  maybe_clean "Xcode DerivedData" \
+    "$HOME_DIR/Library/Developer/Xcode/DerivedData" \
+    "rm -rf ~/Library/Developer/Xcode/DerivedData/*"
+
+  maybe_clean "CoreSimulator old devices" \
+    "$HOME_DIR/Library/Developer/CoreSimulator" \
+    "xcrun simctl delete unavailable"
+
+  maybe_clean "Homebrew cache" \
+    "$HOME_DIR/Library/Caches/Homebrew" \
+    "brew cleanup --prune=all"
+
+  maybe_clean "CocoaPods cache" \
+    "$HOME_DIR/Library/Caches/CocoaPods" \
+    "rm -rf ~/Library/Caches/CocoaPods"
+
+  maybe_clean "npm cache" \
+    "$HOME_DIR/.npm" \
+    "npm cache clean --force"
+
+  maybe_clean "yarn cache" \
+    "$HOME_DIR/.yarn" \
+    "yarn cache clean"
+
+  maybe_clean "pnpm store" \
+    "$HOME_DIR/Library/pnpm/store" \
+    "pnpm store prune"
+
+  maybe_clean "go build cache" \
+    "$HOME_DIR/Library/Caches/go-build" \
+    "go clean -cache"
+
+  maybe_clean "uv cache" \
+    "$HOME_DIR/Library/Caches/uv" \
+    "uv cache clean"
+
+  maybe_clean "pip cache" \
+    "$HOME_DIR/Library/Caches/pip" \
+    "pip cache purge"
+
+  maybe_clean "Gradle caches" \
+    "$HOME_DIR/.gradle/caches" \
+    "rm -rf ~/.gradle/caches/*"
+
+  maybe_clean "NuGet cache" \
+    "$HOME_DIR/.nuget" \
+    "dotnet nuget locals all --clear"
+
+  maybe_clean "mise downloads" \
+    "$HOME_DIR/.local/share/mise/downloads" \
+    "rm -rf ~/.local/share/mise/downloads/*"
+
+  maybe_clean "Trash" \
+    "$HOME_DIR/.Trash" \
+    "rm -rf ~/.Trash/*"
+
+  if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
+    echo "# Docker unused data"
+    echo "docker system prune -a --volumes"
+    echo
+  fi
+
+  hr
+  local total_bytes=$((total_kb * 1024))
+  printf "  Potential savings: ~%s\n" "$(fmt_size "$total_bytes")"
+  hr
+  echo
+  echo "NOTE: Commands above are NOT executed. Copy and run individually."
+}
+
+cmd_breakdown() {
+  local target="${1:-all}"
+  echo "=== Disk Usage Breakdown  $(date '+%Y-%m-%d %H:%M') ==="
+
+  case "$target" in
+    docker)
+      breakdown_docker
+      ;;
+    xcode)
+      breakdown_xcode
+      ;;
+    unity)
+      breakdown_unity
+      ;;
+    runtimes|mise|asdf)
+      breakdown_runtimes
+      ;;
+    all)
+      breakdown_docker || true
+      breakdown_xcode || true
+      breakdown_unity || true
+      breakdown_runtimes || true
+      ;;
+    *)
+      echo "Unknown category: $target"
+      echo "Available: docker, xcode, unity, runtimes, all (default)"
+      return 1
+      ;;
+  esac
+}
+
+breakdown_docker() {
+  section "Docker Images"
+  if command -v docker &>/dev/null && docker info &>/dev/null 2>&1; then
+    printf "  %-40s %-10s %s\n" "REPOSITORY:TAG" "SIZE" "CREATED"
+    printf "  %-40s %-10s %s\n" "──────────────" "────" "───────"
+    docker images --format '{{.Repository}}:{{.Tag}}\t{{.Size}}\t{{.CreatedSince}}' 2>/dev/null \
+      | sort -t$'\t' -k2 -hr | while IFS=$'\t' read -r repo size created; do
+        printf "  %-40s %-10s %s\n" "$repo" "$size" "$created"
+      done || true
+
+    section "Docker Volumes"
+    docker system df -v 2>/dev/null | awk '
+      /^VOLUME NAME/ { capture=1; next }
+      capture && /^$/ { exit }
+      capture { printf "  %-50s %s\n", $1, $NF }
+    ' || true
+
+    section "Docker Disk Summary"
+    docker system df 2>/dev/null | while IFS= read -r line; do
+      printf "  %s\n" "$line"
+    done || true
+  else
+    echo "  Docker is not running or not installed."
+  fi
+}
+
+breakdown_xcode() {
+  section "Xcode DerivedData Projects"
+  if [[ -d "$HOME_DIR/Library/Developer/Xcode/DerivedData" ]]; then
+    list_subdirs_all "$HOME_DIR/Library/Developer/Xcode/DerivedData"
+  fi
+
+  section "iOS DeviceSupport Versions"
+  local ds_dir="$HOME_DIR/Library/Developer/Xcode/iOS DeviceSupport"
+  if [[ -d "$ds_dir" ]]; then
+    $DU -sk "$ds_dir"/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      print_row "$name" "$(fmt_size "$bytes")"
+    done
+  fi
+
+  section "watchOS DeviceSupport Versions"
+  local wds_dir="$HOME_DIR/Library/Developer/Xcode/watchOS DeviceSupport"
+  if [[ -d "$wds_dir" ]]; then
+    $DU -sk "$wds_dir"/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      print_row "$name" "$(fmt_size "$bytes")"
+    done
+  fi
+
+  section "Xcode Archives"
+  if [[ -d "$HOME_DIR/Library/Developer/Xcode/Archives" ]]; then
+    list_subdirs_all "$HOME_DIR/Library/Developer/Xcode/Archives"
+  fi
+
+  section "CoreSimulator Runtimes"
+  if command -v xcrun &>/dev/null; then
+    xcrun simctl runtime list 2>/dev/null | while IFS= read -r line; do
+      printf "  %s\n" "$line"
+    done
+  fi
+
+  section "Xcode Installer Archives (xcodes)"
+  local xcodes_dir="$HOME_DIR/Library/Application Support/com.robotsandpencils.xcodes"
+  if [[ -d "$xcodes_dir" ]]; then
+    print_row_if_exists "xcodes total" "$xcodes_dir"
+    for f in "$xcodes_dir"/*.xip; do
+      [[ -f "$f" ]] || continue
+      local name size_bytes
+      name="$(basename "$f")"
+      size_bytes="$(du_bytes "$f")"
+      print_row "  $name" "$(fmt_size "$size_bytes")"
+    done
+  fi
+}
+
+breakdown_unity() {
+  section "Unity Editor Versions"
+  if [[ -d "/Applications/Unity/Hub/Editor" ]]; then
+    $DU -sk /Applications/Unity/Hub/Editor/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
+      local name
+      name="$(basename "$dir")"
+      local bytes=$((kb * 1024))
+      print_row "$name" "$(fmt_size "$bytes")"
+    done
+  fi
+
+  section "Unity Library Breakdown"
+  list_subdirs_all "$HOME_DIR/Library/Unity"
+
+  section "Unity Caches"
+  local caches_dir="$HOME_DIR/Library/Caches"
+  for d in "$caches_dir"/com.unity3d.* "$caches_dir"/Unity "$caches_dir"/unityhub-updater; do
+    [[ -d "$d" ]] || continue
+    local name
+    name="$(basename "$d")"
+    print_row_if_exists "$name" "$d"
+  done
+}
+
+breakdown_runtimes() {
+  section "mise installs"
+  list_subdirs_all "$HOME_DIR/.local/share/mise/installs"
+
+  section "asdf installs"
+  if [[ -d "$HOME_DIR/.asdf/installs" ]]; then
+    list_subdirs_all "$HOME_DIR/.asdf/installs"
+  fi
+
+  section ".dotnet"
+  if [[ -d "$HOME_DIR/.dotnet" ]]; then
+    list_subdirs_all "$HOME_DIR/.dotnet"
+  fi
+
+  section ".rustup"
+  if [[ -d "$HOME_DIR/.rustup" ]]; then
+    list_subdirs_all "$HOME_DIR/.rustup"
+  fi
+}
+
+# --- main ---
+
+subcmd="${1:-report}"
+shift 2>/dev/null || true
+
+case "$subcmd" in
+  report)    cmd_report ;;
+  summary)   cmd_summary ;;
+  clean)     cmd_clean ;;
+  breakdown) cmd_breakdown "${1:-all}" ;;
+  help|*)
+    cat <<'USAGE'
+Usage: mise run disk-usage [command]
+
+Commands:
+  report              (default) Full disk usage report across all categories
+  summary             Disk overview + Top 10 consumers only
+  clean               Show safe cache cleanup commands (dry-run, no execution)
+  breakdown [target]  Detailed per-item breakdown of a category
+
+Breakdown targets:
+  all        (default) All categories below
+  docker     Docker images, volumes, build cache
+  xcode      DerivedData projects, DeviceSupport, Archives, Simulators
+  unity      Editor versions, caches, Library breakdown
+  runtimes   mise/asdf installs, .dotnet, .rustup
+
+Examples:
+  mise run disk-usage
+  mise run disk-usage summary
+  mise run disk-usage clean
+  mise run disk-usage breakdown
+  mise run disk-usage breakdown docker
+USAGE
+    ;;
+esac

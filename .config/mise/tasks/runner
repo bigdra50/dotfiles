@@ -1,0 +1,250 @@
+#!/usr/bin/env bash
+#MISE description="Manage GitHub Actions self-hosted runners"
+#MISE alias="r"
+
+set -euo pipefail
+
+RUNNER_BASE="$HOME/runners"
+RUNNER_CACHE="$RUNNER_BASE/_cache"
+DEFAULT_LABELS="self-hosted,macos,codex"
+HOSTNAME="$(hostname -s)"
+
+# --- helpers ---
+
+detect_arch() {
+  local arch
+  arch="$(uname -m)"
+  case "$arch" in
+    arm64|aarch64) echo "osx-arm64" ;;
+    x86_64)        echo "osx-x64"   ;;
+    *)             echo "Unsupported architecture: $arch" >&2; exit 1 ;;
+  esac
+}
+
+latest_runner_version() {
+  gh api repos/actions/runner/releases/latest --jq '.tag_name' | sed 's/^v//'
+}
+
+download_runner() {
+  local version="$1"
+  local arch="$2"
+  local tarball="actions-runner-${arch}-${version}.tar.gz"
+  local url="https://github.com/actions/runner/releases/download/v${version}/${tarball}"
+
+  mkdir -p "$RUNNER_CACHE"
+
+  if [[ -f "$RUNNER_CACHE/$tarball" ]]; then
+    echo "Cache hit: $tarball"
+  else
+    echo "Downloading $tarball ..."
+    curl -fsSL -o "$RUNNER_CACHE/$tarball" "$url"
+    echo "Downloaded."
+  fi
+
+  echo "$RUNNER_CACHE/$tarball"
+}
+
+runner_dirs() {
+  local repo_path="$1"
+  local base="$RUNNER_BASE/$repo_path"
+  if [[ -d "$base" ]]; then
+    fd -d 1 -t d '^runner-' "$base" 2>/dev/null | sort -V
+  fi
+}
+
+# --- subcommands ---
+
+cmd_setup() {
+  local repo_path=""
+  local count=1
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -c|--count) count="$2"; shift 2 ;;
+      *)          repo_path="$1"; shift ;;
+    esac
+  done
+
+  if [[ -z "$repo_path" ]]; then
+    echo "Usage: mise run runner -- setup <owner/repo> [-c count]" >&2
+    exit 1
+  fi
+
+  local arch version tarball repo_url
+  arch="$(detect_arch)"
+  version="$(latest_runner_version)"
+  tarball="$(download_runner "$version" "$arch")"
+  repo_url="https://$repo_path"
+
+  # repo name for runner naming
+  local repo_name
+  repo_name="$(basename "$repo_path")"
+
+  for i in $(seq 1 "$count"); do
+    local runner_dir="$RUNNER_BASE/$repo_path/runner-$i"
+
+    if [[ -f "$runner_dir/.runner" ]]; then
+      echo "runner-$i: already configured, skipping."
+      continue
+    fi
+
+    echo "=== Setting up runner-$i ==="
+    mkdir -p "$runner_dir"
+    tar xzf "$tarball" -C "$runner_dir"
+
+    read -rsp "Registration token for runner-$i (from GitHub Settings > Actions > Runners): " token
+    echo ""
+
+    local runner_name="${HOSTNAME}-${repo_name}-${i}"
+    "$runner_dir/config.sh" --unattended \
+      --url "$repo_url" \
+      --token "$token" \
+      --labels "$DEFAULT_LABELS" \
+      --name "$runner_name" \
+      --replace
+
+    echo "Installing launchd service..."
+    (cd "$runner_dir" && sudo ./svc.sh install && sudo ./svc.sh start)
+
+    echo "runner-$i ($runner_name): setup complete."
+    echo ""
+  done
+}
+
+cmd_list() {
+  local base="$RUNNER_BASE/github.com"
+  if [[ ! -d "$base" ]]; then
+    echo "No runners found."
+    return
+  fi
+
+  fd -t d '^runner-' "$base" | sort -V | while read -r dir; do
+    local rel="${dir#"$RUNNER_BASE/"}"
+    local status="not configured"
+
+    if [[ -f "$dir/.runner" ]]; then
+      status="configured"
+      if (cd "$dir" && sudo ./svc.sh status 2>/dev/null | grep -q "active (running)"); then
+        status="running"
+      elif (cd "$dir" && sudo ./svc.sh status 2>/dev/null | grep -q "inactive"); then
+        status="stopped"
+      fi
+    fi
+
+    printf "%-60s %s\n" "$rel" "[$status]"
+  done
+}
+
+cmd_start() {
+  local repo_path="$1"
+  if [[ -z "$repo_path" ]]; then
+    echo "Usage: mise run runner -- start <owner/repo>" >&2
+    exit 1
+  fi
+
+  local dirs
+  dirs="$(runner_dirs "$repo_path")"
+  if [[ -z "$dirs" ]]; then
+    echo "No runners found for $repo_path" >&2
+    exit 1
+  fi
+
+  echo "$dirs" | while read -r dir; do
+    local name
+    name="$(basename "$dir")"
+    echo "Starting $name ..."
+    (cd "$dir" && sudo ./svc.sh start)
+  done
+}
+
+cmd_stop() {
+  local repo_path="$1"
+  if [[ -z "$repo_path" ]]; then
+    echo "Usage: mise run runner -- stop <owner/repo>" >&2
+    exit 1
+  fi
+
+  local dirs
+  dirs="$(runner_dirs "$repo_path")"
+  if [[ -z "$dirs" ]]; then
+    echo "No runners found for $repo_path" >&2
+    exit 1
+  fi
+
+  echo "$dirs" | while read -r dir; do
+    local name
+    name="$(basename "$dir")"
+    echo "Stopping $name ..."
+    (cd "$dir" && sudo ./svc.sh stop)
+  done
+}
+
+cmd_remove() {
+  local repo_path="$1"
+  if [[ -z "$repo_path" ]]; then
+    echo "Usage: mise run runner -- remove <owner/repo>" >&2
+    exit 1
+  fi
+
+  local dirs
+  dirs="$(runner_dirs "$repo_path")"
+  if [[ -z "$dirs" ]]; then
+    echo "No runners found for $repo_path" >&2
+    exit 1
+  fi
+
+  echo "$dirs" | while read -r dir; do
+    local name
+    name="$(basename "$dir")"
+    echo "=== Removing $name ==="
+
+    if [[ -f "$dir/.runner" ]]; then
+      (cd "$dir" && sudo ./svc.sh stop 2>/dev/null || true)
+      (cd "$dir" && sudo ./svc.sh uninstall 2>/dev/null || true)
+
+      read -rsp "Removal token for $name: " token
+      echo ""
+      (cd "$dir" && ./config.sh remove --token "$token") || true
+    fi
+
+    rm -rf "$dir"
+    echo "$name removed."
+  done
+
+  # remove repo dir if empty
+  local repo_dir="$RUNNER_BASE/$repo_path"
+  if [[ -d "$repo_dir" ]] && [[ -z "$(ls -A "$repo_dir")" ]]; then
+    rmdir "$repo_dir"
+  fi
+}
+
+# --- main ---
+
+subcmd="${1:-help}"
+shift || true
+
+case "$subcmd" in
+  setup)  cmd_setup "$@" ;;
+  list)   cmd_list ;;
+  start)  cmd_start "${1:-}" ;;
+  stop)   cmd_stop "${1:-}" ;;
+  remove) cmd_remove "${1:-}" ;;
+  help|*)
+    cat <<'USAGE'
+Usage: mise run runner -- <command> [args]
+
+Commands:
+  setup <owner/repo> [-c count]   Setup runner(s) (default: 1)
+  list                            List all runners and status
+  start <owner/repo>              Start launchd services
+  stop  <owner/repo>              Stop launchd services
+  remove <owner/repo>             Remove runners and unregister
+
+Examples:
+  mise run runner -- setup github.com/ORG/REVIEW-REPO
+  mise run runner -- setup github.com/ORG/REVIEW-REPO -c 3
+  mise run runner -- list
+  mise run runner -- stop github.com/ORG/REVIEW-REPO
+USAGE
+    ;;
+esac

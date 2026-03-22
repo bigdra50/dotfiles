@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+#MISE description="Setup xcodebuild.nvim remote_debugger for iOS 17+ device debugging"
+#MISE alias="srd"
+
+set -euo pipefail
+
+DEST="$HOME/Library/xcodebuild.nvim"
+SOURCE="$HOME/.local/share/nvim/lazy/xcodebuild.nvim/tools/remote_debugger"
+ME="$(whoami)"
+
+# Check prerequisites
+if ! command -v pymobiledevice3 &>/dev/null; then
+  echo "Error: pymobiledevice3 not installed"
+  echo "Run: mise use -g 'pipx:pymobiledevice3'"
+  exit 1
+fi
+
+if [[ ! -f "$SOURCE" ]]; then
+  echo "Error: xcodebuild.nvim not installed or remote_debugger not found"
+  echo "Expected: $SOURCE"
+  exit 1
+fi
+
+echo "This will setup remote_debugger for iOS 17+ device debugging."
+echo ""
+echo "Actions:"
+echo "  1. Copy remote_debugger to $DEST (root owned)"
+echo "  2. Add passwordless sudo permission to /etc/sudoers"
+echo ""
+read -p "Continue? [y/N] " -n 1 -r
+echo ""
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo "Cancelled."
+  exit 0
+fi
+
+echo "Installing remote_debugger..."
+sudo install -d -m 755 -o root "$DEST"
+sudo install -m 755 -o root "$SOURCE" "$DEST"
+
+# Check if sudoers entry already exists
+if sudo grep -q "$DEST/remote_debugger" /etc/sudoers 2>/dev/null; then
+  echo "Sudoers entry already exists, skipping..."
+else
+  echo "Adding sudoers entry..."
+  sudo bash -c "echo \"$ME ALL = (ALL) NOPASSWD: $DEST/remote_debugger\" >> /etc/sudoers"
+fi
+
+echo ""
+echo "Done! Verify with: nvim -c 'checkhealth xcodebuild'"
