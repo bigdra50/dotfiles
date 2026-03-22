@@ -90,7 +90,6 @@ install_tools() {
 trust_mise_configs() {
     if command_exists mise; then
         info "Trusting mise configuration files..."
-        mise trust "$DOTFILES_DIR/.mise.toml" 2>/dev/null || true
         mise trust "$DOTFILES_DIR/.config/mise/config.toml" 2>/dev/null || true
     fi
 }
