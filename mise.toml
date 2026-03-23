@@ -1,0 +1,49 @@
+# Dotfiles setup tasks
+# Usage: mise run setup           -- full setup
+#        mise run setup:symlinks  -- symlinks only
+#        mise run setup:symlinks ::: setup:neovim  -- parallel execution
+
+[tasks."setup"]
+description = "Full dotfiles setup"
+depends = ["setup:base", "setup:platform-tools", "setup:symlinks", "setup:claude", "setup:neovim"]
+run = 'echo "Setup complete."'
+run_windows = 'Write-Host "Setup complete."'
+
+[tasks."setup:base"]
+description = "Install base system packages"
+dir = "{{cwd}}"
+run = "bash scripts/setup/base.sh"
+run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\base.ps1"
+
+[tasks."setup:platform-tools"]
+description = "Install platform-specific tools and mise runtimes"
+depends = ["setup:base"]
+dir = "{{cwd}}"
+run = "bash scripts/setup/platform-tools.sh"
+run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\platform-tools.ps1"
+
+[tasks."setup:symlinks"]
+description = "Create dotfile symlinks"
+depends = ["setup:base"]
+dir = "{{cwd}}"
+raw = true
+run = "bash scripts/setup/symlinks.sh"
+run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\symlinks.ps1"
+
+[tasks."setup:claude"]
+description = "Link Claude Code configuration"
+depends = ["setup:symlinks"]
+dir = "{{cwd}}"
+raw = true
+run = "bash scripts/setup/claude.sh"
+run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\claude.ps1"
+
+[tasks."setup:neovim"]
+description = "Setup Neovim Python/Node environments"
+depends = ["setup:platform-tools"]
+dir = "{{cwd}}"
+run = "bash scripts/setup/neovim.sh"
+run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\neovim.ps1"
+
+[settings]
+experimental = true
