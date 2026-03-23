@@ -68,8 +68,19 @@ def main() -> None:
             output["hookSpecificOutput"]["decision"]["message"] = "G2グラスから拒否"
         print(json.dumps(output))
     except Exception as e:
-        # Relay server unavailable or timeout — fall through silently
-        logging.info("relay unavailable, falling through: %s", e)
+        logging.info("relay unavailable: %s", e)
+        # Non-interactive (-p) mode: fall through causes infinite loop
+        # because there is no terminal to show permission prompt.
+        # Output explicit "allow" so the tool can proceed.
+        if not sys.stdout.isatty():
+            logging.info("non-interactive mode detected, auto-allowing")
+            print(json.dumps({
+                "hookSpecificOutput": {
+                    "hookEventName": "PermissionRequest",
+                    "decision": {"behavior": "allow"},
+                }
+            }))
+        # Interactive mode: fall through to normal CLI prompt
 
 
 if __name__ == "__main__":
