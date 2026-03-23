@@ -38,7 +38,7 @@ return {
 					"ruff",
 					"stylua",
 				},
-				auto_update = true,
+				auto_update = false,
 				run_on_start = true,
 				start_delay = 3000, -- 3秒遅延
 				debounce_hours = 24, -- 24時間に1回
