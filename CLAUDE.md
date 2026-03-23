@@ -12,12 +12,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Key Commands
 
 ```bash
-# インストール
-./install.sh                      # インタラクティブ
-INTERACTIVE=false ./install.sh    # 非インタラクティブ（CI用）
-
-# ツール更新
-./scripts/install-tools.sh
+# フルセットアップ（mise task経由）
+mise run setup                      # 全ステップ実行
+mise run setup:symlinks             # シンボリンクのみ
+mise run setup:claude               # Claude設定のみ
+./install.sh                        # シム（mise run setup へ委譲）
+./install.sh --only symlinks,claude # 特定ステップのみ
 
 # 新規マシンセットアップ（ワンライナー）
 curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
@@ -38,14 +38,17 @@ irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
    - `extensions.zsh` - プラグインロード
    - `.zshrc_local` - ローカルオーバーライド
 
-### ツール管理
+### ツール管理・セットアップ
 
 | ファイル | 用途 |
 |---------|------|
-| `mise/config.toml` | ランタイム管理（go, rust, node, python, neovim等） |
-| `tools.toml` | Cargo/Go/プラットフォーム固有ツール |
+| `mise.toml` | セットアップタスク定義（`setup:*`） |
+| `.config/mise/config.toml` | グローバルツール定義（ランタイム + CLI） |
+| `tools.toml` | プラットフォーム固有ツール（brew/scoop/apt） |
+| `scripts/setup/*.sh` | 各タスクのbash実装 |
+| `scripts/setup/*.ps1` | 各タスクのPowerShell実装 |
 
-miseがプライマリのツール管理。`tools.toml`は補助的に使用。
+miseがオーケストレーター。`run` / `run_windows` でクロスプラットフォーム対応。
 
 ### シンボリンク対象
 
@@ -88,6 +91,7 @@ miseで管理すべきツールが他の場所（brew, cargo, npm -g, pipx）に
 ├── docs/       # ドキュメント
 ├── rules/      # コーディングルール（言語別）
 ├── settings.json
-├── skills/     # スキル定義（フラット構造必須）
-└── install.sh  # ~/.claude へのシンボリンク作成
+└── skills/     # スキル定義（フラット構造必須）
 ```
+
+セットアップは `mise run setup:claude`（`scripts/setup/claude.sh`）で実行。
