@@ -21,18 +21,21 @@ Copilot agentを使用してタスクを実行し、結果を返す。
 /copilot review src/auth/
 /copilot --model gpt-5 このアーキテクチャを分析して
 /copilot --model claude-opus-4.6 セキュリティレビュー
+/copilot --effort high 複雑なバグを分析して
 ```
 
 ## Argument Parsing
 
-引数から `--model <model>` を抽出し、残りをタスクとして渡す。
+引数から `--model <model>` と `--effort <level>` を抽出し、残りをタスクとして渡す。
 
 - `--model` が指定された場合: copilot agent に `--model <model>` 付きで実行を指示
-- `--model` が省略された場合: Copilot のデフォルト (claude-sonnet-4.5) を使用
+- `--model` が省略された場合: ローカル設定のデフォルトを使用
+- `--effort` が指定された場合: copilot agent に `--effort <level>` 付きで実行を指示
+- `--effort` が省略された場合: ローカル設定に従う
 
 ## Behavior
 
-1. 引数を解析（`--model` の有無を確認）
+1. 引数を解析（`--model`, `--effort` の有無を確認）
 2. ユーザーのタスクをcopilot agentに委譲
 3. copilot -p で実行、結果を取得
 4. 結果をユーザーに提示

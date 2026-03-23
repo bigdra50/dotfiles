@@ -2,7 +2,7 @@
 name: copilot-plan-loop
 description: |
   設計プランをCopilot CLIレビューで反復改善するループ。プラン作成→Copilotレビュー→FB反映→再レビューを収束まで繰り返す。
-  --model でレビューモデルを指定可能。
+  --model でレビューモデル、--effort で推論レベルを指定可能。
   Use for: "copilot-plan-loop", "Copilotとプラン練る", "設計レビューループ(Copilot)", "プラン精度上げて(Copilot)"
 user-invocable: true
 ---
@@ -18,6 +18,7 @@ user-invocable: true
 /copilot-plan-loop path/to/plan.md           # 指定ファイルを対象
 /copilot-plan-loop --model gpt-5 plan.md     # GPT-5でレビュー
 /copilot-plan-loop --model claude-opus-4.6   # Claude Opusでレビュー
+/copilot-plan-loop --effort high plan.md     # 高推論レベルでレビュー
 ```
 
 ## Workflow
@@ -25,13 +26,14 @@ user-invocable: true
 ```python
 plan = resolve_plan(args or conversation_context)
 files = extract_related_files(plan)
-model = parse_model_arg(args)  # None if not specified
+model = parse_model_arg(args)    # None if not specified
+effort = parse_effort_arg(args)  # None if not specified
 round = 0
 history = []
 
 while True:
     round += 1
-    review = copilot_review(plan, files, history, model)
+    review = copilot_review(plan, files, history, model, effort)
     must, should, nice = classify(review)
     report_to_user(round, must, should, nice)
 
@@ -62,6 +64,7 @@ Task tool で copilot agent を起動。プロンプトに含める内容:
 3. レビュー観点の指定
 4. 前回のレビュー結果と対応内容（2回目以降）
 5. `--model` が指定されていればモデル指定
+6. `--effort` が指定されていれば推論レベル指定
 
 レビュープロンプトのテンプレート:
 
@@ -156,5 +159,6 @@ Round N レビュー結果:
 
 - Copilot agent は `subagent_type: copilot` で起動する
 - `--model` が指定されていれば、copilot agent への指示に含める
+- `--effort` が指定されていれば、copilot agent への指示に含める
 - 各ラウンドの Copilot レビュー結果は次ラウンドのプロンプトに含め、同じ指摘の繰り返しを防ぐ
 - NICE 項目は対応を強制しない。ユーザー判断に委ねる

@@ -2,7 +2,7 @@
 name: copilot-review-loop
 description: |
   実装コードをCopilot CLIマルチモデルレビューで反復改善するループ。/copilot-review実行→FB分類→コード修正→再レビューを収束まで繰り返す。
-  --models で観点別モデルを指定可能。
+  --models で観点別モデル、--effort で推論レベルを指定可能。
   Use for: "copilot-review-loop", "Copilotで品質上げて", "マルチモデルレビューループ", "反復コードレビュー(Copilot)"
 user-invocable: true
 ---
@@ -17,7 +17,8 @@ user-invocable: true
 /copilot-review-loop                                    # 直近の変更を対象にループ開始
 /copilot-review-loop src/relay/                         # 指定パスを対象
 /copilot-review-loop --staged                           # git staged の変更を対象
-/copilot-review-loop --models all-premium src/          # 全観点プレミアムモデル
+/copilot-review-loop --models all-gpt src/              # 全観点GPT
+/copilot-review-loop --effort high src/                 # 高推論レベル
 ```
 
 ## Workflow
@@ -25,12 +26,13 @@ user-invocable: true
 ```python
 target = resolve_target(args or recent_changes)
 models_arg = parse_models_arg(args)
+effort_arg = parse_effort_arg(args)
 round = 0
 history = []
 
 while True:
     round += 1
-    review = copilot_review(target, models_arg)   # /copilot-review を実行
+    review = copilot_review(target, models_arg, effort_arg)  # /copilot-review を実行
     must, should, nice = classify(review)
     report_to_user(round, must, should, nice)
 
@@ -58,7 +60,7 @@ print_summary(history)
 
 ## Step 2: /copilot-review 実行
 
-Skill tool で `/copilot-review` を実行する。対象パスと `--models` 引数を渡す。
+Skill tool で `/copilot-review` を実行する。対象パスと `--models`, `--effort` 引数を渡す。
 
 4観点（セキュリティ、パフォーマンス、保守性、設計）のマルチモデル並列レビュー結果が返る。
 
@@ -109,7 +111,7 @@ Round N レビュー結果:
 ## Notes
 
 - レビューは `/copilot-review` スキルに委譲する。直接 copilot -p を呼ばない
-- `--models` 引数は `/copilot-review` にそのまま渡す
+- `--models`, `--effort` 引数は `/copilot-review` にそのまま渡す
 - 各ラウンドの修正内容を次ラウンドのレビューに反映し、同じ指摘の繰り返しを防ぐ
 - コード修正はユーザー承認後に実行する。自動修正はしない
 - NICE 項目は対応を強制しない。ユーザー判断に委ねる

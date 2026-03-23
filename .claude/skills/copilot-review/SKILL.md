@@ -19,7 +19,8 @@ user-invocable: true
 /copilot-review <target>
 /copilot-review src/auth/
 /copilot-review --models gpt-5,claude-opus-4.6,gemini-3.1-pro,claude-sonnet-4.6 src/
-/copilot-review --models all-free src/   # 全観点を無料モデル(GPT-4.1)で実行
+/copilot-review --effort high src/       # 高推論レベルでレビュー
+/copilot-review --effort high --models all-gpt src/
 ```
 
 ## Model Mapping
@@ -51,18 +52,19 @@ user-invocable: true
 ## Argument Parsing
 
 1. `--models <value>` を抽出
-2. プリセット名なら展開、カンマ区切りなら分割
-3. 残りの引数をターゲットパスとして使用
+2. `--effort <level>` を抽出（省略時はフラグなし = 設定準拠）
+3. プリセット名なら展開、カンマ区切りなら分割
+4. 残りの引数をターゲットパスとして使用
 
 ## Execution
 
 Bash toolで4つの`copilot -p`を run_in_background: true で並列起動:
 
 ```bash
-cd <target_dir> && copilot -p "[Security Review] ..." --model <security_model> --no-ask-user 2>/dev/null
-cd <target_dir> && copilot -p "[Performance Review] ..." --model <perf_model> --no-ask-user 2>/dev/null
-cd <target_dir> && copilot -p "[Maintainability Review] ..." --model <maint_model> --no-ask-user 2>/dev/null
-cd <target_dir> && copilot -p "[Architecture Review] ..." --model <arch_model> --no-ask-user 2>/dev/null
+cd <target_dir> && copilot -p "[Security Review] ..." --model <security_model> [--effort <level>] --no-ask-user 2>/dev/null
+cd <target_dir> && copilot -p "[Performance Review] ..." --model <perf_model> [--effort <level>] --no-ask-user 2>/dev/null
+cd <target_dir> && copilot -p "[Maintainability Review] ..." --model <maint_model> [--effort <level>] --no-ask-user 2>/dev/null
+cd <target_dir> && copilot -p "[Architecture Review] ..." --model <arch_model> [--effort <level>] --no-ask-user 2>/dev/null
 ```
 
 ## Review Prompts
