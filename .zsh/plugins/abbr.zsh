@@ -1,6 +1,10 @@
 # zsh-abbr: fish-like abbreviations
 # Session abbreviations (-S) for dotfiles-managed definitions
 # User-added abbreviations are persisted in $XDG_CONFIG_HOME/zsh-abbr/user-abbreviations
+#
+# ABBR_DEFAULT_BINDINGS=0 (zinit.zsh) で accept-line フックを無効化し、
+# スペースキーで展開するように変更。履歴呼び出し時の ; 付加問題を回避。
+bindkey " " abbr-expand-and-insert
 
 abbr -S -q add cp='cp -r'
 abbr -S -q add mkdir='mkdir -p'
