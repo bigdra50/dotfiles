@@ -539,18 +539,25 @@ else
     STATUS_LINE="${STATUS_LINE} ${C_ORANGE}${TIME_ICON} ${CURRENT_TIME}${C_RESET}"
 fi
 
-# 5. Project Type
-if [[ -n "$PROJECT_ICON" ]]; then
-    if [[ -n "$PROJECT_VERSION" ]]; then
-        STATUS_LINE="${STATUS_LINE} ${C_WHITE}${PROJECT_ICON} ${PROJECT_VERSION}${C_RESET}"
-    else
-        STATUS_LINE="${STATUS_LINE} ${C_WHITE}${PROJECT_ICON}${C_RESET}"
-    fi
-fi
-
-# 6. Git Status
+# 5. Git Status
 if [[ -n "$GIT_STATUS" ]]; then
     STATUS_LINE="${STATUS_LINE}${GIT_STATUS}"
+fi
+
+# 7. Unilyze Code Health (Unity projects only, cache-based, background refresh)
+UNILYZE_STATUS=""
+if [[ -d "$PROJECT_DIR/Assets" ]] && [[ -d "$PROJECT_DIR/ProjectSettings" ]]; then
+    UNILYZE_HASH=$(md5 -qs "$PROJECT_DIR")
+    UNILYZE_CACHE="${TMPDIR:-/tmp/}unilyze-sl-${UNILYZE_HASH}.txt"
+    if [[ -f "$UNILYZE_CACHE" ]]; then
+        UNILYZE_STATUS=$(cat "$UNILYZE_CACHE" 2>/dev/null)
+        CACHE_AGE=$(( $(date +%s) - $(stat -f %m "$UNILYZE_CACHE" 2>/dev/null || echo 0) ))
+        if [[ $CACHE_AGE -gt 60 ]]; then
+            (unilyze statusline -p "$PROJECT_DIR" > /dev/null 2>&1 &)
+        fi
+    elif command -v unilyze &>/dev/null; then
+        (unilyze statusline -p "$PROJECT_DIR" > /dev/null 2>&1 &)
+    fi
 fi
 
 # ============================================================================
@@ -558,3 +565,19 @@ fi
 # ============================================================================
 
 echo "$STATUS_LINE"
+
+# Line 2: Project Type + Unilyze (if available)
+STATUS_LINE2=""
+if [[ -n "$PROJECT_ICON" ]]; then
+    if [[ -n "$PROJECT_VERSION" ]]; then
+        STATUS_LINE2="${C_WHITE}${PROJECT_ICON} ${PROJECT_VERSION}${C_RESET}"
+    else
+        STATUS_LINE2="${C_WHITE}${PROJECT_ICON}${C_RESET}"
+    fi
+fi
+if [[ -n "$UNILYZE_STATUS" ]]; then
+    STATUS_LINE2="${STATUS_LINE2:+${STATUS_LINE2} }${UNILYZE_STATUS}"
+fi
+if [[ -n "$STATUS_LINE2" ]]; then
+    echo "$STATUS_LINE2"
+fi
