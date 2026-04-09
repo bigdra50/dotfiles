@@ -28,12 +28,13 @@ irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 
 ## Architecture
 
-### Zsh設定 (`.zsh/`)
+### Zsh設定 (`.config/zsh/` = `$ZDOTDIR`)
 
 ロード順序:
-1. `.zshenv` - PATH、環境変数
-2. `.zshrc` - 以下を順にロード:
-   - `environment.zsh` - mise有効化、Go設定
+1. `~/.zshenv` - ZDOTDIR設定のみ → `$ZDOTDIR/.zshenv` に委譲
+2. `$ZDOTDIR/.zshenv` - PATH、環境変数、XDG設定
+3. `$ZDOTDIR/.zshrc` - 以下を順にロード:
+   - `environment.zsh` - mise有効化、Go設定、atuin初期化
    - `interface.zsh` - Starship、viバインディング
    - `extensions.zsh` - プラグインロード
    - `.zshrc_local` - ローカルオーバーライド
@@ -50,14 +51,21 @@ irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 
 miseがオーケストレーター。`run` / `run_windows` でクロスプラットフォーム対応。
 
+mise 活用パターン:
+- `MISE_ENV=staging mise run deploy` — 環境プロファイル切り替え（`.mise.staging.toml`）
+- `mise lock` — ツールバージョンをチェックサム付きでロック
+- `mise prepare` — lockfile変更を検知して依存インストールを自動実行
+- hk（git hookマネージャ） — `.hk.toml` or `.mise.toml` 内でフック定義
+
 ### シンボリンク対象
 
 | ソース | リンク先 |
 |--------|----------|
 | `.*` (ルート) | `~/.*` |
 | `.config/*` | `~/.config/*` |
-| `.zsh/` | `~/.zsh/` |
 | `.claude/` | `~/.claude/` |
+
+Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照。
 
 プラットフォーム固有の除外:
 - Linux/WSL: `.yabairc`, `.skhdrc`（macOS専用）
@@ -65,23 +73,10 @@ miseがオーケストレーター。`run` / `run_windows` でクロスプラッ
 ### ローカルオーバーライド
 
 マシン固有の設定は以下に記述（gitignore済み）:
-- `~/.zshrc_local`
-- `~/.zshenv_local`
+- `$ZDOTDIR/.zshrc_local` (`~/.config/zsh/.zshrc_local`)
+- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`)
 - `~/.gitconfig_local`
 
-## ツール監査
-
-```bash
-./scripts/audit-tools.sh  # 手動実行
-```
-
-miseで管理すべきツールが他の場所（brew, cargo, npm -g, pipx）にインストールされていないかチェック。
-シェル起動時に週1回自動実行される（`.zsh/plugins/audit-tools.zsh`）。
-
-許可リスト（`scripts/audit-tools.sh`内で定義）:
-- brew: python, ruby（他パッケージの依存関係）
-- npm: MCP関連ツール
-- pipx: 特殊用途ツール
 
 ## Claude Code設定 (`.claude/`)
 
