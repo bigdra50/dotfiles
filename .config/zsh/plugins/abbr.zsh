@@ -6,17 +6,23 @@
 # abbr-expand + accept-line のカスタムウィジェットで Enter 時展開を実現。
 # Space には abbr-expand-and-insert をバインドし、引数付きコマンドでも展開可能にする。
 
-# zsh-abbr は sheldon の zsh-defer で遅延ロードされるため、設定もdeferする
-zsh-defer -c '
+# zsh-abbr が利用可能なときだけキーバインドと略語を初期化する
+_setup_abbr() {
+if ! command -v abbr &>/dev/null; then
+  return 0
+fi
+
 _abbr_accept() {
   zle abbr-expand
   BUFFER="${BUFFER%;}"
   zle accept-line
 }
-zle -N _abbr_accept
-bindkey "^M" _abbr_accept
-bindkey " " abbr-expand-and-insert
-bindkey "^ " magic-space
+if [[ -o interactive ]] && (( ${+functions[zle]} )); then
+  zle -N _abbr_accept
+  bindkey "^M" _abbr_accept
+  bindkey " " abbr-expand-and-insert
+  bindkey "^ " magic-space
+fi
 
 abbr -S -q add cp="cp -r"
 abbr -S -q add mkdir="mkdir -p"
@@ -37,4 +43,6 @@ abbr -S -q add so="source"
 abbr -S -q add soz="source $HOME/.zshenv && source $ZDOTDIR/.zshrc"
 abbr -S -q add yolo="claude --dangerously-skip-permissions"
 abbr -S -q add cccommit="~/bin/cccommit.sh"
-'
+}
+
+_setup_abbr

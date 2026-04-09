@@ -21,7 +21,7 @@ mise run setup:claude               # Claude設定のみ
 ./install.sh --only symlinks,claude # 特定ステップのみ
 
 # 新規マシンセットアップ（ワンライナー）
-curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
+curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/master/bootstrap | bash
 ```
 
 ## Architecture

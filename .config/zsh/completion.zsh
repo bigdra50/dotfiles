@@ -67,7 +67,11 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # --- carapace: 1600+ CLIツールの補完を一括提供 ---
 if command -v carapace &> /dev/null; then
   export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
-  zsh-defer eval "$(carapace _carapace zsh)"
+  if command -v zsh-defer &> /dev/null; then
+    zsh-defer eval "$(carapace _carapace zsh)"
+  else
+    eval "$(carapace _carapace zsh)"
+  fi
 fi
 
 # --- autosuggestions ---
