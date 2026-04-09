@@ -8,15 +8,15 @@ return {
     },
     config = function()
       require("go").setup()
-      
-      -- Format on save as recommended in README
-      local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*.go",
+
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "go",
+        group = vim.api.nvim_create_augroup("GoSettings", { clear = true }),
         callback = function()
-          require('go.format').goimports()
+          vim.opt_local.tabstop = 4
+          vim.opt_local.shiftwidth = 4
+          vim.opt_local.expandtab = false
         end,
-        group = format_sync_grp,
       })
     end,
     event = { "CmdlineEnter" },

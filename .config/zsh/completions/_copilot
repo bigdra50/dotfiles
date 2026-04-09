@@ -1,0 +1,142 @@
+#compdef copilot
+
+# GitHub Copilot CLI completion
+# Generated from: copilot --help (v2026.04)
+
+_copilot_models() {
+  local -a models=(
+    'gpt-5.2:GPT-5.2'
+    'gpt-5.4:GPT-5.4'
+    'sonnet-4:Claude Sonnet 4'
+    'sonnet-4-thinking:Claude Sonnet 4 Thinking'
+    'opus-4:Claude Opus 4'
+    'gemini-3.1-pro:Gemini 3.1 Pro'
+  )
+  _describe 'model' models
+}
+
+_copilot_plugin() {
+  local -a cmds=(
+    'install:Install a plugin'
+    'list:List installed plugins'
+    'marketplace:Manage plugin marketplaces'
+    'uninstall:Uninstall a plugin'
+    'update:Update a plugin'
+  )
+  _describe 'plugin command' cmds
+}
+
+_copilot_plugin_marketplace() {
+  local -a cmds=(
+    'add:Add a marketplace'
+    'browse:Browse plugins in a marketplace'
+    'list:List registered marketplaces'
+    'remove:Remove a marketplace'
+  )
+  _describe 'marketplace command' cmds
+}
+
+_copilot() {
+  local -a commands=(
+    'help:Display help information'
+    'init:Initialize Copilot instructions'
+    'login:Authenticate with Copilot'
+    'plugin:Manage plugins'
+    'update:Download the latest version'
+    'version:Display version information'
+  )
+
+  local -a help_topics=(
+    'commands:Interactive Mode Commands'
+    'config:Configuration Settings'
+    'environment:Environment Variables'
+    'logging:Logging'
+    'permissions:Permissions'
+    'providers:Custom Model Providers (BYOK)'
+  )
+
+  _arguments -s \
+    '--effort[Set reasoning effort level]:level:(low medium high xhigh)' \
+    '--reasoning-effort[Set reasoning effort level]:level:(low medium high xhigh)' \
+    '--acp[Start as Agent Client Protocol server]' \
+    '*--add-dir[Add directory to allowed list]:directory:_directories' \
+    '*--add-github-mcp-tool[Add GitHub MCP tool]:tool' \
+    '*--add-github-mcp-toolset[Add GitHub MCP toolset]:toolset' \
+    '*--additional-mcp-config[Additional MCP config (JSON or @file)]:config:_files' \
+    '--agent[Specify a custom agent]:agent' \
+    '--allow-all[Enable all permissions]' \
+    '--allow-all-paths[Allow access to any path]' \
+    '--allow-all-tools[Allow all tools without confirmation]' \
+    '--allow-all-urls[Allow access to all URLs]' \
+    '*--allow-tool[Tools allowed without confirmation]:tool' \
+    '*--allow-url[Allow specific URLs or domains]:url' \
+    '--autopilot[Enable autopilot continuation in prompt mode]' \
+    '*--available-tools[Only these tools available to model]:tool' \
+    '--banner[Show the startup banner]' \
+    '--bash-env[Enable BASH_ENV support]::value:(on off)' \
+    '--config-dir[Set configuration directory]:directory:_directories' \
+    '--continue[Resume the most recent session]' \
+    '*--deny-tool[Tools denied permission]:tool' \
+    '*--deny-url[Deny access to specific URLs]:url' \
+    '--disable-builtin-mcps[Disable all built-in MCP servers]' \
+    '*--disable-mcp-server[Disable a specific MCP server]:server' \
+    '--disallow-temp-dir[Prevent access to temp directory]' \
+    '--enable-all-github-mcp-tools[Enable all GitHub MCP tools]' \
+    '--enable-reasoning-summaries[Request reasoning summaries]' \
+    '*--excluded-tools[Tools not available to model]:tool' \
+    '--experimental[Enable experimental features]' \
+    '(-h --help)'{-h,--help}'[Display help]' \
+    '(-i --interactive)'{-i,--interactive}'[Start interactive mode with prompt]:prompt' \
+    '--log-dir[Set log file directory]:directory:_directories' \
+    '--log-level[Set log level]:level:(none error warning info debug all default)' \
+    '--max-autopilot-continues[Max continuation messages]:count' \
+    '--model[Set the AI model]:model:_copilot_models' \
+    '--mouse[Enable mouse support]::value:(on off)' \
+    '--no-ask-user[Disable ask_user tool]' \
+    '--no-auto-update[Disable auto update]' \
+    '--no-bash-env[Disable BASH_ENV support]' \
+    '--no-color[Disable color output]' \
+    '--no-custom-instructions[Disable loading AGENTS.md]' \
+    '--no-experimental[Disable experimental features]' \
+    '--no-mouse[Disable mouse support]' \
+    '--output-format[Output format]:format:(text json)' \
+    '(-p --prompt)'{-p,--prompt}'[Non-interactive prompt]:text' \
+    '--plain-diff[Disable rich diff rendering]' \
+    '*--plugin-dir[Load plugin from directory]:directory:_directories' \
+    '--resume[Resume from previous session]::sessionId' \
+    '(-s --silent)'{-s,--silent}'[Output only agent response]' \
+    '--screen-reader[Enable screen reader optimizations]' \
+    '*--secret-env-vars[Env vars to redact]:vars' \
+    '--share[Share session to markdown]::path:_files' \
+    '--share-gist[Share session to GitHub gist]' \
+    '--stream[Streaming mode]:mode:(on off)' \
+    '(-v --version)'{-v,--version}'[Show version information]' \
+    '--yolo[Enable all permissions]' \
+    '1:command:->cmd' \
+    '*:prompt' \
+    && return
+
+  case "$state" in
+    cmd)
+      _describe 'command' commands
+      ;;
+  esac
+
+  # Handle subcommand completion
+  local cmd=${words[2]}
+  local subcmd=${words[3]}
+  case "$cmd" in
+    plugin)
+      if (( CURRENT == 3 )); then
+        _copilot_plugin
+      elif [[ "$subcmd" == "marketplace" ]] && (( CURRENT == 4 )); then
+        _copilot_plugin_marketplace
+      fi
+      ;;
+    help)
+      _describe 'topic' help_topics
+      ;;
+  esac
+}
+
+_copilot "$@"

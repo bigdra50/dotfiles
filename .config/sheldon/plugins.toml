@@ -1,0 +1,40 @@
+shell = "zsh"
+
+[templates]
+defer = """{{ hooks?.pre | nl }}{% for file in files %}zsh-defer source "{{ file }}"\n{% endfor %}{% if hooks?.post %}zsh-defer -c '{{ hooks?.post }}'\n{% endif %}"""
+
+# --- core ---
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+# --- plugins ---
+
+[plugins.zsh-autocomplete]
+github = "marlonrichert/zsh-autocomplete"
+apply = ["source"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+apply = ["source"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
+hooks.post = "_zsh_autosuggest_start"
+
+[plugins.fast-syntax-highlighting]
+github = "zdharma-continuum/fast-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.zsh-256color]
+github = "chrissicool/zsh-256color"
+apply = ["defer"]
+
+[plugins.claude-code-zsh-completion]
+github = "1160054/claude-code-zsh-completion"
+
+[plugins.zsh-abbr]
+github = "olets/zsh-abbr"
+apply = ["defer"]
+hooks.pre = "ABBR_DEFAULT_BINDINGS=0"

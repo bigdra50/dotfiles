@@ -64,15 +64,15 @@ end
 -- 診断サインをセットアップ
 function M.setup_diagnostics(custom_icons)
   local icons = vim.tbl_extend("force", M.icons.diagnostics, custom_icons or {})
-  
+
   local signs = {}
   for type, icon in pairs(icons) do
     local hl = "DiagnosticSign" .. type
     signs[hl] = { text = icon, texthl = hl, numhl = "" }
   end
-  
+
   M.define_signs(signs)
-  
+
   -- 診断の設定も同時に行う
   vim.diagnostic.config({
     signs = true,
@@ -93,40 +93,40 @@ end
 -- DAPのサインをセットアップ
 function M.setup_dap(custom_icons)
   local icons = vim.tbl_extend("force", M.icons.dap, custom_icons or {})
-  
+
   local signs = {
-    DapBreakpoint = { 
-      text = icons.Breakpoint, 
-      texthl = "DiagnosticError", 
-      linehl = "", 
-      numhl = "" 
+    DapBreakpoint = {
+      text = icons.Breakpoint,
+      texthl = "DiagnosticError",
+      linehl = "",
+      numhl = "",
     },
-    DapBreakpointCondition = { 
-      text = icons.BreakpointCondition, 
-      texthl = "DiagnosticError", 
-      linehl = "", 
-      numhl = "" 
+    DapBreakpointCondition = {
+      text = icons.BreakpointCondition,
+      texthl = "DiagnosticError",
+      linehl = "",
+      numhl = "",
     },
-    DapBreakpointRejected = { 
-      text = icons.BreakpointRejected, 
-      texthl = "DiagnosticError", 
-      linehl = "", 
-      numhl = "" 
+    DapBreakpointRejected = {
+      text = icons.BreakpointRejected,
+      texthl = "DiagnosticError",
+      linehl = "",
+      numhl = "",
     },
-    DapStopped = { 
-      text = icons.Stopped, 
-      texthl = "DiagnosticOk", 
-      linehl = "DapStoppedLine", 
-      numhl = "" 
+    DapStopped = {
+      text = icons.Stopped,
+      texthl = "DiagnosticOk",
+      linehl = "DapStoppedLine",
+      numhl = "",
     },
-    DapLogPoint = { 
-      text = icons.LogPoint, 
-      texthl = "DiagnosticInfo", 
-      linehl = "", 
-      numhl = "" 
+    DapLogPoint = {
+      text = icons.LogPoint,
+      texthl = "DiagnosticInfo",
+      linehl = "",
+      numhl = "",
     },
   }
-  
+
   M.define_signs(signs)
 end
 

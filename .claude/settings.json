@@ -12,7 +12,8 @@
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
     "FORCE_AUTO_BACKGROUND_TASKS": "1",
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_NO_FLICKER": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -136,10 +137,8 @@
       "Bash (mysql:*)",
       "Bash (mongod:*) ",
       "NotebookEdit"
-    ],
-    "defaultMode": "auto"
+    ]
   },
-  "model": "opus[1m]",
   "hooks": {
     "Stop": [
       {
@@ -152,25 +151,9 @@
         ]
       }
     ],
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/save-history-on-compact.sh",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
     "PermissionRequest": [
       {
         "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/permission-relay.py",
-            "timeout": 60
-          },
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type permission_prompt",
@@ -202,6 +185,17 @@
           }
         ]
       }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.command // empty' | while IFS= read -r cmd; do printf ': %s:0;%s\\n' \"$(date +%s)\" \"$cmd\"; done >> ${HOME}/.zsh_history"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
@@ -222,7 +216,11 @@
     "pr-review-toolkit@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true
+    "plugin-dev@claude-plugins-official": true,
+    "unity-dev@bigdra50": true,
+    "codex@openai-codex": true,
+    "copilot@upfrontier-copilot": true,
+    "oh-my-mermaid@oh-my-mermaid": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -230,16 +228,48 @@
         "source": "git",
         "url": "https://github.com/anthropics/claude-plugins-official.git"
       }
+    },
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    },
+    "upfrontier-copilot": {
+      "source": {
+        "source": "github",
+        "repo": "upfrontier/copilot-plugin-cc"
+      }
+    },
+    "oh-my-mermaid": {
+      "source": {
+        "source": "github",
+        "repo": "oh-my-mermaid/oh-my-mermaid"
+      }
     }
   },
   "language": "Japanese",
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true,
+    "network": {
+      "allowedDomains": [
+        "127.0.0.1:*",
+        "localhost:*",
+        "github.com",
+        "api.github.com",
+        "raw.githubusercontent.com"
+      ]
+    },
+    "excludedCommands": ["vpn *", "u *", "gh *"]
+  },
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
+  "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "mcpServers": {},
-  "voiceEnabled": true
+  "mcpServers": {}
 }

@@ -15,7 +15,7 @@ end
 -- 複数のプラグインを安全に読み込む
 function M.safe_require_multiple(...)
   local modules = {}
-  for _, module_name in ipairs({...}) do
+  for _, module_name in ipairs({ ... }) do
     local module = M.safe_require(module_name)
     if not module then
       return nil
