@@ -37,7 +37,6 @@ link_dotfiles() {
         if [[ -d "$file" ]]; then
             case "$basename" in
                 ".config"|".claude") continue ;;
-                ".zsh") ;;
                 *) continue ;;
             esac
         fi

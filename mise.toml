@@ -45,5 +45,28 @@ dir = "{{cwd}}"
 run = "bash scripts/setup/neovim.sh"
 run_windows = "powershell -ExecutionPolicy Bypass -File scripts\\setup\\neovim.ps1"
 
+[tasks."nvim:test"]
+description = "Run Neovim smoke tests"
+dir = "{{cwd}}"
+run = "bash scripts/nvim-smoke-test.sh"
+
+[tasks."nvim:fmt"]
+description = "Check Neovim Lua formatting"
+dir = "{{cwd}}"
+run = "stylua --check .config/nvim/"
+
+[tasks."nvim:fmt:fix"]
+description = "Fix Neovim Lua formatting"
+dir = "{{cwd}}"
+run = "stylua .config/nvim/"
+
+[tasks."nvim:ci"]
+description = "Run Neovim CI locally (stylua via actrun + smoke test)"
+dir = "{{cwd}}"
+run = """
+~/.local/bin/actrun workflow run .github/workflows/nvim-ci.yml --local --trust --job stylua
+bash scripts/nvim-smoke-test.sh
+"""
+
 [settings]
 experimental = true
