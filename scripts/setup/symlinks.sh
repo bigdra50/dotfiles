@@ -20,6 +20,22 @@ get_excludes() {
     esac
 }
 
+cleanup_obsolete_links() {
+    local obsolete_links=(
+        "$HOME/.zsh"
+        "$HOME/.zshrc"
+        "$HOME/.Brewfile"
+        "$HOME/.mise.toml"
+    )
+
+    for path in "${obsolete_links[@]}"; do
+        if [[ -L "$path" ]] && [[ ! -e "$path" ]]; then
+            rm "$path"
+            info "Removed obsolete symlink $path"
+        fi
+    done
+}
+
 # ---- Root-level dotfiles ----
 
 link_dotfiles() {
@@ -53,6 +69,13 @@ link_config() {
     info "Creating symlinks for .config directory..."
     [[ ! -d "$DOTFILES_DIR/.config" ]] && return 0
 
+    # Migrate the old "~/.config -> dotfiles/.config" layout to the new
+    # per-entry symlink layout before creating individual links.
+    if [[ -L "$HOME/.config" ]] && [[ -d "$HOME/.config" ]] && [[ "$HOME/.config" -ef "$DOTFILES_DIR/.config" ]]; then
+        rm "$HOME/.config"
+        info "Migrated legacy ~/.config symlink to directory layout"
+    fi
+
     mkdir -p "$HOME/.config"
 
     for config in "$DOTFILES_DIR/.config"/*; do
@@ -79,6 +102,7 @@ link_config() {
 
 # ---- Main ----
 
+cleanup_obsolete_links
 link_dotfiles
 link_config
 

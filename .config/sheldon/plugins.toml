@@ -36,5 +36,5 @@ github = "1160054/claude-code-zsh-completion"
 
 [plugins.zsh-abbr]
 github = "olets/zsh-abbr"
-apply = ["defer"]
+apply = ["source"]
 hooks.pre = "ABBR_DEFAULT_BINDINGS=0"

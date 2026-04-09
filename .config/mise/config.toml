@@ -44,7 +44,7 @@ ghq = "latest"
 
 # Development
 direnv = "latest"
-"asdf:neovim" = "nightly"
+neovim = "nightly"
 cmake = "latest"
 uv = "latest"
 
@@ -94,7 +94,6 @@ xcodes = "latest"
 stylua = "latest"
 swiftformat = "latest"
 hk = "latest"
-"github:rossmacarthur/sheldon" = "0.8.5"
 "npm:oh-my-mermaid" = "latest"
 "npm:agent-browser" = "latest"
 pnpm = "10.28.1"
@@ -110,4 +109,4 @@ run = "~/.config/mise/tasks/runner {{arg(name=\"args\", var=true)}}"
 [settings]
 experimental = true
 legacy_version_file = true
-disable_backends = []
+disable_backends = ["conda"]

@@ -35,6 +35,18 @@ link_claude() {
             create_symlink "$CLAUDE_DIR/$file" "$HOME/.claude/$file"
         fi
     done
+
+    if [[ -L "$HOME/.claude/docs" ]] && [[ ! -e "$HOME/.claude/docs" ]]; then
+        rm "$HOME/.claude/docs"
+        info "Removed obsolete symlink $HOME/.claude/docs"
+    fi
+
+    # Older setups linked ~/.claude/skills directly into the repo. Remove that
+    # legacy link so npx-managed skills do not write back into dotfiles.
+    if [[ -L "$HOME/.claude/skills" ]] && [[ -d "$CLAUDE_DIR/skills" ]] && [[ "$HOME/.claude/skills" -ef "$CLAUDE_DIR/skills" ]]; then
+        rm "$HOME/.claude/skills"
+        info "Removed legacy ~/.claude/skills symlink"
+    fi
 }
 
 # ---- Install skills ----

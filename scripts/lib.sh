@@ -106,6 +106,13 @@ create_symlink() {
             return 0
         fi
 
+        # If source and target already resolve to the same inode, avoid
+        # rewriting the source tree into a self-referential symlink.
+        if [[ -e "$target" ]] && [[ "$source" -ef "$target" ]]; then
+            warning "$target resolves to the source; skipping"
+            return 0
+        fi
+
         # Handle based on interactive mode
         if [[ "$interactive" == "false" ]]; then
             if [[ ! -L "$target" ]]; then

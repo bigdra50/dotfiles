@@ -5,7 +5,7 @@
 # Sets up a new machine from scratch: git -> clone -> mise -> setup
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
+#   curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/master/bootstrap | bash
 #   DOTFILES_DIR=$HOME/custom/path bash bootstrap
 
 set -euo pipefail
@@ -48,7 +48,7 @@ _success "git $(git --version | awk '{print $3}')"
 if [[ -d "$DOTFILES_DIR/.git" ]]; then
     _info "Updating existing repo..."
     cd "$DOTFILES_DIR"
-    git pull --rebase origin main || _info "Pull failed, continuing with existing version"
+    git pull --rebase || _info "Pull failed, continuing with existing version"
 else
     _info "Cloning dotfiles..."
     mkdir -p "$(dirname "$DOTFILES_DIR")"
@@ -77,6 +77,6 @@ echo ""
 _success "Bootstrap complete!"
 echo ""
 echo "  Next steps:"
-echo "    1. Restart your shell or: source ~/.zshrc"
-echo "    2. Customize: ~/.zshrc_local, ~/.gitconfig_local"
+echo "    1. Restart your shell or: exec \$SHELL -l"
+echo "    2. Customize: ~/.config/zsh/.zshrc_local, ~/.gitconfig_local"
 echo ""

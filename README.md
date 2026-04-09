@@ -8,7 +8,7 @@ Windows は [dotfiles-win](https://github.com/bigdra50/dotfiles-win) を参照�
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
+curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/master/bootstrap | bash
 ```
 
 Manual:
