@@ -30,18 +30,6 @@ gh-my-fzf() {
 zle -N gh-my-fzf
 bindkey '^\' gh-my-fzf
 
-# gh + fzf: upfrontierのリポジトリ
-gh-org-fzf() {
-  local repo=$(gh repo list upfrontier --limit 200 --json nameWithOwner -q '.[].nameWithOwner' | fzf --prompt="upfrontier repos > ")
-  if [ -n "$repo" ]; then
-    BUFFER="gh repo view --web $repo"
-    zle accept-line
-  fi
-  zle -R -c
-}
-zle -N gh-org-fzf
-bindkey '^Xo' gh-org-fzf
-
 # gh + fzf: GitHub全体を検索
 gh-search-fzf() {
   local repo=$(: | fzf --prompt="gh search > " \
