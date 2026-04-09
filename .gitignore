@@ -69,6 +69,7 @@ yarn-error.log*
 # Specific files to exclude within tracked config directories
 .config/gh/hosts.yml
 .config/mise/*.lock
+.config/zsh/.zcompdump*
 
 # Utility directories
 .bin/
