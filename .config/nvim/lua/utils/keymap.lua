@@ -56,19 +56,19 @@ end
 function M.conditional_keymaps(name)
   local keymaps = {}
   local active = false
-  
+
   local manager = {
     name = name,
-    
+
     -- キーマップを追加
     add = function(mode, lhs, rhs, opts)
-      table.insert(keymaps, {mode, lhs, rhs, opts})
+      table.insert(keymaps, { mode, lhs, rhs, opts })
       if active then
         M.set(mode, lhs, rhs, opts)
       end
       return manager
     end,
-    
+
     -- 複数のキーマップを追加
     add_bulk = function(mappings)
       for _, mapping in ipairs(mappings) do
@@ -76,7 +76,7 @@ function M.conditional_keymaps(name)
       end
       return manager
     end,
-    
+
     -- キーマップを有効化
     activate = function()
       if not active then
@@ -87,7 +87,7 @@ function M.conditional_keymaps(name)
       end
       return manager
     end,
-    
+
     -- キーマップを無効化
     deactivate = function()
       if active then
@@ -99,12 +99,12 @@ function M.conditional_keymaps(name)
       end
       return manager
     end,
-    
+
     -- 状態を取得
     is_active = function()
       return active
     end,
-    
+
     -- トグル
     toggle = function()
       if active then
@@ -113,20 +113,20 @@ function M.conditional_keymaps(name)
         manager.activate()
       end
       return manager
-    end
+    end,
   }
-  
+
   return manager
 end
 
 -- Which-key形式のキーマップ定義をサポート
 function M.which_key_register(mappings, opts)
   opts = opts or {}
-  
+
   local function process_mapping(prefix, mapping_table)
     for key, value in pairs(mapping_table) do
       local full_key = prefix .. key
-      
+
       if type(value) == "table" then
         if value[1] then
           -- コマンドとdescriptionがある場合
@@ -143,7 +143,7 @@ function M.which_key_register(mappings, opts)
       end
     end
   end
-  
+
   process_mapping("", mappings)
 end
 

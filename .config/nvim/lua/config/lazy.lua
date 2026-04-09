@@ -24,6 +24,7 @@ local plugin_modules = {
   require("plugins.editor"),
   require("plugins.ai"),
   require("plugins.go"),
+  require("plugins.haskell"),
 }
 
 for _, module in ipairs(plugin_modules) do
@@ -52,11 +53,4 @@ require("lazy").setup(plugins, {
       },
     },
   },
-})
-
--- 起動時に自動更新（バックグラウンド）
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    require("lazy").update({ show = false })
-  end,
 })

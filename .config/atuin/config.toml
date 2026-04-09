@@ -1,0 +1,28 @@
+## atuin configuration
+## https://docs.atuin.sh/configuration/config/
+
+# 検索モード: fuzzy (fzf風), prefix, fulltext, skim
+search_mode = "fuzzy"
+
+# フィルタモード: Ctrl-R でカレントディレクトリ優先
+filter_mode = "global"
+filter_mode_shell_up_key_binding = "directory"
+
+# 表示スタイル: compact (1行1エントリ)
+style = "compact"
+
+# インライン表示高さ
+inline_height = 20
+
+# 履歴フィルタ（記録しないコマンドのプレフィックス）
+history_filter = [
+  "^ls",
+  "^cd",
+  "^exit",
+]
+
+# Enter でコマンドを即実行（false = バッファに入れるだけ）
+enter_accept = true
+
+# キーバインドモード: vim-normal / emacs / auto
+keymap_mode = "auto"

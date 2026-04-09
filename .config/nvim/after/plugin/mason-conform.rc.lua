@@ -1,1 +1,0 @@
--- mason-conform.nvim configuration is now handled in lua/plugins/lsp.lua

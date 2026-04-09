@@ -14,13 +14,13 @@ end
 -- 複数のオートコマンドを一括作成
 function M.create_autocmds(augroup_name, autocmds)
   local group = M.create_augroup(augroup_name)
-  
+
   for _, autocmd in ipairs(autocmds) do
     local event = autocmd[1]
     local opts = vim.tbl_extend("force", { group = group }, autocmd[2])
     M.create_autocmd(event, opts)
   end
-  
+
   return group
 end
 
@@ -29,7 +29,7 @@ function M.on_filetype(filetype, callback, opts)
   opts = opts or {}
   opts.pattern = filetype
   opts.callback = callback
-  
+
   return M.create_autocmd("FileType", opts)
 end
 
@@ -38,7 +38,7 @@ function M.on_buf_enter(pattern, callback, opts)
   opts = opts or {}
   opts.pattern = pattern
   opts.callback = callback
-  
+
   return M.create_autocmd("BufEnter", opts)
 end
 
@@ -56,11 +56,11 @@ end
 -- 遅延実行用のオートコマンド
 function M.defer(callback, events)
   events = events or { "BufReadPost", "BufNewFile" }
-  
+
   local function wrapped_callback()
     vim.defer_fn(callback, 0)
   end
-  
+
   return M.create_autocmd(events, {
     once = true,
     callback = wrapped_callback,
@@ -70,12 +70,12 @@ end
 -- パフォーマンス最適化用：大きなファイルの検出
 function M.setup_large_file_detection(size_limit, callback)
   size_limit = size_limit or 1024 * 1024 -- 1MB
-  
+
   return M.create_autocmd("BufReadPre", {
     callback = function(args)
       local file = args.file
-      local ok, stats = pcall(vim.loop.fs_stat, file)
-      
+      local ok, stats = pcall(vim.uv.fs_stat, file)
+
       if ok and stats and stats.size > size_limit then
         callback(args.buf, stats.size)
       end
@@ -97,7 +97,7 @@ M.common = {
       end,
     })
   end,
-  
+
   -- 行末の空白を強調表示
   highlight_trailing_whitespace = function()
     M.create_autocmd({ "BufNewFile", "BufRead" }, {
@@ -106,18 +106,21 @@ M.common = {
       end,
     })
   end,
-  
+
   -- ターミナルモードの設定
   setup_terminal = function()
     M.create_autocmds("TerminalSettings", {
-      { "TermOpen", {
-        callback = function()
-          vim.opt_local.number = false
-          vim.opt_local.relativenumber = false
-          vim.opt_local.signcolumn = "no"
-          vim.cmd("startinsert")
-        end,
-      }},
+      {
+        "TermOpen",
+        {
+          callback = function()
+            vim.opt_local.number = false
+            vim.opt_local.relativenumber = false
+            vim.opt_local.signcolumn = "no"
+            vim.cmd("startinsert")
+          end,
+        },
+      },
     })
   end,
 

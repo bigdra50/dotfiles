@@ -26,8 +26,8 @@ end
 
 -- OS別の設定
 function M.by_os(configs)
-  local os_name = vim.loop.os_uname().sysname:lower()
-  
+  local os_name = vim.uv.os_uname().sysname:lower()
+
   if os_name:match("darwin") then
     return configs.mac or configs.default or {}
   elseif os_name:match("linux") then
@@ -35,7 +35,7 @@ function M.by_os(configs)
   elseif os_name:match("windows") then
     return configs.windows or configs.default or {}
   end
-  
+
   return configs.default or {}
 end
 
@@ -90,12 +90,12 @@ end
 function M.plugin_setup(defaults)
   return function(user_config)
     local config = M.merge(defaults, user_config)
-    
+
     -- 共通の設定処理
     if config.enabled == false then
       return nil
     end
-    
+
     return config
   end
 end

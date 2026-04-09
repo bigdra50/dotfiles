@@ -1,0 +1,85 @@
+#compdef agent
+
+# Cursor Agent CLI completion
+# Generated from: agent --help (v2026.03.30)
+
+_agent_models() {
+  local -a models
+  models=(${(f)"$(agent models 2>/dev/null | awk '/^\S+ -/ {print $1}')"})
+  _describe 'model' models
+}
+
+_agent_mcp_commands() {
+  local -a cmds=(
+    'login:Authenticate with an MCP server'
+    'list:List configured MCP servers and their status'
+    'list-tools:List available tools for a specific MCP'
+    'enable:Add an MCP server to the local approved list'
+    'disable:Disable an MCP server'
+  )
+  _describe 'mcp command' cmds
+}
+
+_agent() {
+  local -a commands=(
+    'install-shell-integration:Install shell integration to ~/.zshrc'
+    'uninstall-shell-integration:Remove shell integration from ~/.zshrc'
+    'login:Authenticate with Cursor'
+    'logout:Sign out and clear stored authentication'
+    'mcp:Manage MCP servers'
+    'status:View authentication status'
+    'whoami:View authentication status'
+    'models:List available models for this account'
+    'about:Display version, system, and account information'
+    'update:Update Cursor Agent to the latest version'
+    'create-chat:Create a new empty chat and return its ID'
+    'generate-rule:Generate a new Cursor rule with interactive prompts'
+    'rule:Generate a new Cursor rule with interactive prompts'
+    'agent:Start the Cursor Agent'
+    'ls:Resume a chat session'
+    'resume:Resume the latest chat session'
+    'help:Display help for command'
+  )
+
+  _arguments -s \
+    '(-v --version)'{-v,--version}'[Output the version number]' \
+    '--api-key[API key for authentication]:key' \
+    '*'{-H,--header}'[Add custom header]:header' \
+    '(-p --print)'{-p,--print}'[Print responses to console (non-interactive)]' \
+    '--output-format[Output format]:format:(text json stream-json)' \
+    '--stream-partial-output[Stream partial output as individual text deltas]' \
+    '(-c --cloud)'{-c,--cloud}'[Start in cloud mode]' \
+    '--mode[Execution mode]:mode:(plan ask)' \
+    '--plan[Start in plan mode]' \
+    '--resume[Select a session to resume]::chatId' \
+    '--continue[Continue previous session]' \
+    '--model[Model to use]:model:_agent_models' \
+    '--list-models[List available models and exit]' \
+    '(-f --force)'{-f,--force}'[Force allow commands unless explicitly denied]' \
+    '--yolo[Alias for --force (Run Everything)]' \
+    '--sandbox[Enable or disable sandbox mode]:mode:(enabled disabled)' \
+    '--approve-mcps[Automatically approve all MCP servers]' \
+    '--trust[Trust the current workspace without prompting]' \
+    '--workspace[Workspace directory to use]:dir:_directories' \
+    '(-w --worktree)'{-w,--worktree}'[Start in an isolated git worktree]::name' \
+    '--worktree-base[Branch or ref to base the new worktree on]:branch:__git_branch_names' \
+    '--skip-worktree-setup[Skip running worktree setup scripts]' \
+    '(-h --help)'{-h,--help}'[Display help]' \
+    '1:command:->cmd' \
+    '*:prompt' \
+    && return
+
+  case "$state" in
+    cmd)
+      _describe 'command' commands
+      ;;
+  esac
+
+  case "${words[2]}" in
+    mcp)
+      _agent_mcp_commands
+      ;;
+  esac
+}
+
+_agent "$@"

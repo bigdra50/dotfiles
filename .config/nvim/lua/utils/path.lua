@@ -13,7 +13,7 @@ end
 -- パスの結合
 function M.join(...)
   local separator = M.is_windows and "\\" or "/"
-  local parts = {...}
+  local parts = { ... }
   return table.concat(parts, separator)
 end
 
@@ -23,7 +23,7 @@ function M.homebrew_prefix()
   if homebrew_prefix_cache then
     return homebrew_prefix_cache
   end
-  
+
   local handle = io.popen("brew --prefix 2>/dev/null")
   if handle then
     local result = handle:read("*a"):gsub("%s+", "")
@@ -33,14 +33,14 @@ function M.homebrew_prefix()
       return result
     end
   end
-  
+
   -- フォールバック（Apple SiliconとIntel Macの両方に対応）
   if vim.fn.isdirectory("/opt/homebrew") == 1 then
     homebrew_prefix_cache = "/opt/homebrew"
   else
     homebrew_prefix_cache = "/usr/local"
   end
-  
+
   return homebrew_prefix_cache
 end
 
@@ -50,7 +50,7 @@ function M.xcode_path()
   if xcode_path_cache then
     return xcode_path_cache
   end
-  
+
   local handle = io.popen("xcode-select -p 2>/dev/null")
   if handle then
     local result = handle:read("*a"):gsub("%s+", "")
@@ -61,14 +61,14 @@ function M.xcode_path()
       return xcode_path_cache
     end
   end
-  
+
   return nil
 end
 
 -- 実行可能ファイルを検索（複数の候補から最初に見つかったものを返す）
 function M.find_executable(...)
-  local candidates = {...}
-  
+  local candidates = { ... }
+
   for _, candidate in ipairs(candidates) do
     if type(candidate) == "string" then
       local path = vim.fn.exepath(candidate)
@@ -83,7 +83,7 @@ function M.find_executable(...)
       end
     end
   end
-  
+
   return nil
 end
 
@@ -107,7 +107,7 @@ function M.find_vscode_extension_executable(pattern, executable)
   if vim.fn.isdirectory(extensions_dir) == 0 then
     return nil
   end
-  
+
   local dirs = vim.fn.glob(M.join(extensions_dir, pattern), false, true)
   for _, dir in ipairs(dirs) do
     local exe_path = M.find_in_dir(dir, executable)
@@ -115,7 +115,7 @@ function M.find_vscode_extension_executable(pattern, executable)
       return exe_path
     end
   end
-  
+
   return nil
 end
 
@@ -126,19 +126,19 @@ function M.find_python_venv()
     M.join(M.home(), ".local", "share", "nvim", "venv", "bin", "python"),
     M.join(vim.fn.stdpath("data"), "venv", "bin", "python"),
   }
-  
+
   for _, path in ipairs(venv_paths) do
     if vim.fn.filereadable(path) == 1 then
       return path
     end
   end
-  
+
   -- uvプロジェクトのPythonを試す
-  local uv_python = vim.trim(vim.fn.system('uv run --quiet which python 2>/dev/null'))
+  local uv_python = vim.trim(vim.fn.system("uv run --quiet which python 2>/dev/null"))
   if vim.v.shell_error == 0 and vim.fn.filereadable(uv_python) == 1 then
     return uv_python
   end
-  
+
   -- システムPythonにフォールバック
   return M.find_executable("python3", "python")
 end
@@ -153,7 +153,7 @@ function M.get_tool_path(tool_name)
         "/usr/bin/swift-format"
       )
     end,
-    
+
     ["codelldb"] = function()
       return M.find_executable(
         "codelldb",
@@ -163,12 +163,12 @@ function M.get_tool_path(tool_name)
       ) or M.find_vscode_extension_executable("vadimcn.vscode-lldb*", "adapter/codelldb")
     end,
   }
-  
+
   local getter = tools[tool_name]
   if getter then
     return getter()
   end
-  
+
   -- デフォルトの検索
   return M.find_executable(tool_name)
 end
