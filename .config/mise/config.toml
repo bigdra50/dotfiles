@@ -107,5 +107,4 @@ run = "~/.config/mise/tasks/runner {{arg(name=\"args\", var=true)}}"
 [settings]
 experimental = true
 legacy_version_file = true
-disable_default_shorthands = false
 disable_backends = []
