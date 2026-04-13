@@ -90,6 +90,7 @@ local config = {
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.term = "" -- Set to empty so FZF works on windows
+	config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "-NoLogo" }
 	table.insert(
 		config.launch_menu,
 		{ label = "PowerShell", args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "-NoLogo" } }
