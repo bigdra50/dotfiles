@@ -11,7 +11,8 @@ local function file_exists(path)
 end
 
 -- dotfiles内の画像パス（シンボリックリンク経由でも正しく解決）
-local dotfiles_dir = os.getenv("HOME") .. "/dev/github.com/bigdra50/dotfiles"
+local home = os.getenv("HOME") or os.getenv("USERPROFILE")
+local dotfiles_dir = home .. "/dev/github.com/bigdra50/dotfiles"
 local bg_image = dotfiles_dir .. "/wezterm/images/ztmy.jpg"
 
 -- Claude Code通知: bellイベントでタスク完了をトースト通知
