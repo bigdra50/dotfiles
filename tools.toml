@@ -1,5 +1,5 @@
 # Tool Management Configuration
-# Supports: macOS, WSL-Ubuntu, PowerShell (Windows)
+# Supports: macOS, WSL-Ubuntu
 # Priority: Cross-platform tools > Platform-specific tools
 
 # NOTE: CLI tools (bat, fd, ripgrep, lsd, dust, etc.) and language runtimes
@@ -38,48 +38,6 @@ apt = [
     "wslu",  # WSL utilities for Windows integration
 ]
 
-[platform.windows]
-# Windows PowerShell environment
-# Tools installed via scoop (https://scoop.sh/)
-scoop_buckets = [
-    "extras",
-    "nerd-fonts",
-]
-
-scoop = [
-    # Core tools
-    "git",
-    "gh",
-    "fzf",
-    "jq",
-    "yq",
-    
-    # Terminal & Shell
-    "windows-terminal",
-    "oh-my-posh",
-    
-    # Development
-    "neovim",
-    "vscode",
-    
-    # Utilities
-    "sudo",
-    "which",
-    "touch",
-    "grep",
-]
-
-# Windows-specific tools (nushell via scoop or cargo)
-# NOTE: On macOS/Linux, nushell can be added to mise config.toml if needed
-
-# PowerShell modules
-powershell_modules = [
-    "PSReadLine",
-    "posh-git",
-    "Terminal-Icons",
-    "z",  # zoxide alternative for PowerShell
-]
-
 [fallback]
 # Special installations for tools that need custom setup
 special = [
@@ -87,13 +45,11 @@ special = [
         name = "fzf", 
         condition = "!command -v fzf",
         install_unix = "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --all --no-bash --no-fish --no-update-rc",
-        install_windows = "scoop install fzf"
     },
     {
         name = "wezterm",
         condition = "!command -v wezterm",
         install_macos = "brew install --cask wezterm",
-        install_windows = "scoop install wezterm",
         install_wsl = "echo 'WezTerm runs on Windows host, not in WSL'"
     }
 ]

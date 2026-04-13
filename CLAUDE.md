@@ -7,7 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 個人用dotfilesリポジトリ。シンボリックリンクベースで設定ファイルを管理。
 
 - リポジトリ: `~/dev/github.com/bigdra50/dotfiles`
-- 対応OS: macOS, Linux, WSL, Windows (PowerShell)
+- 対応OS: macOS, Linux, WSL
+- Windows は [dotfiles-win](https://github.com/bigdra50/dotfiles-win) で管理
 
 ## Key Commands
 
@@ -21,9 +22,6 @@ mise run setup:claude               # Claude設定のみ
 
 # 新規マシンセットアップ（ワンライナー）
 curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
-
-# Windows
-irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 ```
 
 ## Architecture
@@ -45,11 +43,10 @@ irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 |---------|------|
 | `mise.toml` | セットアップタスク定義（`setup:*`） |
 | `.config/mise/config.toml` | グローバルツール定義（ランタイム + CLI） |
-| `tools.toml` | プラットフォーム固有ツール（brew/scoop/apt） |
+| `tools.toml` | プラットフォーム固有ツール（brew/apt） |
 | `scripts/setup/*.sh` | 各タスクのbash実装 |
-| `scripts/setup/*.ps1` | 各タスクのPowerShell実装 |
 
-miseがオーケストレーター。`run` / `run_windows` でクロスプラットフォーム対応。
+miseがオーケストレーター。
 
 mise 活用パターン:
 - `MISE_ENV=staging mise run deploy` — 環境プロファイル切り替え（`.mise.staging.toml`）

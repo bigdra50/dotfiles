@@ -1,13 +1,12 @@
 # dotfiles
 
+macOS / Linux / WSL 用。
+Windows は [dotfiles-win](https://github.com/bigdra50/dotfiles-win) を参照。
+
 ## Install
 
 ```bash
-# macOS / Linux / WSL
 curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap | bash
-
-# Windows (PowerShell)
-irm https://raw.githubusercontent.com/bigdra50/dotfiles/main/bootstrap.ps1 | iex
 ```
 
 Manual:
@@ -15,7 +14,7 @@ Manual:
 ```bash
 git clone https://github.com/bigdra50/dotfiles.git ~/dev/github.com/bigdra50/dotfiles
 cd ~/dev/github.com/bigdra50/dotfiles
-./install.sh  # Windows: .\install.ps1
+./install.sh
 ```
 
 ## Commands
