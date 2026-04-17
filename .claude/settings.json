@@ -200,6 +200,39 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture UserPromptSubmit"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture PreCompact"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture SessionEnd"
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
