@@ -13,7 +13,8 @@
     "ENABLE_BACKGROUND_TASKS": "1",
     "FORCE_AUTO_BACKGROUND_TASKS": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_NO_FLICKER": "1"
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "xhigh"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -137,8 +138,11 @@
       "Bash (mysql:*)",
       "Bash (mongod:*) ",
       "NotebookEdit"
-    ]
+    ],
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": []
   },
+  "model": "claude-opus-4-6[1m]",
   "hooks": {
     "Stop": [
       {
@@ -243,7 +247,7 @@
   },
   "language": "Japanese",
   "sandbox": {
-    "enabled": true,
+    "enabled": false,
     "autoAllowBashIfSandboxed": true,
     "network": {
       "allowedDomains": [
@@ -257,10 +261,11 @@
     "excludedCommands": ["vpn *", "u *", "gh *"]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true,
   "skipAutoPermissionPrompt": true,
+  "useAutoModeDuringPlan": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
