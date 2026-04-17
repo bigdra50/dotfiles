@@ -31,7 +31,6 @@ starship = "latest"
 atuin = "latest"
 yazi = "latest"
 carapace = "latest"
-ffmpeg = "latest"
 "cargo:mcat" = "latest"
 "cargo:mdbook" = "latest"
 "cargo:procs" = "latest"
@@ -98,6 +97,8 @@ hk = "latest"
 "github:rossmacarthur/sheldon" = "0.8.5"
 "npm:oh-my-mermaid" = "latest"
 "npm:agent-browser" = "latest"
+pnpm = "10.28.1"
+"pipx:claude-session-index" = "latest"
 # magi: fbprophet依存がビルド不可のためpipxで維持
 
 [tasks.runner]
