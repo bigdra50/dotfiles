@@ -71,6 +71,10 @@ yarn-error.log*
 .config/mise/*.lock
 .config/zsh/.zcompdump*
 
+# Credentials and private network configs
+.config/gogcli/
+.config/evenhub/
+
 # Utility directories
 .bin/
 
