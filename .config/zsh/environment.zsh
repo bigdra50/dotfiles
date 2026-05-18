@@ -34,8 +34,17 @@ if command -v go &> /dev/null; then
   export PATH=$PATH:$GOPATH/bin
 fi
 
+# dotnet tools (/etc/paths.d/dotnet-cli-tools contains literal "~/.dotnet/tools";
+# path_helper does not expand it, so PATH lookup fails. Prepend the resolved path.)
+if command -v dotnet &> /dev/null; then
+  export PATH=$PATH:$HOME/.dotnet/tools
+fi
+
 # atuin - SQLite-based shell history
 if command -v atuin &> /dev/null; then
   eval "$(atuin init zsh)"
 fi
+
+# cc-worklog: task-mgr に出力先を向ける
+export CC_WORKLOG_DIR="/Users/ryudai.kimura/workspace/task-mgr"
 
