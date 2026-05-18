@@ -1,7 +1,3 @@
----
-globs: "**/*.md"
----
-
 # Markdown Rules
 
 ## GitHub Flavored Markdown (GFM)

@@ -1,4 +1,30 @@
-# コミットルール
+# コミット・PRルール
+
+対象: コミットメッセージ、PRタイトル、PR本文。
+
+## メッセージ言語ポリシー
+
+リモートリポジトリの公開設定に従って言語を切り替える。
+
+| visibility | 言語 |
+| ---------- | ---- |
+| public     | 英語 |
+| private    | 日本語 |
+| internal   | 日本語 |
+| 判定不能   | 日本語（フォールバック） |
+
+判定方法:
+
+```bash
+gh repo view --json visibility -q .visibility
+# "PUBLIC" → 英語、"PRIVATE" / "INTERNAL" → 日本語
+```
+
+`gh` が使えない・リモート未設定・ネットワーク不通などで判定できない場合は日本語にフォールバックする。
+ユーザーが明示的に言語を指定した場合はそれを優先する。
+
+このポリシーはコミットメッセージ、PRタイトル、PR本文すべてに適用する。
+type/emoji（`feat`, `fix`, `✨` 等）は言語に関わらず英語のまま。
 
 ## コミット条件
 
@@ -51,8 +77,13 @@
 - ドキュメント更新（docs）
 - テスト追加（test）
 
-# 分割してコミット
+# 分割してコミット（public想定: 英語）
 1st: ✨ feat: add new feature
 2nd: 📝 docs: update documentation
 3rd: ✅ test: add unit tests
+
+# 分割してコミット（private想定: 日本語）
+1st: ✨ feat: 新機能を追加
+2nd: 📝 docs: ドキュメントを更新
+3rd: ✅ test: ユニットテストを追加
 ```
