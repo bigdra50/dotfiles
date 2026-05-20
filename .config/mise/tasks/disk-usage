@@ -7,8 +7,36 @@ set -euo pipefail
 
 HOME_DIR="$HOME"
 DU="/usr/bin/du"
+DF="/bin/df"
+ROOT_DEV="$(stat -f '%d' / 2>/dev/null || echo 0)"
 
 # --- helpers ---
+
+# Returns 0 if path (or its symlink target) resides on a different FS than /
+is_external_fs() {
+  local path="$1"
+  [[ -e "$path" ]] || return 1
+  local dev
+  # -L: follow symlinks so we compare the FS the path actually points to
+  dev="$(stat -L -f '%d' "$path" 2>/dev/null)" || return 1
+  [[ "$dev" != "$ROOT_DEV" ]]
+}
+
+# Annotation describing a symlink target and whether it crosses to another FS
+location_note() {
+  local path="$1"
+  if [[ -L "$path" ]]; then
+    local target
+    target="$(readlink "$path")"
+    if is_external_fs "$path"; then
+      printf '  → %s (external)' "$target"
+    else
+      printf '  → %s' "$target"
+    fi
+  elif is_external_fs "$path"; then
+    printf '  (external FS)'
+  fi
+}
 
 hr() {
   printf '%.0s─' {1..60}
@@ -38,7 +66,11 @@ fmt_size() {
 du_bytes() {
   local path="$1"
   if [[ -e "$path" ]]; then
-    $DU -sk "$path" 2>/dev/null | awk '{print $1 * 1024}'
+    if [[ -L "$path" ]]; then
+      $DU -skL "$path" 2>/dev/null | awk '{print $1 * 1024}'
+    else
+      $DU -sk "$path" 2>/dev/null | awk '{print $1 * 1024}'
+    fi
   else
     echo 0
   fi
@@ -59,7 +91,7 @@ print_row() {
 print_row_if_exists() {
   local label="$1" path="$2"
   if [[ -e "$path" ]]; then
-    print_row "$label" "$(du_fmt "$path")"
+    print_row "$label" "$(du_fmt "$path")$(location_note "$path")"
   fi
 }
 
@@ -94,7 +126,39 @@ list_subdirs_all() {
 
 report_disk_overview() {
   section "Disk Overview"
-  df -h / | awk 'NR==2 {printf "  Total: %s  Used: %s  Free: %s  Usage: %s\n", $2, $3, $4, $5}'
+  printf "  %-30s %7s %7s %7s %5s\n" "Mount" "Total" "Used" "Free" "Use%"
+  printf "  %-30s %7s %7s %7s %5s\n" "-----" "-----" "----" "----" "----"
+
+  # Build list of physical mounts: / and /Volumes/* excluding symlinks
+  local mounts=("/")
+  local v
+  for v in /Volumes/*; do
+    [[ -e "$v" ]] || continue
+    [[ -L "$v" ]] && continue
+    # Skip if same FS as / (e.g. firmlinks like /Volumes/Macintosh HD that resolve to /)
+    is_external_fs "$v" || continue
+    mounts+=("$v")
+  done
+
+  for v in "${mounts[@]}"; do
+    $DF -h "$v" 2>/dev/null | awk -v mount="$v" '
+      NR==2 { printf "  %-30s %7s %7s %7s %5s\n", mount, $2, $3, $4, $5 }
+    '
+  done
+
+  # macOS APFS volumes share container space; df "Used" hides purgeable/snapshot data
+  if command -v diskutil &>/dev/null; then
+    local apfs_info
+    apfs_info="$(diskutil info / 2>/dev/null | rg -i '(volume used space|free space)' || true)"
+    if [[ -n "$apfs_info" ]]; then
+      echo
+      echo "  APFS root volume (real usage):"
+      echo "$apfs_info" | sed 's/^[ 	]*/    /'
+      echo
+      echo "  Note: du sums logical file sizes; APFS clones / hardlinks may"
+      echo "        inflate per-directory totals beyond actual volume usage."
+    fi
+  fi
 }
 
 report_home_tree() {
@@ -254,12 +318,14 @@ cmd_summary() {
   echo "=== Disk Usage Summary  $(date '+%Y-%m-%d %H:%M') ==="
   report_disk_overview
 
-  section "Top 10 Consumers in ~/"
-  $DU -d 1 -k "$HOME_DIR" 2>/dev/null | sort -rn | head -n 11 | tail -n 10 | while read -r kb dir; do
+  section "Top 10 Consumers in ~/  (internal FS only, -x)"
+  # -x: do not cross filesystem boundaries — keeps external-volume symlinks
+  # from inflating sizes in the home directory listing
+  $DU -d 1 -k -x "$HOME_DIR" 2>/dev/null | sort -rn | head -n 11 | tail -n 10 | while read -r kb dir; do
     local name
     name="$(basename "$dir")"
     local bytes=$((kb * 1024))
-    print_row "$name" "$(fmt_size "$bytes")"
+    print_row "$name" "$(fmt_size "$bytes")$(location_note "$dir")"
   done
 }
 
@@ -275,11 +341,17 @@ cmd_clean() {
   maybe_clean() {
     local label="$1" path="$2" cmd="$3"
     if [[ -e "$path" ]]; then
-      local kb
-      kb="$($DU -sk "$path" 2>/dev/null | awk '{print $1}')"
-      total_kb=$((total_kb + kb))
+      local kb du_args="-sk"
+      [[ -L "$path" ]] && du_args="-skL"
+      kb="$($DU $du_args "$path" 2>/dev/null | awk '{print $1}')"
       local bytes=$((kb * 1024))
-      printf "# %s (%s)\n" "$label" "$(fmt_size "$bytes")"
+      local fs_note=""
+      if is_external_fs "$path"; then
+        fs_note=", external FS — does NOT free internal disk"
+      else
+        total_kb=$((total_kb + kb))
+      fi
+      printf "# %s (%s%s)\n" "$label" "$(fmt_size "$bytes")" "$fs_note"
       printf "%s\n\n" "$cmd"
     fi
   }
@@ -348,7 +420,8 @@ cmd_clean() {
 
   hr
   local total_bytes=$((total_kb * 1024))
-  printf "  Potential savings: ~%s\n" "$(fmt_size "$total_bytes")"
+  printf "  Potential internal-disk savings: ~%s\n" "$(fmt_size "$total_bytes")"
+  printf "  (external-FS entries are excluded from this total)\n"
   hr
   echo
   echo "NOTE: Commands above are NOT executed. Copy and run individually."
@@ -467,8 +540,18 @@ breakdown_xcode() {
 
 breakdown_unity() {
   section "Unity Editor Versions"
-  if [[ -d "/Applications/Unity/Hub/Editor" ]]; then
-    $DU -sk /Applications/Unity/Hub/Editor/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
+  local hub_editor="/Applications/Unity/Hub/Editor"
+  if [[ -e "$hub_editor" ]]; then
+    if [[ -L "$hub_editor" ]]; then
+      local target
+      target="$(readlink "$hub_editor")"
+      printf "  Editor location: %s -> %s\n" "$hub_editor" "$target"
+      if is_external_fs "$hub_editor"; then
+        printf "  Note: editors live on an external volume (no internal disk impact)\n"
+      fi
+      echo
+    fi
+    $DU -sk "$hub_editor"/*/ 2>/dev/null | sort -rn | while read -r kb dir; do
       local name
       name="$(basename "$dir")"
       local bytes=$((kb * 1024))
