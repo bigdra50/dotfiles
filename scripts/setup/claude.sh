@@ -56,4 +56,8 @@ install_skills() {
 link_claude
 install_skills
 
+# Sync rules to Codex/Copilot
+info "Syncing rules to Codex/Copilot..."
+bash "$DOTFILES_DIR/scripts/sync-rules.sh" --global
+
 success "Claude Code configuration installed"
