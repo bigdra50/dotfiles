@@ -11,6 +11,24 @@ user-invocable: true
 
 実装済みコードに /copilot-review を実行し、指摘を反映して再レビューする反復ループ。
 
+## When NOT to use
+
+- 単発レビューで十分なとき → `/copilot-review` (loop なし)
+- 設計プランのレビュー対象 → `/copilot-plan-loop`
+- Codex CLI を使いたい → `/review-loop`
+- メトリクス駆動の構造改善 → `/refactor-loop`
+- まだコードを書いていない → 通常会話で実装してから
+
+## Pitfalls (read first)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `--models all-gpt` で 1 モデルしか動かない | argparse で models 配列が agent に伝わっていない | Step 2 で `--models` をそのまま渡しているか確認 |
+| 観点ごとに別モデルを指定したい | デフォルト mapping が固定 | `--models security=gpt-5,perf=claude-opus-4.6` のように観点指定 |
+| 同じ指摘が毎ラウンド出る | 修正履歴が次ラウンドの reviewer に渡っていない | 修正内容を要約し、次の `/copilot-review` 引数に含める |
+| 修正がテストを壊す | Step 4 のテスト実行をスキップしている | プロジェクトの test command を CLAUDE.md から特定し必ず実行 |
+| `--effort high` でレートリミット | 4 観点 × 高 effort はコスト大 | observability 不足箇所だけ effort high に絞る |
+
 ## Usage
 
 ```
@@ -107,6 +125,25 @@ Round N レビュー結果:
 
 対応済み: X件 / 未対応 (NICE): X件
 ```
+
+## Anti-patterns
+
+| 合理化 | 実像 |
+|---|---|
+| 「マルチモデルだから観点間で矛盾しない」 | 観点ごとに別モデルなら矛盾し得る。ユーザー判断で優先順位を決める |
+| 「`--models all-gpt` で十分 (Claude 不要)」 | モデルファミリーで盲点が偏る。混合の方が見落としが減る |
+| 「テスト失敗したけどレビュー結果は反映済みだから次へ」 | 修正で別の不具合を導入。テスト緑化前に次ラウンドへ進まない |
+| 「NICE は無視してよい (時間ない)」 | NICE が積もると debt 化。ユーザーに判断を委ねる方が良い |
+| 「`/copilot-review` の出力をそのまま applied=true にしてよい」 | reviewer は提案するだけ。承認はユーザー、適用は別ステップ |
+
+## Related skills
+
+- `/copilot-plan-loop` — 設計プランを Copilot でループ (code ではなく plan 対象)
+- `/review-loop` — 同じワークフローを Codex CLI で実施
+- `/refactor-loop` — メトリクス駆動の構造改善ループ (CodeHealth 系、別系統)
+- `/copilot-review` — このスキルが委譲する単発マルチモデルレビュー
+- `/dual-review` — Claude + Copilot を統合した単発レビュー
+- `empirical-prompt-tuning` (mizchi) — このスキル自体の品質を bias-free に評価
 
 ## Notes
 

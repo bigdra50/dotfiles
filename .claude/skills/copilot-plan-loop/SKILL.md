@@ -11,6 +11,24 @@ user-invocable: true
 
 設計プランをCopilot agentにレビュー依頼し、フィードバックを反映して再レビューする反復ループ。
 
+## When NOT to use
+
+- 単発レビューで十分なとき → `/copilot-review` (loop なし)
+- 実装コードのレビュー対象 → `/copilot-review-loop`
+- Codex CLI を使いたい → `/plan-loop`
+- プランがまだ存在しない (作成は通常会話で進める)
+- モデル比較が不要なら → `/plan-loop` (Codex 固定の方が軽い)
+
+## Pitfalls (read first)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| `--model` を変えても結果が同じ | argparse で model が agent に伝わっていない | Step 2 のテンプレで `{model}` を埋めているか確認 |
+| `--effort high` で response が異常に遅い | high は推論コストが大きい。レート制限に達することも | medium にフォールバック、または target を絞り込む |
+| 同じ指摘が毎ラウンド出る | history が次ラウンド prompt に渡っていない | `{previous_feedback_and_responses}` を必ず埋める |
+| MUST が永遠にゼロにならない | reviewer が plan の最新版を読めていない | `plan_path` を絶対パスで渡す。`--model` を強モデルに変えて再試行 |
+| Copilot の出力が日本語にならない | model によっては日本語指示が弱い | テンプレ末尾「日本語で回答してください」を維持。それでも英語なら model 変更 |
+
 ## Usage
 
 ```
@@ -154,6 +172,25 @@ Round N レビュー結果:
 
 対応済み: X件 / 未対応 (NICE): X件
 ```
+
+## Anti-patterns
+
+| 合理化 | 実像 |
+|---|---|
+| 「`--model gpt-5` の方が常に良い」 | モデル特性で得意領域が違う。観点ごとに使い分ける |
+| 「`--effort high` を毎回つける」 | コストとレイテンシが跳ねる。MUST 出尽くした後の確認用に温存 |
+| 「ユーザー承認をスキップして自動反映」 | プランが意図せず歪む。承認は省略しない |
+| 「2 ラウンドで MUST が出なかったから収束」 | 評価軸が偏っている可能性。観点 6 つすべてカバーされたか確認 |
+| 「Copilot に任せれば中立な評価が出る」 | Copilot も prompt 設計の影響を受ける。テンプレを変えたら評価軸が揺れる |
+
+## Related skills
+
+- `/plan-loop` — 同じワークフローを Codex CLI で実施
+- `/copilot-review-loop` — 実装コードを Copilot でループ (plan ではなく code)
+- `/refactor-loop` — メトリクス駆動の構造改善ループ (CodeHealth 系、別系統)
+- `/copilot-review` — このスキルの単発レビュー版 (loop なし)
+- `/dual-review` — Claude + Copilot の単発統合レビュー
+- `empirical-prompt-tuning` (mizchi) — このスキル自体の品質を bias-free に評価
 
 ## Notes
 

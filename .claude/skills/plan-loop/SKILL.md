@@ -10,6 +10,24 @@ user-invocable: true
 
 設計プランをCodex agentにレビュー依頼し、フィードバックを反映して再レビューする反復ループ。
 
+## When NOT to use
+
+- 単発レビューで十分なとき → `/codex-review` (loop なし)
+- 実装コードのレビュー対象 → `/review-loop`
+- Copilot CLI を使いたい → `/copilot-plan-loop`
+- プランがまだ存在しない (作成は通常会話で進める)
+- レビューを 1 ラウンドだけ回したい → 直接 codex agent を Task tool で呼ぶ
+
+## Pitfalls (read first)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| 同じ指摘が毎ラウンド出る | history が次ラウンド prompt に渡っていない | Step 2 のテンプレで `{previous_feedback_and_responses}` を埋めているか確認 |
+| MUST が永遠にゼロにならない | reviewer が plan の最新版を読めていない | `plan_path` を絶対パスで渡す。codex agent への文脈渡しを見直す |
+| 2 ラウンドで打ち切られる | `apply_feedback` が失敗してエラーで break | 例外を握りつぶさず、ユーザーに報告して中断するか継続するか判断を仰ぐ |
+| Codex の出力が日本語にならない | テンプレ末尾の「日本語で回答してください」が省略 | プロンプトテンプレを改変するときも言語指定は必ず残す |
+| 指摘の重大度分類が一貫しない | classify ルールが prompter ごとに揺れる | MUST/SHOULD/NICE の定義をテンプレ通りに渡す。独自解釈しない |
+
 ## Usage
 
 ```
@@ -148,6 +166,25 @@ Round N レビュー結果:
 
 対応済み: X件 / 未対応 (NICE): X件
 ```
+
+## Anti-patterns
+
+| 合理化 | 実像 |
+|---|---|
+| 「2 ラウンドで MUST が出なかったから収束」 | 評価軸が偏っている可能性。観点 6 つすべてカバーされたか確認 |
+| 「ユーザー承認をスキップして自動反映」 | プランが意図せず歪む。承認は省略しない |
+| 「NICE も全部反映する方が品質高い」 | NICE は subjective。反映で別の人の判断が混入 |
+| 「ラウンド数の上限を 3 にしておけば安全」 | 3 ラウンドで MUST が残ったまま打ち切られる。上限を設けないのが本来の設計 |
+| 「Codex に任せれば中立な評価が出る」 | Codex も prompt 設計の影響を受ける。テンプレを改変したら評価軸が揺れる |
+
+## Related skills
+
+- `/review-loop` — 実装コードを Codex でループ (plan ではなく code 対象)
+- `/copilot-plan-loop` — 同じワークフローを Copilot CLI で実施
+- `/refactor-loop` — メトリクス駆動の構造改善ループ (CodeHealth 系、別系統)
+- `/dual-review` — 単発で複数 AI 視点が欲しいとき (loop なし)
+- `/codex-review` — 単発の 4 観点並列レビュー
+- `empirical-prompt-tuning` (mizchi) — このスキル自体の品質を bias-free に評価
 
 ## Notes
 

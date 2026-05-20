@@ -10,6 +10,26 @@ description: |
 
 unilyze メトリクスの CodeHealth スコアを収束条件として、リファクタリングを反復実行する。
 
+## When NOT to use
+
+- C# 以外のコードベース (unilyze は C# 専用)
+- 機能追加・バグ修正の途中 (そちらを先に完了させる)
+- リリース直前で破壊的変更を入れたくないとき
+- 短期的に削除予定のコード (測定する意味がない)
+- メトリクス取れる規模に達していない新規プロジェクト
+- レビュー観点での品質改善が主目的 → `/review-loop` または `/copilot-review-loop`
+
+## Pitfalls (read first)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| partial class や static 拡張が GodClass 判定される | 計測特性によるもの | `quality-audit/references/blind-spots.md` を参照、対象から除外 |
+| `unilyze hotspot` が失敗 | 非 git リポジトリ or git 履歴が不足 | CodeHealth 順にフォールバック (本文 Step 1 に記載) |
+| Degraded > 0 のまま次ラウンドへ進む | 悪化対応をスキップ | Step 4 の判定ロジックを厳守、悪化を直してから次へ |
+| ベースラインが古い | snapshot 更新を忘れる | Step 7 で `cp refactor-after.json quality-audit.json` を必ず実行 |
+| `--target 8.0` で永遠に収束しない | 既存コードベースの現実値に対し target 高すぎ | `unilyze metrics` で閾値を確認、target を 6.5〜7.5 に調整 |
+| テスト失敗が次ラウンドにキャリーオーバーする | Step 3 のテスト実行前に Step 4 へ進んでいる | 順序厳守。テスト緑化を必須条件にする |
+
 ## Quick Reference
 
 ```bash
@@ -177,6 +197,26 @@ Overall: N types improved, M reached target, K remaining
 ```bash
 cp "$UNILYZE_DIR/refactor-after.json" "$UNILYZE_DIR/quality-audit.json"
 ```
+
+## Anti-patterns
+
+| 合理化 | 実像 |
+|---|---|
+| 「メトリクス値を下げるためなら多少可読性を犠牲にしてよい」 | Goodhart's Law。指標が target になった瞬間に良い指標ではなくなる |
+| 「1 ラウンドで複数型をまとめて改善した方が効率的」 | 悪化原因の切り分けが不可能になる。1 型ずつ守る |
+| 「partial class を分割して GodClass 解消」 | 計測の都合に実装を合わせる本末転倒。除外で対処する |
+| 「CodeHealth 7.99 → 8.00 まで詰める」 | 小数点以下は誤差レベル。target に到達したら止める |
+| 「hotspot 取れないから CodeHealth 順だけで進める」 | 滅多に変更しないコードに労力を使ってしまう。せめて頻出ファイルを目視確認 |
+| 「テスト書いていないが mechanical な変更だから安全」 | 振る舞いが変わる refactor は珍しくない。テストなしなら範囲を最小化する |
+
+## Related skills
+
+- `/quality-audit` — メトリクス + AI レビューの統合監査 (refactor の前段で baseline 取得)
+- `/csharp-diagnose` — ReSharper + similarity-csharp による事前診断 (refactor 候補の発見)
+- `/csharp-perf-optimizer` — Cysharp 知見によるパフォーマンス最適化 (perf 改善が主目的なら)
+- `/review-loop` — refactor 結果を Codex レビューでさらに磨く
+- `/plan-loop` — 大規模 refactor の計画段階を Codex でレビュー
+- `empirical-prompt-tuning` (mizchi) — このスキル自体の品質を bias-free に評価
 
 ## Notes
 

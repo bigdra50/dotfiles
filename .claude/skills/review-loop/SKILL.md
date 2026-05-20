@@ -10,6 +10,24 @@ user-invocable: true
 
 実装済みコードに /codex-review を実行し、指摘を反映して再レビューする反復ループ。
 
+## When NOT to use
+
+- 単発レビューで十分なとき → `/codex-review` (loop なし)
+- 設計プランのレビュー対象 → `/plan-loop`
+- Copilot CLI を使いたい → `/copilot-review-loop`
+- メトリクス駆動の構造改善 → `/refactor-loop`
+- まだコードを書いていない → 通常会話で実装してから
+
+## Pitfalls (read first)
+
+| Symptom | Cause | Fix |
+|---|---|---|
+| 同じ指摘が毎ラウンド出る | 修正履歴が次ラウンドの reviewer に渡っていない | 各ラウンドの修正内容を要約し、次の `/codex-review` 引数に含める |
+| 修正がテストを壊す | Step 4 のテスト実行をスキップしている | プロジェクトの test command を CLAUDE.md から特定し必ず実行 |
+| `--staged` で対象が空 | git add していない / staging が古い | `git status` で確認、必要なら `git add` を促す |
+| MUST が永遠にゼロにならない | 修正対象の判断ミスで別ファイルを直している | reviewer が指摘した `file:line` を厳格に追う |
+| ラウンドが 1 回で収束する | reviewer が浅いレビューしかしていない | `/codex-review` の 4 観点 prompt が省略されていないか確認 |
+
 ## Usage
 
 ```
@@ -104,6 +122,25 @@ Round N レビュー結果:
 
 対応済み: X件 / 未対応 (NICE): X件
 ```
+
+## Anti-patterns
+
+| 合理化 | 実像 |
+|---|---|
+| 「テスト失敗したけどレビュー結果は反映済みだから次へ」 | 修正で別の不具合を導入。テスト緑化前に次ラウンドへ進まない |
+| 「NICE は無視してよい (時間ない)」 | NICE が積もると debt 化。ユーザーに判断を委ねる方が良い |
+| 「`--staged` ならテスト不要 (commit 前なので)」 | staged の状態で壊れていれば commit してから困る。テストは必ず |
+| 「Codex が同じ指摘繰り返すから収束した」 | 指摘の伝達がうまくいっていないだけ。修正履歴を要約して渡す |
+| 「reviewer の出力をそのまま applied=true にしてよい」 | reviewer は提案するだけ。承認はユーザー、適用は別ステップ |
+
+## Related skills
+
+- `/plan-loop` — 設計プランを Codex でループ (code ではなく plan 対象)
+- `/copilot-review-loop` — 同じワークフローを Copilot CLI で実施
+- `/refactor-loop` — メトリクス駆動の構造改善ループ (CodeHealth 系、別系統)
+- `/codex-review` — このスキルが委譲する単発 4 観点レビュー
+- `/dual-review` — Claude + Codex/Copilot を統合した単発レビュー
+- `empirical-prompt-tuning` (mizchi) — このスキル自体の品質を bias-free に評価
 
 ## Notes
 
