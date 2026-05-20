@@ -24,46 +24,39 @@ Provide an alternative AI perspective (Cursor Agent's models) for tasks where a 
 Use `agent -p` command via Bash tool to execute tasks.
 
 ```bash
-# Default execution pattern (print mode, trust workspace)
-cd <project_directory> && agent -p "<prompt>" --trust 2>/dev/null
+# Default execution pattern (print mode, trust workspace, composer-2.5-fast)
+cd <project_directory> && agent -p "<prompt>" --model composer-2.5-fast --trust 2>/dev/null
 ```
+
+If `composer-2.5-fast` is rate-limited or otherwise unavailable, do NOT silently fall back to another model. Stop delegation, surface the failure to the parent (Claude Code), and let the parent implement the task itself. This is intentional: the user has opted out of fallback to slower/standard tiers and prefers Claude Code to take over rather than degrade the Cursor execution.
 
 **Key flags:**
 
-| Flag                     | Usage                                              |
-| ------------------------ | -------------------------------------------------- |
-| `-p "<prompt>"`          | Non-interactive print mode (for scripts)           |
-| `--trust`                | Trust workspace without prompting                  |
-| `--model <model>`        | Specify model (default: composer-2-fast)            |
-| `--mode plan`            | Read-only planning mode (analyze, no edits)        |
-| `--mode ask`             | Q&A mode for explanations (read-only)              |
-| `--force` / `--yolo`     | When edits requested (allow all commands)           |
-| `--sandbox enabled`      | DEFAULT: Sandboxed execution                       |
-| `--sandbox disabled`     | Disable sandbox for full system access             |
-| `--workspace <path>`     | Specify workspace directory                        |
-| `--output-format <fmt>`  | Output format: text / json / stream-json           |
+| Flag                    | Usage                                       |
+| ----------------------- | ------------------------------------------- |
+| `-p "<prompt>"`         | Non-interactive print mode (for scripts)    |
+| `--trust`               | Trust workspace without prompting           |
+| `--model <model>`       | Specify model (default: composer-2.5-fast)  |
+| `--mode plan`           | Read-only planning mode (analyze, no edits) |
+| `--mode ask`            | Q&A mode for explanations (read-only)       |
+| `--force` / `--yolo`    | When edits requested (allow all commands)   |
+| `--sandbox enabled`     | DEFAULT: Sandboxed execution                |
+| `--sandbox disabled`    | Disable sandbox for full system access      |
+| `--workspace <path>`    | Specify workspace directory                 |
+| `--output-format <fmt>` | Output format: text / json / stream-json    |
 
 **Model selection:**
 
-If the user specifies a model, use `--model <model>`. Representative models:
+Default to `composer-2.5-fast`. If the user specifies a model, use `--model <model>`. Representative models:
 
-| Model | Provider | Notes |
-|-------|----------|-------|
-| composer-2-fast | Cursor | Default, fast |
-| composer-2 | Cursor | Current flagship |
-| gpt-5.4-medium | OpenAI | GPT-5.4 1M |
-| gpt-5.4-high | OpenAI | GPT-5.4 1M High reasoning |
-| gpt-5.3-codex | OpenAI | Codex series |
-| gpt-5.2 | OpenAI | Balanced |
-| claude-4.6-opus-high | Anthropic | Deep analysis |
-| claude-4.6-sonnet-medium | Anthropic | Fast, capable |
-| claude-4.5-sonnet | Anthropic | 1M context |
-| gemini-3.1-pro | Google | Data-heavy |
-| grok-4-20 | xAI | Alternative |
-| gpt-5.4-mini-medium | OpenAI | Low latency |
-| gpt-5.4-nano-medium | OpenAI | Minimal latency |
+| Model             | Provider | Notes                       |
+| ----------------- | -------- | --------------------------- |
+| composer-2.5-fast | Cursor   | Default, fast               |
+| composer-2.5      | Cursor   | Current flagship            |
+| composer-2-fast   | Cursor   | Legacy fast (fallback)      |
+| composer-2        | Cursor   | Legacy flagship (fallback)  |
 
-Use `agent --list-models` to see all available models.
+Use `agent --list-models` to see all available models (includes GPT-5.x, Claude Opus 4.x, Gemini 3.x, Grok 4.x, Kimi K2.5 等).
 
 **Execution guidelines:**
 
@@ -121,17 +114,17 @@ You are a senior developer. Implement the requested feature following:
 **Example executions:**
 
 ```bash
-# Code review (read-only ask mode)
-cd /path/to/project && agent -p "Review the recent changes in src/auth/ for security issues" --mode ask --trust 2>/dev/null
+# Code review (read-only ask mode, default composer-2.5-fast)
+cd /path/to/project && agent -p "Review the recent changes in src/auth/ for security issues" --model composer-2.5-fast --mode ask --trust 2>/dev/null
 
 # Code review with specific model
 cd /path/to/project && agent -p "Review the API layer architecture" --model gpt-5.4-high --mode ask --trust 2>/dev/null
 
-# Design analysis (plan mode)
-cd /path/to/project && agent -p "Analyze the architecture of the API layer and suggest improvements" --mode plan --trust 2>/dev/null
+# Design analysis (plan mode, higher quality model)
+cd /path/to/project && agent -p "Analyze the architecture of the API layer and suggest improvements" --model composer-2.5 --mode plan --trust 2>/dev/null
 
 # Implementation (with force/yolo)
-cd /path/to/project && agent -p "Add input validation to the user registration form" --force --trust 2>/dev/null
+cd /path/to/project && agent -p "Add input validation to the user registration form" --model composer-2.5-fast --force --trust 2>/dev/null
 ```
 
 **Response format:**
@@ -144,6 +137,7 @@ After executing Cursor Agent:
 
 **Error handling:**
 
+- If rate-limited (HTTP 429, "rate limit", "quota exceeded" etc. in stderr/stdout): Stop immediately. Do NOT retry. Do NOT fall back to another model (no `composer-2.5`, no `composer-2-fast`). Report the rate-limit clearly to the parent (Claude Code) — including which model hit the limit and any reset time if visible — and hand the task back so Claude Code implements it directly.
 - If agent fails to start: Check authentication (`agent login`)
 - If execution times out: Suggest breaking the task into smaller parts or using `--mode ask` for lighter analysis
 - If output is truncated: Try with a simpler prompt or specific file targets

@@ -30,32 +30,29 @@ cd <project_directory> && copilot -p "<prompt>" --no-ask-user 2>/dev/null
 
 **Key flags:**
 
-| Flag                        | Usage                                          |
-| --------------------------- | ---------------------------------------------- |
-| `-p "<prompt>"`             | Non-interactive single-shot execution          |
-| `--no-ask-user`             | DEFAULT: Suppress clarifying questions         |
-| `--model <model>`           | Specify model (default: gpt-5.4)               |
-| `--allow-all-tools`         | When edits requested (full tool access)        |
-| `--yolo`                    | Alias for --allow-all-tools                    |
-| `--allow-tool "<pattern>"`  | Allow specific tools (glob pattern)            |
-| `--deny-tool "<pattern>"`   | Deny specific tools (glob pattern)             |
-| `--effort <level>`          | Reasoning effort (low/medium/high)             |
-| `--autopilot`               | Autonomous multi-step execution                |
-| `--max-autopilot-continues N` | Limit autonomous steps                       |
+| Flag                          | Usage                                   |
+| ----------------------------- | --------------------------------------- |
+| `-p "<prompt>"`               | Non-interactive single-shot execution   |
+| `--no-ask-user`               | DEFAULT: Suppress clarifying questions  |
+| `--model <model>`             | Specify model (default: gpt-5.5)        |
+| `--allow-all-tools`           | When edits requested (full tool access) |
+| `--yolo`                      | Alias for --allow-all-tools             |
+| `--allow-tool "<pattern>"`    | Allow specific tools (glob pattern)     |
+| `--deny-tool "<pattern>"`     | Deny specific tools (glob pattern)      |
+| `--effort <level>`            | Reasoning effort (low/medium/high)      |
+| `--autopilot`                 | Autonomous multi-step execution         |
+| `--max-autopilot-continues N` | Limit autonomous steps                  |
 
 **Model selection:**
 
 If the user specifies a model, use `--model <model>`. Common models:
 
-| Model | Provider | Notes |
-|-------|----------|-------|
-| gpt-5.4 | OpenAI | Default |
-| claude-sonnet-4.5 | Anthropic | |
-| claude-sonnet-4.6 | Anthropic | |
-| claude-opus-4.6 | Anthropic | Deep analysis |
-| gpt-5 | OpenAI | |
-| gpt-5.4-mini | OpenAI | Low latency |
-| gemini-3.1-pro | Google | Data-heavy |
+| Model             | Provider  | Notes         |
+| ----------------- | --------- | ------------- |
+| gpt-5.5           | OpenAI    | Default       |
+| claude-sonnet-4.6 | Anthropic |               |
+| claude-opus-4.6   | Anthropic | Deep analysis |
+| claude-opus-4.7   | Anthropic | Deep analysis |
 
 **Execution guidelines:**
 
@@ -122,7 +119,7 @@ cd /path/to/project && copilot -p "Review the recent changes in src/auth/ for se
 cd /path/to/project && copilot -p "Review the API layer architecture" --model gpt-5 --no-ask-user 2>/dev/null
 
 # Code review with high reasoning effort
-cd /path/to/project && copilot -p "Review the auth module for subtle security issues" --model gpt-5.4 --effort high --no-ask-user 2>/dev/null
+cd /path/to/project && copilot -p "Review the auth module for subtle security issues" --model gpt-5.5 --effort high --no-ask-user 2>/dev/null
 
 # Design analysis
 cd /path/to/project && copilot -p "Analyze the architecture of the API layer and suggest improvements" --no-ask-user 2>/dev/null
