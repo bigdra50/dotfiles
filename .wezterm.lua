@@ -14,8 +14,25 @@ end
 local dotfiles_dir = os.getenv("HOME") .. "/dev/github.com/bigdra50/dotfiles"
 local bg_image = dotfiles_dir .. "/wezterm/images/ztmy.jpg"
 
+-- Claude Code通知: bellイベントでタスク完了をトースト通知
+wezterm.on("bell", function(window, pane)
+	-- ペインの作業ディレクトリからプロジェクト名を取得（OSC 7未設定ならnil）
+	local cwd = pane:get_current_working_dir()
+	local project_name = "不明"
+	if cwd and cwd.file_path then
+		project_name = cwd.file_path:match("([^/]+)/?$") or "不明"
+	end
+	local time = wezterm.strftime("%H:%M:%S")
+
+	local title = "Claude Code - タスク完了"
+	local message = string.format("プロジェクト: %s\n時刻: %s", project_name, time)
+
+	window:toast_notification(title, message, nil, 5000)
+end)
+
 local config = {
 	check_for_updates = true,
+	audible_bell = "SystemBeep", -- システムベル音も鳴らす
 	font = wezterm.font_with_fallback({
 		"Hack Nerd Font",
 		"Hiragino Sans",
