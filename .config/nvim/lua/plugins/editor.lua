@@ -30,6 +30,10 @@ return {
         },
         sync_install = false,
         auto_install = true,
+        -- swift is generated from grammar definitions via the tree-sitter
+        -- CLI, which fails on CI runners; retries on every startup would
+        -- pollute the smoke test's stderr. Local installs are unaffected.
+        ignore_install = vim.env.CI and { "swift" } or {},
         highlight = { enable = true },
         indent = { enable = true },
       })
@@ -42,10 +46,34 @@ return {
     cmd = "Telescope",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
-      { "<leader>ff", function() require("telescope.builtin").find_files() end, desc = "Find files" },
-      { "<leader>fg", function() require("telescope.builtin").live_grep() end, desc = "Live grep" },
-      { "<leader>fb", function() require("telescope.builtin").buffers() end, desc = "Buffers" },
-      { "<leader>fh", function() require("telescope.builtin").help_tags() end, desc = "Help tags" },
+      {
+        "<leader>ff",
+        function()
+          require("telescope.builtin").find_files()
+        end,
+        desc = "Find files",
+      },
+      {
+        "<leader>fg",
+        function()
+          require("telescope.builtin").live_grep()
+        end,
+        desc = "Live grep",
+      },
+      {
+        "<leader>fb",
+        function()
+          require("telescope.builtin").buffers()
+        end,
+        desc = "Buffers",
+      },
+      {
+        "<leader>fh",
+        function()
+          require("telescope.builtin").help_tags()
+        end,
+        desc = "Help tags",
+      },
     },
     config = function()
       require("telescope").setup({
@@ -92,8 +120,18 @@ return {
         nearest_only = true,
       })
       local opts = { noremap = true, silent = true }
-      vim.keymap.set("n", "n", [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
-      vim.keymap.set("n", "N", [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]], opts)
+      vim.keymap.set(
+        "n",
+        "n",
+        [[<Cmd>execute('normal! ' . v:count1 . 'n')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        opts
+      )
+      vim.keymap.set(
+        "n",
+        "N",
+        [[<Cmd>execute('normal! ' . v:count1 . 'N')<CR><Cmd>lua require('hlslens').start()<CR>]],
+        opts
+      )
       vim.keymap.set("n", "*", [[*<Cmd>lua require('hlslens').start()<CR>]], opts)
       vim.keymap.set("n", "#", [[#<Cmd>lua require('hlslens').start()<CR>]], opts)
       vim.keymap.set("n", "g*", [[g*<Cmd>lua require('hlslens').start()<CR>]], opts)
@@ -140,7 +178,9 @@ return {
       vim.keymap.set({ "n", "v" }, "<leader>dh", require("dap.ui.widgets").hover, { desc = "Hover" })
       vim.keymap.set({ "n", "v" }, "<leader>de", function()
         local ok, dapui = pcall(require, "dapui")
-        if ok then dapui.eval() end
+        if ok then
+          dapui.eval()
+        end
       end, { desc = "Eval" })
 
       vim.keymap.set("n", "<leader>dd", xcodebuild_dap.build_and_debug, { desc = "Build & Debug" })
@@ -220,9 +260,15 @@ return {
           vim.wo.fillchars = "eob: "
         end,
       })
-      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
     end,
   },
 
@@ -278,13 +324,21 @@ return {
             vim.keymap.set(mode, l, r, opts)
           end
           map("n", "g]", function()
-            if vim.wo.diff then return "g]" end
-            vim.schedule(function() gs.next_hunk() end)
+            if vim.wo.diff then
+              return "g]"
+            end
+            vim.schedule(function()
+              gs.next_hunk()
+            end)
             return "<Ignore>"
           end, { expr = true })
           map("n", "g[", function()
-            if vim.wo.diff then return "g[" end
-            vim.schedule(function() gs.prev_hunk() end)
+            if vim.wo.diff then
+              return "g["
+            end
+            vim.schedule(function()
+              gs.prev_hunk()
+            end)
             return "<Ignore>"
           end, { expr = true })
           map("n", "gu", gs.reset_hunk)
@@ -376,7 +430,12 @@ return {
       vim.keymap.set("n", "<leader>xT", "<cmd>XcodebuildTestClass<cr>", { desc = "Run This Test Class" })
       vim.keymap.set("n", "<leader>xl", "<cmd>XcodebuildToggleLogs<cr>", { desc = "Toggle Xcodebuild Logs" })
       vim.keymap.set("n", "<leader>xc", "<cmd>XcodebuildToggleCodeCoverage<cr>", { desc = "Toggle Code Coverage" })
-      vim.keymap.set("n", "<leader>xC", "<cmd>XcodebuildShowCodeCoverageReport<cr>", { desc = "Show Code Coverage Report" })
+      vim.keymap.set(
+        "n",
+        "<leader>xC",
+        "<cmd>XcodebuildShowCodeCoverageReport<cr>",
+        { desc = "Show Code Coverage Report" }
+      )
       vim.keymap.set("n", "<leader>xe", "<cmd>XcodebuildTestExplorerToggle<cr>", { desc = "Toggle Test Explorer" })
       vim.keymap.set("n", "<leader>xs", "<cmd>XcodebuildFailingSnapshots<cr>", { desc = "Show Failing Snapshots" })
       vim.keymap.set("n", "<leader>xd", "<cmd>XcodebuildSelectDevice<cr>", { desc = "Select Device" })

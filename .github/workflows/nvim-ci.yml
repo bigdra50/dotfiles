@@ -2,6 +2,7 @@ name: Neovim CI
 
 on:
   push:
+    branches: [master]
     paths:
       - ".config/nvim/**"
       - "scripts/nvim-smoke-test.sh"
@@ -37,7 +38,9 @@ jobs:
             Darwin-x86_64) archive="stylua-macos-x86_64.zip" ;;
             *) echo "Unsupported platform"; exit 1 ;;
           esac
-          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/latest/download/$archive" -o stylua.zip
+          # Pinned: stylua releases change default formatting between versions,
+          # which silently breaks --check against code formatted by older ones
+          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
           unzip -o stylua.zip -d /usr/local/bin
           rm stylua.zip
 
@@ -61,6 +64,8 @@ jobs:
           exit 0
 
       - name: Install Neovim
+        env:
+          NEOVIM_VERSION: ${{ matrix.neovim }}
         run: |
           if command -v nvim &>/dev/null; then
             echo "nvim already available: $(nvim --version | head -1)"
@@ -90,6 +95,28 @@ jobs:
           echo "XDG_DATA_HOME=${tmpdir}/nvim-data" >> "$GITHUB_ENV"
           echo "XDG_STATE_HOME=${tmpdir}/nvim-state" >> "$GITHUB_ENV"
           echo "XDG_CACHE_HOME=${tmpdir}/nvim-cache" >> "$GITHUB_ENV"
+
+      - name: Install tree-sitter CLI
+        # Generated treesitter parsers need the tree-sitter CLI at install
+        # time. Local machines rarely hit this because parsers are already
+        # installed; CI cold caches do.
+        run: npm install -g tree-sitter-cli
+
+      - name: Setup Go
+        # go.nvim's build step (go.install.update_all_sync) shells out to go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - name: Bootstrap plugins (warm the cold cache)
+        # First startup clones lazy.nvim, installs plugins, runs build steps,
+        # and kicks off async treesitter installs. Doing it here keeps that
+        # noise out of the strict startup check below, which would otherwise
+        # fail nondeterministically depending on async build timing.
+        run: |
+          nvim --headless "+Lazy! sync" +qall! || true
+          nvim --headless +qall! || true
 
       - name: Smoke test (startup + module require)
         run: |

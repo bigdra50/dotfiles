@@ -147,9 +147,13 @@ return {
         once = true,
         callback = function()
           local root = vim.fs.root(0, "ProjectSettings")
-          if not root then return end
+          if not root then
+            return
+          end
           local version_file = root .. "/ProjectSettings/ProjectVersion.txt"
-          if vim.fn.filereadable(version_file) ~= 1 then return end
+          if vim.fn.filereadable(version_file) ~= 1 then
+            return
+          end
           local script = vim.fn.expand("~/dev/github.com/bigdra50/dotfiles/scripts/unity-fix-csproj.sh")
           if vim.fn.executable(script) == 1 then
             vim.fn.system({ script, root })
@@ -220,7 +224,9 @@ return {
       vim.api.nvim_create_autocmd("User", {
         pattern = { "XcodebuildBuildFinished", "XcodebuildTestsFinished" },
         callback = function(event)
-          if event.data.cancelled then return end
+          if event.data.cancelled then
+            return
+          end
           local trouble = require("trouble")
           if event.data.success then
             trouble.close()
