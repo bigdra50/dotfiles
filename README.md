@@ -3,6 +3,8 @@
 macOS / Linux / WSL 用。
 Windows は [dotfiles-win](https://github.com/bigdra50/dotfiles-win) を参照。
 
+キーバインド・エイリアス・mise タスク・Claude 資産の検索可能なリファレンス: <https://bigdra50.github.io/dotfiles/>
+
 ## Install
 
 ```bash
@@ -27,4 +29,6 @@ INTERACTIVE=false ./install.sh    # non-interactive
 
 ## Docs
 
-- [Bark通知セットアップ](docs/bark-notification.md) - Claude Code → iPhone プッシュ通知
+- [architecture](docs/architecture.md) — リポジトリ構成
+- [reference](docs/reference.md) — 設定から生成する検索可能リファレンス ([GitHub Pages](https://bigdra50.github.io/dotfiles/))
+- [serve-reports](docs/serve-reports.md) — Claude Code レポートの LAN 公開 (`mise run serve-reports`)
