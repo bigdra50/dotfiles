@@ -1,0 +1,135 @@
+name: Keybindings
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - ".wezterm.lua"
+      - ".skhdrc"
+      - ".config/zsh/**"
+      - ".config/nvim/**"
+      - "scripts/keybindings/**"
+      - ".github/workflows/keybindings.yml"
+  pull_request:
+    paths:
+      - ".wezterm.lua"
+      - ".skhdrc"
+      - ".config/zsh/**"
+      - ".config/nvim/**"
+      - "scripts/keybindings/**"
+      - ".github/workflows/keybindings.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keybindings-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Pinned for stable `show-keys --lua` output format (parser depends on it)
+  WEZTERM_VERSION: "20240203-110809-5046fc22"
+
+jobs:
+  extract-and-check:
+    # ubuntu-22.04 matches the pinned wezterm .deb target
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    outputs:
+      count: ${{ steps.summary.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Cache wezterm deb
+        id: cache-wezterm
+        uses: actions/cache@v4
+        with:
+          path: /tmp/wezterm.deb
+          key: wezterm-deb-${{ env.WEZTERM_VERSION }}-ubuntu22.04
+
+      - name: Download wezterm deb
+        if: steps.cache-wezterm.outputs.cache-hit != 'true'
+        run: |
+          url="https://github.com/wez/wezterm/releases/download/${WEZTERM_VERSION}/wezterm-${WEZTERM_VERSION}.Ubuntu22.04.deb"
+          curl -fsSL "$url" -o /tmp/wezterm.deb
+
+      - name: Install wezterm
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq /tmp/wezterm.deb
+          wezterm --version
+
+      - name: Install Neovim
+        run: |
+          curl -fsSL "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -o nvim.tar.gz
+          tar xzf nvim.tar.gz
+          sudo cp -r nvim-linux-x86_64/* /usr/local/
+          rm -rf nvim.tar.gz nvim-linux-x86_64
+          nvim --version | head -1
+
+      - name: Set XDG environment
+        run: |
+          workspace="${GITHUB_WORKSPACE:-$(pwd)}"
+          tmpdir="${RUNNER_TEMP:-/tmp}"
+          echo "XDG_CONFIG_HOME=${workspace}/.config" >> "$GITHUB_ENV"
+          echo "XDG_DATA_HOME=${tmpdir}/nvim-data" >> "$GITHUB_ENV"
+          echo "XDG_STATE_HOME=${tmpdir}/nvim-state" >> "$GITHUB_ENV"
+          echo "XDG_CACHE_HOME=${tmpdir}/nvim-cache" >> "$GITHUB_ENV"
+
+      - name: Lint (ruff + mypy)
+        run: |
+          pipx run ruff check scripts/keybindings/
+          pipx run ruff format --check scripts/keybindings/
+          pipx run mypy --strict scripts/keybindings/
+
+      - name: Unit tests
+        run: python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings
+
+      - name: Extract keybindings
+        run: bash scripts/keybindings/extract.sh --out keybindings.json
+
+      - name: Validate schema + duplicates + counts
+        run: python scripts/keybindings/validate.py --input keybindings.json
+
+      - name: Render HTML
+        run: python scripts/keybindings/render.py --input keybindings.json --html --out site/
+
+      - name: Summary
+        id: summary
+        run: |
+          count=$(python scripts/keybindings/validate.py --input keybindings.json --count-only)
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "### Keybindings extracted: $count records" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+
+  deploy:
+    needs: extract-and-check
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Summary
+        run: |
+          echo "### Deployed to GitHub Pages" >> "$GITHUB_STEP_SUMMARY"
+          echo "URL: ${{ steps.deploy.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Records: ${{ needs.extract-and-check.outputs.count }}" >> "$GITHUB_STEP_SUMMARY"
