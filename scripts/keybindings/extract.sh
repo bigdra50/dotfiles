@@ -8,16 +8,16 @@ SCRIPT_DIR="scripts/keybindings"
 OUT_PATH=""
 
 while [[ $# -gt 0 ]]; do
-  case "$1" in
-    --out)
-      OUT_PATH="$2"
-      shift 2
-      ;;
-    *)
-      error "unknown argument: $1"
-      exit 1
-      ;;
-  esac
+    case "$1" in
+        --out)
+            OUT_PATH="$2"
+            shift 2
+            ;;
+        *)
+            error "unknown argument: $1"
+            exit 1
+            ;;
+    esac
 done
 
 TMPDIR_WORK="$(mktemp -d)"
@@ -30,28 +30,28 @@ NVIM_OUT="${TMPDIR_WORK}/nvim.json"
 MERGED_OUT="${TMPDIR_WORK}/merged.json"
 
 run_extractor() {
-  local tool_name="$1"
-  local output_file="$2"
-  shift 2
-  info "extracting ${tool_name} keybindings..."
-  set +e
-  "$@" >"${output_file}"
-  local exit_status=$?
-  set -e
-  if [[ ${exit_status} -ne 0 ]]; then
-    error "${tool_name} extractor failed (exit ${exit_status})"
-    exit 1
-  fi
-  if ! python3 -c "
+    local tool_name="$1"
+    local output_file="$2"
+    shift 2
+    info "extracting ${tool_name} keybindings..."
+    set +e
+    "$@" >"${output_file}"
+    local exit_status=$?
+    set -e
+    if [[ ${exit_status} -ne 0 ]]; then
+        error "${tool_name} extractor failed (exit ${exit_status})"
+        exit 1
+    fi
+    if ! python3 -c "
 import json, sys
 with open(sys.argv[1], encoding='utf-8') as f:
     data = json.load(f)
 if not isinstance(data, list):
     sys.exit(1)
 " "${output_file}"; then
-    error "${tool_name} extractor produced invalid JSON (expected array)"
-    exit 1
-  fi
+        error "${tool_name} extractor produced invalid JSON (expected array)"
+        exit 1
+    fi
 }
 
 run_extractor "zsh" "${ZSH_OUT}" python3 "${SCRIPT_DIR}/extract_zsh.py" --root .
@@ -78,10 +78,10 @@ print()
 " "${ZSH_OUT}" "${SKHD_OUT}" "${WEZ_OUT}" "${NVIM_OUT}" >"${MERGED_OUT}"
 
 if [[ -n "${OUT_PATH}" ]]; then
-  mkdir -p "$(dirname "${OUT_PATH}")"
-  cp "${MERGED_OUT}" "${OUT_PATH}"
+    mkdir -p "$(dirname "${OUT_PATH}")"
+    cp "${MERGED_OUT}" "${OUT_PATH}"
 else
-  cat "${MERGED_OUT}"
+    cat "${MERGED_OUT}"
 fi
 
 success "keybinding extraction complete"

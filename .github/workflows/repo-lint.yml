@@ -1,0 +1,112 @@
+name: Repo Lint
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repo-lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install shellcheck and shfmt
+        run: |
+          curl -fsSL "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz" -o shellcheck.tar.xz
+          tar -xJf shellcheck.tar.xz
+          sudo cp shellcheck-v0.10.0/shellcheck /usr/local/bin/
+          rm -rf shellcheck.tar.xz shellcheck-v0.10.0
+
+          curl -fsSL "https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64" -o /usr/local/bin/shfmt
+          chmod +x /usr/local/bin/shfmt
+
+          shellcheck --version
+          shfmt --version
+
+      - name: Shellcheck
+        run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/keybindings/*.sh
+
+      - name: shfmt
+        run: shfmt -d -i 4 -ci scripts/
+
+  zsh-syntax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install zsh
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zsh
+
+      - name: Check zsh syntax
+        run: |
+          FAILED=0
+
+          shopt -s nullglob
+          for f in .config/zsh/*.zsh .config/zsh/plugins/*.zsh; do
+            if ! zsh -n "$f"; then
+              echo "Syntax error in $f"
+              FAILED=1
+            fi
+          done
+
+          for f in .config/zsh/.zshenv .config/zsh/.zshenv_local; do
+            [[ -f "$f" ]] || continue
+            if ! zsh -n "$f"; then
+              echo "Syntax error in $f"
+              FAILED=1
+            fi
+          done
+
+          if [[ "$FAILED" -ne 0 ]]; then
+            exit 1
+          fi
+
+  workflows-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install actionlint
+        run: bash <(curl -fsSL https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+
+      - name: Lint workflows
+        # actionlint's -shellcheck flag only accepts an executable path; an
+        # argument string silently disables the integration. Severity floor
+        # goes through shellcheck's own SHELLCHECK_OPTS instead, matching the
+        # -S warning policy of the shell job.
+        env:
+          SHELLCHECK_OPTS: -S warning
+        run: ./actionlint
+
+  wezterm-lua-format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install stylua
+        run: |
+          case "$(uname -s)-$(uname -m)" in
+            Linux-x86_64)  archive="stylua-linux-x86_64.zip" ;;
+            Linux-aarch64) archive="stylua-linux-aarch64.zip" ;;
+            Darwin-arm64)  archive="stylua-macos-aarch64.zip" ;;
+            Darwin-x86_64) archive="stylua-macos-x86_64.zip" ;;
+            *) echo "Unsupported platform"; exit 1 ;;
+          esac
+          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/latest/download/$archive" -o stylua.zip
+          unzip -o stylua.zip -d /usr/local/bin
+          rm stylua.zip
+
+      - name: Check .wezterm.lua formatting
+        run: stylua --check .wezterm.lua

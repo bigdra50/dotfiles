@@ -19,6 +19,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
+# shellcheck disable=SC2034
 CYAN='\033[0;36m'
 NC='\033[0m'
 
@@ -62,7 +63,7 @@ detect_platform() {
                 echo "linux"
             fi
             ;;
-        MINGW*|MSYS*|CYGWIN*)
+        MINGW* | MSYS* | CYGWIN*)
             echo "windows"
             ;;
         *)
@@ -73,10 +74,10 @@ detect_platform() {
 
 detect_arch() {
     case "$(uname -m)" in
-        x86_64|amd64)
+        x86_64 | amd64)
             echo "x86_64"
             ;;
-        aarch64|arm64)
+        aarch64 | arm64)
             echo "aarch64"
             ;;
         *)
@@ -108,7 +109,8 @@ create_symlink() {
         # Handle based on interactive mode
         if [[ "$interactive" == "false" ]]; then
             if [[ ! -L "$target" ]]; then
-                local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
+                local backup
+                backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
                 mv "$target" "$backup"
                 info "Backed up to $backup"
             else
@@ -124,7 +126,8 @@ create_symlink() {
             fi
 
             if [[ ! -L "$target" ]]; then
-                local backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
+                local backup
+                backup="${target}.backup.$(date +%Y%m%d_%H%M%S)"
                 mv "$target" "$backup"
                 info "Backed up to $backup"
             else
