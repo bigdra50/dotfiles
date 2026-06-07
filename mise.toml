@@ -112,5 +112,20 @@ description = "Run keybinding parser unit tests"
 dir = "{{cwd}}"
 run = "python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings"
 
+[tasks."sh:lint"]
+description = "Lint shell scripts (shellcheck -S warning)"
+dir = "{{cwd}}"
+run = "mise x shellcheck@latest -- shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/keybindings/*.sh"
+
+[tasks."sh:fmt"]
+description = "Check shell script formatting (shfmt)"
+dir = "{{cwd}}"
+run = "mise x shfmt@latest -- shfmt -d -i 4 -ci scripts/"
+
+[tasks."sh:fmt:fix"]
+description = "Fix shell script formatting (shfmt)"
+dir = "{{cwd}}"
+run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/"
+
 [settings]
 experimental = true
