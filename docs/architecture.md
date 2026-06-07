@@ -227,28 +227,25 @@ graph TD
 
 ```
 
-## キーバインド解析パイプライン
+## リファレンスハブ
 
-詳細は [keybindings.md](keybindings.md)。
+詳細は [reference.md](reference.md)。1つの列駆動レンダラ（`scripts/reference/common/`）を4ドメインで共有する。
 
 ```mermaid
 flowchart LR
     subgraph sources["設定ソース"]
-        wez[".wezterm.lua"]
-        nvim[".config/nvim/"]
-        zsh[".config/zsh/"]
-        skhd[".skhdrc"]
+        kb[".wezterm.lua / .config/zsh<br/>.skhdrc / .config/nvim"]
+        sc[".config/zsh<br/>(alias/abbr/func)"]
+        tk["mise tasks --json"]
+        cl[".claude/"]
     end
 
-    subgraph extract["抽出 (scripts/reference/)"]
-        wez -->|"show-keys --lua<br/>effective vs default"| diff1["diff/タグ付け"]
-        nvim -->|"headless dump<br/>vs --clean"| diff2["組み込み除外"]
-        zsh -->|"bindkey 静的パース"| norm["正規化"]
-        skhd -->|"静的パース"| norm
-    end
+    kb --> ekb["extract.sh<br/>(keybindings)"]
+    sc --> esc["extract_shortcuts.py"]
+    tk --> etk["extract_tasks.py"]
+    cl --> ecl["extract_claude.py"]
 
-    diff1 & diff2 & norm --> json["共通JSONスキーマ"]
-    json --> validate["validate.py<br/>(重複/件数下限)"]
-    validate --> pages["GitHub Pages<br/>(検索可能HTML)"]
-    validate --> fzf["mise run keys<br/>(fzf検索)"]
+    ekb & esc & etk & ecl --> render["common 列駆動レンダラ<br/>(page.py / PageConfig)"]
+    render --> pages["GitHub Pages<br/>hub + /<domain>/"]
+    render --> fzf["mise run keys<br/>(fzf検索)"]
 ```

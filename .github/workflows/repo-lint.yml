@@ -33,10 +33,11 @@ jobs:
           shfmt --version
 
       - name: Shellcheck
-        run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/keybindings/*.sh
+        run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh
 
       - name: shfmt
-        run: shfmt -d -i 4 -ci scripts/
+        # Scoped to real scripts; tests/fixtures hold parser input data, not code
+        run: shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh
 
   zsh-syntax:
     runs-on: ubuntu-latest
