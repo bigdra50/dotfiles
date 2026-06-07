@@ -226,3 +226,29 @@ graph TD
     end
 
 ```
+
+## キーバインド解析パイプライン
+
+詳細は [keybindings.md](keybindings.md)。
+
+```mermaid
+flowchart LR
+    subgraph sources["設定ソース"]
+        wez[".wezterm.lua"]
+        nvim[".config/nvim/"]
+        zsh[".config/zsh/"]
+        skhd[".skhdrc"]
+    end
+
+    subgraph extract["抽出 (scripts/keybindings/)"]
+        wez -->|"show-keys --lua<br/>effective vs default"| diff1["diff/タグ付け"]
+        nvim -->|"headless dump<br/>vs --clean"| diff2["組み込み除外"]
+        zsh -->|"bindkey 静的パース"| norm["正規化"]
+        skhd -->|"静的パース"| norm
+    end
+
+    diff1 & diff2 & norm --> json["共通JSONスキーマ"]
+    json --> validate["validate.py<br/>(重複/件数下限)"]
+    validate --> pages["GitHub Pages<br/>(検索可能HTML)"]
+    validate --> fzf["mise run keys<br/>(fzf検索)"]
+```
