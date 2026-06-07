@@ -82,10 +82,13 @@ jobs:
           echo "XDG_CACHE_HOME=${tmpdir}/nvim-cache" >> "$GITHUB_ENV"
 
       - name: Lint (ruff + mypy)
+        # Install into the setup-python 3.14 env: pipx would run mypy under
+        # the runner's system Python 3.10, where datetime.UTC does not exist
         run: |
-          pipx run ruff check scripts/keybindings/
-          pipx run ruff format --check scripts/keybindings/
-          pipx run mypy --strict scripts/keybindings/
+          pip install --quiet ruff mypy
+          ruff check scripts/keybindings/
+          ruff format --check scripts/keybindings/
+          mypy --strict scripts/keybindings/
 
       - name: Unit tests
         run: python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings
