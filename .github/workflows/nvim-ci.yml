@@ -40,7 +40,7 @@ jobs:
           esac
           # Pinned: stylua releases change default formatting between versions,
           # which silently breaks --check against code formatted by older ones
-          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
           unzip -o stylua.zip -d /usr/local/bin
           rm stylua.zip
 
@@ -81,7 +81,7 @@ jobs:
               archive="nvim-macos-arm64"
               ;;
           esac
-          curl -fsSL "https://github.com/neovim/neovim/releases/download/${version}/${archive}.tar.gz" -o nvim.tar.gz
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/neovim/neovim/releases/download/${version}/${archive}.tar.gz" -o nvim.tar.gz
           tar xzf nvim.tar.gz
           sudo cp -r "${archive}"/* /usr/local/
           rm -rf nvim.tar.gz "${archive}"

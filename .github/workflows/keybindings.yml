@@ -56,7 +56,7 @@ jobs:
         if: steps.cache-wezterm.outputs.cache-hit != 'true'
         run: |
           url="https://github.com/wez/wezterm/releases/download/${WEZTERM_VERSION}/wezterm-${WEZTERM_VERSION}.Ubuntu22.04.deb"
-          curl -fsSL "$url" -o /tmp/wezterm.deb
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "$url" -o /tmp/wezterm.deb
 
       - name: Install wezterm
         run: |
@@ -66,7 +66,7 @@ jobs:
 
       - name: Install Neovim
         run: |
-          curl -fsSL "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -o nvim.tar.gz
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz" -o nvim.tar.gz
           tar xzf nvim.tar.gz
           sudo cp -r nvim-linux-x86_64/* /usr/local/
           rm -rf nvim.tar.gz nvim-linux-x86_64

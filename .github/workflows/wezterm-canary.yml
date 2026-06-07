@@ -32,7 +32,7 @@ jobs:
             echo "ERROR: Could not find Ubuntu22.04.deb asset in latest release"
             exit 1
           fi
-          curl -fsSL "$deb_url" -o /tmp/wezterm.deb
+          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "$deb_url" -o /tmp/wezterm.deb
           sudo apt-get install -y -qq /tmp/wezterm.deb
           wezterm --version
 
