@@ -5,10 +5,12 @@ from __future__ import annotations
 import json
 from collections import Counter
 
+from common.nav import build_nav
 from common.page_config import Column, Filter, PageConfig
 
 PAGE_CONFIG = PageConfig(
     title="Keybindings",
+    nav=build_nav("keybindings"),
     columns=(
         Column("tool", "Tool"),
         Column("mode", "Mode"),

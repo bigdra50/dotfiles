@@ -5,10 +5,12 @@ from __future__ import annotations
 import json
 from collections import Counter
 
+from common.nav import build_nav
 from common.page_config import Column, Filter, PageConfig
 
 PAGE_CONFIG = PageConfig(
     title="mise Tasks",
+    nav=build_nav("tasks"),
     columns=(
         Column("category", "Category", kind="badge"),
         Column("name", "Name"),
