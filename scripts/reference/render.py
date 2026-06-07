@@ -1,18 +1,23 @@
 #!/usr/bin/env python3
-"""Render keybinding JSON records to HTML or TSV."""
+"""Render reference records to HTML or TSV for a given domain.
+
+Each domain (keybindings, shortcuts, tasks, claude) exposes a `page` module
+with PAGE_CONFIG, TSV_FIELDS, and build_meta(records). This script dispatches
+on --domain so the renderer itself stays domain-agnostic.
+"""
 
 from __future__ import annotations
 
 import argparse
+import importlib
 import json
 import subprocess
 import sys
-from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
 
-from keybindings.render_html import render_searchable_html
-from keybindings.render_tsv import render_fzf_tsv
+from common.render_html import render_searchable_html
+from common.render_tsv import render_tsv
 
 
 def load_records(input_path: str | None) -> list[dict[str, str]]:
@@ -40,25 +45,6 @@ def resolve_git_commit() -> str:
         return "unknown"
 
 
-def count_by_tool(records: list[dict[str, str]]) -> dict[str, int]:
-    counts: Counter[str] = Counter()
-    for record in records:
-        counts[record.get("tool", "")] += 1
-    return dict(counts)
-
-
-def build_meta(records: list[dict[str, str]]) -> dict[str, str]:
-    generated_at = datetime.now(UTC).isoformat()
-    commit = resolve_git_commit()
-    counts = count_by_tool(records)
-    return {
-        "generated_at": generated_at,
-        "commit": commit,
-        "counts": json.dumps(counts),
-        "note": "nvim: global maps only (v1)",
-    }
-
-
 def resolve_output_path(out_arg: str | None, html_mode: bool) -> Path | None:
     if out_arg is None:
         return None
@@ -77,7 +63,8 @@ def write_output(content: str, out_path: Path | None) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Render keybinding records")
+    parser = argparse.ArgumentParser(description="Render reference records")
+    parser.add_argument("--domain", default="keybindings")
     parser.add_argument("--input", default="-")
     parser.add_argument("--html", action="store_true")
     parser.add_argument("--tsv", action="store_true")
@@ -88,15 +75,18 @@ def main() -> int:
         print("exactly one of --html or --tsv is required", file=sys.stderr)
         return 1
 
+    page = importlib.import_module(f"{args.domain}.page")
     input_path = None if args.input == "-" else args.input
     records = load_records(input_path)
 
     if args.html:
-        meta = build_meta(records)
-        content = render_searchable_html(records, meta)
+        meta = dict(page.build_meta(records))
+        meta["generated_at"] = datetime.now(UTC).isoformat()
+        meta["commit"] = resolve_git_commit()
+        content = render_searchable_html(records, page.PAGE_CONFIG, meta)
         out_path = resolve_output_path(args.out, html_mode=True)
     else:
-        content = render_fzf_tsv(records)
+        content = render_tsv(records, page.TSV_FIELDS)
         out_path = resolve_output_path(args.out, html_mode=False)
 
     write_output(content, out_path)

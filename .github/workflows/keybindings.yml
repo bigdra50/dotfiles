@@ -8,7 +8,7 @@ on:
       - ".skhdrc"
       - ".config/zsh/**"
       - ".config/nvim/**"
-      - "scripts/keybindings/**"
+      - "scripts/reference/**"
       - ".github/workflows/keybindings.yml"
   pull_request:
     paths:
@@ -16,7 +16,7 @@ on:
       - ".skhdrc"
       - ".config/zsh/**"
       - ".config/nvim/**"
-      - "scripts/keybindings/**"
+      - "scripts/reference/**"
       - ".github/workflows/keybindings.yml"
 
 permissions:
@@ -86,26 +86,26 @@ jobs:
         # the runner's system Python 3.10, where datetime.UTC does not exist
         run: |
           pip install --quiet ruff mypy
-          ruff check scripts/keybindings/
-          ruff format --check scripts/keybindings/
-          mypy --strict scripts/keybindings/
+          ruff check scripts/reference/
+          ruff format --check scripts/reference/
+          mypy --strict scripts/reference/
 
       - name: Unit tests
-        run: python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings
+        run: python -m unittest discover -s scripts/reference/tests -t scripts/reference
 
       - name: Extract keybindings
-        run: bash scripts/keybindings/extract.sh --out keybindings.json
+        run: bash scripts/reference/extract.sh --out keybindings.json
 
       - name: Validate schema + duplicates + counts
-        run: python scripts/keybindings/validate.py --input keybindings.json
+        run: python scripts/reference/validate.py --input keybindings.json
 
       - name: Render HTML
-        run: python scripts/keybindings/render.py --input keybindings.json --html --out site/
+        run: python scripts/reference/render.py --domain keybindings --input keybindings.json --html --out site/
 
       - name: Summary
         id: summary
         run: |
-          count=$(python scripts/keybindings/validate.py --input keybindings.json --count-only)
+          count=$(python scripts/reference/validate.py --input keybindings.json --count-only)
           echo "count=$count" >> "$GITHUB_OUTPUT"
           echo "### Keybindings extracted: $count records" >> "$GITHUB_STEP_SUMMARY"
 

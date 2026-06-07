@@ -240,7 +240,7 @@ flowchart LR
         skhd[".skhdrc"]
     end
 
-    subgraph extract["抽出 (scripts/keybindings/)"]
+    subgraph extract["抽出 (scripts/reference/)"]
         wez -->|"show-keys --lua<br/>effective vs default"| diff1["diff/タグ付け"]
         nvim -->|"headless dump<br/>vs --clean"| diff2["組み込み除外"]
         zsh -->|"bindkey 静的パース"| norm["正規化"]
