@@ -13,7 +13,7 @@ SOURCE_PATHS=(
     ".skhdrc"
     ".config/zsh"
     ".config/nvim"
-    "scripts/keybindings"
+    "scripts/reference"
 )
 
 cache_needs_refresh() {
@@ -31,8 +31,9 @@ cache_needs_refresh() {
 regenerate_cache() {
     info "extracting keybindings (first run takes a while)..."
     mkdir -p "${CACHE_DIR}"
-    bash scripts/keybindings/extract.sh --out "${CACHE_JSON}"
-    python3 scripts/keybindings/render.py \
+    bash scripts/reference/extract.sh --out "${CACHE_JSON}"
+    python3 scripts/reference/render.py \
+        --domain keybindings \
         --input "${CACHE_JSON}" \
         --tsv \
         --out "${CACHE_TSV}"

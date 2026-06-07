@@ -9,10 +9,10 @@ set -euo pipefail
 SELF="$(readlink -f "${BASH_SOURCE[0]}")"
 DOTFILES_DIR="$(cd "$(dirname "${SELF}")/../../.." && pwd)"
 
-if [[ ! -f "${DOTFILES_DIR}/scripts/keybindings/search.sh" ]]; then
+if [[ ! -f "${DOTFILES_DIR}/scripts/reference/search.sh" ]]; then
   echo "keybindings search script not found under: ${DOTFILES_DIR}" >&2
   exit 1
 fi
 
 cd "${DOTFILES_DIR}"
-exec bash scripts/keybindings/search.sh "$@"
+exec bash scripts/reference/search.sh "$@"
