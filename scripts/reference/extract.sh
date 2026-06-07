@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
 source scripts/lib.sh
 
-SCRIPT_DIR="scripts/keybindings"
+SCRIPT_DIR="scripts/reference"
 OUT_PATH=""
 
 while [[ $# -gt 0 ]]; do

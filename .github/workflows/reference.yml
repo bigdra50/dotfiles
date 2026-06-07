@@ -1,4 +1,4 @@
-name: Keybindings
+name: Reference
 
 on:
   push:
@@ -8,22 +8,28 @@ on:
       - ".skhdrc"
       - ".config/zsh/**"
       - ".config/nvim/**"
-      - "scripts/keybindings/**"
-      - ".github/workflows/keybindings.yml"
+      - ".config/mise/**"
+      - "mise.toml"
+      - ".claude/**"
+      - "scripts/reference/**"
+      - ".github/workflows/reference.yml"
   pull_request:
     paths:
       - ".wezterm.lua"
       - ".skhdrc"
       - ".config/zsh/**"
       - ".config/nvim/**"
-      - "scripts/keybindings/**"
-      - ".github/workflows/keybindings.yml"
+      - ".config/mise/**"
+      - "mise.toml"
+      - ".claude/**"
+      - "scripts/reference/**"
+      - ".github/workflows/reference.yml"
 
 permissions:
   contents: read
 
 concurrency:
-  group: keybindings-${{ github.ref }}
+  group: reference-${{ github.ref }}
   cancel-in-progress: true
 
 env:
@@ -31,12 +37,12 @@ env:
   WEZTERM_VERSION: "20240203-110809-5046fc22"
 
 jobs:
-  extract-and-check:
+  build:
     # ubuntu-22.04 matches the pinned wezterm .deb target
     runs-on: ubuntu-22.04
     timeout-minutes: 15
     outputs:
-      count: ${{ steps.summary.outputs.count }}
+      counts: ${{ steps.build.outputs.counts }}
     steps:
       - uses: actions/checkout@v6
 
@@ -44,6 +50,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
+
+      - name: Install mise
+        run: |
+          curl https://mise.run | sh
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Cache wezterm deb
         id: cache-wezterm
@@ -86,28 +97,28 @@ jobs:
         # the runner's system Python 3.10, where datetime.UTC does not exist
         run: |
           pip install --quiet ruff mypy
-          ruff check scripts/keybindings/
-          ruff format --check scripts/keybindings/
-          mypy --strict scripts/keybindings/
+          ruff check scripts/reference/
+          ruff format --check scripts/reference/
+          mypy --strict scripts/reference/
 
       - name: Unit tests
-        run: python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings
+        run: python -m unittest discover -s scripts/reference/tests -t scripts/reference
 
-      - name: Extract keybindings
-        run: bash scripts/keybindings/extract.sh --out keybindings.json
-
-      - name: Validate schema + duplicates + counts
-        run: python scripts/keybindings/validate.py --input keybindings.json
-
-      - name: Render HTML
-        run: python scripts/keybindings/render.py --input keybindings.json --html --out site/
-
-      - name: Summary
-        id: summary
+      - name: Build reference site
+        id: build
+        # XDG_CONFIG_HOME points mise at the repo config + global task dir so the
+        # tasks catalog sees all tasks; trusting the configs avoids interactive prompts.
+        env:
+          MISE_TRUSTED_CONFIG_PATHS: ${{ github.workspace }}/mise.toml:${{ github.workspace }}/.config/mise/config.toml
         run: |
-          count=$(python scripts/keybindings/validate.py --input keybindings.json --count-only)
-          echo "count=$count" >> "$GITHUB_OUTPUT"
-          echo "### Keybindings extracted: $count records" >> "$GITHUB_STEP_SUMMARY"
+          bash scripts/reference/build_site.sh --out site/ | tee /tmp/build.log
+          counts=$(grep -oE "\{[^}]*\}" /tmp/build.log | tail -1)
+          echo "counts=$counts" >> "$GITHUB_OUTPUT"
+          {
+            echo "### Reference site built"
+            echo ""
+            echo "$counts"
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Upload Pages artifact
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
@@ -116,7 +127,7 @@ jobs:
           path: site/
 
   deploy:
-    needs: extract-and-check
+    needs: build
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -135,4 +146,4 @@ jobs:
         run: |
           echo "### Deployed to GitHub Pages" >> "$GITHUB_STEP_SUMMARY"
           echo "URL: ${{ steps.deploy.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
-          echo "Records: ${{ needs.extract-and-check.outputs.count }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "Counts: ${{ needs.build.outputs.counts }}" >> "$GITHUB_STEP_SUMMARY"

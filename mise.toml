@@ -74,58 +74,66 @@ run = "bash scripts/sync-rules.sh --project ."
 [tasks."keys"]
 description = "Search keybindings interactively with fzf"
 dir = "{{cwd}}"
-run = "bash scripts/keybindings/search.sh"
+run = "bash scripts/reference/search.sh"
 
 [tasks."keys:build"]
 description = "Extract keybindings from all tools into JSON"
 dir = "{{cwd}}"
-run = "bash scripts/keybindings/extract.sh"
+run = "bash scripts/reference/extract.sh"
 
 [tasks."keys:check"]
 description = "Validate keybinding schema, duplicates, and minimum counts"
 dir = "{{cwd}}"
 run = """
-bash scripts/keybindings/extract.sh --out /tmp/keybindings-check.json
-python scripts/keybindings/validate.py --input /tmp/keybindings-check.json
+bash scripts/reference/extract.sh --out /tmp/keybindings-check.json
+python scripts/reference/validate.py --input /tmp/keybindings-check.json
 """
 
 [tasks."keys:html"]
 description = "Render searchable keybindings HTML"
 dir = "{{cwd}}"
 run = """
-bash scripts/keybindings/extract.sh --out /tmp/keybindings-html.json
-python scripts/keybindings/render.py --input /tmp/keybindings-html.json --html --out /tmp/keybindings-site/
+bash scripts/reference/extract.sh --out /tmp/keybindings-html.json
+python scripts/reference/render.py --domain keybindings --input /tmp/keybindings-html.json --html --out /tmp/keybindings-site/
 echo "open /tmp/keybindings-site/index.html"
 """
 
-[tasks."keys:lint"]
-description = "Lint keybinding Python sources (ruff + mypy)"
+[tasks."ref:lint"]
+description = "Lint reference pipeline Python sources (ruff + mypy)"
 dir = "{{cwd}}"
 run = """
-uvx ruff check scripts/keybindings/
-uvx ruff format --check scripts/keybindings/
-uvx mypy --strict scripts/keybindings/
+uvx ruff check scripts/reference/
+uvx ruff format --check scripts/reference/
+uvx mypy --strict scripts/reference/
 """
 
-[tasks."keys:test"]
-description = "Run keybinding parser unit tests"
+[tasks."ref:test"]
+description = "Run reference pipeline unit tests"
 dir = "{{cwd}}"
-run = "python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings"
+run = "python -m unittest discover -s scripts/reference/tests -t scripts/reference"
+
+[tasks."ref:html"]
+description = "Build the full reference site (hub + all domain pages)"
+dir = "{{cwd}}"
+run = """
+bash scripts/reference/build_site.sh --out /tmp/reference-site
+echo "open /tmp/reference-site/index.html"
+"""
 
 [tasks."sh:lint"]
 description = "Lint shell scripts (shellcheck -S warning)"
 dir = "{{cwd}}"
-run = "mise x shellcheck@latest -- shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/keybindings/*.sh"
+run = "mise x shellcheck@latest -- shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
 
 [tasks."sh:fmt"]
-description = "Check shell script formatting (shfmt)"
+description = "Check shell script formatting (shfmt; excludes test fixtures)"
 dir = "{{cwd}}"
-run = "mise x shfmt@latest -- shfmt -d -i 4 -ci scripts/"
+run = "mise x shfmt@latest -- shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
 
 [tasks."sh:fmt:fix"]
 description = "Fix shell script formatting (shfmt)"
 dir = "{{cwd}}"
-run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/"
+run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
 
 [settings]
 experimental = true

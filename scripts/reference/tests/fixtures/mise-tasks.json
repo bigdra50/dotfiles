@@ -1,0 +1,42 @@
+[
+  {
+    "name": "keys:build",
+    "aliases": [],
+    "description": "Extract keybinding sources",
+    "source": "/repo/mise.toml",
+    "depends": [],
+    "global": false
+  },
+  {
+    "name": "setup",
+    "aliases": [],
+    "description": "Full dotfiles setup",
+    "source": "/repo/.config/mise/tasks/setup",
+    "depends": [],
+    "global": false
+  },
+  {
+    "name": "disk-usage",
+    "aliases": [],
+    "description": "",
+    "source": "/repo/.config/mise/tasks/disk-usage",
+    "depends": ["setup"],
+    "global": false
+  },
+  {
+    "name": "sh:fmt:fix",
+    "aliases": ["fmt-fix", "format"],
+    "description": "Format and fix shell scripts",
+    "source": "/repo/.config/mise/tasks/sh/fmt-fix",
+    "depends": ["setup", "sh:lint"],
+    "global": false
+  },
+  {
+    "name": "globaltask",
+    "aliases": [],
+    "description": "A global mise task",
+    "source": "/Users/someone/.config/mise/tasks/globaltask",
+    "depends": [],
+    "global": true
+  }
+]
