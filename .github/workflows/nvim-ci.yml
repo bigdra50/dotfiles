@@ -97,10 +97,26 @@ jobs:
           echo "XDG_CACHE_HOME=${tmpdir}/nvim-cache" >> "$GITHUB_ENV"
 
       - name: Install tree-sitter CLI
-        # The swift treesitter parser is generated from grammar definitions on
-        # install, which requires the tree-sitter CLI. Local machines rarely
-        # hit this because parsers are already installed; CI cold caches do.
+        # Generated treesitter parsers need the tree-sitter CLI at install
+        # time. Local machines rarely hit this because parsers are already
+        # installed; CI cold caches do.
         run: npm install -g tree-sitter-cli
+
+      - name: Setup Go
+        # go.nvim's build step (go.install.update_all_sync) shells out to go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - name: Bootstrap plugins (warm the cold cache)
+        # First startup clones lazy.nvim, installs plugins, runs build steps,
+        # and kicks off async treesitter installs. Doing it here keeps that
+        # noise out of the strict startup check below, which would otherwise
+        # fail nondeterministically depending on async build timing.
+        run: |
+          nvim --headless "+Lazy! sync" +qall! || true
+          nvim --headless +qall! || true
 
       - name: Smoke test (startup + module require)
         run: |
