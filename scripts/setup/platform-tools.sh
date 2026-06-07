@@ -14,12 +14,17 @@ install_macos_tools() {
     if ! command_exists brew; then return; fi
 
     info "Installing macOS tools via Homebrew..."
-    local brew_tools=($(awk '/\[platform.macos\]/,/brew_cask/ {
+    # while-read instead of mapfile: this runs on stock macOS bash 3.2,
+    # which predates mapfile (bash 4.0)
+    local brew_tools=()
+    while IFS= read -r line; do
+        brew_tools+=("$line")
+    done < <(awk '/\[platform.macos\]/,/brew_cask/ {
         if (/^[[:space:]]*"/ && !/brew_cask/) {
             gsub(/[[:space:]]*"|".*/, "")
             print
         }
-    }' "$TOOLS_FILE"))
+    }' "$TOOLS_FILE")
 
     for tool in "${brew_tools[@]}"; do
         if brew list "$tool" &>/dev/null; then
@@ -30,12 +35,15 @@ install_macos_tools() {
     done
 
     info "Installing macOS cask applications..."
-    local brew_casks=($(awk '/brew_cask = \[/,/\]/ {
+    local brew_casks=()
+    while IFS= read -r line; do
+        brew_casks+=("$line")
+    done < <(awk '/brew_cask = \[/,/\]/ {
         if (/^[[:space:]]*"/) {
             gsub(/[[:space:]]*"|".*/, "")
             print
         }
-    }' "$TOOLS_FILE"))
+    }' "$TOOLS_FILE")
 
     for cask in "${brew_casks[@]}"; do
         if brew list --cask "$cask" &>/dev/null; then
@@ -55,12 +63,14 @@ install_linux_tools() {
 
     local platform_tools=()
     if [[ "$PLATFORM" == "wsl" ]]; then
-        platform_tools=($(awk '/\[platform.wsl\]/,/\[/ {
+        while IFS= read -r line; do
+            platform_tools+=("$line")
+        done < <(awk '/\[platform.wsl\]/,/\[/ {
             if (/^[[:space:]]*"/ && !/\[/) {
                 gsub(/[[:space:]]*"|".*/, "")
                 print
             }
-        }' "$TOOLS_FILE"))
+        }' "$TOOLS_FILE")
     fi
 
     local all_tools=("${essential_tools[@]}" "${platform_tools[@]}")
@@ -157,7 +167,7 @@ info "Detected platform: $PLATFORM"
 
 case "$PLATFORM" in
     macos) install_macos_tools ;;
-    wsl|linux) install_linux_tools ;;
+    wsl | linux) install_linux_tools ;;
 esac
 
 install_mise

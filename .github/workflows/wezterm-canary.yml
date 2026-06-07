@@ -1,0 +1,61 @@
+# Early detection of show-keys format drift between the pinned wezterm version
+# (used in keybindings CI) and latest stable. If the parser throws ValueError
+# on the new format, this workflow fails fast before the drift reaches master.
+name: Wezterm Canary
+
+on:
+  schedule:
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  canary:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jq
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq jq
+
+      - name: Install latest wezterm stable
+        run: |
+          deb_url=$(gh api repos/wez/wezterm/releases/latest \
+            --jq '.assets[] | select(.name | test("Ubuntu22.04.deb$")) | .browser_download_url')
+          if [[ -z "$deb_url" ]]; then
+            echo "ERROR: Could not find Ubuntu22.04.deb asset in latest release"
+            exit 1
+          fi
+          curl -fsSL "$deb_url" -o /tmp/wezterm.deb
+          sudo apt-get install -y -qq /tmp/wezterm.deb
+          wezterm --version
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Extract keybindings
+        run: python scripts/keybindings/extract_wezterm.py --config-file .wezterm.lua > canary.json
+
+      - name: Validate canary output
+        run: |
+          if ! jq -e 'type=="array"' canary.json >/dev/null; then
+            echo "ERROR: canary.json is not a JSON array"
+            exit 1
+          fi
+
+          count=$(jq '[.[]|select(.origin=="custom")]|length' canary.json)
+          echo "Custom keybinding count: $count"
+          echo "### Wezterm canary: $count custom keybindings" >> "$GITHUB_STEP_SUMMARY"
+
+          if [[ "$count" -lt 25 ]]; then
+            echo "ERROR: Expected at least 25 custom keybindings, got $count"
+            exit 1
+          fi

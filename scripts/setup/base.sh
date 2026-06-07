@@ -22,7 +22,7 @@ case "$PLATFORM" in
             success "Homebrew already installed"
         fi
         ;;
-    linux|wsl)
+    linux | wsl)
         if command_exists apt-get; then
             info "Updating apt packages..."
             sudo apt-get update
