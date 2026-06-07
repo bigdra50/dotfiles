@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+#MISE description="Search dotfiles keybindings with fzf from anywhere"
+
+set -euo pipefail
+
+# This file lives at <dotfiles>/.config/mise/tasks/keys and is reached via the
+# ~/.config/mise symlink, so resolving our own path locates the repo without
+# assuming a ghq root (the dotfiles repo is not ghq-managed).
+SELF="$(readlink -f "${BASH_SOURCE[0]}")"
+DOTFILES_DIR="$(cd "$(dirname "${SELF}")/../../.." && pwd)"
+
+if [[ ! -f "${DOTFILES_DIR}/scripts/keybindings/search.sh" ]]; then
+  echo "keybindings search script not found under: ${DOTFILES_DIR}" >&2
+  exit 1
+fi
+
+cd "${DOTFILES_DIR}"
+exec bash scripts/keybindings/search.sh "$@"
