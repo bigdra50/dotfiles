@@ -71,5 +71,46 @@ run = "bash scripts/sync-rules.sh --global"
 description = "Generate project-level rule files for Cursor/Copilot"
 run = "bash scripts/sync-rules.sh --project ."
 
+[tasks."keys"]
+description = "Search keybindings interactively with fzf"
+dir = "{{cwd}}"
+run = "bash scripts/keybindings/search.sh"
+
+[tasks."keys:build"]
+description = "Extract keybindings from all tools into JSON"
+dir = "{{cwd}}"
+run = "bash scripts/keybindings/extract.sh"
+
+[tasks."keys:check"]
+description = "Validate keybinding schema, duplicates, and minimum counts"
+dir = "{{cwd}}"
+run = """
+bash scripts/keybindings/extract.sh --out /tmp/keybindings-check.json
+python scripts/keybindings/validate.py --input /tmp/keybindings-check.json
+"""
+
+[tasks."keys:html"]
+description = "Render searchable keybindings HTML"
+dir = "{{cwd}}"
+run = """
+bash scripts/keybindings/extract.sh --out /tmp/keybindings-html.json
+python scripts/keybindings/render.py --input /tmp/keybindings-html.json --html --out /tmp/keybindings-site/
+echo "open /tmp/keybindings-site/index.html"
+"""
+
+[tasks."keys:lint"]
+description = "Lint keybinding Python sources (ruff + mypy)"
+dir = "{{cwd}}"
+run = """
+uvx ruff check scripts/keybindings/
+uvx ruff format --check scripts/keybindings/
+uvx mypy --strict scripts/keybindings/
+"""
+
+[tasks."keys:test"]
+description = "Run keybinding parser unit tests"
+dir = "{{cwd}}"
+run = "python -m unittest discover -s scripts/keybindings/tests -t scripts/keybindings"
+
 [settings]
 experimental = true

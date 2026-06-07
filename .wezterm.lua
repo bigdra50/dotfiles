@@ -69,6 +69,21 @@ local config = {
 		{ key = "9", mods = "LEADER", action = wezterm.action({ ActivateTab = 8 }) },
 		{ key = "&", mods = "LEADER|SHIFT", action = wezterm.action({ CloseCurrentTab = { confirm = true } }) },
 		{ key = "x", mods = "LEADER", action = wezterm.action({ CloseCurrentPane = { confirm = true } }) },
+		-- ペイン入れ替え: ラベル選択したペインとスワップ
+		{ key = "o", mods = "LEADER", action = wezterm.action.PaneSelect({ mode = "SwapWithActive" }) },
+		-- 全ペインを時計回りに回転
+		{ key = "r", mods = "LEADER", action = wezterm.action.RotatePanes("Clockwise") },
+		-- 現在のペインを新しいタブへ分離（tmux の break-pane 相当）
+		{
+			key = "!",
+			mods = "LEADER|SHIFT",
+			action = wezterm.action_callback(function(_, pane)
+				pane:move_to_new_tab():activate()
+			end),
+		},
+		-- タブを左右に移動
+		{ key = "<", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(-1) },
+		{ key = ">", mods = "LEADER|SHIFT", action = wezterm.action.MoveTabRelative(1) },
 	},
 }
 

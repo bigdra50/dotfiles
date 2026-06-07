@@ -1,0 +1,13 @@
+# focus window
+alt - x : yabai -m window --focus recent
+alt - h : yabai -m window --focus west
+# swap window
+shift + alt - x : yabai -m window --swap recent
+shift + alt - h : yabai -m window --swap west
+# move window
+shift + cmd - h : yabai -m window --warp west
+# increase window size
+shift + alt - a : yabai -m window --resize left:-20:0
+# rotate tree
+alt - r : yabai -m space --rotate 90
+invalid line without colon
