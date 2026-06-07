@@ -55,7 +55,7 @@ parse_rule_file() {
         else
             RULE_BODY+="$line"$'\n'
         fi
-    done < "$file"
+    done <"$file"
 
     RULE_PATTERNS="$patterns"
     RULE_SYNC="$sync"
@@ -122,7 +122,7 @@ generate_global() {
             echo ""
             echo "$lang_rules"
         fi
-    } > "$CODEX_OUT"
+    } >"$CODEX_OUT"
     success "Generated $CODEX_OUT"
 
     # --- Copilot ---
@@ -149,7 +149,7 @@ generate_global() {
             echo ""
             echo "$lang_rules"
         fi
-    } > "$COPILOT_OUT"
+    } >"$COPILOT_OUT"
     success "Generated $COPILOT_OUT"
 }
 
@@ -165,7 +165,7 @@ generate_project() {
     while IFS= read -r -d '' file; do
         parse_rule_file "$file"
         [[ "$RULE_SYNC" == "false" ]] && continue
-        [[ -z "$RULE_PATTERNS" ]] && continue  # Skip global rules for per-project
+        [[ -z "$RULE_PATTERNS" ]] && continue # Skip global rules for per-project
 
         local basename
         basename=$(basename "$file" .md)
@@ -188,9 +188,9 @@ generate_project() {
             # Convert comma-separated to YAML array
             if [[ "$RULE_PATTERNS" == *","* ]]; then
                 echo "globs:"
-                IFS=',' read -ra pats <<< "$RULE_PATTERNS"
+                IFS=',' read -ra pats <<<"$RULE_PATTERNS"
                 for pat in "${pats[@]}"; do
-                    pat=$(echo "$pat" | xargs)  # trim whitespace
+                    pat=$(echo "$pat" | xargs) # trim whitespace
                     echo "  - \"$pat\""
                 done
             else
@@ -199,7 +199,7 @@ generate_project() {
             echo "---"
             echo ""
             echo "$body"
-        } > "$cursor_file"
+        } >"$cursor_file"
         success "Generated $cursor_file"
 
         # Copilot: .instructions.md with applyTo:
@@ -212,7 +212,7 @@ generate_project() {
             echo "---"
             echo ""
             echo "$body"
-        } > "$copilot_file"
+        } >"$copilot_file"
         success "Generated $copilot_file"
     done < <(find -L "$RULES_DIR" -name '*.md' -print0 | sort -z)
 

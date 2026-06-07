@@ -24,11 +24,13 @@ get_excludes() {
 
 link_dotfiles() {
     info "Creating symlinks for dotfiles..."
-    local excludes=$(get_excludes)
+    local excludes
+    excludes=$(get_excludes)
 
     for file in "$DOTFILES_DIR"/.*; do
         [[ ! -e "$file" ]] && continue
-        local basename=$(basename "$file")
+        local basename
+        basename=$(basename "$file")
 
         if echo " $excludes " | grep -q " $basename "; then
             continue
@@ -36,7 +38,7 @@ link_dotfiles() {
 
         if [[ -d "$file" ]]; then
             case "$basename" in
-                ".config"|".claude") continue ;;
+                ".config" | ".claude") continue ;;
                 *) continue ;;
             esac
         fi
@@ -55,14 +57,15 @@ link_config() {
 
     for config in "$DOTFILES_DIR/.config"/*; do
         [[ ! -e "$config" ]] && continue
-        local basename=$(basename "$config")
+        local basename
+        basename=$(basename "$config")
 
         if [[ "$basename" =~ \.backup\. ]] || [[ "$basename" == ".DS_Store" ]]; then
             continue
         fi
 
         case "$PLATFORM" in
-            linux|wsl)
+            linux | wsl)
                 if [[ "$basename" == "posh" || "$basename" == "yashiki" ]]; then
                     warning "Skipping $basename (macOS only)"
                     continue
