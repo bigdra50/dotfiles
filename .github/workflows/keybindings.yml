@@ -47,7 +47,7 @@ jobs:
 
       - name: Cache wezterm deb
         id: cache-wezterm
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/wezterm.deb
           key: wezterm-deb-${{ env.WEZTERM_VERSION }}-ubuntu22.04
