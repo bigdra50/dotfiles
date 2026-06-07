@@ -27,10 +27,16 @@ return {
       local xcodebuild_device = function()
         local platform = vim.g.xcodebuild_platform or ""
         local device = vim.g.xcodebuild_device_name or ""
-        if device == "" then return "" end
+        if device == "" then
+          return ""
+        end
         local icons = {
-          iOS = "", iPadOS = "", macOS = "",
-          watchOS = "", tvOS = "󰟴", visionOS = "󰿄",
+          iOS = "",
+          iPadOS = "",
+          macOS = "",
+          watchOS = "",
+          tvOS = "󰟴",
+          visionOS = "󰿄",
         }
         return (icons[platform] or "") .. " " .. device
       end
@@ -42,7 +48,12 @@ return {
         },
         sections = {
           lualine_x = {
-            { xcodebuild_device, cond = function() return vim.bo.filetype == "swift" end },
+            {
+              xcodebuild_device,
+              cond = function()
+                return vim.bo.filetype == "swift"
+              end,
+            },
             "encoding",
             "fileformat",
             "filetype",
@@ -136,7 +147,6 @@ return {
           notification = {},
         },
       })
-
     end,
   },
 }
