@@ -1,0 +1,203 @@
+#!/usr/bin/env python3
+#MISE description="Claude rules (user + project) を Cursor 向け .cursor/rules/*.mdc に同期"
+#USAGE flag "--filter <filter>" help="user scope の絞り込み (unity|all, default: unity)"
+
+"""
+Claude Code の rules を Cursor の .mdc 形式に変換してプロジェクトの .cursor/rules/ に同期する。
+
+入力:
+  ~/.claude/rules/**/*.md        (user scope; --filter でプリセット絞り込み)
+  <cwd>/.claude/rules/**/*.md    (project scope; 常に全ファイル対象)
+
+出力:
+  <cwd>/.cursor/rules/*.mdc      (同名は project が user を上書き)
+
+Cursor Agent CLI はユーザースコープ rules ファイルを認識しないため、
+user / project 両方をプロジェクトスコープに集約することで
+Claude Code と Cursor Agent のガイダンス不整合を解消する。
+
+frontmatter 変換:
+  Claude paths: "X"       → Cursor globs: X, alwaysApply: false
+  Claude frontmatter なし → Cursor alwaysApply: true
+"""
+
+from __future__ import annotations
+import os
+import re
+import sys
+from pathlib import Path
+
+# mise は task をプロジェクトルート or $HOME で実行するため、
+# 呼び出し時の cwd を MISE_ORIGINAL_CWD から取得する（無ければ現在の cwd）
+WORKSPACE = Path(os.environ.get("MISE_ORIGINAL_CWD") or os.getcwd()).resolve()
+
+USER_RULES = Path.home() / ".claude" / "rules"
+PROJECT_RULES = WORKSPACE / ".claude" / "rules"
+TARGET_ROOT = WORKSPACE / ".cursor" / "rules"
+
+FILTER_PRESETS: dict[str, list[str] | None] = {
+    "unity": [
+        "unity/csharp.md",
+        "unity/testing.md",
+        "csharp/coding.md",
+        "design-principles.md",
+    ],
+    "all": None,
+}
+
+FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n(.*)", re.DOTALL)
+H1_RE = re.compile(r"^#\s+(.+)$", re.MULTILINE)
+
+
+def _extract_paths_field(fm_text: str) -> list[str]:
+    """paths: フィールドを YAML のスカラー/フロー配列/ブロック配列で解釈し glob 文字列のリストを返す。"""
+    lines = fm_text.splitlines()
+    paths: list[str] = []
+    i = 0
+    while i < len(lines):
+        stripped = lines[i].lstrip()
+        if stripped.startswith("paths:"):
+            value = stripped[len("paths:"):].strip()
+            if value.startswith("["):
+                # flow list: [a, b]
+                for item in value.strip("[]").split(","):
+                    cleaned = item.strip().strip('"').strip("'")
+                    if cleaned:
+                        paths.append(cleaned)
+            elif value:
+                # scalar
+                paths.append(value.strip('"').strip("'"))
+            else:
+                # block list: 次行以降の `- item`
+                j = i + 1
+                while j < len(lines):
+                    sub = lines[j].strip()
+                    if sub.startswith("-"):
+                        item = sub[1:].strip().strip('"').strip("'")
+                        if item:
+                            paths.append(item)
+                        j += 1
+                    elif not sub or sub.startswith("#"):
+                        j += 1
+                    else:
+                        break
+            break
+        i += 1
+    return paths
+
+
+def parse_claude_frontmatter(text: str) -> tuple[dict[str, object], str]:
+    match = FRONTMATTER_RE.match(text)
+    if not match:
+        return {}, text.lstrip()
+    fm_text = match.group(1)
+    body = match.group(2).lstrip()
+
+    fm: dict[str, object] = {}
+    paths = _extract_paths_field(fm_text)
+    if paths:
+        fm["paths"] = paths
+
+    # paths 以外のスカラーフィールドを抽出
+    for line in fm_text.splitlines():
+        stripped = line.lstrip()
+        if stripped.startswith("-") or not stripped or stripped.startswith("#"):
+            continue
+        if ":" in stripped:
+            key, value = stripped.split(":", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+            if key != "paths" and value:
+                fm[key] = value
+    return fm, body
+
+
+def extract_description(body: str, fallback: str) -> str:
+    match = H1_RE.search(body)
+    return match.group(1).strip() if match else fallback
+
+
+def convert_to_mdc(rel_path: str, source_root: Path, scope: str) -> tuple[str, str]:
+    src = source_root / rel_path
+    fm, body = parse_claude_frontmatter(src.read_text(encoding="utf-8"))
+    description = extract_description(body, src.stem)
+
+    header = ["---", f"description: [{scope}] {description}"]
+    paths = fm.get("paths")
+    if isinstance(paths, list) and paths:
+        header.append(f"globs: {', '.join(paths)}")
+        header.append("alwaysApply: false")
+    else:
+        header.append("alwaysApply: true")
+    header.append("---")
+
+    return (
+        rel_path.replace("/", "-").replace(".md", ".mdc"),
+        "\n".join(header) + "\n\n" + body,
+    )
+
+
+def collect_targets(root: Path, filter_name: str, scope: str) -> list[str]:
+    if not root.is_dir():
+        return []
+    # project scope は常に全ファイル対象（プロジェクト固有なので絞り込まない）
+    if scope == "project":
+        return sorted(
+            str(p.relative_to(root)) for p in root.rglob("*.md") if p.is_file()
+        )
+    # user scope は filter 適用
+    preset = FILTER_PRESETS[filter_name]
+    if preset is None:
+        return sorted(
+            str(p.relative_to(root)) for p in root.rglob("*.md") if p.is_file()
+        )
+    return [rel for rel in preset if (root / rel).is_file()]
+
+
+def parse_args(argv: list[str]) -> str:
+    filter_name = "unity"
+    i = 0
+    while i < len(argv):
+        if argv[i] == "--filter" and i + 1 < len(argv):
+            filter_name = argv[i + 1]
+            i += 2
+        else:
+            i += 1
+    if filter_name not in FILTER_PRESETS:
+        print(f"unknown filter: {filter_name}", file=sys.stderr)
+        print(f"available: {sorted(FILTER_PRESETS.keys())}", file=sys.stderr)
+        sys.exit(2)
+    return filter_name
+
+
+def main(argv: list[str]) -> int:
+    filter_name = parse_args(argv)
+    TARGET_ROOT.mkdir(parents=True, exist_ok=True)
+
+    merged: dict[str, tuple[str, str]] = {}
+
+    for rel in collect_targets(USER_RULES, filter_name, "user"):
+        name, content = convert_to_mdc(rel, USER_RULES, "user")
+        merged[name] = ("user", content)
+
+    for rel in collect_targets(PROJECT_RULES, filter_name, "project"):
+        name, content = convert_to_mdc(rel, PROJECT_RULES, "project")
+        merged[name] = ("project", content)
+
+    print(f"filter:  {filter_name} (user scope only)")
+    print(f"user:    {USER_RULES}")
+    print(f"project: {PROJECT_RULES} ({'exists' if PROJECT_RULES.exists() else 'none'})")
+    print(f"target:  {TARGET_ROOT}")
+    print()
+
+    for name, (scope, content) in sorted(merged.items()):
+        (TARGET_ROOT / name).write_text(content, encoding="utf-8")
+        print(f"  [{scope:>7}] {name}")
+
+    print()
+    print(f"done. generated {len(merged)} file(s).")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))
