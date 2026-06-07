@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+#MISE description="Claude Code の HTML レポートを ghq 配下から集約して LAN に公開する (miniserve)"
+
+set -euo pipefail
+
+# --- config ---
+
+DATA_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/claude-reports"
+PORT="${REPORTS_PORT:-9080}"
+GHQ_ROOT="$(ghq root)"
+
+usage() {
+  cat <<'USAGE'
+Usage: mise run serve-reports [-- [--collect-only] [scope...]]
+
+ghq 配下の Claude Code レポート HTML を集約し miniserve で LAN に公開する。
+
+scope:
+  ghq root からのサブパスで収集範囲を絞る (複数指定可、無指定なら全体)。
+  スラッシュを含まない場合は github.com/<scope> とみなす。
+
+  mise run serve-reports -- bigdra50                  # github.com/bigdra50 のみ
+  mise run serve-reports -- github.com/upfrontier     # 任意ホスト/owner
+  mise run serve-reports -- bigdra50 upfrontier       # 複数 owner
+
+収集対象:
+  - <repo>/implementation-notes.html
+  - <repo>/.claude/reports/**/*.html
+
+環境変数:
+  REPORTS_PORT   公開ポート (default: 9080)
+  REPORTS_AUTH   Basic 認証 "user:pass" (default: なし)
+USAGE
+}
+
+# --- args ---
+
+COLLECT_ONLY=false
+SCOPES=()
+for arg in "$@"; do
+  case "$arg" in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --collect-only) COLLECT_ONLY=true ;;
+    -*)
+      echo "error: unknown option: $arg" >&2
+      usage
+      exit 1
+      ;;
+    *) SCOPES+=("$arg") ;;
+  esac
+done
+
+command -v miniserve >/dev/null 2>&1 || {
+  echo "error: miniserve が見つかりません。brew install miniserve" >&2
+  exit 1
+}
+
+# --- scope 解決: 集約ディレクトリを消す前に検証する ---
+# search_specs: "search_root \t impl_notes_depth \t reports_dir_depth" の行リスト
+
+search_specs=""
+scope_label="all"
+if [[ ${#SCOPES[@]} -eq 0 ]]; then
+  # ghq root 全体: host/owner/repo の 3 階層下にプロジェクトルートがある
+  search_specs="${GHQ_ROOT}	4	5"$'\n'
+else
+  scope_label=""
+  for scope in "${SCOPES[@]}"; do
+    [[ "$scope" == */* ]] || scope="github.com/$scope"
+    scope="${scope%/}"
+    if [[ ! -d "$GHQ_ROOT/$scope" ]]; then
+      echo "warn: scope が見つかりません: $GHQ_ROOT/$scope" >&2
+      continue
+    fi
+    # scope の階層数だけ探索深度を浅くする
+    slashes="${scope//[!\/]/}"
+    n=$((${#slashes} + 1))
+    search_specs+="${GHQ_ROOT}/${scope}	$((4 - n))	$((5 - n))"$'\n'
+    scope_label+="${scope_label:+, }$scope"
+  done
+  [[ -n "$search_specs" ]] || {
+    echo "error: 有効な scope がありません" >&2
+    exit 1
+  }
+fi
+
+# --- collect: 集約ディレクトリを毎回作り直す (symlink 集約なので安全) ---
+
+[[ "$DATA_DIR" == */claude-reports ]] || {
+  echo "error: unexpected DATA_DIR: $DATA_DIR" >&2
+  exit 1
+}
+rm -rf "$DATA_DIR"
+mkdir -p "$DATA_DIR"
+
+# rows: epoch \t datetime \t project \t href \t label
+rows=""
+
+add_row() { # <file> <project> <href> <label>
+  local f="$1" project="$2" href="$3" label="$4"
+  local epoch dt
+  epoch="$(stat -f '%m' "$f")"
+  dt="$(stat -f '%Sm' -t '%Y-%m-%d %H:%M' "$f")"
+  rows+="${epoch}	${dt}	${project}	${href}	${label}"$'\n'
+}
+
+# project 名は ghq の owner/repo 部分 (host は省く)
+project_of() { # <path-relative-to-ghq-root>
+  echo "$1" | cut -d/ -f2,3
+}
+
+collect_scope() { # <search_root> <impl_notes_depth> <reports_dir_depth>
+  local root="$1" d_impl="$2" d_reports="$3"
+  local f d rel project name
+
+  # 1) プロジェクトルート直下の implementation-notes.html
+  while IFS= read -r f; do
+    rel="${f#"$GHQ_ROOT"/}" # host/owner/repo/implementation-notes.html
+    project="$(project_of "$rel")"
+    mkdir -p "$DATA_DIR/$project"
+    ln -sf "$f" "$DATA_DIR/$project/implementation-notes.html"
+    add_row "$f" "$project" "$project/implementation-notes.html" "implementation-notes"
+  done < <(fd -H -I -t f --max-depth "$d_impl" '^implementation-notes\.html$' "$root")
+
+  # 2) .claude/reports/ 配下の HTML (html-reports スキル)
+  #    相対リンクを保つためディレクトリごと symlink する
+  while IFS= read -r d; do
+    d="${d%/}"
+    rel="${d#"$GHQ_ROOT"/}" # host/owner/repo/.claude/reports
+    project="$(project_of "$rel")"
+    mkdir -p "$DATA_DIR/$project"
+    ln -sfn "$d" "$DATA_DIR/$project/reports"
+    while IFS= read -r f; do
+      name="${f#"$d"/}"
+      add_row "$f" "$project" "$project/reports/$name" "${name%.html}"
+    done < <(fd -I -e html --max-depth 2 . "$d")
+  done < <(fd -H -I -t d --max-depth "$d_reports" -p '\.claude/reports$' "$root")
+}
+
+while IFS=$'\t' read -r root d_impl d_reports; do
+  [[ -n "$root" ]] || continue
+  collect_scope "$root" "$d_impl" "$d_reports"
+done <<<"$search_specs"
+
+# --- index.html 生成 (mtime 降順) ---
+
+count="$(printf '%s' "$rows" | rg -c '' || echo 0)"
+
+{
+  cat <<'HTML'
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Reports</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: -apple-system, "Hiragino Sans", sans-serif; max-width: 960px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.4rem; }
+  table { border-collapse: collapse; width: 100%; }
+  th, td { text-align: left; padding: .45rem .6rem; border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent); }
+  td.t { white-space: nowrap; font-variant-numeric: tabular-nums; opacity: .7; }
+  td.p { opacity: .8; }
+  a { text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  footer { margin-top: 1.5rem; font-size: .8rem; opacity: .6; }
+</style>
+</head>
+<body>
+<h1>Claude Reports</h1>
+<table>
+<tr><th>更新</th><th>プロジェクト</th><th>レポート</th></tr>
+HTML
+  printf '%s' "$rows" | sort -t$'\t' -k1,1nr | while IFS=$'\t' read -r _ dt project href label; do
+    printf '<tr><td class="t">%s</td><td class="p">%s</td><td><a href="%s">%s</a></td></tr>\n' \
+      "$dt" "$project" "$href" "$label"
+  done
+  printf '</table>\n<footer>generated: %s / %s reports / scope: %s</footer>\n</body>\n</html>\n' \
+    "$(date '+%Y-%m-%d %H:%M')" "$count" "$scope_label"
+} > "$DATA_DIR/index.html"
+
+echo "collected: $count reports (scope: $scope_label) -> $DATA_DIR"
+
+[[ "$COLLECT_ONLY" == true ]] && exit 0
+
+# --- serve ---
+
+HOST="$(scutil --get LocalHostName 2>/dev/null || hostname -s)"
+# デフォルトルートのインターフェースから LAN IP を取得 (表示用)
+IFACE="$(route -n get default 2>/dev/null | awk '/interface:/ {print $2}')"
+IP="$(ipconfig getifaddr "${IFACE:-en0}" 2>/dev/null || true)"
+echo "URL: http://${HOST}.local:${PORT}/${IP:+  (http://${IP}:${PORT}/)}"
+
+exec miniserve "$DATA_DIR" \
+  --index index.html \
+  --port "$PORT" \
+  --qrcode \
+  --title "Claude Reports" \
+  ${REPORTS_AUTH:+--auth "$REPORTS_AUTH"}
