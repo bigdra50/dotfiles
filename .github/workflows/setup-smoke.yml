@@ -1,0 +1,72 @@
+name: Setup Smoke
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - "scripts/setup/**"
+      - "scripts/lib.sh"
+      - ".github/workflows/setup-smoke.yml"
+  pull_request:
+    paths:
+      - "scripts/setup/**"
+      - "scripts/lib.sh"
+      - ".github/workflows/setup-smoke.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run symlinks (1st)
+        run: INTERACTIVE=false bash scripts/setup/symlinks.sh
+
+      - name: Verify symlinks
+        run: |
+          FAILED=0
+          workspace="${GITHUB_WORKSPACE}"
+
+          check_symlink() {
+            local path="$1"
+            if [[ ! -L "$path" ]]; then
+              echo "ERROR: $path is not a symlink"
+              FAILED=1
+              return
+            fi
+            local target
+            target=$(readlink -f "$path")
+            if [[ "$target" != "$workspace"* ]]; then
+              echo "ERROR: $path resolves to $target (expected under $workspace)"
+              FAILED=1
+            fi
+          }
+
+          check_symlink "$HOME/.wezterm.lua"
+          check_symlink "$HOME/.zshenv"
+          check_symlink "$HOME/.config/zsh"
+          check_symlink "$HOME/.config/mise"
+
+          if [[ "$RUNNER_OS" == "macOS" ]]; then
+            check_symlink "$HOME/.skhdrc"
+          elif [[ "$RUNNER_OS" == "Linux" ]]; then
+            if [[ -e "$HOME/.skhdrc" ]]; then
+              echo "ERROR: $HOME/.skhdrc should not exist on Linux (EXCLUDE_LINUX)"
+              FAILED=1
+            fi
+          fi
+
+          if [[ "$FAILED" -ne 0 ]]; then
+            exit 1
+          fi
+
+      - name: Run symlinks (2nd, idempotency)
+        run: INTERACTIVE=false bash scripts/setup/symlinks.sh
