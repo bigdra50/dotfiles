@@ -30,6 +30,10 @@ return {
         },
         sync_install = false,
         auto_install = true,
+        -- swift is generated from grammar definitions via the tree-sitter
+        -- CLI, which fails on CI runners; retries on every startup would
+        -- pollute the smoke test's stderr. Local installs are unaffected.
+        ignore_install = vim.env.CI and { "swift" } or {},
         highlight = { enable = true },
         indent = { enable = true },
       })
