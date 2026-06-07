@@ -104,7 +104,9 @@ jobs:
             Darwin-x86_64) archive="stylua-macos-x86_64.zip" ;;
             *) echo "Unsupported platform"; exit 1 ;;
           esac
-          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/latest/download/$archive" -o stylua.zip
+          # Pinned to the same version as nvim-ci.yml: stylua releases change
+          # default formatting, which breaks --check against committed code
+          curl -fsSL "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
           unzip -o stylua.zip -d /usr/local/bin
           rm stylua.zip
 
