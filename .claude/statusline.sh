@@ -552,7 +552,7 @@ if [[ -d "$PROJECT_DIR/Assets" ]] && [[ -d "$PROJECT_DIR/ProjectSettings" ]]; th
     if [[ -f "$UNILYZE_CACHE" ]]; then
         UNILYZE_STATUS=$(cat "$UNILYZE_CACHE" 2>/dev/null)
         CACHE_AGE=$(( $(date +%s) - $(stat -f %m "$UNILYZE_CACHE" 2>/dev/null || echo 0) ))
-        if [[ $CACHE_AGE -gt 60 ]]; then
+        if [[ $CACHE_AGE -gt 60 ]] && command -v unilyze &>/dev/null; then
             (unilyze statusline -p "$PROJECT_DIR" > /dev/null 2>&1 &)
         fi
     elif command -v unilyze &>/dev/null; then
