@@ -104,7 +104,7 @@ jobs:
 
       - name: Setup Go
         # go.nvim's build step (go.install.update_all_sync) shells out to go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: stable
           cache: false
