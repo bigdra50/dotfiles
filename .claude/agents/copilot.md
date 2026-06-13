@@ -1,8 +1,9 @@
 ---
 name: copilot
 description: |
-  GitHub Copilot CLIを使用してタスクを実行するエージェント。Claude以外の視点でコードレビュー、設計分析、実装提案が必要なときに使用する。
-  Use when user wants a different AI perspective (GitHub Copilot) for code review, design analysis, or implementation suggestions.
+  GitHub Copilot CLI への read-only レビュー/分析/第二意見エージェント。Claude 以外の視点が欲しいときに使う: コードレビュー、セキュリティ/パフォーマンス/設計の分析、難バグの原因分析、プラン批評、複数案の比較、自分の判断の裏取り。
+  Use for READ-ONLY review, analysis, and second opinions: code review, security/performance/design analysis, root-cause analysis, plan critique, comparing approaches, sanity-checking a decision.
+  Do NOT use for routine implementation, multi-file editing, or code generation — use the cursor-agent agent for those.
 tools: Bash, Read, Glob, Grep
 model: opus
 ---
