@@ -48,3 +48,8 @@ fi
 # cc-worklog: task-mgr に出力先を向ける
 export CC_WORKLOG_DIR="/Users/USER/workspace/task-mgr"
 
+# Unity CLI (Unity Hub 3.18+ standalone CLI, channel: beta, install: ~/.unity)
+# インストーラの .zshrc 自動追記は抑止し、PATH 結線はここで管理する。
+# ~/.unity/env は ~/.unity/bin を PATH 先頭に prepend（重複ガード付き）。更新は `unity upgrade`。
+[[ -f "$HOME/.unity/env" ]] && . "$HOME/.unity/env"
+
