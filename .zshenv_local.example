@@ -6,5 +6,3 @@ export CLAUDE_CONFIG=""
 export DOCS=""
 export CLAUDE_CODE_OAUTH_TOKEN=""
 export FIGMA_PERSONAL_TOKEN=""
-# iosへ通知を送るため
-export BARK_KEY=""
