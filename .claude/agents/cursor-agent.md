@@ -1,8 +1,9 @@
 ---
 name: cursor-agent
 description: |
-  Cursor Agent CLIを使用してタスクを実行するエージェント。Claude以外の視点でコードレビュー、設計分析、実装提案が必要なときに使用する。
-  Use when user wants a different AI perspective (Cursor Agent) for code review, design analysis, or implementation suggestions.
+  Cursor Agent CLI への実装委譲エージェント。コード変更をサブエージェントに任せるときに使う: 複数ファイル編集、反復的・定型的な実装、boilerplate/scaffold 生成、リファクタリング、テスト追加、マイグレーション、合意済みプランの適用。実装を「提案」させるのではなく、実際にファイルを編集させる。
+  Use to DELEGATE IMPLEMENTATION to a subagent: multi-file edits, repetitive/boilerplate implementation, scaffolding, refactoring, adding tests, migrations, or applying an approved plan. The agent edits files — it does not merely suggest changes.
+  Do NOT use for read-only code review, design critique, root-cause analysis, or a second opinion — use the copilot agent for those.
 tools: Bash, Read, Glob, Grep
 model: opus
 ---
