@@ -31,27 +31,6 @@
 - キーワード検索が空振りしたら副作用から攻める（生成物のファイル、タイムスタンプ、設定の差分、コミット等）
 - 直接語彙で見つからないときは「その作業の後に何が変わるか」を起点にキーワードを再構成する
 
-## 重要な判断は事前にLLM間で議論する
-
-議論の余地があり、かつ内容が重要な場合は、ユーザーに問う前に gpt5.5 と議論し、その結論をユーザーへ提示する。
-
-- 1ターンで終えず、LLM間で議論の決着がつくまで繰り返す
-- 内容の複雑度に応じて reasoning effort を使い分ける
-  - 通常: `high`
-  - 複雑・難解な判断: `xhigh`
-- 既定は copilot を使う。未インストール・レートリミット・認証エラー時は他方へフォールバックする（copilot → codex）
-- 使用前に `command -v copilot` / `command -v codex` で CLI の存在を確認する（マシンごとにインストール状況が異なる）
-  - copilot: `copilot -p "<議題>" --model gpt-5.5 --effort <high|xhigh> --no-ask-user`
-  - codex: `codex exec --sandbox read-only -c model_reasoning_effort='"<high|xhigh>"' "<議題>" </dev/null`（model=gpt-5.5 は `~/.codex/config.toml` で既定。`</dev/null` で stdin を閉じないと入力待ちで hang する）
-- 2ターン目以降は新規起動せず resume で文脈を引き継ぐ（resume の各 CLI 形は `~/.claude/rules/delegation.md` の「議論・セッションの継続」を参照）
-  - copilot: `copilot --continue -p "<続き>" --no-ask-user`（特定セッションは `--resume=<id>`）
-  - codex: `codex exec resume --last "<続き>" </dev/null`（特定セッションは `codex exec resume <session-id>`）
-- フォールバックは1議論セッションあたり1回まで（A→B のみ。A→B→A の往復はしない）
-- 両方とも不可用なら議論を打ち切り、その旨と暫定的な自分の見解をユーザーに伝えた上で「複数の選択肢がある場合」のフローへ進む
-- 一度切替えたら、その議論セッション内の以降のターンは切替先で続行する（ターンごとに再切替しない）
-- 決着後、議論の要点と最終結論をまとめてユーザーへ提示する
-- そのうえでユーザーの判断が必要な選択が残る場合は、下記「複数の選択肢がある場合」のフローに進む
-
 ## 複数の選択肢がある場合
 
 1. まず選択肢を提示
