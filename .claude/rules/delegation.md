@@ -67,29 +67,8 @@
 
 ## CLI 運用
 
-| 項目     | cursor-agent                 | copilot                               |
-| -------- | ---------------------------- | ------------------------------------- |
-| モデル   | `composer-2.5-fast` 固定     | `gpt-5.5`（第二意見は GPT 系優先）    |
-| 不可時   | フォールバックせず自分に戻す | —                                     |
-| 分析     | `--mode ask` / `--mode plan` | `--no-ask-user`                       |
-| 実装     | `--force`                    | `--allow-all-tools`（明示委譲時のみ） |
-| 深い推論 | —                            | `--effort high`                       |
-
-## 委譲先の稼働監視
-
-各 CLI は JSONL ストリーミング出力を持つ。委譲時はこれを使い、スタックや rate limit を検知する。
-
-| CLI       | JSONL フラグ                  | 活動イベント           | 完了イベント                          |
-| --------- | ----------------------------- | ---------------------- | ------------------------------------- |
-| `agent`   | `--output-format stream-json` | `assistant`            | `result`（`is_error`, `duration_ms`） |
-| `copilot` | `--output-format json`        | `assistant.turn_start` | `result`（`exitCode`）                |
-| `codex`   | `--json`                      | `turn.started`         | `turn.completed`（`usage`）           |
-
-判定基準:
-
-- 一定時間イベントが来ない → スタックの疑い（タイムアウトして自分に戻す）
-- 活動イベントなしで完了 → rate limit / 認証エラーの可能性
-- 事前に rate limit 残量を確認する API はない。実行して事後検知する
+- cursor-agent: `--force`（実装）、`--mode ask`（分析）。不可時はフォールバックせず自分に戻す
+- copilot: `--effort high`、`--no-ask-user`。実装は `--allow-all-tools`（明示委譲時のみ）
 
 ## 重要な判断はLLM間で議論する
 
@@ -98,28 +77,13 @@
 - 決着がつくまで繰り返す（1 ターンで終えない）
 - reasoning effort: 通常 `high`、複雑な判断 `xhigh`
 - 既定 copilot → 不可時 codex へフォールバック（1 議論あたり 1 回まで。切替後は切替先で続行）
-- 両方不可なら打ち切り、自分の見解を提示して CLAUDE.md「複数の選択肢がある場合」フローへ
+- 両方不可なら打ち切り、自分の見解を提示
 
 ```bash
-# 初回
 copilot -p "<議題>" --model gpt-5.5 --effort <high|xhigh> --no-ask-user
 codex exec --sandbox read-only -c model_reasoning_effort='"<high|xhigh>"' "<議題>" </dev/null
-
-# 継続（resume）
-copilot --continue -p "<続き>" --no-ask-user        # 直近
-copilot --resume=<id> -p "<続き>" --no-ask-user      # 特定セッション
-codex exec resume --last "<続き>" </dev/null          # 直近
-codex exec resume <session-id> "<続き>" </dev/null    # 特定セッション
 ```
 
 ## セッションの継続
 
-同じ相手との継続は新規起動ではなく resume する。
-
-| CLI            | 直近を継続                          | 特定セッション                        |
-| -------------- | ----------------------------------- | ------------------------------------- |
-| `copilot`      | `copilot --continue -p "<続き>"`    | `copilot --resume=<id> -p "<続き>"`   |
-| `codex`        | `codex exec resume --last "<続き>"` | `codex exec resume <id> "<続き>"`     |
-| `cursor-agent` | `agent --continue -p "<続き>"`      | `agent --resume <chatId> -p "<続き>"` |
-
-ID 不明時は引数なし `--resume` でピッカーから選ぶ。
+同じ相手との継続は `--continue`（直近）または `--resume <id>`（特定セッション）を使う。
