@@ -6,9 +6,7 @@
     "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
     "CLAUDE_CODE_IDE_SKIP_VALID_CHECK": "1",
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
     "DISABLE_ERROR_REPORTING": "1",
-    "DISABLE_TELEMETRY": "1",
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
     "FORCE_AUTO_BACKGROUND_TASKS": "1",
@@ -142,7 +140,6 @@
     "defaultMode": "acceptEdits",
     "additionalDirectories": []
   },
-  "model": "claude-opus-4-6[1m]",
   "hooks": {
     "Stop": [
       {
@@ -292,16 +289,22 @@
         "raw.githubusercontent.com"
       ]
     },
-    "excludedCommands": ["vpn *", "u *", "gh *"]
+    "excludedCommands": [
+      "vpn *",
+      "u *",
+      "gh *"
+    ]
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "voiceEnabled": true,
   "skipDangerousModePermissionPrompt": true,
+  "remoteControlAtStartup": true,
   "skipAutoPermissionPrompt": true,
   "useAutoModeDuringPlan": true,
+  "voiceEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "mcpServers": {}
+  "mcpServers": {},
+  "agentPushNotifEnabled": true
 }
