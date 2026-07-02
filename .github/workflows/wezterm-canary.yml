@@ -7,6 +7,10 @@ on:
   schedule:
     - cron: "0 3 1 * *"
   workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/wezterm-canary.yml"
+      - "scripts/reference/extract_wezterm.py"
 
 permissions:
   contents: read
@@ -42,7 +46,7 @@ jobs:
           python-version: "3.14"
 
       - name: Extract keybindings
-        run: python scripts/keybindings/extract_wezterm.py --config-file .wezterm.lua > canary.json
+        run: python scripts/reference/extract_wezterm.py --config-file .wezterm.lua > canary.json
 
       - name: Validate canary output
         run: |
