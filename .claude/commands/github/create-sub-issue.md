@@ -20,7 +20,13 @@ ARGUMENTSから以下を抽出:
 
 ## 実行手順
 
-### 1. Sub-issue作成
+### 1. リポジトリ情報取得
+
+```bash
+gh repo view --json owner,name
+```
+
+### 2. Sub-issue作成
 
 ```bash
 gh issue create \
@@ -28,7 +34,7 @@ gh issue create \
   --body "<body>"
 ```
 
-### 2. 親IssueのNode ID取得
+### 3. 親IssueのNode ID取得
 
 ```bash
 gh api graphql -f query='
@@ -41,11 +47,11 @@ query($owner: String!, $repo: String!, $number: Int!) {
 }' -f owner="<owner>" -f repo="<repo>" -F number=<parent_number>
 ```
 
-### 3. Sub-issueのNode ID取得
+### 4. Sub-issueのNode ID取得
 
 作成したIssue番号で同様にNode IDを取得。
 
-### 4. Sub-issueを親に紐付け
+### 5. Sub-issueを親に紐付け
 
 ```bash
 gh api graphql \
