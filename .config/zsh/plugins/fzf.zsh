@@ -6,10 +6,24 @@ pop(){
   cd $(dirs -lp | bat -r 2: | fzf --no-sort --prompt='cd >') 
 }
 
+# ghq list はリポジトリルート(外付けドライブ)の全走査で ~33s かかるため結果をキャッシュする。
+# Ctrl+] はキャッシュから即 fzf 表示し、古い(>10分)ときだけ裏で非同期に更新する。
 ghq-fzf() {
-  local src=$(ghq list | fzf --preview "ls -laTp $(ghq root)/{} | tail -n+4 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
+  local root cache src
+  root=$(ghq root)
+  cache="${XDG_CACHE_HOME:-$HOME/.cache}/ghq-list"
+
+  # 初回（キャッシュ無し）のみブロックして生成
+  [[ -s $cache ]] || ghq list > "$cache"
+
+  # 10分より古いときだけ裏で更新（外付けドライブへの多重走査を防ぐ）
+  if [[ -z $(find "$cache" -mmin -10 2>/dev/null) ]]; then
+    ( ghq list > "$cache.tmp" 2>/dev/null && mv -f "$cache.tmp" "$cache" ) &!
+  fi
+
+  src=$(fzf < "$cache" --preview "ls -la $root/{} 2>/dev/null")
   if [ -n "$src" ]; then
-    BUFFER="cd $(ghq root)/$src"
+    BUFFER="cd $root/$src"
     zle accept-line
   fi
   zle -R -c
