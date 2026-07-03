@@ -1,13 +1,15 @@
 ---
-paths: "**/*.go"
+paths:
+  - "**/*.go"
 ---
 
-# Go コーディングルール
+# Go
 
-- エラーは `%w` でラップする（`%v` ではない）
+機械検査可能な規約（`%w` ラップ、slog のキー名等）は golangci-lint の設定が正。
+
 - エラーはログするか返すか、どちらか一方のみ
-- ループ内で `defer` しない（関数に抽出する）
-- `context.Context` は struct に格納せず、メソッド引数で渡す
-- goroutine は `ctx.Done()` で終了を保証する
-- チャネルの `close` 責任は送信側
-- slog でエラーは `"error"` キーで渡す
+- インターフェースは使用側で定義し、小さく保つ
+- 可変設定には Functional Options パターン
+- センチネルエラー（`errors.Is`）とカスタムエラー型（`errors.As`）を使い分ける
+- ゼロ値が有用な struct 設計にする
+- goroutine は `ctx.Done()` で終了を保証する。チャネルの `close` 責任は送信側

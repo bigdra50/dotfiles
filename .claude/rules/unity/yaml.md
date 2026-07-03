@@ -1,5 +1,9 @@
 ---
-paths: "**/*.{meta,asset,prefab,unity}"
+paths:
+  - "**/*.meta"
+  - "**/*.asset"
+  - "**/*.prefab"
+  - "**/*.unity"
 ---
 
 # Editing the Unity YAML file

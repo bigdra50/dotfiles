@@ -1,5 +1,6 @@
 ---
-paths: "**/Assets/**/*.cs"
+paths:
+  - "**/Assets/**/*.cs"
 ---
 
 # Unity C#
@@ -8,7 +9,7 @@ paths: "**/Assets/**/*.cs"
 
 - MonoBehaviourは薄く保つ（ロジックは別クラスへ）
 - ScriptableObjectで設定・データを外部化
-- VContainer/ZenjectでDI
+- DIはVContainer（プロジェクトが既にZenjectを使っている場合のみZenjectに従う）
 - Assembly Definitionで依存関係を明示
 
 ## Assertion と例外
@@ -24,7 +25,7 @@ paths: "**/Assets/**/*.cs"
 | 同 GameObject 上の必須コンポーネント | `Assert.IsNotNull` + `RequireComponent` | 設計上の不変条件 |
 | 内部メソッドの引数事前条件 | `Assert` | 呼び出し側のバグを早期検出 |
 | `public` API の引数検証 | `ArgumentNullException` 等 | 境界で契約を表明 |
-| `FindObjectOfType` / `Physics.Raycast` / `TryGetComponent` | `if` 分岐 | 失敗が通常フロー |
+| `FindFirstObjectByType` / `Physics.Raycast` / `TryGetComponent` | `if` 分岐 | 失敗が通常フロー |
 | 外部入力（ユーザー、ネット、I/O、API） | `if` 分岐 + Result/例外 | リカバリ必須 |
 
 原則:
@@ -54,4 +55,4 @@ Domain Reload 無効時にも正しく動作する実装にする。
 - 静的フィールドは原則使用しない（DIで解決）
 - やむを得ず使う場合は `[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]` でリセット
 - 静的イベントは `OnEnable` で `-=` してから `+=`、`OnDisable` で `-=`
-- R3/UniRxの購読は `OnDestroy` で確実にDispose
+- Rx購読は `OnDestroy` で確実にDispose（新規はR3。UniRxはレガシー保守のみ）

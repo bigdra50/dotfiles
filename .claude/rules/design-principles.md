@@ -1,21 +1,34 @@
 ---
 paths:
+  - "**/*.py"
   - "**/*.go"
   - "**/*.rs"
   - "**/*.ts"
-  - "**/*.lua"
+  - "**/*.tsx"
+  - "**/*.js"
+  - "**/*.jsx"
   - "**/*.cs"
+  - "**/*.swift"
+  - "**/*.lua"
 ---
 
 # 設計共通ルール
 
-- SOLID原則に従う
-- 関数型アプローチを優先: 純粋関数、不変データ構造、副作用の分離（Functional Core, Imperative Shell）
-- YAGNI: 現在必要な機能のみ実装。未使用コードは即削除。意図不明なコードは変更前にユーザーに確認
+言語別ルールやプロジェクトの lint 設定と矛盾する場合はそちらを優先する。
 
-## 命名規則
+## 関数型優先
 
-`check`、`process`、`handle`、`do` のような曖昧な動詞を避け、具体的なアクションを使う:
+- ロジックは純粋関数で書く。副作用（I/O、状態変更、時刻、乱数）は境界に隔離する（Functional Core, Imperative Shell）
+- データはデフォルトで不変。mutable な状態はスコープを最小にし、共有しない
+- パフォーマンス制約（ホットパス、GC 回避）がある場合はその言語・環境のパフォーマンスルールを優先する
 
-- CompareVersion / ValidateInput / FetchLatestData
-- 戻り値型も同様: VersionCompareResult, ParsedConfig（CheckResult, Data は避ける）
+## 継承より委譲
+
+- 継承はフレームワークが要求する場合のみ（例外クラス、MonoBehaviour、ORM の base model 等）
+- 自作クラス間の継承は書かない。振る舞いの共有は composition と interface / Protocol で行う
+- is-a に見えても、目的が振る舞いの共有なら委譲を選ぶ
+
+## YAGNI
+
+- 現在必要な機能のみ実装する。未使用コードは即削除
+- 意図が不明なコードは変更前にユーザーに確認する
