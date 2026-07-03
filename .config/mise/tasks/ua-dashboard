@@ -1,0 +1,113 @@
+#!/usr/bin/env bash
+#MISE description="understand-anything のダッシュボードを LAN に公開する (Vite, token 認証付き)"
+
+set -euo pipefail
+
+# understand-anything の knowledge-graph.json を Vite で配信し、LAN の別デバイスから
+# 見られるようにする。token を先に固定してから起動するので、URL/QR を起動前に表示できる
+# (Vite 側は env UNDERSTAND_ACCESS_TOKEN を優先する)。
+
+# --- config (env で上書き可) ---
+
+PORT="${UA_PORT:-5180}"
+TOKEN="${UA_TOKEN:-$(openssl rand -hex 16)}"
+BIND="0.0.0.0" # LAN 公開。--local で 127.0.0.1 に
+
+usage() {
+  cat <<'USAGE'
+Usage: mise run ua-dashboard [project-dir] [-- [--port N] [--local]]
+
+understand-anything のダッシュボードを LAN に公開する。
+project-dir 省略時はコマンドを実行したディレクトリ (MISE_ORIGINAL_CWD) を使う。
+
+  mise run ua-dashboard                       # カレントプロジェクトを LAN 公開
+  mise run ua-dashboard ~/dev/foo             # 指定プロジェクト
+  mise run ua-dashboard -- --port 5190        # ポート指定
+  mise run ua-dashboard -- --local            # localhost のみ (LAN 非公開)
+
+前提:
+  対象プロジェクトに .understand-anything/knowledge-graph.json があること
+  (無ければ先に Claude Code で /understand を実行)。
+
+環境変数:
+  UA_PORT    公開ポート (default: 5180)
+  UA_TOKEN   アクセストークン (default: ランダム生成)
+USAGE
+}
+
+# --- args ---
+
+PROJECT="${MISE_ORIGINAL_CWD:-$PWD}"
+for arg in "$@"; do
+  case "$arg" in
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --port=*) PORT="${arg#*=}" ;;
+    --local) BIND="127.0.0.1" ;;
+    -*)
+      echo "error: unknown option: $arg" >&2
+      usage
+      exit 1
+      ;;
+    *) PROJECT="$arg" ;;
+  esac
+done
+PROJECT="$(cd "$PROJECT" 2>/dev/null && pwd)" || {
+  echo "error: project-dir が見つかりません" >&2
+  exit 1
+}
+
+# --- 前提チェック: knowledge graph ---
+
+if [[ ! -f "$PROJECT/.understand-anything/knowledge-graph.json" ]]; then
+  echo "error: $PROJECT に .understand-anything/knowledge-graph.json がありません。" >&2
+  echo "       先に Claude Code で /understand を実行してください。" >&2
+  exit 1
+fi
+
+# --- ダッシュボード本体を解決 (プラグインの最新バージョン) ---
+
+DASH="$(ls -d "$HOME"/.claude/plugins/cache/understand-anything/understand-anything/*/packages/dashboard 2>/dev/null | sort -V | tail -1)"
+if [[ -z "$DASH" || ! -d "$DASH" ]]; then
+  echo "error: understand-anything プラグインの dashboard が見つかりません。" >&2
+  echo "       Claude Code で understand-anything プラグインを導入してください。" >&2
+  exit 1
+fi
+PLUGIN_ROOT="${DASH%/packages/dashboard}"
+
+# --- 初回セットアップ (依存・core ビルドが無ければ用意) ---
+
+if [[ ! -f "$PLUGIN_ROOT/packages/core/dist/index.js" ]]; then
+  echo "core パッケージをビルドします (初回のみ)..." >&2
+  (cd "$PLUGIN_ROOT" && (pnpm install --frozen-lockfile 2>/dev/null || pnpm install) && pnpm --filter @understand-anything/core build)
+fi
+if [[ ! -d "$DASH/node_modules" ]]; then
+  echo "dashboard の依存を導入します (初回のみ)..." >&2
+  (cd "$DASH" && (pnpm install --frozen-lockfile 2>/dev/null || pnpm install))
+fi
+
+# --- LAN IP / URL ---
+
+IFACE="$(route -n get default 2>/dev/null | awk '/interface:/ {print $2}')"
+IP="$(ipconfig getifaddr "${IFACE:-en0}" 2>/dev/null || true)"
+if [[ "$BIND" == "127.0.0.1" || -z "$IP" ]]; then
+  URL="http://127.0.0.1:${PORT}/?token=${TOKEN}"
+else
+  URL="http://${IP}:${PORT}/?token=${TOKEN}"
+fi
+
+echo "project : $PROJECT"
+echo "graph   : $PROJECT/.understand-anything/knowledge-graph.json"
+echo "URL     : $URL"
+[[ "$BIND" != "127.0.0.1" && -n "$IP" ]] && echo "local   : http://127.0.0.1:${PORT}/?token=${TOKEN}"
+command -v qrencode >/dev/null 2>&1 && qrencode -t ANSIUTF8 "$URL"
+echo "(同じ Wi-Fi/AP のデバイスから上記 URL を開く。token 必須。Ctrl+C で停止)"
+echo
+
+# --- serve (token を env で固定して起動 → URL は上記で確定済み) ---
+
+cd "$DASH"
+exec env GRAPH_DIR="$PROJECT" UNDERSTAND_ACCESS_TOKEN="$TOKEN" \
+  npx vite --host "$BIND" --port "$PORT" --strictPort
