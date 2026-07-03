@@ -1,18 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "cleanupPeriodDays": 1000,
+  "cleanupPeriodDays": 365,
   "env": {
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "0",
     "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
     "CLAUDE_CODE_IDE_SKIP_VALID_CHECK": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
     "FORCE_AUTO_BACKGROUND_TASKS": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
-    "CLAUDE_CODE_EFFORT_LEVEL": "xhigh"
+    "CLAUDE_CODE_WORKFLOWS": "1"
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -111,35 +111,29 @@
       "Bash(command -v:*)",
       "Bash(echo:*)",
       "Bash(printf:*)",
-      "Bash(write:/tmp/*)"
+      "Bash(write:/tmp/*)",
+      "Bash(fc-list:*)",
+      "Bash(system_profiler:*)",
+      "WebFetch(domain:syu-m-5151.hatenablog.com)",
+      "Bash(grep:*)",
+      "Read(/Users/USER/Documents/Obsidian Vault/daily/*)",
+      "Edit(/Users/USER/Documents/Obsidian Vault/daily/*)",
+      "Write(/Users/USER/Documents/Obsidian Vault/daily/*)",
+      "Bash(for f in ~/.claude/projects/-Users-USER-dev-github-com-bigdra50-dotfiles/*.jsonl)",
+      "Bash(do if grep -q \"diff-review\\\\|legacy-code-improvement\\\\|sync-docs\\\\|\\\\.zsh/completions\\\\|wezterm/\\\\|commands/github\" \"$f\")",
+      "Bash(fi)",
+      "Bash(done)"
     ],
     "deny": [
-      "Bash(sudo:*)",
-      "Bash(rm -rf:*)",
-      "Bash(git push:*)",
-      "Bash(git reset:*)",
-      "Bash(git rebase:*)",
-      "Bash(git add .:*)",
-      "Bash(git add -A:*)",
-      "Read(**/.env*)",
-      "Read(**/id_rsa)",
-      "Read(**/id_ed25519)",
-      "Read(**/*token*)",
-      "Write(**/.env*)",
-      "Write(**/secrets/**)",
-      "Bash(curl:*)",
-      "Bash(wget:*)",
-      "Bash(nc:*)",
-      "Bash(npm uninstall:*)",
-      "Bash(npm remove:*)",
-      "Bash(psql:*)",
-      "Bash(mysql:*)",
-      "Bash(mongod:*)",
-      "NotebookEdit"
+      "Bash(sudo:*)"
     ],
-    "defaultMode": "acceptEdits",
+    "ask": [
+      "Bash(rm -rf:*)"
+    ],
+    "defaultMode": "auto",
     "additionalDirectories": []
   },
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "Stop": [
       {
@@ -147,6 +141,16 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type stop",
+            "async": true
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/open-impl-notes.sh",
+            "statusMessage": "implementation-notes.html を確認しています",
             "async": true
           }
         ]
@@ -170,7 +174,7 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type idle_prompt",
-            "timeout": 5
+            "async": true
           }
         ]
       }
@@ -204,7 +208,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null && session-topic-capture UserPromptSubmit"
+            "command": "session-topic-capture UserPromptSubmit"
           }
         ]
       }
@@ -215,7 +219,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null && session-topic-capture PreCompact"
+            "command": "session-topic-capture PreCompact"
           }
         ]
       }
@@ -226,7 +230,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null && session-topic-capture SessionEnd"
+            "command": "session-topic-capture SessionEnd"
+          },
+          {
+            "type": "command",
+            "command": "~/.local/share/mise/shims/sessions index 2>/dev/null || true",
+            "statusMessage": "セッションインデックスを更新しています",
+            "async": true
           }
         ]
       }
@@ -238,23 +248,20 @@
     "padding": 0
   },
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": false,
-    "frontend-design@claude-code-plugins": true,
     "git-workflow@bigdra50": true,
-    "example-skills@anthropic-agent-skills": true,
     "claude-md-management@claude-plugins-official": true,
-    "csharp-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
     "unity-dev@bigdra50": true,
-    "codex@openai-codex": true,
+    "codex@openai-codex": false,
     "oh-my-mermaid@oh-my-mermaid": true,
-    "copilot@ORG-copilot": true
+    "figma@claude-plugins-official": true,
+    "everything-evenhub@everything-evenhub": true,
+    "unity-coding-skills@bigdra50-unity-coding-skills": true,
+    "understand-anything@understand-anything": true,
+    "watch@claude-video": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -274,8 +281,33 @@
         "source": "github",
         "repo": "oh-my-mermaid/oh-my-mermaid"
       }
+    },
+    "everything-evenhub": {
+      "source": {
+        "source": "github",
+        "repo": "even-realities/everything-evenhub"
+      }
+    },
+    "bigdra50-unity-coding-skills": {
+      "source": {
+        "source": "github",
+        "repo": "bigdra50/unity-coding-skills"
+      }
+    },
+    "understand-anything": {
+      "source": {
+        "source": "github",
+        "repo": "Egonex-AI/Understand-Anything"
+      }
+    },
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
+      }
     }
   },
+  "viewMode": "verbose",
   "language": "Japanese",
   "sandbox": {
     "enabled": false,
@@ -296,15 +328,25 @@
     ]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
+  "ultracode": true,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
+  "verbose": true,
+  "autoCompactEnabled": true,
   "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "useAutoModeDuringPlan": true,
   "voiceEnabled": true,
   "feedbackSurveyState": {
     "lastShownTime": 1754086968953
   },
-  "mcpServers": {},
-  "agentPushNotifEnabled": true
+  "mcpServers": {}
 }
