@@ -115,6 +115,12 @@ return {
       })
       vim.lsp.enable("upm_lsp")
 
+      -- openscad-lsp (OpenSCAD) — Mason 管理外。バイナリは `cargo install openscad-lsp`
+      vim.lsp.config("openscad_lsp", {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable("openscad_lsp")
+
       -- 診断サイン
       require("utils.signs").setup_diagnostics()
 
