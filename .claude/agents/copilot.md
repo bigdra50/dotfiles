@@ -37,10 +37,10 @@ cd <project_directory> && copilot -p "<prompt>" --no-ask-user 2>/dev/null
 | `--no-ask-user`               | DEFAULT: Suppress clarifying questions  |
 | `--model <model>`             | Specify model (default: gpt-5.5)        |
 | `--allow-all-tools`           | When edits requested (full tool access) |
-| `--yolo`                      | Alias for --allow-all-tools             |
+| `--yolo`                      | Alias for --allow-all-tools --allow-all-paths --allow-all-urls |
 | `--allow-tool "<pattern>"`    | Allow specific tools (glob pattern)     |
 | `--deny-tool "<pattern>"`     | Deny specific tools (glob pattern)      |
-| `--effort <level>`            | Reasoning effort (low/medium/high)      |
+| `--effort <level>`            | Reasoning effort (none/low/medium/high/xhigh/max) |
 | `--autopilot`                 | Autonomous multi-step execution         |
 | `--max-autopilot-continues N` | Limit autonomous steps                  |
 

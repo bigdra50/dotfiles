@@ -1,0 +1,9 @@
+# 2021年に coc-yank（クリップボード履歴プラグイン）のデータへ誤混入した
+# Oura Ring API アクセストークン。現HEADからは削除済み・.config/coc/ はgitignore済み。
+# トークンは失効済み（2026-07-02 確認）。エントリは履歴スキャンのCI誤検知抑止のため維持。
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:119
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:468
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:749
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:787
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:927
+5e51cccb917a41f6becc958baf3725eb37a15c66:.config/coc/extensions/coc-yank-data/yank:generic-api-key:963

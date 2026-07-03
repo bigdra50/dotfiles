@@ -11,7 +11,8 @@ local function file_exists(path)
 end
 
 -- dotfiles内の画像パス（シンボリックリンク経由でも正しく解決）
-local dotfiles_dir = os.getenv("HOME") .. "/dev/github.com/bigdra50/dotfiles"
+local home = os.getenv("HOME") or os.getenv("USERPROFILE")
+local dotfiles_dir = home .. "/dev/github.com/bigdra50/dotfiles"
 local bg_image = dotfiles_dir .. "/wezterm/images/ztmy.jpg"
 
 -- Claude Code通知: bellイベントでタスク完了をトースト通知
@@ -89,10 +90,52 @@ local config = {
 
 if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 	config.term = "" -- Set to empty so FZF works on windows
+	config.default_prog = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "-NoLogo" }
 	table.insert(
 		config.launch_menu,
 		{ label = "PowerShell", args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "-NoLogo" } }
 	)
+
+	-- WSL ドメインを自動検出（Ubuntu 等）
+	config.wsl_domains = wezterm.default_wsl_domains()
+	local wsl_ubuntu
+	for _, dom in ipairs(config.wsl_domains) do
+		if dom.name:find("Ubuntu") then
+			wsl_ubuntu = dom.name
+			break
+		end
+	end
+	-- Ubuntu が見つからなければ先頭の WSL ドメインを使う
+	if not wsl_ubuntu and config.wsl_domains[1] then
+		wsl_ubuntu = config.wsl_domains[1].name
+	end
+	if wsl_ubuntu then
+		table.insert(config.launch_menu, { label = "WSL: " .. wsl_ubuntu, domain = { DomainName = wsl_ubuntu } })
+	end
+
+	-- シェル切替キーバインド（Windows のみ）
+	--   LEADER + p   → PowerShell タブ
+	--   LEADER + w   → WSL タブ
+	--   LEADER + Tab → ランチャー（一覧から選択）
+	table.insert(config.keys, {
+		key = "p",
+		mods = "LEADER",
+		action = wezterm.action.SpawnCommandInNewTab({
+			args = { "C:\\Program Files\\PowerShell\\7\\pwsh.exe", "-NoLogo" },
+		}),
+	})
+	if wsl_ubuntu then
+		table.insert(config.keys, {
+			key = "w",
+			mods = "LEADER",
+			action = wezterm.action.SpawnCommandInNewTab({ domain = { DomainName = wsl_ubuntu } }),
+		})
+	end
+	table.insert(config.keys, {
+		key = "Tab",
+		mods = "LEADER",
+		action = wezterm.action.ShowLauncherArgs({ flags = "FUZZY|LAUNCH_MENU_ITEMS|DOMAINS" }),
+	})
 
 	-- Find installed visual studio version(s) and add their compilation
 	-- environment command prompts to the menu
