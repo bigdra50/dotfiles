@@ -17,7 +17,7 @@ _abbr_accept() {
   BUFFER="${BUFFER%;}"
   zle accept-line
 }
-if [[ -o interactive ]] && (( ${+functions[zle]} )); then
+if [[ -o interactive && -o zle ]]; then
   zle -N _abbr_accept
   bindkey "^M" _abbr_accept
   bindkey " " abbr-expand-and-insert
