@@ -113,3 +113,6 @@ TODO.md
 
 # Claude Code session artifacts (implementation-notes rule)
 implementation-notes.html
+
+# Claude Code session artifacts (html-reports skill output)
+.claude/reports/
