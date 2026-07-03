@@ -70,6 +70,7 @@ yarn-error.log*
 .config/gh/hosts.yml
 .config/mise/*.lock
 .config/zsh/.zcompdump*
+.config/zsh/.zsh_sessions/
 
 # Credentials and private network configs
 .config/gogcli/
@@ -109,3 +110,6 @@ TODO.md
 # Claude Code instructions (personal notes)
 .claude/settings.local.json
 .config/nvim/.claude/settings.local.json
+
+# Claude Code session artifacts (implementation-notes rule)
+implementation-notes.html
