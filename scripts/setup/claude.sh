@@ -41,9 +41,10 @@ link_claude() {
         info "Removed obsolete symlink $HOME/.claude/docs"
     fi
 
-    # Older setups linked ~/.claude/skills directly into the repo. Remove that
-    # legacy link so npx-managed skills do not write back into dotfiles.
-    if [[ -L "$HOME/.claude/skills" ]] && [[ -d "$CLAUDE_DIR/skills" ]] && [[ "$HOME/.claude/skills" -ef "$CLAUDE_DIR/skills" ]]; then
+    # Older setups linked ~/.claude/skills directly into the repo. Skills now
+    # live in bigdra50/skills, so the link is dangling — remove it before
+    # npx-managed skills write through it into dotfiles.
+    if [[ -L "$HOME/.claude/skills" ]] && [[ "$(readlink "$HOME/.claude/skills")" == "$CLAUDE_DIR/skills" ]]; then
         rm "$HOME/.claude/skills"
         info "Removed legacy ~/.claude/skills symlink"
     fi
@@ -59,7 +60,7 @@ install_skills() {
         return
     fi
 
-    npx skills add "github:bigdra50/dotfiles" -g -y
+    npx skills add "github:bigdra50/skills" -g -y
     npx skills add "github:bigdra50/unity-cli" -g -y
 }
 

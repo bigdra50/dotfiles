@@ -79,11 +79,15 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 
 ```
 .claude/
-├── commands/   # カスタムスラッシュコマンド
-├── docs/       # ドキュメント
-├── rules/      # コーディングルール（言語別）
+├── agents/         # サブエージェント定義
+├── commands/       # カスタムスラッシュコマンド
+├── hooks/          # フックスクリプト
+├── output-styles/  # 出力スタイル
+├── rules/          # コーディングルール（言語別）
+├── tools/          # 補助スクリプト
 ├── settings.json
-└── skills/     # スキル定義（フラット構造必須）
+└── statusline.sh
 ```
 
 セットアップは `mise run setup:claude`（`scripts/setup/claude.sh`）で実行。
+skills は [bigdra50/skills](https://github.com/bigdra50/skills) で管理し、セットアップ時に `npx skills add` で `~/.claude/skills` へ展開する（このリポジトリには置かない）。

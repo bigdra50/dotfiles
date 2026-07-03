@@ -19,21 +19,13 @@ class TestClaudeExtract(unittest.TestCase):
 
     def test_extracts_all_asset_types(self) -> None:
         types = {record["type"] for record in self.records}
-        self.assertEqual(types, {"skill", "agent", "command", "rule"})
-
-    def test_extracts_skill_metadata(self) -> None:
-        skill = self.by_name["example-skill"]
-        self.assertEqual(skill["type"], "skill")
-        self.assertIn("example skill", skill["description"].lower())
-        self.assertEqual(skill["invocable"], "true")
-        self.assertEqual(skill["model"], "")
+        self.assertEqual(types, {"agent", "command", "rule"})
 
     def test_extracts_agent_metadata(self) -> None:
         agent = self.by_name["example-agent"]
         self.assertEqual(agent["type"], "agent")
         self.assertIn("example agent", agent["description"].lower())
         self.assertEqual(agent["model"], "opus")
-        self.assertEqual(agent["invocable"], "")
 
     def test_extracts_command_with_frontmatter(self) -> None:
         command = self.by_name["example-command"]

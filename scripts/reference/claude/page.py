@@ -17,15 +17,14 @@ PAGE_CONFIG = PageConfig(
         Column("description", "Description", kind="wrap"),
         Column("source", "Source", kind="wrap"),
     ),
-    filters=(Filter("type", "Type", values=("skill", "agent", "command", "rule")),),
+    filters=(Filter("type", "Type", values=("agent", "command", "rule")),),
     search_fields=("name", "description", "source"),
     badge_classes={
-        "skill": "badge-blue",
         "agent": "badge-purple",
         "command": "badge-green",
         "rule": "badge-orange",
     },
-    note="Catalog of Claude Code skills, agents, commands, and rules in .claude/",
+    note="Catalog of Claude Code agents, commands, and rules in .claude/",
 )
 
 TSV_FIELDS = ("type", "name", "description", "source")

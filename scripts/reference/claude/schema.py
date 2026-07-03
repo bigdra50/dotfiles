@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-ALLOWED_TYPES: frozenset[str] = frozenset({"skill", "agent", "command", "rule"})
+ALLOWED_TYPES: frozenset[str] = frozenset({"agent", "command", "rule"})
 
 
 @dataclass(frozen=True)
@@ -13,7 +13,6 @@ class ClaudeAsset:
     name: str
     description: str
     model: str
-    invocable: str
     source: str
 
 
@@ -28,6 +27,5 @@ def to_record(asset: ClaudeAsset) -> dict[str, str]:
         "name": asset.name,
         "description": collapse_whitespace(asset.description),
         "model": asset.model,
-        "invocable": asset.invocable,
         "source": asset.source,
     }

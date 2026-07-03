@@ -17,7 +17,7 @@ NOTES = {
     "keybindings": "wezterm · zsh · skhd · nvim",
     "shortcuts": "aliases · abbreviations · functions",
     "tasks": "mise task catalog",
-    "claude": "skills · agents · commands · rules",
+    "claude": "agents · commands · rules",
 }
 
 
