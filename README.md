@@ -24,7 +24,7 @@ cd ~/dev/github.com/bigdra50/dotfiles
 ```bash
 ./install.sh                      # install
 INTERACTIVE=false ./install.sh    # non-interactive
-./scripts/install-tools.sh        # update tools
+mise run setup:platform-tools     # update platform tools
 ```
 
 ## Docs
