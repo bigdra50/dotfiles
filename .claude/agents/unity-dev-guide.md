@@ -39,11 +39,16 @@ Use gitmcp.io MCP for C# source code reference when:
 
 **MCP URL**: `https://gitmcp.io/Unity-Technologies/UnityCsReference`
 
+**Useful source paths**:
+- MonoBehaviour lifecycle: `Runtime/Export/Scripting/MonoBehaviour.bindings.cs`
+- Editor extensions: `Editor/Mono/Inspector/`
+- Serialization: `Runtime/Serialization/`
+
 ## Package Documentation
 
 **UPM Packages**:
 - Location: `./Library/PackageCache/`
-- Reference order: README.md → Source files → package.json documentationUrl
+- Reference order: README.md → Documentation~/ → package.json documentationUrl → Source files
 
 **NuGet Packages**:
 - List: `./Assets/packages.config`
@@ -118,3 +123,61 @@ All responses must include:
 | 33 | MeshFilter |
 | 114 | MonoBehaviour |
 | 115 | MonoScript |
+
+## Documentation Reference
+
+**Official sites**:
+
+| Site | Use | URL |
+|------|-----|-----|
+| Manual | Concepts, workflows | docs.unity3d.com/{ver}/Documentation/Manual/ |
+| ScriptReference | API specs | docs.unity3d.com/{ver}/Documentation/ScriptReference/ |
+| Package Docs | Package APIs | docs.unity3d.com/Packages/{package}@{ver}/ |
+| Learn | Tutorials | learn.unity.com |
+| Forum | Community Q&A | forum.unity.com |
+
+**Version notation in URLs**:
+
+| Unity Version | URL notation |
+|---------------|--------------|
+| Unity 6 | 6000.0 |
+| Unity 2023 LTS | 2023.2 |
+| Unity 2022 LTS | 2022.3 |
+
+**API search patterns**:
+
+```
+# Whole class
+site:docs.unity3d.com ScriptReference {ClassName}
+
+# Specific method
+site:docs.unity3d.com {ClassName}.{MethodName}
+
+# Property
+site:docs.unity3d.com {ClassName}-{propertyName}
+
+# Feature explanation
+site:docs.unity3d.com Manual {topic}
+
+# Troubleshooting
+site:forum.unity.com {error message}
+site:issuetracker.unity3d.com {issue}
+```
+
+**Major package docs**:
+
+| Package | Documentation URL |
+|---------|-------------------|
+| com.unity.ugui | docs.unity3d.com/Packages/com.unity.ugui@latest |
+| com.unity.textmeshpro | docs.unity3d.com/Packages/com.unity.textmeshpro@latest |
+| com.unity.inputsystem | docs.unity3d.com/Packages/com.unity.inputsystem@latest |
+| com.unity.addressables | docs.unity3d.com/Packages/com.unity.addressables@latest |
+| com.unity.entities | docs.unity3d.com/Packages/com.unity.entities@latest |
+
+**Performance search keywords**:
+
+- Profiler usage: `Unity Profiler tutorial`
+- Memory: `Unity memory optimization GC`
+- Rendering: `Unity draw call batching`
+- Build size: `Unity build size reduction`
+- Load time: `Unity loading time optimization`
