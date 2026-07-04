@@ -84,7 +84,8 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 ├── hooks/          # フックスクリプト
 ├── output-styles/  # 出力スタイル
 ├── rules/          # コーディングルール（言語別）
-├── tools/          # 補助スクリプト
+├── scripts/        # hooks/skills が参照する補助スクリプト（セッションID解決等）
+├── tools/          # 補助スクリプト（statusline 用）
 ├── settings.json
 └── statusline.sh
 ```
