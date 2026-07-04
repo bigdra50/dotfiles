@@ -1,6 +1,11 @@
 export LANG=ja_JP.UTF-8
 export LANGUAGE='ja'
 
+# PATH/FPATH の重複排除 (.zshenv は zsh のネスト起動ごとに毎回評価されるため、
+# 無条件 prepend だけだとエントリが恒久的に増殖する)
+# NOTE: scalar 代入 (export PATH=...) 経由でも効かせるには配列とスカラーの両方に -U が必要
+typeset -gU path PATH fpath FPATH
+
 # Homebrew (macOS)
 if [[ -d /opt/homebrew ]]; then
   export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"

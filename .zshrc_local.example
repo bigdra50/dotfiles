@@ -1,2 +1,2 @@
 # Machine-local shell config (not tracked by git)
-# Copy to ~/.zshrc_local and customize
+# Copy to $ZDOTDIR/.zshrc_local (~/.config/zsh/.zshrc_local) and customize
