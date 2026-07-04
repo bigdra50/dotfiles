@@ -121,11 +121,7 @@
       "Bash(grep:*)",
       "Read(/Users/USER/Documents/Obsidian Vault/daily/*)",
       "Edit(/Users/USER/Documents/Obsidian Vault/daily/*)",
-      "Write(/Users/USER/Documents/Obsidian Vault/daily/*)",
-      "Bash(for f in ~/.claude/projects/-Users-USER-dev-github-com-bigdra50-dotfiles/*.jsonl)",
-      "Bash(do if grep -q \"diff-review\\\\|legacy-code-improvement\\\\|sync-docs\\\\|\\\\.zsh/completions\\\\|wezterm/\\\\|commands/github\" \"$f\")",
-      "Bash(fi)",
-      "Bash(done)"
+      "Write(/Users/USER/Documents/Obsidian Vault/daily/*)"
     ],
     "deny": [
       "Bash(sudo:*)"
@@ -358,7 +354,7 @@
     ]
   },
   "alwaysThinkingEnabled": true,
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "ultracode": true,
   "voice": {
     "enabled": true,
@@ -375,8 +371,5 @@
   "skipAutoPermissionPrompt": true,
   "useAutoModeDuringPlan": true,
   "voiceEnabled": true,
-  "feedbackSurveyState": {
-    "lastShownTime": 1754086968953
-  },
   "mcpServers": {}
 }

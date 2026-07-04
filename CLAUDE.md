@@ -92,3 +92,8 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 
 セットアップは `mise run setup:claude`（`scripts/setup/claude.sh`）で実行。
 skills は [bigdra50/skills](https://github.com/bigdra50/skills) で管理し、セットアップ時に `npx skills add` で `~/.claude/skills` へ展開する（このリポジトリには置かない）。
+
+settings.json だけは symlink ではなく **jq マージ適用**（`apply_claude_settings`）。
+Claude Code が実行時に atomic write で保存するため symlink は保存のたびに実ファイル化して乖離する。
+dotfiles 版が定義するキーは dotfiles が勝ち、live 側だけにあるランタイムキーは保持される。
+設定を恒久変更するときは dotfiles 側を編集して `mise run setup:claude` で適用する。
