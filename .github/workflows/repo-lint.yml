@@ -33,11 +33,22 @@ jobs:
           shfmt --version
 
       - name: Shellcheck
-        run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh
+        run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh
 
       - name: shfmt
         # Scoped to real scripts; tests/fixtures hold parser input data, not code
-        run: shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh
+        run: shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh
+
+  claude-config:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Validate .claude JSON configs
+        run: |
+          jq empty .claude/settings.json
+          jq empty .claude/package.json
 
   zsh-syntax:
     runs-on: ubuntu-latest

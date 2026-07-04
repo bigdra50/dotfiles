@@ -19,7 +19,7 @@ marker="${TMPDIR:-/tmp}/claude-impl-notes-${key}"
 prev="$(cat "$marker" 2>/dev/null || echo '')"
 
 if [ "$cur" != "$prev" ]; then
-  printf '%s' "$cur" >"$marker"
-  "$OPEN_CMD" "$f" >/dev/null 2>&1 || true
+    printf '%s' "$cur" >"$marker"
+    "$OPEN_CMD" "$f" >/dev/null 2>&1 || true
 fi
 exit 0

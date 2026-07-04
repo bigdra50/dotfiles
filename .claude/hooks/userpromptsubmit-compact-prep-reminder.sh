@@ -32,7 +32,7 @@ rm -f "$WARN_MARKER" 2>/dev/null || true
 # cooldown marker を作成（statusline が再度 warn marker を書くのを防止）
 WARNED_DIR="${TMPDIR:-/tmp}/claude-compact-warned"
 mkdir -p "$WARNED_DIR" 2>/dev/null || true
-printf '%s\n' "$(date +%s)" > "$WARNED_DIR/$SESSION_ID" 2>/dev/null || true
+printf '%s\n' "$(date +%s)" >"$WARNED_DIR/$SESSION_ID" 2>/dev/null || true
 
 CTX="[COMPACT PREP REMINDER] context 使用率が ${CTX_PCT}% に達した。"
 CTX+=$'\n'"- 作業区切りでユーザーに \`/compact-prep\` の実行を提案せよ。"

@@ -123,17 +123,17 @@ echo "open /tmp/reference-site/index.html"
 [tasks."sh:lint"]
 description = "Lint shell scripts (shellcheck -S warning)"
 dir = "{{cwd}}"
-run = "mise x shellcheck@latest -- shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
+run = "mise x shellcheck@latest -- shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh"
 
 [tasks."sh:fmt"]
 description = "Check shell script formatting (shfmt; excludes test fixtures)"
 dir = "{{cwd}}"
-run = "mise x shfmt@latest -- shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
+run = "mise x shfmt@latest -- shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh"
 
 [tasks."sh:fmt:fix"]
 description = "Fix shell script formatting (shfmt)"
 dir = "{{cwd}}"
-run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh"
+run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh"
 
 [tasks."lint:paths"]
 description = "Verify scripts/ path references in CI and task definitions resolve to real files"

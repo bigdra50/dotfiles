@@ -15,18 +15,18 @@
 set -uo pipefail
 
 if [[ -z "${CLAUDE_CODE_SESSION_ID:-}" ]]; then
-  exit 1
+    exit 1
 fi
 
 case "${1:-}" in
-  --state-path)
-    printf '%s\n' "${TMPDIR:-/tmp}/claude-compact-state/${CLAUDE_CODE_SESSION_ID}.md"
-    ;;
-  --plan-pointer-path)
-    printf '%s\n' "${TMPDIR:-/tmp}/claude-active-plan/${CLAUDE_CODE_SESSION_ID}"
-    ;;
-  *)
-    printf '%s\n' "$CLAUDE_CODE_SESSION_ID"
-    ;;
+    --state-path)
+        printf '%s\n' "${TMPDIR:-/tmp}/claude-compact-state/${CLAUDE_CODE_SESSION_ID}.md"
+        ;;
+    --plan-pointer-path)
+        printf '%s\n' "${TMPDIR:-/tmp}/claude-active-plan/${CLAUDE_CODE_SESSION_ID}"
+        ;;
+    *)
+        printf '%s\n' "$CLAUDE_CODE_SESSION_ID"
+        ;;
 esac
 exit 0
