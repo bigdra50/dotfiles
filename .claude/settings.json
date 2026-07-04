@@ -211,6 +211,22 @@
             "command": "session-topic-capture UserPromptSubmit"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/userpromptsubmit-compaction-recovery.sh"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/userpromptsubmit-compact-prep-reminder.sh"
+          }
+        ]
       }
     ],
     "PreCompact": [
@@ -220,6 +236,17 @@
           {
             "type": "command",
             "command": "session-topic-capture PreCompact"
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/compaction-recovery.sh"
           }
         ]
       }

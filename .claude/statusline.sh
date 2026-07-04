@@ -39,6 +39,8 @@ MODEL_ID=$(echo "$input" | jq -r '.model.display_name // "Unknown"')
 CURRENT_DIR=$(echo "$input" | jq -r '.workspace.current_dir // "~"')
 PROJECT_DIR=$(echo "$input" | jq -r '.workspace.project_dir // "~"')
 TRANSCRIPT_PATH=$(echo "$input" | jq -r '.transcript_path // ""')
+SESSION_ID=$(echo "$input" | jq -r '.session_id // empty')
+CTX_USED_PCT=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
 # Extract time information
 TOTAL_DURATION_MS=$(echo "$input" | jq -r '.cost.total_duration_ms // 0')
@@ -502,6 +504,35 @@ get_memory_status() {
 MEMORY_STATUS=$(get_memory_status)
 
 # ============================================================================
+# Context Window Usage + Compact-Prep Warn Marker
+# ============================================================================
+
+CTX_STATUS=""
+CTX_INT_PCT=""
+if [[ -n "$CTX_USED_PCT" ]]; then
+    CTX_INT_PCT=${CTX_USED_PCT%%.*}
+    ctx_color="$C_GREEN"
+    if [[ "$CTX_INT_PCT" -ge 60 ]] 2>/dev/null; then
+        ctx_color="$C_RED"
+    elif [[ "$CTX_INT_PCT" -ge 40 ]] 2>/dev/null; then
+        ctx_color="$C_YELLOW"
+    fi
+    CTX_STATUS="${C_CYAN}CTX${C_RESET} ${ctx_color}${CTX_INT_PCT}%${C_RESET}"
+fi
+
+# 閾値超で compact-prep 警告 marker を書く（cooldown 中でなければ）
+# userpromptsubmit-compact-prep-reminder.sh が marker を検出して通知を注入する
+COMPACT_WARN_THRESHOLD=60
+if [[ -n "$SESSION_ID" && "$SESSION_ID" != */* && -n "$CTX_INT_PCT" ]] && [[ "$CTX_INT_PCT" -ge "$COMPACT_WARN_THRESHOLD" ]] 2>/dev/null; then
+    _warned_dir="${TMPDIR:-/tmp}/claude-compact-warned"
+    if [[ ! -f "$_warned_dir/$SESSION_ID" ]]; then
+        _warn_dir="${TMPDIR:-/tmp}/claude-compact-warn"
+        mkdir -p "$_warn_dir" 2>/dev/null || true
+        printf '%s\n' "$CTX_INT_PCT" > "$_warn_dir/$SESSION_ID" 2>/dev/null || true
+    fi
+fi
+
+# ============================================================================
 # Build Status Line
 # ============================================================================
 
@@ -525,6 +556,11 @@ STATUS_LINE="${STATUS_LINE} ${C_GREEN}${DIR_ICON} ${DISPLAY_DIR}${C_RESET}"
 # 3. Memory Status
 if [[ -n "$MEMORY_STATUS" ]]; then
     STATUS_LINE="${STATUS_LINE} ${MEMORY_STATUS}"
+fi
+
+# 3.5. Context Window Usage
+if [[ -n "$CTX_STATUS" ]]; then
+    STATUS_LINE="${STATUS_LINE} ${CTX_STATUS}"
 fi
 
 # 4. Time (current time and session duration)

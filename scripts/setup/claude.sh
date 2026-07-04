@@ -7,7 +7,7 @@ CLAUDE_DIR="$DOTFILES_DIR/.claude"
 source "$DOTFILES_DIR/scripts/lib.sh"
 
 # Directories to link
-CLAUDE_DIRS="commands rules agents tools hooks output-styles"
+CLAUDE_DIRS="commands rules agents tools hooks output-styles scripts"
 
 # Files to link
 CLAUDE_FILES="CLAUDE.md settings.json statusline.sh"
