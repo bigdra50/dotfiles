@@ -15,6 +15,9 @@
     "CLAUDE_CODE_WORKFLOWS": "1"
   },
   "includeCoAuthoredBy": false,
+  "attribution": {
+    "sessionUrl": false
+  },
   "permissions": {
     "allow": [
       "Read",
