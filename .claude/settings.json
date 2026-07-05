@@ -207,7 +207,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "session-topic-capture UserPromptSubmit"
+            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture UserPromptSubmit || true"
           }
         ]
       },
@@ -234,7 +234,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "session-topic-capture PreCompact"
+            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture PreCompact || true"
           }
         ]
       }
@@ -256,11 +256,11 @@
         "hooks": [
           {
             "type": "command",
-            "command": "session-topic-capture SessionEnd"
+            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture SessionEnd || true"
           },
           {
             "type": "command",
-            "command": "~/.local/share/mise/shims/sessions index 2>/dev/null || true",
+            "command": "if command -v sessions >/dev/null 2>&1; then sessions index 2>/dev/null; elif [ -x \"$HOME/.local/share/mise/shims/sessions\" ]; then \"$HOME/.local/share/mise/shims/sessions\" index 2>/dev/null; fi; true",
             "statusMessage": "セッションインデックスを更新しています",
             "async": true
           }

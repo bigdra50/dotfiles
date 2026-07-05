@@ -466,26 +466,38 @@ GIT_STATUS=$(get_git_status)
 # ============================================================================
 
 get_memory_status() {
-    # Get total memory in bytes
-    local total_bytes=$(sysctl -n hw.memsize 2>/dev/null)
+    local total_kb="" used_kb="" used_percent=""
 
-    # Get memory pressure info which includes free percentage
-    local mem_pressure=$(memory_pressure 2>/dev/null)
-    local free_percent=$(echo "$mem_pressure" | grep "System-wide memory free percentage:" | awk '{print $5}' | tr -d '%')
+    if [[ -r /proc/meminfo ]]; then
+        # Linux / Git Bash(MSYS) — /proc/meminfo (kB)
+        local avail_kb
+        total_kb=$(awk '/^MemTotal:/{print $2; exit}' /proc/meminfo 2>/dev/null)
+        avail_kb=$(awk '/^MemAvailable:/{print $2; exit}' /proc/meminfo 2>/dev/null)
+        # MemAvailable が無い環境（MSYS 等）は MemFree で近似
+        [[ -z "$avail_kb" ]] && avail_kb=$(awk '/^MemFree:/{print $2; exit}' /proc/meminfo 2>/dev/null)
+        [[ -n "$total_kb" && -n "$avail_kb" ]] && used_kb=$((total_kb - avail_kb))
+    elif command -v sysctl >/dev/null 2>&1; then
+        # macOS — hw.memsize (bytes) + memory_pressure
+        local total_bytes free_percent
+        total_bytes=$(sysctl -n hw.memsize 2>/dev/null)
+        free_percent=$(memory_pressure 2>/dev/null | grep "System-wide memory free percentage:" | awk '{print $5}' | tr -d '%')
+        if [[ -n "$total_bytes" && -n "$free_percent" ]]; then
+            total_kb=$((total_bytes / 1024))
+            used_kb=$((total_kb * (100 - free_percent) / 100))
+            used_percent=$((100 - free_percent))  # source 値を直接使い、切り捨て由来の off-by-one を避ける
+        fi
+    fi
 
     # Validate inputs
-    if [[ -z "$total_bytes" ]] || [[ -z "$free_percent" ]]; then
+    if [[ -z "$total_kb" ]] || [[ -z "$used_kb" ]] || [[ "$total_kb" -le 0 ]]; then
         echo ""
         return
     fi
 
-    # Calculate used memory
-    local used_percent=$((100 - free_percent))
-    local used_bytes=$((total_bytes * used_percent / 100))
-
     # Convert to GB (round to nearest integer)
-    local total_gb=$((total_bytes / 1024 / 1024 / 1024))
-    local used_gb=$((used_bytes / 1024 / 1024 / 1024))
+    [[ -z "$used_percent" ]] && used_percent=$((used_kb * 100 / total_kb))
+    local total_gb=$(((total_kb + 524288) / 1048576))
+    local used_gb=$(((used_kb + 524288) / 1048576))
 
     # Determine color based on usage percentage
     local mem_color="$C_GREEN"
@@ -583,11 +595,11 @@ fi
 # 7. Unilyze Code Health (Unity projects only, cache-based, background refresh)
 UNILYZE_STATUS=""
 if [[ -d "$PROJECT_DIR/Assets" ]] && [[ -d "$PROJECT_DIR/ProjectSettings" ]]; then
-    UNILYZE_HASH=$(md5 -qs "$PROJECT_DIR")
-    UNILYZE_CACHE="${TMPDIR:-/tmp/}unilyze-sl-${UNILYZE_HASH}.txt"
+    UNILYZE_HASH=$(printf '%s' "$PROJECT_DIR" | { md5sum 2>/dev/null || md5 2>/dev/null; } | cut -d' ' -f1)
+    UNILYZE_CACHE="${TMPDIR:-/tmp}/unilyze-sl-${UNILYZE_HASH}.txt"
     if [[ -f "$UNILYZE_CACHE" ]]; then
         UNILYZE_STATUS=$(cat "$UNILYZE_CACHE" 2>/dev/null)
-        CACHE_AGE=$(( $(date +%s) - $(stat -f %m "$UNILYZE_CACHE" 2>/dev/null || echo 0) ))
+        CACHE_AGE=$(( $(date +%s) - $(stat -c %Y "$UNILYZE_CACHE" 2>/dev/null || stat -f %m "$UNILYZE_CACHE" 2>/dev/null || echo 0) ))
         if [[ $CACHE_AGE -gt 60 ]] && command -v unilyze &>/dev/null; then
             (unilyze statusline -p "$PROJECT_DIR" > /dev/null 2>&1 &)
         fi
