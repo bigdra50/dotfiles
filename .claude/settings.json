@@ -1,23 +1,20 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "cleanupPeriodDays": 365,
+  "cleanupPeriodDays": 1000,
   "env": {
     "CLAUDE_CODE_AUTO_CONNECT_IDE": "0",
     "CLAUDE_CODE_IDE_SKIP_AUTO_INSTALL": "1",
     "CLAUDE_CODE_IDE_SKIP_VALID_CHECK": "1",
-    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
     "DISABLE_ERROR_REPORTING": "1",
     "DISABLE_MICROCOMPACT": "1",
     "ENABLE_BACKGROUND_TASKS": "1",
     "FORCE_AUTO_BACKGROUND_TASKS": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_NO_FLICKER": "1",
-    "CLAUDE_CODE_WORKFLOWS": "1"
+    "CLAUDE_CODE_EFFORT_LEVEL": "xhigh"
   },
   "includeCoAuthoredBy": false,
-  "attribution": {
-    "sessionUrl": false
-  },
   "permissions": {
     "allow": [
       "Read",
@@ -114,25 +111,13 @@
       "Bash(command -v:*)",
       "Bash(echo:*)",
       "Bash(printf:*)",
-      "Bash(write:/tmp/*)",
-      "Bash(fc-list:*)",
-      "Bash(system_profiler:*)",
-      "WebFetch(domain:syu-m-5151.hatenablog.com)",
-      "Bash(grep:*)",
-      "Read(/Users/USER/Documents/Obsidian Vault/daily/*)",
-      "Edit(/Users/USER/Documents/Obsidian Vault/daily/*)",
-      "Write(/Users/USER/Documents/Obsidian Vault/daily/*)"
+      "Bash(write:/tmp/*)"
     ],
-    "deny": [
-      "Bash(sudo:*)"
-    ],
-    "ask": [
-      "Bash(rm -rf:*)"
-    ],
+    "deny": [],
     "defaultMode": "auto",
     "additionalDirectories": []
   },
-  "model": "claude-fable-5[1m]",
+  "model": "claude-opus-4-6[1m]",
   "hooks": {
     "Stop": [
       {
@@ -140,16 +125,6 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type stop",
-            "async": true
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/open-impl-notes.sh",
-            "statusMessage": "implementation-notes.html を確認しています",
             "async": true
           }
         ]
@@ -173,7 +148,7 @@
           {
             "type": "command",
             "command": "python3 ~/.claude/hooks/notify.py --type idle_prompt",
-            "async": true
+            "timeout": 5
           }
         ]
       }
@@ -196,7 +171,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.command // empty' | while IFS= read -r cmd; do printf ': %s:0;%s\\n' \"$(date +%s)\" \"$cmd\"; done >> ${HOME}/.zsh_history"
+            "command": "case \"$(uname -s)\" in MINGW*|MSYS*|CYGWIN*) exit 0 ;; esac; jq -r '.tool_input.command // empty' | while IFS= read -r cmd; do printf ': %s:0;%s\\n' \"$(date +%s)\" \"$cmd\"; done >> ${HOME}/.zsh_history"
           }
         ]
       }
@@ -207,23 +182,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture UserPromptSubmit || true"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/userpromptsubmit-compaction-recovery.sh"
-          }
-        ]
-      },
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/userpromptsubmit-compact-prep-reminder.sh"
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture UserPromptSubmit || true"
           }
         ]
       }
@@ -234,18 +193,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture PreCompact || true"
-          }
-        ]
-      }
-    ],
-    "PostCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/compaction-recovery.sh"
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture PreCompact || true"
           }
         ]
       }
@@ -256,13 +204,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v session-topic-capture >/dev/null 2>&1 && session-topic-capture SessionEnd || true"
-          },
-          {
-            "type": "command",
-            "command": "if command -v sessions >/dev/null 2>&1; then sessions index 2>/dev/null; elif [ -x \"$HOME/.local/share/mise/shims/sessions\" ]; then \"$HOME/.local/share/mise/shims/sessions\" index 2>/dev/null; fi; true",
-            "statusMessage": "セッションインデックスを更新しています",
-            "async": true
+            "command": "command -v session-topic-capture >/dev/null && session-topic-capture SessionEnd || true"
           }
         ]
       }
@@ -274,20 +216,23 @@
     "padding": 0
   },
   "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": false,
+    "frontend-design@claude-code-plugins": true,
     "git-workflow@bigdra50": true,
+    "example-skills@anthropic-agent-skills": true,
     "claude-md-management@claude-plugins-official": true,
+    "csharp-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "claude-code-setup@claude-plugins-official": true,
+    "pr-review-toolkit@claude-plugins-official": true,
     "feature-dev@claude-plugins-official": true,
     "hookify@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
     "unity-dev@bigdra50": true,
-    "codex@openai-codex": false,
+    "codex@openai-codex": true,
     "oh-my-mermaid@oh-my-mermaid": true,
-    "figma@claude-plugins-official": true,
-    "everything-evenhub@everything-evenhub": true,
-    "unity-coding-skills@bigdra50-unity-coding-skills": true,
-    "understand-anything@understand-anything": true,
-    "watch@claude-video": true
+    "copilot@ORG-copilot": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -307,33 +252,8 @@
         "source": "github",
         "repo": "oh-my-mermaid/oh-my-mermaid"
       }
-    },
-    "everything-evenhub": {
-      "source": {
-        "source": "github",
-        "repo": "even-realities/everything-evenhub"
-      }
-    },
-    "bigdra50-unity-coding-skills": {
-      "source": {
-        "source": "github",
-        "repo": "bigdra50/unity-coding-skills"
-      }
-    },
-    "understand-anything": {
-      "source": {
-        "source": "github",
-        "repo": "Egonex-AI/Understand-Anything"
-      }
-    },
-    "claude-video": {
-      "source": {
-        "source": "github",
-        "repo": "bradautomates/claude-video"
-      }
     }
   },
-  "viewMode": "verbose",
   "language": "Japanese",
   "sandbox": {
     "enabled": false,
@@ -355,21 +275,18 @@
   },
   "alwaysThinkingEnabled": true,
   "effortLevel": "xhigh",
-  "ultracode": true,
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  },
   "skipDangerousModePermissionPrompt": true,
-  "theme": "dark-daltonized",
-  "editorMode": "vim",
-  "verbose": true,
-  "autoCompactEnabled": true,
   "remoteControlAtStartup": true,
-  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
   "useAutoModeDuringPlan": true,
   "voiceEnabled": true,
-  "mcpServers": {}
+  "feedbackSurveyState": {
+    "lastShownTime": 1754086968953
+  },
+  "mcpServers": {
+    "notion": {
+      "url": "https://mcp.notion.com/mcp"
+    }
+  }
 }
