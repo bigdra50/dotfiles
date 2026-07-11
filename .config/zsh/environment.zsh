@@ -46,7 +46,8 @@ if command -v atuin &> /dev/null; then
 fi
 
 # cc-worklog: task-mgr に出力先を向ける
-export CC_WORKLOG_DIR="/Users/USER/workspace/task-mgr"
+# $HOME 相対にして macOS/WSL 両対応 (macOS では従来と同一パスに解決される)
+export CC_WORKLOG_DIR="$HOME/workspace/task-mgr"
 
 # Unity CLI (Unity Hub 3.18+ standalone CLI, channel: beta, install: ~/.unity)
 # インストーラの .zshrc 自動追記は抑止し、PATH 結線はここで管理する。
