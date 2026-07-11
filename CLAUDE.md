@@ -91,7 +91,10 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 ```
 
 セットアップは `mise run setup:claude`（`scripts/setup/claude.sh`）で実行。
-skills は [bigdra50/skills](https://github.com/bigdra50/skills) で管理し、セットアップ時に `npx skills add` で `~/.claude/skills` へ展開する（このリポジトリには置かない）。
+
+skills は [bigdra50/skills](https://github.com/bigdra50/skills) と [bigdra50/unity-cli](https://github.com/bigdra50/unity-cli) で管理し、このリポジトリには置かない。
+導入は apm（[Microsoft Agent Package Manager](https://github.com/microsoft/apm)）で行う。宣言的マニフェスト `.apm/apm.yml` に各スキルを `<owner/repo>/<skill-dir>` のサブパスで列挙し（リポジトリ直下は apm パッケージではないため個別のスキルフォルダを指す）、`scripts/setup/claude.sh` が apm を `~/.local`（sudo 不要）へ導入したうえで `apm install -g` でユーザスコープ `~/.claude/skills` へ展開する。
+スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
 
 settings.json だけは symlink ではなく **jq マージ適用**（`apply_claude_settings`）。
 Claude Code が実行時に atomic write で保存するため symlink は保存のたびに実ファイル化して乖離する。
