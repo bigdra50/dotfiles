@@ -13,6 +13,10 @@ github = "romkatv/zsh-defer"
 [plugins.zsh-autocomplete]
 github = "marlonrichert/zsh-autocomplete"
 apply = ["source"]
+# macOS のみで読み込む (extensions.zsh が macOS のとき SHELDON_PROFILE=macos を設定)。
+# WSL(ConPTY) ではライブメニューの再描画が崩れて 1 打鍵ごとに表示が多重化するため外す。
+# 実入力自体は正常だが、Tab 補完は fzf-tab、履歴ゴーストは zsh-autosuggestions が担う。
+profiles = ["macos"]
 
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
