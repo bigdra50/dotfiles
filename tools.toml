@@ -34,7 +34,6 @@ apt = [
     "curl",
     "git",
     "zsh",
-    "dircolors",
     "wslu",  # WSL utilities for Windows integration
 ]
 
