@@ -5,7 +5,7 @@
 
 [tasks."setup"]
 description = "Full dotfiles setup"
-depends = ["setup:base", "setup:platform-tools", "setup:symlinks", "setup:claude", "setup:neovim"]
+depends = ["setup:base", "setup:platform-tools", "setup:symlinks", "setup:claude", "setup:neovim", "setup:hooks"]
 run = 'echo "Setup complete."'
 
 [tasks."setup:base"]
@@ -38,6 +38,12 @@ description = "Setup Neovim Python/Node environments"
 depends = ["setup:platform-tools"]
 dir = "{{cwd}}"
 run = "bash scripts/setup/neovim.sh"
+
+[tasks."setup:hooks"]
+description = "Install git pre-commit hooks (gitleaks + work-marker guard)"
+depends = ["setup:base"]
+dir = "{{cwd}}"
+run = "uvx pre-commit install"
 
 [tasks."nvim:test"]
 description = "Run Neovim smoke tests"

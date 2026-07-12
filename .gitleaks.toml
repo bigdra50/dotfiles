@@ -1,0 +1,21 @@
+# gitleaks custom config (pre-commit hook が自動で読む)
+#
+# この repo は PUBLIC のため、汎用シークレットに加えて業務マーカーの混入を遮断する。
+# 業務固有の設定・ホスト定義は private な ORG-USER/dotfiles 側で管理する。
+# 誤検知の例外は .gitleaksignore にフィンガープリントで登録する。
+
+[extend]
+# gitleaks 標準ルール (API key 等) を維持した上で custom rules を足す
+useDefault = true
+
+[[rules]]
+id = "work-email-domain"
+description = "業務メールドメイン (ORG.jp) は public repo に入れない"
+regex = '''ORG\.jp'''
+keywords = ["ORG"]
+
+[[rules]]
+id = "work-internal-domain"
+description = "業務内部ドメイン (*.ORG.jp) は public repo に入れない"
+regex = '''[A-Za-z0-9.-]*ORG\.jp'''
+keywords = ["ORG"]
