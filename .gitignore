@@ -46,7 +46,6 @@ yarn-error.log*
 # Config directories to exclude (tools that auto-generate)
 .config/configstore/
 .config/yarn/
-.config/git/
 .config/op/
 .config/raycast/
 .config/swiftpm/

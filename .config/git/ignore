@@ -1,0 +1,32 @@
+# === macOS ===
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Icon?
+.Spotlight-V100
+.Trashes
+.TemporaryItems
+.fseventsd
+
+# === Editor / IDE ===
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.sublime-workspace
+
+# === Backup & Temp ===
+*.bak
+*.orig
+*.tmp
+*.log
+
+# === Security (誤コミット防止) ===
+*.pem
+*.key
+
+# === Claude Code ===
+**/.claude/settings.local.json
+**/CLAUDE.local.md
