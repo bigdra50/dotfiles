@@ -1,0 +1,4 @@
+[url "git@github.com.bigdra50:"]
+  insteadOf = git@github.com:
+[url "ssh://git@github.com.bigdra50/"]
+  insteadOf = ssh://git@github.com/
