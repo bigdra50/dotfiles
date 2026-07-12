@@ -6,9 +6,8 @@ export LANGUAGE='ja'
 # NOTE: scalar 代入 (export PATH=...) 経由でも効かせるには配列とスカラーの両方に -U が必要
 typeset -gU path PATH fpath FPATH
 
-# Homebrew (macOS)
+# Homebrew (macOS) — PATH は env.zsh の正準順序で管理し、ここでは FPATH のみ
 if [[ -d /opt/homebrew ]]; then
-  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
   export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 fi
 
@@ -32,13 +31,7 @@ export XDG_CACHE_HOME=$HOME/.cache
 export XDG_DATA_HOME=$HOME/.local/share
 export XDG_STATE_HOME=$HOME/.local/state
 
-export PATH=$HOME/opt:$PATH
 export CHEAT_CONFIG_PATH=$XDG_CONFIG_HOME/cheat/conf.yml
-export PATH=$HOME/.local/bin:$PATH
-
-# Cargo tools (auto-installed via dotfiles)
-export PATH=$HOME/.cargo/bin:$PATH
-
 
 # mkdir XDG Base Directories
 mkdir -p $XDG_CONFIG_HOME $XDG_CACHE_HOME $XDG_DATA_HOME $XDG_STATE_HOME $HOME/.local/{bin,src}
@@ -48,5 +41,9 @@ if [ -e "$ZDOTDIR/plugins/fzf.zsh" ]; then
   export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'; \
   export FZF_DEFAULT_OPTS='--height 40% --reverse --border';
 fi
+
+# 正準 PATH 順序 + 常時 export (非対話シェルにも必要な環境) を適用。
+# login shell では path_helper 対策として $ZDOTDIR/.zprofile からも再 source される。
+[[ -f "$ZDOTDIR/env.zsh" ]] && . "$ZDOTDIR/env.zsh"
 
 [[ -e "$ZDOTDIR/.zshenv_local" ]] && . "$ZDOTDIR/.zshenv_local"
