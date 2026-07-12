@@ -100,6 +100,7 @@ generate_global() {
     done < <(find -L "$RULES_DIR" -name '*.md' -print0 | sort -z)
 
     # --- Codex ---
+    mkdir -p "$(dirname "$CODEX_OUT")"
     {
         if [[ -f "$CODEX_HEADER" ]]; then
             cat "$CODEX_HEADER"

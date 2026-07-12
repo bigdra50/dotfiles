@@ -217,3 +217,66 @@ alias cld='claude-search-date'      # 日付検索
 alias cle='claude-search-errors'    # エラー検索
 alias clc='claude-search-commands'  # コマンド検索
 alias css='claude-search-session'   # セッション検索
+
+# ─── claude -p プロファイル ───────────────────────────────────
+#
+# cc           : デフォルト（セッション設定のモデル）
+# cc-opus      : 複雑な設計・レビュー向け
+# cc-sonnet    : 日常の実装タスク
+# cc-haiku     : 軽量な質問・変換
+# cc-fable     : 創造的タスク
+#
+# 使い方:
+#   cc "このコードをレビューして"
+#   echo "data" | cc "要約して"
+#   cc-sonnet --output-format json "APIのスキーマを生成"
+#   cc-select "対話的にモデル選択"
+
+cc() {
+    claude -p "$@"
+}
+
+cc-opus() {
+    claude -p --model claude-opus-4-8 "$@"
+}
+
+cc-sonnet() {
+    claude -p --model claude-sonnet-5 "$@"
+}
+
+cc-haiku() {
+    claude -p --model claude-haiku-4-5-20251001 "$@"
+}
+
+cc-fable() {
+    claude -p --model claude-fable-5 "$@"
+}
+
+cc-select() {
+    local models=(
+        "claude-opus-4-8:Opus 4.8 — 最高精度、設計・レビュー"
+        "claude-sonnet-5:Sonnet 5 — バランス型、日常タスク"
+        "claude-haiku-4-5-20251001:Haiku 4.5 — 高速・軽量"
+        "claude-fable-5:Fable 5 — 創造的タスク"
+    )
+    local selected
+    selected=$(printf '%s\n' "${models[@]}" | \
+        fzf --delimiter ':' \
+            --with-nth 2 \
+            --header 'モデルを選択 (ESC でキャンセル)' \
+            --preview 'echo "Model ID: {1}"' \
+            --height '~10') || return 0
+    local model_id="${selected%%:*}"
+    echo "Using: $model_id"
+    claude -p --model "$model_id" "$@"
+}
+
+cc-local() {
+    if ! command -v ollama &>/dev/null; then
+        echo "ollama が見つかりません。インストールしてください。" >&2
+        return 1
+    fi
+    local model="${CC_LOCAL_MODEL:-hermes3:14b}"
+    echo "Local: $model (ollama)" >&2
+    ollama run "$model" "$@"
+}

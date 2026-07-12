@@ -23,7 +23,16 @@ fi
 export EDITOR=nvim
 
 # Roslyn LSP: Unity の .csproj (TargetFrameworkVersion v4.7.1) 用に Mono 参照アセンブリを指定
-export FrameworkPathOverride="/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.7.2-api"
+# macOS は Mono.framework、Linux は mono パッケージのパス。存在する場合のみ設定する
+# (存在しないパスを FrameworkPathOverride に渡すと dotnet/Roslyn の解決が壊れるため)
+case "$OSTYPE" in
+  darwin*)
+    export FrameworkPathOverride="/Library/Frameworks/Mono.framework/Versions/Current/lib/mono/4.7.2-api"
+    ;;
+  linux*)
+    [[ -d /usr/lib/mono/4.7.2-api ]] && export FrameworkPathOverride="/usr/lib/mono/4.7.2-api"
+    ;;
+esac
 
 # export XDG Base Directories
 export XDG_CONFIG_HOME=$HOME/.config

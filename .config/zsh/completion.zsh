@@ -75,7 +75,9 @@ if command -v carapace &> /dev/null; then
 fi
 
 # --- autosuggestions ---
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+# completion 戦略は履歴に無い入力で補完エンジン由来のゴースト候補を出し、
+# WSL/ConPTY 上では表示ノイズ(打っていない文字が見える)の一因になる。履歴ベースのみに絞る。
+ZSH_AUTOSUGGEST_STRATEGY=(history)
 
 # キーバインド
 bindkey '\e[A' up-line-or-search

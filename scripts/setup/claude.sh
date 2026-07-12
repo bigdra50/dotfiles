@@ -45,8 +45,8 @@ link_claude() {
     fi
 
     # Older setups linked ~/.claude/skills directly into the repo. Skills now
-    # live in bigdra50/skills, so the link is dangling — remove it before
-    # npx-managed skills write through it into dotfiles.
+    # live in bigdra50/skills and are deployed by apm, so the link is dangling —
+    # remove it before apm writes skill folders through it into dotfiles.
     if [[ -L "$HOME/.claude/skills" ]] && [[ "$(readlink "$HOME/.claude/skills")" == "$CLAUDE_DIR/skills" ]]; then
         rm "$HOME/.claude/skills"
         info "Removed legacy ~/.claude/skills symlink"
@@ -106,18 +106,113 @@ apply_claude_settings() {
     success "$target (merged dotfiles settings)"
 }
 
-# ---- Install skills ----
+# ---- Install skills (via apm) ----
 
-install_skills() {
-    info "Installing skills via npx skills..."
+# apm CLI のバージョン (release tarball を固定取得する)
+APM_VERSION="0.24.1"
 
-    if ! command_exists npx; then
-        warning "npx not found, skipping skills installation"
-        return
+# apm (Microsoft Agent Package Manager) を sudo 無しで ~/.local に導入する。
+# 公式インストーラ (curl https://aka.ms/apm-unix | sh) は /usr/local/bin へ sudo
+# 導入するため、非対話・パスワード無しの環境で失敗する。ここでは release tarball を
+# ~/.local/share/apm へ展開し ~/.local/bin/apm に symlink する。apm は PyInstaller
+# onedir バンドルなので、単体バイナリではなく _internal/ ごと配置する必要がある。
+ensure_apm() {
+    if command_exists apm; then
+        success "apm already installed ($(apm --version 2>/dev/null | head -1))"
+        return 0
     fi
 
-    npx skills add "github:bigdra50/skills" -g -y
-    npx skills add "github:bigdra50/unity-cli" -g -y
+    local arch os tarball url tmp extracted
+    case "$(uname -m)" in
+        x86_64 | amd64) arch="x86_64" ;;
+        aarch64 | arm64) arch="aarch64" ;;
+        *)
+            warning "Unsupported arch for apm ($(uname -m)); skipping skills"
+            return 1
+            ;;
+    esac
+    case "$(uname -s)" in
+        Darwin*) os="macos" ;;
+        Linux*) os="linux" ;;
+        *)
+            warning "Unsupported OS for apm; skipping skills"
+            return 1
+            ;;
+    esac
+    tarball="apm-${os}-${arch}.tar.gz"
+    url="https://github.com/microsoft/apm/releases/download/v${APM_VERSION}/${tarball}"
+
+    info "Installing apm ${APM_VERSION} to ~/.local (sudo-free)..."
+    tmp="$(mktemp -d)"
+    if ! curl -fsSL -o "$tmp/apm.tar.gz" "$url"; then
+        warning "Failed to download apm; skipping skills"
+        rm -rf "$tmp"
+        return 1
+    fi
+    tar xzf "$tmp/apm.tar.gz" -C "$tmp"
+    extracted="$(find "$tmp" -maxdepth 1 -type d -name 'apm-*' | head -1)"
+    if [[ -z "$extracted" ]]; then
+        warning "Unexpected apm archive layout; skipping skills"
+        rm -rf "$tmp"
+        return 1
+    fi
+    mkdir -p "$HOME/.local/share" "$HOME/.local/bin"
+    rm -rf "$HOME/.local/share/apm"
+    mv "$extracted" "$HOME/.local/share/apm"
+    ln -sf "$HOME/.local/share/apm/apm" "$HOME/.local/bin/apm"
+    rm -rf "$tmp"
+    export PATH="$HOME/.local/bin:$PATH"
+    command_exists apm && success "apm installed ($(apm --version 2>/dev/null | head -1))"
+}
+
+# 旧 skillpm (`npx skills add`) が残した収束レイアウトを撤去する。
+# skillpm は実体を ~/.agents/skills に置き ~/.claude/skills/<name> をそこへ symlink
+# する。apm は実体を ~/.claude/skills に直接配置するため、両者が衝突しないよう
+# skillpm 状態を検出したらバックアップして退避する (apm 管理下では no-op)。
+cleanup_legacy_skillpm() {
+    local skills_dir="$HOME/.claude/skills"
+    [[ -f "$HOME/.agents/.skill-lock.json" ]] || return 0
+
+    local ts backup
+    ts="$(date +%Y%m%d_%H%M%S)"
+    backup="$HOME/.claude/skills.skillpm-backup.$ts"
+    warning "Detected legacy skillpm skills; migrating to apm"
+    if [[ -e "$skills_dir" && ! -L "$skills_dir" ]]; then
+        mv "$skills_dir" "$backup"
+        info "Backed up ~/.claude/skills -> $backup"
+    elif [[ -L "$skills_dir" ]]; then
+        rm -f "$skills_dir"
+    fi
+    if [[ -d "$HOME/.agents/skills" ]]; then
+        mv "$HOME/.agents/skills" "$HOME/.agents/skills.skillpm-backup.$ts"
+    fi
+    rm -f "$HOME/.agents/.skill-lock.json"
+}
+
+install_skills() {
+    info "Installing skills via apm..."
+
+    if ! ensure_apm; then
+        return 0
+    fi
+
+    cleanup_legacy_skillpm
+
+    # dotfiles の宣言的マニフェスト (.apm/apm.yml) をグローバルの正本として配置し、
+    # apm install -g で ~/.claude/skills へ展開する。apm はインストール時に
+    # ~/.apm/apm.yml を書き換えるため symlink せず copy する (settings.json と同じ
+    # 「dotfiles が正、再実行で再適用」方針)。
+    if [[ ! -f "$DOTFILES_DIR/.apm/apm.yml" ]]; then
+        warning "$DOTFILES_DIR/.apm/apm.yml not found; skipping skills"
+        return 0
+    fi
+    mkdir -p "$HOME/.apm"
+    install -m 644 "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
+    if apm install -g --target claude; then
+        success "Skills installed via apm"
+    else
+        warning "apm install reported issues; check 'apm install -g' output"
+    fi
 }
 
 # ---- Main ----

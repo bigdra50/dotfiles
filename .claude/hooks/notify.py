@@ -2,9 +2,10 @@
 """Claude Code notification hook (cross-platform).
 
 Desktop notification:
-  macOS:  terminal-notifier (primary) -> osascript (fallback)
-  Linux:  notify-send
-  Others: log-only (graceful skip)
+  macOS:   terminal-notifier (primary) -> osascript (fallback)
+  Linux:   notify-send
+  Windows: BurntToast (primary) -> NotifyIcon balloon (fallback)
+  Others:  log-only (graceful skip)
 Also pushes to a local relay (G2 glasses) when enabled.
 
 Behaviour is tunable via env vars:
@@ -72,6 +73,14 @@ LINUX_SOUND_MAP = {
 LINUX_URGENCY_MAP = {
     "permission_prompt": "critical",
     "stop": "normal",
+}
+
+# macOS sound name -> Windows System.Media.SystemSounds method
+WINDOWS_SOUND_MAP = {
+    "Glass": "Asterisk",
+    "Basso": "Exclamation",
+    "Ping": "Beep",
+    "Pop": "Beep",
 }
 
 RELAY_SERVER_URL = os.environ.get("RELAY_SERVER_URL", "http://localhost:3000")
@@ -321,6 +330,73 @@ def _play_sound_linux(name: str) -> None:
 
 
 # --------------------------------------------------------------------------- #
+# Desktop notification — Windows
+# --------------------------------------------------------------------------- #
+
+def _powershell() -> str:
+    return shutil.which("powershell") or shutil.which("pwsh") or ""
+
+
+# BurntToast があれば使い、無ければ NotifyIcon バルーン（追加モジュール不要）に
+# フォールバックする。title/body は環境変数で渡してクォート事故を避ける。
+_WINDOWS_TOAST_PS = r"""
+$ErrorActionPreference = 'SilentlyContinue'
+$t = $env:CC_NOTIFY_TITLE
+$b = $env:CC_NOTIFY_BODY
+if (Get-Module -ListAvailable -Name BurntToast) {
+    Import-Module BurntToast
+    if ($b) { New-BurntToastNotification -Text $t, $b } else { New-BurntToastNotification -Text $t }
+} else {
+    Add-Type -AssemblyName System.Windows.Forms
+    Add-Type -AssemblyName System.Drawing
+    $ni = New-Object System.Windows.Forms.NotifyIcon
+    $ni.Icon = [System.Drawing.SystemIcons]::Information
+    $ni.Visible = $true
+    $ni.BalloonTipTitle = $t
+    if ($b) { $ni.BalloonTipText = $b } else { $ni.BalloonTipText = $t }
+    $ni.ShowBalloonTip(5000)
+    Start-Sleep -Milliseconds 5200
+    $ni.Dispose()
+}
+"""
+
+
+def _notify_desktop_windows(_notification_type: str, title: str, body: str, _cwd: str) -> None:
+    ps = _powershell()
+    if not ps:
+        logging.info("powershell not found; skipping desktop notification")
+        return
+    env = dict(os.environ)
+    env["CC_NOTIFY_TITLE"] = title or "Claude Code"
+    env["CC_NOTIFY_BODY"] = body or ""
+    try:
+        # fire-and-forget: NotifyIcon バルーンは子プロセスが ~5s 生存する必要がある
+        subprocess.Popen(
+            [ps, "-NoProfile", "-NonInteractive", "-Command", _WINDOWS_TOAST_PS],
+            env=env, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+    except Exception as e:
+        logging.warning("windows toast failed: %s", e)
+
+
+def _play_sound_windows(name: str) -> None:
+    ps = _powershell()
+    if not ps:
+        return
+    sound = WINDOWS_SOUND_MAP.get(name, "Beep")
+    try:
+        # .Play() は非同期(PlaySound SND_ASYNC)。プロセスが即終了すると再生が切れるため
+        # 短い keep-alive で鳴らし切る（fire-and-forget なので notify.py はブロックしない）。
+        subprocess.Popen(
+            [ps, "-NoProfile", "-NonInteractive", "-Command",
+             f"[System.Media.SystemSounds]::{sound}.Play(); Start-Sleep -Milliseconds 1500"],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+    except Exception:
+        pass
+
+
+# --------------------------------------------------------------------------- #
 # Desktop notification — dispatcher
 # --------------------------------------------------------------------------- #
 
@@ -329,6 +405,8 @@ def notify_desktop(notification_type: str, title: str, body: str, cwd: str) -> N
         _notify_desktop_macos(notification_type, title, body, cwd)
     elif sys.platform == "linux":
         _notify_desktop_linux(notification_type, title, body, cwd)
+    elif sys.platform == "win32":
+        _notify_desktop_windows(notification_type, title, body, cwd)
     else:
         logging.info("no desktop notification support on %s", sys.platform)
 
@@ -338,6 +416,8 @@ def play_sound(name: str) -> None:
         _play_sound_macos(name)
     elif sys.platform == "linux":
         _play_sound_linux(name)
+    elif sys.platform == "win32":
+        _play_sound_windows(name)
 
 
 # --------------------------------------------------------------------------- #

@@ -1,0 +1,74 @@
+# apm (Microsoft Agent Package Manager) manifest — global Claude Code skills.
+# Source of truth for `apm install -g` (deploys to ~/.claude/skills).
+# 各エントリは <owner/repo>/<skill-dir> のサブパス指定 (リポジトリ直下は
+# apm パッケージではないため、SKILL.md を持つスキルフォルダを個別に指す)。
+# 更新: `apm update -g` で main の最新へ追従。追加/削除はこのファイルを編集して
+#       `mise run setup:claude` (= scripts/setup/claude.sh) で反映する。
+name: bigdra-skills
+version: 1.0.0
+description: Global Claude Code skills managed by apm
+# Claude Code のユーザスコープ (~/.claude/skills) に配置する
+targets:
+  - claude
+dependencies:
+  apm:
+    - bigdra50/skills/3dcg/blender-export
+    - bigdra50/skills/3dcg/blender-inspect
+    - bigdra50/skills/design/design-mockup
+    - bigdra50/skills/design/drawio
+    - bigdra50/skills/devops/unity-ci
+    - bigdra50/skills/docs/docs-architect
+    - bigdra50/skills/docs/html-reports
+    - bigdra50/skills/docs/html-reports-arch
+    - bigdra50/skills/docs/sync-docs
+    - bigdra50/skills/even/evenhub-upload
+    - bigdra50/skills/knowledge/kb-claude-code
+    - bigdra50/skills/knowledge/kb-macos
+    - bigdra50/skills/lang/unity-csharp-guide
+    - bigdra50/skills/misc/legacy-code-improvement
+    - bigdra50/skills/review/google-code-review
+    - bigdra50/skills/review/multi-review
+    - bigdra50/skills/review/plan-loop
+    - bigdra50/skills/review/review-loop
+    - bigdra50/skills/tooling/unilyze-setup
+    - bigdra50/skills/tooling/unity-cli-setup
+    - bigdra50/skills/unity/asmdef-lint
+    - bigdra50/skills/unity/perspectives/performance-engineer
+    - bigdra50/skills/unity/perspectives/test-engineer
+    - bigdra50/skills/unity/perspectives/unity-architect
+    - bigdra50/skills/unity/perspectives/xr-specialist
+    - bigdra50/skills/unity/project-bootstrap
+    - bigdra50/skills/unity/review-architecture
+    - bigdra50/skills/unity/review-duplication
+    - bigdra50/skills/unity/review-hotspot
+    - bigdra50/skills/unity/review-metrics
+    - bigdra50/skills/unity/review-performance
+    - bigdra50/skills/unity/review-safety
+    - bigdra50/skills/unity/review-testing
+    - bigdra50/skills/unity/review-triage
+    - bigdra50/skills/unity/review-unity-specific
+    - bigdra50/skills/unity/review-weekly
+    - bigdra50/skills/unity/unity-playmode-test
+    - bigdra50/skills/unity/visual-test
+    - bigdra50/skills/workflow/cc-worklog
+    - bigdra50/skills/workflow/claude-stats
+    - bigdra50/skills/workflow/compact-prep
+    - bigdra50/skills/workflow/creating-pull-requests
+    - bigdra50/skills/workflow/disk-usage
+    - bigdra50/skills/workflow/orchestrator
+    - bigdra50/skills/workflow/pr-brief
+    - bigdra50/skills/workflow/report-issue
+    - bigdra50/skills/workflow/session-recap
+    - bigdra50/skills/workflow/x-research
+    - bigdra50/unity-cli/skills/unity-api
+    - bigdra50/unity-cli/skills/unity-asset
+    - bigdra50/unity-cli/skills/unity-build
+    - bigdra50/unity-cli/skills/unity-debug
+    - bigdra50/unity-cli/skills/unity-perf
+    - bigdra50/unity-cli/skills/unity-scene
+    - bigdra50/unity-cli/skills/unity-shared
+    - bigdra50/unity-cli/skills/unity-ui
+    - bigdra50/unity-cli/skills/unity-verify
+  mcp: []
+includes: auto
+scripts: {}

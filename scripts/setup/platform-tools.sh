@@ -65,8 +65,8 @@ install_linux_tools() {
     if [[ "$PLATFORM" == "wsl" ]]; then
         while IFS= read -r line; do
             platform_tools+=("$line")
-        done < <(awk '/\[platform.wsl\]/,/\[/ {
-            if (/^[[:space:]]*"/ && !/\[/) {
+        done < <(awk '/apt = \[/,/\]/ {
+            if (/^[[:space:]]*"/) {
                 gsub(/[[:space:]]*"|".*/, "")
                 print
             }
