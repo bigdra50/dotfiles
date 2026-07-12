@@ -30,12 +30,17 @@ curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/master/bootstrap 
 
 ロード順序:
 1. `~/.zshenv` - ZDOTDIR設定のみ → `$ZDOTDIR/.zshenv` に委譲
-2. `$ZDOTDIR/.zshenv` - PATH、環境変数、XDG設定
-3. `$ZDOTDIR/.zshrc` - 以下を順にロード:
-   - `environment.zsh` - mise有効化、Go設定、atuin初期化
-   - `interface.zsh` - Starship、viバインディング
+2. `$ZDOTDIR/.zshenv` (全 zsh) - XDG設定、FPATH → `env.zsh` + `func-core.zsh` → `.zshenv_local`
+   - `env.zsh` - 正準PATH順序 (mise shims 静的prepend)、GOPATH 等の常時 export
+   - `func-core.zsh` - 非対話でも必要な関数 (gh のアカウント自動選択)
+3. `$ZDOTDIR/.zprofile` (login) - path_helper が PATH を再構成した後に `env.zsh` を再 source
+4. `$ZDOTDIR/.zshrc` (対話のみ) - 以下を順にロード:
+   - `interface.zsh` - compinit、atuin、Starship、viバインディング
    - `extensions.zsh` - プラグインロード
    - `.zshrc_local` - ローカルオーバーライド
+
+非対話シェル (スクリプト、Claude Code のツールシェル等) は 1-3 のみ通るため、
+PATH・環境変数・常時関数は `.zshrc` チェーンではなく `env.zsh` / `func-core.zsh` に置く。
 
 ### ツール管理・セットアップ
 
@@ -61,6 +66,7 @@ mise 活用パターン:
 | `.*` (ルート) | `~/.*` |
 | `.config/*` | `~/.config/*` |
 | `.claude/` | `~/.claude/` |
+| `.ssh/config` | `~/.ssh/config` (config のみ。鍵は管理しない) |
 
 Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照。
 
@@ -71,8 +77,13 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 
 マシン固有の設定は以下に記述（gitignore済み）:
 - `$ZDOTDIR/.zshrc_local` (`~/.config/zsh/.zshrc_local`)
-- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`)
-- `~/.gitconfig_local`
+- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`) — 秘密情報はここに限る
+- `~/.ssh/config.d/local.conf` — マシン固有 ssh ホスト
+
+業務固有の設定（`~/.gitconfig_local`、`~/.gitconfig-ORG`、`~/.ssh/config.d/ORG.conf`）は
+private な ORG-USER/dotfiles の setup.sh が配備する。
+この repo は汎用フック（`[include]`、`Include config.d/*.conf`、`GH_ORG_CONFIG` 参照）だけを持ち、
+業務マーカーの混入は `.gitleaks.toml` の custom rules が commit 時に遮断する。
 
 
 ## Claude Code設定 (`.claude/`)

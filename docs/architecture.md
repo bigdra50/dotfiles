@@ -32,27 +32,35 @@ sheldon + zsh-defer による遅延ロードで起動を高速化している。
 sequenceDiagram
     participant Shell as Zsh
     participant Env as .zshenv
+    participant Core as env.zsh / func-core.zsh
+    participant Prof as .zprofile
     participant RC as .zshrc
-    participant Env2 as environment.zsh
     participant UI as interface.zsh
     participant Ext as extensions.zsh
 
     Note over Shell: ~/.zshenv -> ZDOTDIR設定
-    Shell->>Env: source $ZDOTDIR/.zshenv
-    Note over Env: PATH, XDG, Homebrew, fzf
+    Shell->>Env: source $ZDOTDIR/.zshenv (全 zsh)
+    Note over Env: XDG, FPATH, fzf
+    Env->>Core: source env.zsh + func-core.zsh
+    Note over Core: 正準PATH順序 (mise shims 静的prepend)<br/>GOPATH, CC_WORKLOG_DIR<br/>gh() アカウント自動選択
 
-    Shell->>RC: source $ZDOTDIR/.zshrc
-    RC->>Env2: source environment.zsh
-    Note over Env2: mise activate (shims)<br/>compinit (24h cache)<br/>Go PATH<br/>atuin init
+    alt login shell
+        Note over Shell: /etc/zprofile (path_helper) が<br/>PATH を再構成し prepend を降格させる
+        Shell->>Prof: source $ZDOTDIR/.zprofile
+        Prof->>Core: env.zsh を再 source (正準順序を再主張)
+    end
 
-    RC->>RC: source .zshrc_local
-    Note over RC: マシン固有設定
+    alt interactive shell
+        Shell->>RC: source $ZDOTDIR/.zshrc
+        RC->>UI: source interface.zsh
+        Note over UI: compinit (24h cache)<br/>atuin init<br/>starship init<br/>vi keybindings
+        RC->>Ext: source extensions.zsh
+        Note over Ext: sheldon source (下記参照)<br/>func/history/completion/alias<br/>plugins/*.zsh
+        RC->>RC: source .zshrc_local
+        Note over RC: マシン固有設定
+    end
 
-    RC->>UI: source interface.zsh
-    Note over UI: starship init<br/>vi keybindings
-
-    RC->>Ext: source extensions.zsh
-    Note over Ext: sheldon source (下記参照)<br/>func/history/completion/alias<br/>plugins/*.zsh
+    Note over Shell: 非対話シェルは .zshenv (+login なら .zprofile) のみ。<br/>PATH/env/常時関数を env.zsh 側に置くのはこのため
 ```
 
 ## sheldon プラグインの遅延ロード

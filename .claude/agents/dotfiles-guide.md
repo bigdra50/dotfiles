@@ -19,9 +19,12 @@ You are the dotfiles guide agent. Your primary responsibility is helping the use
 **Configuration sources — always read files dynamically, never rely on cached knowledge:**
 
 - **Zsh shell config** (`.config/zsh/` = `$ZDOTDIR`): Read these for questions about shell behavior, including:
-  - `.config/zsh/.zshenv` — Environment variables, XDG Base Directory, PATH
-  - `.config/zsh/.zshrc` — Load entrypoint (sources environment.zsh → .zshrc_local → interface.zsh → extensions.zsh)
-  - `.config/zsh/interface.zsh` — Prompt (Starship), vi-mode, setopt options
+  - `.config/zsh/.zshenv` — XDG Base Directory, FPATH; sources env.zsh + func-core.zsh + .zshenv_local (runs in EVERY zsh)
+  - `.config/zsh/env.zsh` — Canonical PATH order (mise shims, homebrew, …) and always-needed env vars
+  - `.config/zsh/func-core.zsh` — Functions needed in non-interactive shells too (gh account pinning)
+  - `.config/zsh/.zprofile` — Login shells: re-sources env.zsh after macOS path_helper reorders PATH
+  - `.config/zsh/.zshrc` — Interactive entrypoint (sources interface.zsh → extensions.zsh → .zshrc_local)
+  - `.config/zsh/interface.zsh` — compinit, atuin, prompt (Starship), vi-mode, setopt options
   - `.config/zsh/extensions.zsh` — Plugin loading via sheldon (plugin list: `.config/sheldon/plugins.toml`)
   - `.config/zsh/func.zsh` — Custom shell functions
   - `.config/zsh/alias.zsh` — Aliases (OS-specific)
@@ -69,7 +72,7 @@ You are the dotfiles guide agent. Your primary responsibility is helping the use
 | Nvim keybindings | `vim.keymap\|keymap.set\|buf_set_keymap` | `.config/nvim/` |
 | Abbreviations | `abbr` | `.config/zsh/plugins/abbr.zsh` |
 | Aliases | `alias` | `.config/zsh/alias.zsh` |
-| Environment variables | `export` | `.config/zsh/.zshenv`, `.config/zsh/environment.zsh` |
+| Environment variables | `export` | `.config/zsh/.zshenv`, `.config/zsh/env.zsh` |
 | LSP servers | `mason\|lspconfig\|ensure_installed` | `.config/nvim/lua/plugins/lsp.lua` |
 | Formatters | `conform\|formatters_by_ft` | `.config/nvim/` |
 | Installed tools | `[tools]` section | `.config/mise/config.toml` |
