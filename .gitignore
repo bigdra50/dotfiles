@@ -43,6 +43,10 @@ yarn-error.log*
 .config/nvim/undodir/
 .config/nvim/spell/
 
+# .ssh は config のみ管理 (鍵・known_hosts 等の誤コミット防止)
+.ssh/*
+!.ssh/config
+
 # Config directories to exclude (tools that auto-generate)
 .config/configstore/
 .config/yarn/
