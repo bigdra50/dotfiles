@@ -46,4 +46,8 @@ fi
 # login shell では path_helper 対策として $ZDOTDIR/.zprofile からも再 source される。
 [[ -f "$ZDOTDIR/env.zsh" ]] && . "$ZDOTDIR/env.zsh"
 
+# 常時層の関数 (gh のアカウント自動選択等)。関数は path_helper に影響されないため
+# ここでの1回の source でよい。
+[[ -f "$ZDOTDIR/func-core.zsh" ]] && . "$ZDOTDIR/func-core.zsh"
+
 [[ -e "$ZDOTDIR/.zshenv_local" ]] && . "$ZDOTDIR/.zshenv_local"
