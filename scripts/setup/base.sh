@@ -49,7 +49,12 @@ set_default_shell_zsh() {
         return 0
     }
 
-    current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)"
+    # getent は glibc 専用 (macOS に無い)。無い環境では $SHELL にフォールバック。
+    # set -euo pipefail 下で未存在コマンドは 127 で即死するため command_exists でガードする。
+    current_shell=""
+    if command_exists getent; then
+        current_shell="$(getent passwd "$USER" 2>/dev/null | cut -d: -f7)"
+    fi
     [[ -z "$current_shell" ]] && current_shell="${SHELL:-}"
     if [[ "$current_shell" == */zsh ]]; then
         success "Default shell already zsh ($current_shell)"
