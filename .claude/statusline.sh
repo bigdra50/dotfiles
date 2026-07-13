@@ -575,17 +575,6 @@ if [[ -n "$CTX_STATUS" ]]; then
     STATUS_LINE="${STATUS_LINE} ${CTX_STATUS}"
 fi
 
-# 3.6. Claude usage limits (5h / weekly / scoped models e.g. Fable) — shared SWR cache
-if [[ -x "$HOME/.claude/scripts/claude-usage" ]]; then
-    USAGE_STATUS=$("$HOME/.claude/scripts/claude-usage" statusline 2>/dev/null)
-    if [[ -n "$USAGE_STATUS" && "$USAGE_STATUS" != "usage "* ]]; then
-        if [[ "$USAGE_STATUS" == *⛔* ]]; then USAGE_COLOR="$C_RED"
-        elif [[ "$USAGE_STATUS" == *⚠* ]]; then USAGE_COLOR="$C_ORANGE"
-        else USAGE_COLOR="$C_GRAY"; fi
-        STATUS_LINE="${STATUS_LINE} ${USAGE_COLOR}${USAGE_STATUS}${C_RESET}"
-    fi
-fi
-
 # 4. Time (current time and session duration)
 CURRENT_TIME=$(date +"%H:%M")
 TIME_ICON="$(echo -e "\xF3\xB0\xA5\x94")"  # nf-md-clock (U+F0954)
@@ -637,6 +626,18 @@ fi
 if [[ -n "$UNILYZE_STATUS" ]]; then
     STATUS_LINE2="${STATUS_LINE2:+${STATUS_LINE2} }${UNILYZE_STATUS}"
 fi
+
+# Claude usage limits (5h / weekly / scoped models e.g. Fable) — shared SWR cache; line 2
+if [[ -x "$HOME/.claude/scripts/claude-usage" ]]; then
+    USAGE_STATUS=$("$HOME/.claude/scripts/claude-usage" statusline 2>/dev/null)
+    if [[ -n "$USAGE_STATUS" && "$USAGE_STATUS" != "usage "* ]]; then
+        if [[ "$USAGE_STATUS" == *⛔* ]]; then USAGE_COLOR="$C_RED"
+        elif [[ "$USAGE_STATUS" == *⚠* ]]; then USAGE_COLOR="$C_ORANGE"
+        else USAGE_COLOR="$C_GRAY"; fi
+        STATUS_LINE2="${STATUS_LINE2:+${STATUS_LINE2} }${USAGE_COLOR}${USAGE_STATUS}${C_RESET}"
+    fi
+fi
+
 if [[ -n "$STATUS_LINE2" ]]; then
     echo "$STATUS_LINE2"
 fi
