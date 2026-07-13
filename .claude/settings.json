@@ -183,6 +183,10 @@
           {
             "type": "command",
             "command": "command -v session-topic-capture >/dev/null && session-topic-capture UserPromptSubmit || true"
+          },
+          {
+            "type": "command",
+            "command": "~/.claude/scripts/claude-usage hook 2>/dev/null || true"
           }
         ]
       }
