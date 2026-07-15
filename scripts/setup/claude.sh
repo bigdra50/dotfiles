@@ -7,7 +7,9 @@ CLAUDE_DIR="$DOTFILES_DIR/.claude"
 source "$DOTFILES_DIR/scripts/lib.sh"
 
 # Directories to link
-CLAUDE_DIRS="commands rules agents tools hooks output-styles scripts"
+# NOTE: agents are no longer symlinked — they are apm-managed primitives
+# (source: .apm/agents/*.agent.md) deployed to ~/.claude/agents by install_skills.
+CLAUDE_DIRS="commands rules tools hooks output-styles scripts"
 
 # Files to link
 # NOTE: settings.json は symlink しない。Claude Code が実行時に atomic write
@@ -50,6 +52,14 @@ link_claude() {
     if [[ -L "$HOME/.claude/skills" ]] && [[ "$(readlink "$HOME/.claude/skills")" == "$CLAUDE_DIR/skills" ]]; then
         rm "$HOME/.claude/skills"
         info "Removed legacy ~/.claude/skills symlink"
+    fi
+
+    # Agents used to be symlinked from .claude/agents; they are now apm-managed
+    # primitives (.apm/agents/*.agent.md) deployed by apm. Remove the legacy
+    # symlink so apm writes real agent files into ~/.claude/agents.
+    if [[ -L "$HOME/.claude/agents" ]] && [[ "$(readlink "$HOME/.claude/agents")" == "$CLAUDE_DIR/agents" ]]; then
+        rm "$HOME/.claude/agents"
+        info "Removed legacy ~/.claude/agents symlink (now apm-managed)"
     fi
 }
 
@@ -208,8 +218,18 @@ install_skills() {
     fi
     mkdir -p "$HOME/.apm"
     install -m 644 "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
+
+    # Local apm primitives (agents) live under .apm/<type>/. Mirror them into
+    # ~/.apm so `apm install -g` deploys them to ~/.claude/agents alongside the
+    # dependency skills. Clean-sync so a primitive deleted from dotfiles is also
+    # removed globally on the next run.
+    rm -rf "$HOME/.apm/agents"
+    if [[ -d "$DOTFILES_DIR/.apm/agents" ]]; then
+        cp -R "$DOTFILES_DIR/.apm/agents" "$HOME/.apm/agents"
+    fi
+
     if apm install -g --target claude; then
-        success "Skills installed via apm"
+        success "Skills and agents installed via apm"
     else
         warning "apm install reported issues; check 'apm install -g' output"
     fi

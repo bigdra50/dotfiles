@@ -70,12 +70,14 @@ def collect_from_claude_dir(claude_dir: Path, root: Path) -> list[dict[str, str]
 
 
 def _collect_agents(claude_dir: Path, root: Path) -> list[ClaudeAsset]:
-    agents_root = claude_dir / "agents"
+    # Agents are apm-managed primitives authored under .apm/agents/*.agent.md
+    # (deployed to ~/.claude/agents by apm), not under .claude/agents anymore.
+    agents_root = root / ".apm" / "agents"
     if not agents_root.is_dir():
         return []
 
     assets: list[ClaudeAsset] = []
-    for agent_file in sorted(agents_root.rglob("*.md")):
+    for agent_file in sorted(agents_root.rglob("*.agent.md")):
         text = agent_file.read_text(encoding="utf-8")
         frontmatter = parse_frontmatter(text) or {}
         name = frontmatter.get("name", "").strip() or agent_file.stem
