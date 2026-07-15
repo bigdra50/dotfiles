@@ -1,15 +1,20 @@
-# apm (Microsoft Agent Package Manager) manifest — global Claude Code skills.
-# Source of truth for `apm install -g` (deploys to ~/.claude/skills).
+# apm (Microsoft Agent Package Manager) manifest — global agent primitives.
+# Source of truth for `apm install -g` (deploys skills + agents across the
+# harnesses listed in `targets`: claude/codex/copilot/cursor).
 # 各エントリは <owner/repo>/<skill-dir> のサブパス指定 (リポジトリ直下は
 # apm パッケージではないため、SKILL.md を持つスキルフォルダを個別に指す)。
 # 更新: `apm update -g` で main の最新へ追従。追加/削除はこのファイルを編集して
 #       `mise run setup:claude` (= scripts/setup/claude.sh) で反映する。
 name: bigdra-skills
 version: 1.0.0
-description: Global Claude Code skills managed by apm
-# Claude Code のユーザスコープ (~/.claude/skills) に配置する
+description: Global agent primitives (skills + agents) managed by apm
+# 各 target のユーザスコープへ配置する。rules のクロスツール配布は apm では
+# 部分対応のため、従来どおり scripts/sync-rules.sh に委ねる（apm 対象外）。
 targets:
   - claude
+  - codex
+  - copilot
+  - cursor
 dependencies:
   apm:
     - bigdra50/skills/3dcg/blender-export

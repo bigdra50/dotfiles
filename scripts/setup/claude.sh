@@ -220,16 +220,17 @@ install_skills() {
     install -m 644 "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
 
     # Local apm primitives (agents) live under .apm/<type>/. Mirror them into
-    # ~/.apm so `apm install -g` deploys them to ~/.claude/agents alongside the
-    # dependency skills. Clean-sync so a primitive deleted from dotfiles is also
-    # removed globally on the next run.
+    # ~/.apm so `apm install -g` deploys them alongside the dependency skills.
+    # Clean-sync so a primitive deleted from dotfiles is also removed globally.
     rm -rf "$HOME/.apm/agents"
     if [[ -d "$DOTFILES_DIR/.apm/agents" ]]; then
         cp -R "$DOTFILES_DIR/.apm/agents" "$HOME/.apm/agents"
     fi
 
-    if apm install -g --target claude; then
-        success "Skills and agents installed via apm"
+    # No --target flag: deploy to every harness listed in apm.yml `targets`
+    # (claude/codex/copilot/cursor). Rules stay cross-tool via sync-rules.sh.
+    if apm install -g; then
+        success "Skills and agents installed via apm (targets from apm.yml)"
     else
         warning "apm install reported issues; check 'apm install -g' output"
     fi
