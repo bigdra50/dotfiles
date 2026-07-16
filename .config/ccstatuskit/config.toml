@@ -1,0 +1,31 @@
+# ccstatuskit — https://github.com/bigdra50/ccstatuskit
+# bash statusline.sh 相当のレイアウト + unilyze + compact-prep マーカー
+
+# 1行目: セッション状態 / 2行目: Claude 系（モデル + CTX + 利用枠）/ 3行目: 開発環境
+# 各行はモジュールが全部隠れると行ごと消える（非Unityでは3行目が自動で消滅）
+format = """
+$directory $memory $time $git
+$model $ctx $usage ${custom.compact_warn}
+$project ${custom.unilyze}
+"""
+
+[usage]
+scoped = true
+
+# Unity プロジェクトのみ CodeHealth を表示（unilyze 自身が SWR キャッシュを持つ）
+[custom.unilyze]
+command = "unilyze statusline"
+when_dir = ["Assets"]
+
+# 副作用専用モジュール: CTX が閾値超で compact-prep 警告マーカーを書く。
+# 出力は常に空 = 非表示。userpromptsubmit-compact-prep-reminder.sh が拾う。
+[custom.compact_warn]
+command = '''
+t="${TMPDIR:-/tmp}"
+sid=$(printf '%s' "${CCSK_SESSION_ID:-}" | tr -c 'A-Za-z0-9._-' '_')
+if [ -n "$sid" ] && [ "${CCSK_CTX_PCT:-0}" -ge 60 ] && [ ! -f "$t/claude-compact-warned/$sid" ]; then
+  mkdir -p "$t/claude-compact-warn"
+  printf '%s\n' "$CCSK_CTX_PCT" > "$t/claude-compact-warn/$sid"
+fi
+true
+'''
