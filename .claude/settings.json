@@ -186,7 +186,7 @@
           },
           {
             "type": "command",
-            "command": "~/.claude/scripts/claude-usage hook 2>/dev/null || true"
+            "command": "~/.claude/scripts/usage-warn-hook 2>/dev/null || true"
           }
         ]
       }

@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# usage-warn-hook — UserPromptSubmit hook。
+# ccstatuskit (https://github.com/bigdra50/ccstatuskit) が維持する usage キャッシュを
+# 読み、利用枠が逼迫したときだけ警告をプロンプトへ注入する。
+# 残量デルタゲート付き: 初回・severity 悪化・残量が一定幅減ったときのみ再注入。
+# キャッシュの更新は ccstatuskit の statusline 描画側が担う。ここでは読むだけ。
+
+set -uo pipefail
+
+CACHE_ROOT="${XDG_CACHE_HOME:-$HOME/.cache}/ccstatuskit"
+CACHE="$CACHE_ROOT/usage.json"
+SEEN="$CACHE_ROOT/hook-seen"
+mkdir -p "$SEEN"
+
+[ -f "$CACHE" ] || exit 0
+
+session_id(){  # UserPromptSubmit の stdin JSON から session_id。無ければ env/manual
+  local sid=""
+  if [ ! -t 0 ]; then
+    sid=$(python3 -c "import json,sys
+try: print((json.load(sys.stdin).get('session_id') or '')[:64])
+except Exception: pass" 2>/dev/null)
+  fi
+  [ -z "$sid" ] && sid="${CLAUDE_SESSION_ID:-manual}"
+  printf '%s' "$sid" | tr -c 'A-Za-z0-9._-' '_'
+}
+
+sid=$(session_id)
+python3 - "$CACHE" "$SEEN/$sid" <<'PY'
+import json,sys,datetime
+cache,state=sys.argv[1],sys.argv[2]
+try: d=json.load(open(cache))
+except Exception: sys.exit(0)
+lims=d.get("limits") or []
+def pc(l): return int(round(l.get("percent",0)))
+def rem(l): return 100-pc(l)
+def name(l): return (((l.get("scope") or {}).get("model") or {}).get("display_name")) or "?"
+def label(l):
+    if l.get("scope"): return name(l)+"(週次)"
+    return {"session":"5h","weekly_all":"週次"}.get(l.get("kind",""), l.get("kind",""))
+def reset_short(l):
+    r=l.get("resets_at")
+    if not r: return ""
+    try:
+        t=datetime.datetime.fromisoformat(r.replace("Z","+00:00"))
+        ms=(t-datetime.datetime.now(datetime.timezone.utc)).total_seconds()
+    except Exception: return ""
+    if ms<=0: return "now"
+    h=int(ms//3600); dd=h//24
+    return f"{dd}d" if dd>0 else (f"{h}h" if h>0 else f"{int(ms//60)}m")
+RANK={"normal":0,"warning":1,"critical":2}
+hot=[l for l in lims if RANK.get(l.get("severity"),0)>=1]
+if not hot:
+    try: import os; os.remove(state)   # 落ち着いたら状態リセット
+    except OSError: pass
+    sys.exit(0)
+trigger=min(rem(l) for l in hot)            # 最も逼迫した窓の残量
+sevrank=max(RANK.get(l.get("severity"),0) for l in hot)
+# 前回注入時の (残量, sevrank)
+last_rem, last_sev = None, -1
+try:
+    a,b=open(state).read().split(); last_rem=float(a); last_sev=int(b)
+except Exception: pass
+step = 1 if trigger<=10 else 5              # 残10%以下は1%刻み、それ以上は5%刻み
+inject = (last_rem is None) or (sevrank>last_sev) or ((last_rem-trigger)>=step)
+if not inject: sys.exit(0)
+open(state,"w").write(f"{trigger} {sevrank}")
+lines=[f"- {label(l)}: {pc(l)}% 使用 / 残 {rem(l)}% ({l.get('severity')}, {reset_short(l)}でリセット)" for l in sorted(hot,key=rem)]
+print("[Claude 利用枠 警告] 以下の枠が逼迫。逼迫しているモデル(特に scoped 枠)の使用は必要な場面に限定すること:")
+print("\n".join(lines))
+PY
