@@ -12,9 +12,10 @@ $project ${custom.unilyze}
 [usage]
 scoped = true
 
-# Unity プロジェクトのみ CodeHealth を表示（unilyze 自身が SWR キャッシュを持つ）
+# Unity プロジェクトのみ CodeHealth を表示。
+# -p を明示: cwd 任せだと Claude Code の起動ディレクトリ次第で別の場所を分析してしまう
 [custom.unilyze]
-command = "unilyze statusline"
+command = 'unilyze statusline -p "${CCSK_PROJECT_DIR:-.}"'
 when_dir = ["Assets"]
 
 # 副作用専用モジュール: CTX が閾値超で compact-prep 警告マーカーを書く。
