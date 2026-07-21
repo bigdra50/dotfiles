@@ -49,15 +49,20 @@ link_claude() {
     # Older setups linked ~/.claude/skills directly into the repo. Skills now
     # live in bigdra50/skills and are deployed by apm, so the link is dangling —
     # remove it before apm writes skill folders through it into dotfiles.
-    if [[ -L "$HOME/.claude/skills" ]] && [[ "$(readlink "$HOME/.claude/skills")" == "$CLAUDE_DIR/skills" ]]; then
+    # NOTE: compare by dangling-ness, not readlink string equality — the repo
+    # may be reached via an alias path (e.g. ~/dotfiles -> ~/dev/.../dotfiles
+    # under ghq), which makes readlink's literal target differ from $CLAUDE_DIR
+    # even though both resolve to the same file.
+    if [[ -L "$HOME/.claude/skills" ]] && [[ ! -e "$HOME/.claude/skills" ]]; then
         rm "$HOME/.claude/skills"
         info "Removed legacy ~/.claude/skills symlink"
     fi
 
     # Agents used to be symlinked from .claude/agents; they are now apm-managed
-    # primitives (.apm/agents/*.agent.md) deployed by apm. Remove the legacy
-    # symlink so apm writes real agent files into ~/.claude/agents.
-    if [[ -L "$HOME/.claude/agents" ]] && [[ "$(readlink "$HOME/.claude/agents")" == "$CLAUDE_DIR/agents" ]]; then
+    # primitives (.apm/agents/*.agent.md) deployed by apm. .claude/agents no
+    # longer exists in the repo, so the legacy symlink is always dangling now.
+    # Remove it so apm writes real agent files into ~/.claude/agents.
+    if [[ -L "$HOME/.claude/agents" ]] && [[ ! -e "$HOME/.claude/agents" ]]; then
         rm "$HOME/.claude/agents"
         info "Removed legacy ~/.claude/agents symlink (now apm-managed)"
     fi
