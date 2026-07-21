@@ -235,8 +235,7 @@
     "plugin-dev@claude-plugins-official": true,
     "unity-dev@bigdra50": true,
     "codex@openai-codex": true,
-    "oh-my-mermaid@oh-my-mermaid": true,
-    "copilot@ORG-copilot": true
+    "oh-my-mermaid@oh-my-mermaid": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {

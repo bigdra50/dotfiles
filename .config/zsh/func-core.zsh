@@ -10,7 +10,7 @@
 # cwd の org ディレクトリごとに GH_CONFIG_DIR を出し分けてアカウントを固定する。
 # トークンは keyring 共有なので各 config dir は hosts.yml だけでよい。
 # 具体的な org→config dir の対応は連想配列 GH_ORG_CONFIG で与える。
-# 職場など公開できない対応は非追跡の .zshenv_local 側で定義すること:
+# 公開できない対応は非追跡の .zshenv_local 側で定義すること:
 #   typeset -gA GH_ORG_CONFIG=( github.com/<org> gh-<config-dir> ... )
 # GH_ORG_CONFIG 未定義/不一致ならデフォルト ($XDG_CONFIG_HOME/gh) にフォールバックする。
 gh(){

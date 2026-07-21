@@ -80,10 +80,10 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 - `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`) — 秘密情報はここに限る
 - `~/.ssh/config.d/local.conf` — マシン固有 ssh ホスト
 
-業務固有の設定（`~/.gitconfig_local`、`~/.gitconfig-ORG`、`~/.ssh/config.d/ORG.conf`）は
-private な ORG-USER/dotfiles の setup.sh が配備する。
+プロファイル固有の設定（`~/.gitconfig_local`、`~/.gitconfig-<profile>`、`~/.ssh/config.d/<profile>.conf`）は
+この repo では管理せず、別の private な dotfiles の setup.sh が配備する。
 この repo は汎用フック（`[include]`、`Include config.d/*.conf`、`GH_ORG_CONFIG` 参照）だけを持ち、
-業務マーカーの混入は `.gitleaks.toml` の custom rules が commit 時に遮断する。
+固有識別子の混入は `.gitleaks.toml` の custom rules が commit 時に遮断する。
 
 
 ## Claude Code設定 (`.claude/`)

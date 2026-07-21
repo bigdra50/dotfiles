@@ -20,8 +20,8 @@ scope:
   スラッシュを含まない場合は github.com/<scope> とみなす。
 
   mise run serve-reports -- bigdra50                  # github.com/bigdra50 のみ
-  mise run serve-reports -- github.com/ORG     # 任意ホスト/owner
-  mise run serve-reports -- bigdra50 ORG       # 複数 owner
+  mise run serve-reports -- github.com/<owner>        # 任意ホスト/owner
+  mise run serve-reports -- bigdra50 <other-owner>    # 複数 owner
 
 収集対象:
   - <repo>/implementation-notes.html

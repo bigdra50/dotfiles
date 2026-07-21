@@ -1,21 +1,32 @@
 # gitleaks custom config (pre-commit hook が自動で読む)
 #
-# この repo は PUBLIC のため、汎用シークレットに加えて業務マーカーの混入を遮断する。
-# 業務固有の設定・ホスト定義は private な ORG-USER/dotfiles 側で管理する。
+# この repo は PUBLIC のため、汎用シークレットに加えて
+# 「この repo に入れてはいけない識別子」の混入を遮断する。
+# 環境固有の設定・ホスト定義は別の private な dotfiles 側で管理する。
 # 誤検知の例外は .gitleaksignore にフィンガープリントで登録する。
+#
+# 下記 regex は、検出対象の文字列がこのファイル内に平文で現れないよう
+# 文字クラスで分割してある。gitleaks は自身の設定ファイルをスキャン対象から
+# 除外するため、ここに平文を書くとその文字列は恒久的に検出漏れになる (実測確認済み)。
+# 可読性より「この設定ファイル自体が検索索引にならないこと」を優先する。
+# ルール変更時は必ず repo 外のフィクスチャで検出率を再測定すること
+# (フィクスチャをこの repo に置くと、それ自体が索引になる)。
 
 [extend]
 # gitleaks 標準ルール (API key 等) を維持した上で custom rules を足す
 useDefault = true
 
 [[rules]]
-id = "work-email-domain"
-description = "業務メールドメイン (ORG.jp) は public repo に入れない"
-regex = '''ORG\.jp'''
-keywords = ["ORG"]
+id = "org-identifier"
+description = "Organization-specific identifiers must not enter this public repo"
+regex = '''(?i)(u[p]-?f[r]ontier|u[p]f[t]\b)'''
 
 [[rules]]
-id = "work-internal-domain"
-description = "業務内部ドメイン (*.ORG.jp) は public repo に入れない"
-regex = '''[A-Za-z0-9.-]*ORG\.jp'''
-keywords = ["ORG"]
+id = "project-codename"
+description = "Client project codenames must not enter this public repo"
+regex = '''(?i)(\bint[l]oop|mr-t[r]ain\b|un[i]one\b|off[i]ce-mac)|表[参]道[未]来[都]市'''
+
+[[rules]]
+id = "legal-name"
+description = "Legal name must not enter this public repo"
+regex = '''(?i)ry[u]dai[._-]?k[i]mura'''

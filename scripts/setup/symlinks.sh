@@ -107,7 +107,7 @@ link_ssh() {
     [[ ! -f "$DOTFILES_DIR/.ssh/config" ]] && return 0
 
     # ディレクトリ全体は鍵を含むため repo 管理しない。config のみ file-level で link し、
-    # マシン/業務固有ホストの差し込み先 config.d/ を用意する。
+    # マシン/プロファイル固有ホストの差し込み先 config.d/ を用意する。
     mkdir -p "$HOME/.ssh"
     chmod 700 "$HOME/.ssh"
     create_symlink "$DOTFILES_DIR/.ssh/config" "$HOME/.ssh/config"

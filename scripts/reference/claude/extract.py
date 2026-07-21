@@ -134,6 +134,10 @@ def _collect_rules(claude_dir: Path, root: Path) -> list[ClaudeAsset]:
 
     assets: list[ClaudeAsset] = []
     for rule_file in sorted(rules_root.rglob("*.md")):
+        # private-*.md と symlink は別の private な dotfiles が配備する非公開ルール。
+        # 生成物は公開されるため、見出しすら読み込まない
+        if rule_file.name.startswith("private-") or rule_file.is_symlink():
+            continue
         text = rule_file.read_text(encoding="utf-8")
         description = first_heading_or_line(text)
         assets.append(

@@ -70,7 +70,10 @@ yarn-error.log*
 .config/dot_config
 
 # Specific files to exclude within tracked config directories
-.config/gh/hosts.yml
+# gh はアカウント情報を含む状態ファイル (hosts.yml 等) を同 dir に書くため、
+# config.yml だけを追跡するホワイトリスト方式にする
+.config/gh/*
+!.config/gh/config.yml
 .config/mise/*.lock
 .config/zsh/.zcompdump*
 .config/zsh/.zsh_sessions/
@@ -115,6 +118,12 @@ TODO.md
 # Claude Code instructions (personal notes)
 .claude/settings.local.json
 .config/nvim/.claude/settings.local.json
+
+# 非公開ルール/スキル (別の private な dotfiles が symlink を配備する)
+# symlink をコミットすると blob にリンク先パス文字列が入り、
+# 実体が repo 外でもパス自体が情報を漏らすため、名前パターンで遮断する
+/.claude/rules/private-*.md
+/.claude/skills/private-*
 
 # Claude Code session artifacts (implementation-notes rule)
 implementation-notes.html

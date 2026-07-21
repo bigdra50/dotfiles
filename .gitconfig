@@ -52,8 +52,8 @@
 [includeIf "gitdir:/Volumes/CrucialX9/dev/github.com/bigdra50/"]
   path = ~/.gitconfig-bigdra50
 
-# 業務用の includeIf 群は ~/.gitconfig_local に置く (上の [include] が読む)。
-# 実体は private な ORG-USER/dotfiles の setup.sh が配備し、
+# 追加の includeIf 群は ~/.gitconfig_local に置く (上の [include] が読む)。
+# 実体は別の private な dotfiles の setup.sh が配備し、
 # 無い環境では黙ってスキップされる。
 
 [github]

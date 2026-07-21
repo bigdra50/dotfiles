@@ -241,10 +241,10 @@ Commands:
   remove <owner/repo>             Remove runners and unregister
 
 Examples:
-  mise run runner -- setup github.com/ORG/REVIEW-REPO
-  mise run runner -- setup github.com/ORG/REVIEW-REPO -c 3
+  mise run runner -- setup github.com/<owner>/<repo>
+  mise run runner -- setup github.com/<owner>/<repo> -c 3
   mise run runner -- list
-  mise run runner -- stop github.com/ORG/REVIEW-REPO
+  mise run runner -- stop github.com/<owner>/<repo>
 USAGE
     ;;
 esac
