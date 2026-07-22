@@ -1,0 +1,16 @@
+# Nix 移行実験の検証環境。
+# 既存 docker-compose.yml（リポジトリ直下）とは独立。
+#
+# 使い方:
+#   docker compose -f nix/docker-compose.yml build
+#   docker compose -f nix/docker-compose.yml run --rm nix-verify
+services:
+  nix-verify:
+    build:
+      # コンテキストはリポジトリ直下（.config や nix/ を COPY するため）。
+      context: ..
+      dockerfile: nix/Dockerfile
+    image: dotfiles-nix:latest
+    container_name: dotfiles-nix-verify
+    # switch + ツール/シンボリンク検証を実行。
+    command: ["bash", "nix/verify.sh"]
