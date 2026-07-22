@@ -29,7 +29,8 @@ nix/
 │   ├── wsl.nix        # x86_64-linux（Docker 検証もこれ）
 │   └── mac.nix        # aarch64-darwin（スケルトン）
 ├── Dockerfile         # WSL 相当の検証環境
-└── verify.sh          # switch + ツール/シンボリンク検証
+├── verify.sh          # switch + ツール/シンボリンク検証
+└── ci/nix-ci.yml      # CI 定義テンプレート（下記「CI」参照）
 ```
 
 ## 使い方
@@ -64,6 +65,17 @@ nix run home-manager/master -- switch --flake ./nix#mac
 ```bash
 docker build -f nix/Dockerfile -t dotfiles-nix:latest .
 docker run --rm dotfiles-nix:latest bash nix/verify.sh
+```
+
+### CI で検証（public runner）
+
+CI 定義は [ci/nix-ci.yml](ci/nix-ci.yml) にテンプレートとして置いてある。
+`flake check` + WSL プロファイルのビルドと、Docker での end-to-end 検証を回す。
+
+有効化するには `.github/workflows/` へコピーする:
+
+```bash
+cp nix/ci/nix-ci.yml .github/workflows/nix-ci.yml
 ```
 
 ## mise ↔ Nix 対応

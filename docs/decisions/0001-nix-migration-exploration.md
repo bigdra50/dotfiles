@@ -54,7 +54,7 @@ bash スクリプト（`scripts/setup/*`）で行っている。
 
 - `home-manager switch` の実適用（実ホームへの symlink 生成・PATH 反映）。
   ビルドまでは通っており、残るは活性化のみ。検証用 Docker 構成（`nix/Dockerfile` + `verify.sh`）と
-  CI（`.github/workflows/nix-ci.yml`）で end-to-end を回す。
+  CI テンプレート（`nix/ci/nix-ci.yml` を `.github/workflows/` へ配置）で end-to-end を回す。
 - Mac（aarch64-darwin）の**ビルド**（評価は通るがビルドは Mac 実機が要る）。`hosts/mac.nix` はスケルトン。
 
 ## 判断材料と推奨

@@ -1,0 +1,51 @@
+# Nix 移行実験（nix/）の CI 定義テンプレート。
+# 有効化: このファイルを .github/workflows/nix-ci.yml にコピーする
+# （GitHub App トークンは workflows 権限を持たないため、ワークフローの配置は
+#  リポジトリ所有者が行う）。配置後は内容変更なしでそのまま動く。
+name: Nix CI
+
+# public リポジトリの無料 runner で動く。既存 CI（ci.yml 等）とは独立。
+on:
+  push:
+    branches: [master]
+    paths:
+      - "nix/**"
+      - ".github/workflows/nix-ci.yml"
+  pull_request:
+    paths:
+      - "nix/**"
+      - ".github/workflows/nix-ci.yml"
+
+jobs:
+  # flake が評価でき、WSL プロファイルの activation package がビルドできることを検証。
+  flake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Flake check
+        run: nix flake check ./nix
+
+      - name: Build WSL home configuration
+        run: nix build ./nix#homeConfigurations.wsl.activationPackage --no-link --print-out-paths
+
+  # WSL 相当の Docker 環境で home-manager switch を実行し、
+  # ツールが PATH に載り dotfiles の symlink が張られることを end-to-end 検証。
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Build verification image
+        run: docker build -f nix/Dockerfile -t dotfiles-nix:latest .
+
+      - name: Verify (switch + tools + symlinks)
+        run: docker run --rm dotfiles-nix:latest bash nix/verify.sh
