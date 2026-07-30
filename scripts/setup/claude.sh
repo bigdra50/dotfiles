@@ -228,13 +228,28 @@ install_skills() {
     mkdir -p "$HOME/.apm"
     create_symlink "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
 
-    # Local apm primitives (agents) live under .apm/<type>/. Mirror them into
-    # ~/.apm so `apm install -g` deploys them alongside the dependency skills.
+    # Local apm primitives live under .apm/<type>/. Mirror them into ~/.apm so
+    # `apm install -g` deploys them alongside the dependency skills.
     # Clean-sync so a primitive deleted from dotfiles is also removed globally.
-    rm -rf "$HOME/.apm/agents"
-    if [[ -d "$DOTFILES_DIR/.apm/agents" ]]; then
-        cp -R "$DOTFILES_DIR/.apm/agents" "$HOME/.apm/agents"
-    fi
+    #
+    # scripts/ is not a primitive type; it holds the executables the hook JSONs
+    # point at. Those commands use a literal `~/.apm/scripts/<name>` rather than
+    # ${PLUGIN_ROOT}: at user scope apm resolves ${PLUGIN_ROOT} to $HOME and
+    # deploys a copy of the script under ~/.claude/hooks/<pkg>/, which is a
+    # symlink into this repo and would write the copy back into dotfiles.
+    #
+    # Harness scoping for local hooks uses the `<name>-<harness>-hooks.json`
+    # filename suffix, which apm has deprecated (it warns on every install).
+    # Without it a Claude-only hook is also written to the codex/cursor/copilot
+    # configs. The replacement is the per-dependency `targets:` field, which
+    # needs these to become a real package rather than local content; revisit
+    # when the suffix router is removed.
+    for _dir in agents hooks scripts; do
+        rm -rf "$HOME/.apm/$_dir"
+        if [[ -d "$DOTFILES_DIR/.apm/$_dir" ]]; then
+            cp -R "$DOTFILES_DIR/.apm/$_dir" "$HOME/.apm/$_dir"
+        fi
+    done
 
     seed_apm_lockfile
 

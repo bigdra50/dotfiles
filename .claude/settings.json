@@ -186,10 +186,6 @@
           },
           {
             "type": "command",
-            "command": "~/.claude/scripts/usage-warn-hook 2>/dev/null || true"
-          },
-          {
-            "type": "command",
             "command": "bash ~/.claude/hooks/userpromptsubmit-compaction-recovery.sh"
           }
         ]

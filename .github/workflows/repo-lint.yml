@@ -49,6 +49,9 @@ jobs:
         run: |
           jq empty .claude/settings.json
           jq empty .claude/package.json
+          # apm fails a malformed hook manifest closed, with only a warning at
+          # install time, so catch it here instead.
+          find .apm/hooks -name '*.json' -print0 | xargs -0 -r -n1 jq empty
 
   zsh-syntax:
     runs-on: ubuntu-latest
