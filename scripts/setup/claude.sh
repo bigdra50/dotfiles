@@ -236,12 +236,18 @@ install_skills() {
         cp -R "$DOTFILES_DIR/.apm/agents" "$HOME/.apm/agents"
     fi
 
+    seed_apm_lockfile
+
     # No --target flag: deploy to every harness listed in apm.yml `targets`
     # (claude/codex/copilot/cursor). Rules stay cross-tool via sync-rules.sh.
     if apm install -g; then
         success "Skills and agents installed via apm (targets from apm.yml)"
+        sync_apm_lockfile
     else
+        # 失敗時は戻さない。途中まで書かれた lockfile を正本へ昇格させると、
+        # 次のマシンがその半端な解決をそのまま再現してしまう。
         warning "apm install reported issues; check 'apm install -g' output"
+        warning "Lockfile left unsynced; dotfiles keeps the previous resolution"
     fi
 
     verify_apm_manifest_link
@@ -268,6 +274,51 @@ verify_apm_manifest_link() {
 
     rm -f "$target"
     create_symlink "$source" "$target"
+}
+
+# lockfile を dotfiles から持ち込む。これが git 管理下にあることが
+# `apm install -g --frozen` の再現性の前提で、無ければ apm は各依存をその時点の
+# 最新へ解決し直す (#sha pin を持つ依存だけが固定され、残りは実行日次第になる)。
+#
+# apm.yml と違い symlink にはしない。`apm update` は atomic write で symlink を
+# 実ファイルに置換するため (verify_apm_manifest_link が apm.yml で救っているのと
+# 同じ罠)、往復とも cp で扱う。
+seed_apm_lockfile() {
+    local source="$DOTFILES_DIR/.apm/apm.lock.yaml"
+    local target="$HOME/.apm/apm.lock.yaml"
+
+    [[ -f "$source" ]] || return 0
+
+    # 直前の install が復路で同期しているので、通常ここは一致する。食い違うのは
+    # 復路を通っていない解決 (ローカルの `apm update -g` や他マシンからの pull) が
+    # ある場合で、黙って上書きすると片方が消える。apm.yml と同じく退避して知らせる。
+    if [[ -f "$target" ]] && ! diff -q "$source" "$target" >/dev/null 2>&1; then
+        local backup
+        backup="${target}.detached.$(date +%Y%m%d_%H%M%S)"
+        cp "$target" "$backup"
+        warning "$target differs from dotfiles; saved to $backup before overwrite"
+        warning "Diff it before discarding — an unsynced 'apm update -g' may be in there"
+    fi
+
+    cp "$source" "$target"
+}
+
+# 解決結果を dotfiles へ戻す。seed_apm_lockfile の復路。
+sync_apm_lockfile() {
+    local source="$HOME/.apm/apm.lock.yaml"
+    local dest="$DOTFILES_DIR/.apm/apm.lock.yaml"
+
+    if [[ ! -f "$source" ]]; then
+        warning "$source not found after install; nothing to sync back"
+        return 0
+    fi
+
+    if diff -q "$source" "$dest" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    cp "$source" "$dest"
+    info "apm.lock.yaml updated; review 'git diff .apm/apm.lock.yaml' for pin changes"
 }
 
 # ---- Main ----
