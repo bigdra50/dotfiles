@@ -17,10 +17,4 @@ MARKER_DIR="${TMPDIR:-/tmp}/claude-compacted"
 mkdir -p "$MARKER_DIR" 2>/dev/null || true
 printf '%s\n' "$(date +%s)" >"$MARKER_DIR/$SESSION_ID" 2>/dev/null || true
 
-# compact が実行されたら 60% 警告の未消費 marker と cooldown を両方リセットする
-# (未消費の warn marker を残すと、圧縮直後に stale な使用率で通知が誤発火する)
-rm -f "${TMPDIR:-/tmp}/claude-compact-warn/$SESSION_ID" 2>/dev/null || true
-WARN_DIR="${TMPDIR:-/tmp}/claude-compact-warned"
-rm -f "$WARN_DIR/$SESSION_ID" 2>/dev/null || true
-
 exit 0

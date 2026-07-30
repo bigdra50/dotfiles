@@ -39,7 +39,6 @@ MODEL_ID=$(echo "$input" | jq -r '.model.display_name // "Unknown"')
 CURRENT_DIR=$(echo "$input" | jq -r '.workspace.current_dir // "~"')
 PROJECT_DIR=$(echo "$input" | jq -r '.workspace.project_dir // "~"')
 TRANSCRIPT_PATH=$(echo "$input" | jq -r '.transcript_path // ""')
-SESSION_ID=$(echo "$input" | jq -r '.session_id // empty')
 CTX_USED_PCT=$(echo "$input" | jq -r '.context_window.used_percentage // empty')
 
 # Extract time information
@@ -532,17 +531,8 @@ if [[ -n "$CTX_USED_PCT" ]]; then
     CTX_STATUS="${C_CYAN}CTX${C_RESET} ${ctx_color}${CTX_INT_PCT}%${C_RESET}"
 fi
 
-# 閾値超で compact-prep 警告 marker を書く（cooldown 中でなければ）
-# userpromptsubmit-compact-prep-reminder.sh が marker を検出して通知を注入する
-COMPACT_WARN_THRESHOLD=60
-if [[ -n "$SESSION_ID" && "$SESSION_ID" != */* && -n "$CTX_INT_PCT" ]] && [[ "$CTX_INT_PCT" -ge "$COMPACT_WARN_THRESHOLD" ]] 2>/dev/null; then
-    _warned_dir="${TMPDIR:-/tmp}/claude-compact-warned"
-    if [[ ! -f "$_warned_dir/$SESSION_ID" ]]; then
-        _warn_dir="${TMPDIR:-/tmp}/claude-compact-warn"
-        mkdir -p "$_warn_dir" 2>/dev/null || true
-        printf '%s\n' "$CTX_INT_PCT" > "$_warn_dir/$SESSION_ID" 2>/dev/null || true
-    fi
-fi
+# CTX% の色分けが警告そのものなので、compact-prep を促す marker は書かない。
+# 圧縮後の復旧は PostCompact + UserPromptSubmit の compaction-recovery が担う。
 
 # ============================================================================
 # Build Status Line

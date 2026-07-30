@@ -187,6 +187,10 @@
           {
             "type": "command",
             "command": "~/.claude/scripts/usage-warn-hook 2>/dev/null || true"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/userpromptsubmit-compaction-recovery.sh"
           }
         ]
       }
@@ -198,6 +202,17 @@
           {
             "type": "command",
             "command": "command -v session-topic-capture >/dev/null && session-topic-capture PreCompact || true"
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/compaction-recovery.sh"
           }
         ]
       }
@@ -273,6 +288,7 @@
     ]
   },
   "alwaysThinkingEnabled": true,
+  "autoCompactEnabled": true,
   "effortLevel": "xhigh",
   "skipDangerousModePermissionPrompt": true,
   "remoteControlAtStartup": true,
