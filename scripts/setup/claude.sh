@@ -209,15 +209,23 @@ install_skills() {
     cleanup_legacy_skillpm
 
     # dotfiles の宣言的マニフェスト (.apm/apm.yml) をグローバルの正本として配置し、
-    # apm install -g で ~/.claude/skills へ展開する。apm はインストール時に
-    # ~/.apm/apm.yml を書き換えるため symlink せず copy する (settings.json と同じ
-    # 「dotfiles が正、再実行で再適用」方針)。
+    # apm install -g で ~/.claude/skills へ展開する。
+    #
+    # settings.json とは違い symlink でよい。apm は manifest を書き換えるとき
+    # atomic write (tmp + rename) ではなく symlink を辿って実ファイルへ直接書くため、
+    # symlink が実体に置換されない (inode 不変を実測で確認済み)。
+    # copy にすると apm 側の変更が dotfiles へ戻らず、~/.apm にだけ依存が増える
+    # 片道の drift が起きる。symlink ならそれが原理的に発生しない。
+    #
+    # 引数なしの `apm install -g` は manifest を一切書き換えないのでコメントも残る。
+    # `apm install -g <pkg>` のように apm に manifest を書かせるとコメントは失われる
+    # (依存の変更自体は正しく dotfiles へ流れるので git diff で復元できる)。
     if [[ ! -f "$DOTFILES_DIR/.apm/apm.yml" ]]; then
         warning "$DOTFILES_DIR/.apm/apm.yml not found; skipping skills"
         return 0
     fi
     mkdir -p "$HOME/.apm"
-    install -m 644 "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
+    create_symlink "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
 
     # Local apm primitives (agents) live under .apm/<type>/. Mirror them into
     # ~/.apm so `apm install -g` deploys them alongside the dependency skills.
