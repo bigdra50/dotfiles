@@ -100,12 +100,20 @@ apm は "local files not managed by APM" として触らない。
 
 ### private repo が 404 になる
 
-apm は gh の active アカウントの token を使う。
-`gh()` ラッパーの CWD ベース切り替えは subprocess に効かないので、実行時に別アカウントが active だと private repo が見えない。
+apm は自前で `gh auth token` を引く (`--verbose` に `source=gh-auth-token` と出る)。
+返るのはグローバルに active なアカウントの token で、`gh()` ラッパーは zsh 関数なので apm の subprocess からは呼ばれない。
+つまり apm が見る名義は、その時点で active なものに依存する。
+
+非対話で確実に通すなら org ごとの PAT を渡す。
+setup スクリプトや CI からの実行はこちらにする。
 
 ```bash
 GITHUB_APM_PAT_<OWNER>=<token> apm install -g
 ```
+
+対話的に叩く場合は、対象 repo の dir で `gh` を一度実行して名義を確定させてから apm を叩く。
+ただしそれでも 404 が続くことがある。切り分けは `apm install --dry-run --verbose <pkg>` の
+`Auth resolved:` 行を見て、apm がどの org のどの source で解決したかを確認する。
 
 ### `apm outdated -g` が同じ依存を常に outdated と言う
 
