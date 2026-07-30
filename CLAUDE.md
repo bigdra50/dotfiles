@@ -75,10 +75,11 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 
 ### ローカルオーバーライド
 
-マシン固有の設定は以下に記述（gitignore済み）:
+マシン固有の設定は以下に記述（git 追跡外）:
 - `$ZDOTDIR/.zshrc_local` (`~/.config/zsh/.zshrc_local`)
 - `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`) — 秘密情報はここに限る
 - `~/.ssh/config.d/local.conf` — マシン固有 ssh ホスト
+- `~/.claude/local-instructions.md`（Claude のマシンローカルメモリ。`.claude/CLAUDE.md` から import され、無いマシンでは無視。repo 外に平置きのため gitignore 不要）
 
 プロファイル固有の設定（`~/.gitconfig_local`、`~/.gitconfig-<profile>`、`~/.ssh/config.d/<profile>.conf`）は
 この repo では管理せず、別の private な dotfiles の setup.sh が配備する。

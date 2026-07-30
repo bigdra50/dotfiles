@@ -61,3 +61,10 @@ ghq get <repo>             # clone
 
 - 同一セッション内の 2 回目以降は不要
 - ユーザーの専門分野で自明な語には付けない（冗長回避）
+
+## マシンローカル import
+
+git 管理外のマシン固有メモリを読み込む。
+ファイルが無いマシンでは import は無視される。
+
+@~/.claude/local-instructions.md
