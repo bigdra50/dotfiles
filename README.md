@@ -30,5 +30,6 @@ mise run setup:platform-tools     # update platform tools
 ## Docs
 
 - [architecture](docs/architecture.md) — リポジトリ構成
+- [apm](docs/apm.md) — skills / agents の配布 (`.apm/apm.yml`)
 - [reference](docs/reference.md) — 設定から生成する検索可能リファレンス ([GitHub Pages](https://bigdra50.github.io/dotfiles/))
 - [serve-reports](docs/serve-reports.md) — Claude Code レポートの LAN 公開 (`mise run serve-reports`)
