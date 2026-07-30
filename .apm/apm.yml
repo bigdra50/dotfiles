@@ -1,10 +1,14 @@
 # apm (Microsoft Agent Package Manager) manifest — global agent primitives.
 # Source of truth for `apm install -g` (deploys skills + agents across the
 # harnesses listed in `targets`: claude/codex/copilot/cursor).
-# 各エントリは <owner/repo>/<skill-dir> のサブパス指定 (リポジトリ直下は
-# apm パッケージではないため、SKILL.md を持つスキルフォルダを個別に指す)。
-# 更新: `apm update -g` で main の最新へ追従。追加/削除はこのファイルを編集して
-#       `mise run setup:claude` (= scripts/setup/claude.sh) で反映する。
+# 各エントリは <owner/repo>/<path> のサブパス指定。path は SKILL.md を持つスキル
+# フォルダか、plugin manifest を持つカテゴリ (bundle) を指す。
+# 追加/削除はこのファイルを編集して `mise run setup:claude` で反映する。
+#
+# 更新は `apm update -g --dry-run` で plan を読んでから、引数なしの `apm update -g`。
+# --yes は付けないこと。既定 No のプロンプトが SHA/tag 書き換えを見せる唯一の関門で、
+# 潰すと pin が黙って動く。特定の依存だけ更新するなら `apm update -g <pkg>...`。
+# 他マシンでの再現は `apm install -g --frozen` (lockfile 固定・drift で fail)。
 name: bigdra-skills
 version: 1.0.0
 description: Global agent primitives (skills + agents) managed by apm
@@ -34,8 +38,7 @@ dependencies:
     - bigdra50/skills/github
     - bigdra50/skills/research/x-research
     - bigdra50/skills/review/google-code-review
-    - bigdra50/skills/review/plan-loop
-    - bigdra50/skills/review/review-loop
+    - bigdra50/skills/review/second-opinion
     - bigdra50/skills/system/disk-usage
     - bigdra50/skills/unity
     # 9 スキルを持つ apm パッケージなので、これ 1 行で全部入る。
@@ -47,9 +50,13 @@ dependencies:
     - bigdra50/unilyze/src/Unilyze/Skills/refactor-loop
     # grill-me の本文は "Run a /grilling session." の 1 行なので、grilling が
     # 無いと動かない。片方だけ消さないこと。
-    # 自リポジトリと違い上流の更新は制御できないため #sha で pin する
-    # (タグ運用が遅れており、最新タグ v1.1.0 の時点で plugin.json は既に 1.2.0)。
-    # 追従は `apm outdated -g` で差分を見てから `apm update -g`。
+    # 自リポジトリと違い上流の更新は制御できないため #sha で pin する。
+    #
+    # この 2 件だけは `apm update` に任せられない。update は #sha pin を「最新の
+    # annotated tag が指す commit」へ移すが、上流はタグが main より 42 コミット
+    # 遅れているため、更新すると依存が巻き戻る。同じ理由で `apm outdated -g` は
+    # この 2 件を常に outdated と報告する (pin の方が新しい)。追従は上流 main を
+    # 直接見て、この pin を手で書き換える。
     - mattpocock/skills/skills/productivity/grilling#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mattpocock/skills/skills/productivity/grill-me#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mizchi/skills/devops/actions-ci-tuning

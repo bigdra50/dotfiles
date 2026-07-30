@@ -211,15 +211,16 @@ install_skills() {
     # dotfiles の宣言的マニフェスト (.apm/apm.yml) をグローバルの正本として配置し、
     # apm install -g で ~/.claude/skills へ展開する。
     #
-    # settings.json とは違い symlink でよい。apm は manifest を書き換えるとき
-    # atomic write (tmp + rename) ではなく symlink を辿って実ファイルへ直接書くため、
-    # symlink が実体に置換されない (inode 不変を実測で確認済み)。
-    # copy にすると apm 側の変更が dotfiles へ戻らず、~/.apm にだけ依存が増える
-    # 片道の drift が起きる。symlink ならそれが原理的に発生しない。
+    # settings.json とは違い symlink にする。copy だと apm 側の変更が dotfiles へ
+    # 戻らず、~/.apm にだけ依存が増える片道の drift が起きるため。
     #
-    # 引数なしの `apm install -g` は manifest を一切書き換えないのでコメントも残る。
-    # `apm install -g <pkg>` のように apm に manifest を書かせるとコメントは失われる
-    # (依存の変更自体は正しく dotfiles へ流れるので git diff で復元できる)。
+    # `apm install` 系は symlink を辿って実ファイルへ直接書く (inode 不変を実測)。
+    # 引数なしなら manifest を一切書き換えないのでコメントも残る。`install <pkg>` は
+    # 書き換えるためコメントを失うが、変更自体は dotfiles へ流れ git diff で追える。
+    #
+    # `apm update` だけは別で、atomic write のため symlink を実ファイルに置換する。
+    # しかも #sha pin を「最新タグ」で上書きするので、タグが古いリポジトリでは
+    # 依存が黙って巻き戻る。update 後は必ず symlink と pin の両方を確認すること。
     if [[ ! -f "$DOTFILES_DIR/.apm/apm.yml" ]]; then
         warning "$DOTFILES_DIR/.apm/apm.yml not found; skipping skills"
         return 0
@@ -242,6 +243,31 @@ install_skills() {
     else
         warning "apm install reported issues; check 'apm install -g' output"
     fi
+
+    verify_apm_manifest_link
+}
+
+# `apm update` writes the manifest atomically, which replaces the symlink with a
+# regular file. From then on the global manifest silently stops being the one in
+# this repo, and the two diverge with nothing to signal it. Re-link and say so.
+verify_apm_manifest_link() {
+    local target="$HOME/.apm/apm.yml"
+    local source="$DOTFILES_DIR/.apm/apm.yml"
+
+    if [[ -L "$target" ]] && [[ "$(readlink "$target")" == "$source" ]]; then
+        return 0
+    fi
+
+    if [[ -f "$target" ]] && ! diff -q "$target" "$source" >/dev/null 2>&1; then
+        local backup
+        backup="${target}.detached.$(date +%Y%m%d_%H%M%S)"
+        cp "$target" "$backup"
+        warning "$target had detached from dotfiles and differs; saved to $backup"
+        warning "Diff it before discarding — apm may have rewritten a pin"
+    fi
+
+    rm -f "$target"
+    create_symlink "$source" "$target"
 }
 
 # ---- Main ----
