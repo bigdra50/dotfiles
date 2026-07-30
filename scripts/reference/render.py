@@ -28,7 +28,7 @@ def load_records(input_path: str | None) -> list[dict[str, str]]:
             text = handle.read()
     loaded = json.loads(text)
     if not isinstance(loaded, list):
-        raise ValueError("input JSON must be an array")
+        raise TypeError("input JSON must be an array")
     return loaded
 
 

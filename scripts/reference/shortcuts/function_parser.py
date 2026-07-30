@@ -18,10 +18,7 @@ def strip_comment_text(line: str) -> str:
     stripped = line.strip()
     if not stripped.startswith("#"):
         return ""
-    body = stripped[1:]
-    if body.startswith(" "):
-        body = body[1:]
-    return body
+    return stripped[1:].removeprefix(" ")
 
 
 def collect_preceding_comment_description(lines: list[str], line_index: int) -> str:

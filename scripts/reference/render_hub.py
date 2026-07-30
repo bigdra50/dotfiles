@@ -60,7 +60,7 @@ def main() -> int:
 
     counts = json.loads(args.counts)
     if not isinstance(counts, dict):
-        raise ValueError("--counts must be a JSON object")
+        raise TypeError("--counts must be a JSON object")
 
     meta = {
         "generated_at": datetime.now(UTC).isoformat(),

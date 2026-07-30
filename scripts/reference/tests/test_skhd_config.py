@@ -12,13 +12,11 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 class TestSkhdConfig(unittest.TestCase):
     def setUp(self) -> None:
-        self.valid_text = "\n".join(
-            [
-                "# focus window",
-                "alt - x : yabai -m window --focus recent",
-                "# swap window",
-                "shift + alt - x : yabai -m window --swap recent",
-            ]
+        self.valid_text = (
+            "# focus window\n"
+            "alt - x : yabai -m window --focus recent\n"
+            "# swap window\n"
+            "shift + alt - x : yabai -m window --swap recent"
         )
         self.fixture_text = (FIXTURES / "skhdrc-excerpt.skhdrc").read_text(
             encoding="utf-8"
