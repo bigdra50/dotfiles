@@ -1,0 +1,51 @@
+{
+  "filters": {
+    "comments": true
+  },
+  "rules": {
+    "preset-ja-technical-writing": {
+      "sentence-length": { "max": 150, "skipUrlStringLink": true },
+      "max-ten": { "max": 3 },
+      "max-kanji-continuous-len": { "max": 6 },
+      "no-doubled-joshi": { "min_interval": 1 },
+      "no-double-negative-ja": true,
+      "no-doubled-conjunction": true,
+      "no-doubled-conjunctive-particle-ga": true,
+      "ja-no-weak-phrase": true,
+      "ja-no-redundant-expression": true,
+      "ja-no-abusage": true,
+      "ja-no-successive-word": true,
+      "no-hankaku-kana": true,
+      "no-zero-width-spaces": true,
+      "no-invalid-control-character": true,
+      "no-nfd": true,
+      "no-unmatched-pair": true,
+
+      "ja-no-mixed-period": false,
+      "max-comma": false,
+      "arabic-kanji-numbers": false,
+      "no-mix-dearu-desumasu": false,
+      "no-dropping-the-ra": false,
+      "no-exclamation-question-mark": false,
+      "ja-unnatural-alphabet": false
+    },
+    "@textlint-ja/preset-ai-writing": {
+      "no-ai-list-formatting": true,
+      "no-ai-hype-expressions": true,
+      "no-ai-emphasis-patterns": true,
+      "no-ai-colon-continuation": true,
+
+      "ai-tech-writing-guideline": false
+    },
+    "period-in-list-item": {
+      "periodMark": "",
+      "periodMarks": ["。", "．"],
+      "ignoreLinkEnd": true,
+      "allowOrderedList": false,
+      "forceAppendPeriod": false
+    },
+    "prh": {
+      "rulePaths": ["./prh-writing-style.yml"]
+    }
+  }
+}

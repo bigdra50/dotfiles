@@ -234,4 +234,5 @@ claude /create-mise-task "logs" "tail -f logs/app.log" --description "View appli
 claude /create-mise-task "migrate" "python manage.py migrate" --lang python --description "Run database migrations"
 ```
 
-$ARGUMENTSが提供された場合、指定されたタスク名とコマンドでmiseタスクを作成します。引数がない場合は対話型モードで詳細な情報収集を行います。
+$ARGUMENTSが提供された場合、指定されたタスク名とコマンドでmiseタスクを作成します。
+引数がない場合は対話型モードで詳細な情報収集を行います。

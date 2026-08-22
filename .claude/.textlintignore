@@ -1,0 +1,12 @@
+# エージェント向けプロンプト。`- **ラベル**: 説明` を意図的に使うため
+# no-ai-list-formatting の対象外にする。
+.apm/agents/**
+.claude/commands/**
+.claude/output-styles/**
+.claude/tools/**
+
+# reference レンダラのテストフィクスチャ。文章ではなく入力データ。
+scripts/reference/tests/fixtures/**
+
+# 依存とビルド成果物
+**/node_modules/**

@@ -39,6 +39,29 @@ jobs:
         # Scoped to real scripts; tests/fixtures hold parser input data, not code
         run: shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh
 
+  markdown:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: .claude/package-lock.json
+
+      # --ignore-scripts: fork PR は fork 側の lockfile で npm ci が走る。
+      # install lifecycle script の実行を止める。現在の依存に install script を
+      # 持つパッケージは無いので副作用は無い。
+      - name: Install textlint
+        run: npm ci --prefix .claude --no-audit --no-fund --ignore-scripts
+
+      # hook はフェイルオープンするので、壊れていても静かに素通りする。
+      # gate が生きている保証はここに置く。
+      - name: Lint markdown
+        run: bash scripts/md-lint.sh
+
   claude-config:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -140,8 +163,11 @@ jobs:
           python-version: "3.14"
 
       - name: Lint (ruff + mypy)
+        # Pinned: unpinned, a linter release lands new rules on an unrelated
+        # commit and turns main red with nothing local to reproduce it against.
+        # Bump deliberately and fix the new findings in that same commit.
         run: |
-          pip install --quiet ruff mypy
+          pip install --quiet ruff==0.16.1 mypy==2.3.0
           ruff check scripts/lint/
           ruff format --check scripts/lint/
           mypy --strict scripts/lint/
