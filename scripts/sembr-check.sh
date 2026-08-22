@@ -36,6 +36,9 @@ for f in "$@"; do
         /^[[:space:]]*$/                   { next }
         {
             line = $0
+            # インラインコードは検査対象外。`periodMarks: ["。"]` のように
+            # コード断片が句点を含むと、地の文の一文一行違反と区別が付かない。
+            gsub(/`[^`]*`/, "", line)
             gsub(/。[」』）\)]/, "", line)
             if (match(line, /。.*[^[:space:]]/))
                 printf "%s:%d: 句点の後で改行する（一文一行）: %s\n", FN, NR, $0
