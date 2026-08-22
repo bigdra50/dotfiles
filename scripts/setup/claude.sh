@@ -119,30 +119,52 @@ apply_claude_settings() {
 # ---- Install skills (via apm) ----
 
 # apm CLI のバージョン (release tarball を固定取得する)
-APM_VERSION="0.24.1"
+APM_VERSION="0.28.0"
 
 # apm (Microsoft Agent Package Manager) を sudo 無しで ~/.local に導入する。
 # 公式インストーラ (curl https://aka.ms/apm-unix | sh) は /usr/local/bin へ sudo
 # 導入するため、非対話・パスワード無しの環境で失敗する。ここでは release tarball を
 # ~/.local/share/apm へ展開し ~/.local/bin/apm に symlink する。apm は PyInstaller
 # onedir バンドルなので、単体バイナリではなく _internal/ ごと配置する必要がある。
+# apm のバージョンは lockfile のスキーマを決める。0.23 系と 0.27 系では
+# apm.lock.yaml の形式が違い、混在すると setup のたびに数千行の差分が出る。
+# そのため「入っていれば何もしない」ではなく、pin へ収束させる。
+# ただし収束させられるのは dotfiles が置いた ~/.local の実体だけで、
+# パッケージマネージャ管理のものは奪わずに不一致を報告する。
+apm_current_version() {
+    apm --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1
+}
+
 ensure_apm() {
     if command_exists apm; then
-        success "apm already installed ($(apm --version 2>/dev/null | head -1))"
-        return 0
+        local cur path
+        cur="$(apm_current_version)"
+        path="$(command -v apm)"
+        if [[ "$cur" == "$APM_VERSION" ]]; then
+            success "apm $cur ($path)"
+            return 0
+        fi
+        if [[ "$path" != "$HOME/.local/bin/apm" ]]; then
+            warning "apm $cur at $path is not managed by dotfiles (pin is $APM_VERSION)"
+            warning "Version drift changes the apm.lock.yaml schema; align it manually or drop that copy"
+            return 0
+        fi
+        info "apm $cur -> $APM_VERSION (re-installing dotfiles copy)"
     fi
 
     local arch os tarball url tmp extracted
+    # 資産名は apm-<darwin|linux>-<arm64|x86_64>.tar.gz。uname の綴り
+    # (Darwin / aarch64) とは違うので、そのまま流用すると 404 になる。
     case "$(uname -m)" in
         x86_64 | amd64) arch="x86_64" ;;
-        aarch64 | arm64) arch="aarch64" ;;
+        aarch64 | arm64) arch="arm64" ;;
         *)
             warning "Unsupported arch for apm ($(uname -m)); skipping skills"
             return 1
             ;;
     esac
     case "$(uname -s)" in
-        Darwin*) os="macos" ;;
+        Darwin*) os="darwin" ;;
         Linux*) os="linux" ;;
         *)
             warning "Unsupported OS for apm; skipping skills"
