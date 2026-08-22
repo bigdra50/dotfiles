@@ -33,6 +33,7 @@ dependencies:
     - bigdra50/skills/docs/html-reports
     - bigdra50/skills/docs/html-reports-arch
     - bigdra50/skills/docs/japanese-tech-writing
+    - bigdra50/skills/docs/md-prose-cleanup
     - bigdra50/skills/docs/sync-docs
     - bigdra50/skills/even/evenhub-upload
     - bigdra50/skills/github
