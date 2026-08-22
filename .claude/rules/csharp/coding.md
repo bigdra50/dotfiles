@@ -5,7 +5,8 @@ paths:
 
 # C#
 
-フォーマット・命名の機械検査可能な部分は .editorconfig / analyzer の設定が正。以下は標準からの逸脱と選択のみ。
+フォーマット・命名の機械検査可能な部分は .editorconfig / analyzer の設定が正。
+以下は標準からの逸脱と選択のみ。
 
 ## 命名（.NET runtime 標準からの逸脱）
 

@@ -33,6 +33,7 @@ dependencies:
     - bigdra50/skills/docs/html-reports
     - bigdra50/skills/docs/html-reports-arch
     - bigdra50/skills/docs/japanese-tech-writing
+    - bigdra50/skills/docs/md-prose-cleanup
     - bigdra50/skills/docs/sync-docs
     - bigdra50/skills/even/evenhub-upload
     - bigdra50/skills/github
@@ -41,6 +42,11 @@ dependencies:
     - bigdra50/skills/review/second-opinion
     - bigdra50/skills/system/disk-usage
     - bigdra50/skills/unity
+    # Unity 公式のスキル集 (6 スキル)。apm.yml も plugin.json も持たないが
+    # skills/<name>/SKILL.md レイアウトなので skill collection として解決される。
+    # 上流なのでタグは無く #sha で pin する。unity-cli スキルは公式 CLI の
+    # バージョンに追従しているため、CLI を上げるときはここも一緒に見る。
+    - Unity-Technologies/skills#62fadcaa7011de42e971842bc0d3cfe9e9466a5e
     # 9 スキルを持つ apm パッケージなので、これ 1 行で全部入る。
     # スキルが読む内容リポジトリ (survey-any) は private かつ apm パッケージ構造を
     # 持たないため、ここには載らない。install は通るが、ghq で survey-any を

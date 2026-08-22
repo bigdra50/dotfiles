@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-Neovim設定ファイル。lazy.nvimによるプラグイン管理、LSP/補完/デバッグ機能を備えた開発環境。
+Neovim設定ファイル。
+lazy.nvimによるプラグイン管理、LSP/補完/デバッグ機能を備えた開発環境。
 
 ## Commands
 
@@ -57,13 +58,13 @@ init.lua
 
 ### LSP構成
 
-Mason経由で自動インストール（`mason-tool-installer`で管理）:
+Mason経由で自動インストールするツールは次のとおり（`mason-tool-installer`で管理）。
 - `gopls`, `pyright`, `bash-language-server`, `netcoredbg`
 - Roslyn LSP（C#/Razor）: seblyng/roslyn.nvim
 - sourcekit-lsp: Swift用（visionOSシミュレータ対応コメントアウト有）
 - UPM LSP: Unityパッケージマニフェスト用カスタムLSP
 
-フォーマッタ設定（conform.nvim、保存時自動実行）:
+フォーマッタはconform.nvimで設定し、保存時に自動実行する。
 - Go: goimports → gofmt
 - Python: ruff_format → ruff_organize_imports
 - C#: csharpier（`~/.dotnet/tools/csharpier`）
@@ -86,7 +87,7 @@ Mason経由で自動インストール（`mason-tool-installer`で管理）:
 | `F1` | init.luaを開く | base.lua |
 | `jj` | Escapeへマップ（挿入モード） | base.lua |
 
-デバッグ関連（nvim-dap + xcodebuild.nvim）:
+デバッグ関連（nvim-dap + xcodebuild.nvim）のキーバインドは次のとおり。
 
 | キー | 機能 |
 |------|------|

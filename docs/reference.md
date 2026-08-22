@@ -31,13 +31,15 @@
 
 `scripts/reference/` の構成:
 
-- `common/` — ドメイン非依存の純粋関数: `page_config`（PageConfig/Column/Filter/NavLink）、`render_html`（列駆動の検索可能HTML）、`render_tsv`、`hub_html`、`nav`
-- `keybindings/` `shortcuts/` `tasks/` `claude/` — 各ドメインのパーサ + `page.py`（`PAGE_CONFIG` / `TSV_FIELDS` / `build_meta`）
-- ルートの `extract_*.py` / `extract.sh` / `render.py` / `render_hub.py` / `build_site.sh` / `validate.py` / `search.sh` — I/O境界（CLI）
+- `common/`: ドメイン非依存の純粋関数。`page_config`（PageConfig/Column/Filter/NavLink）、`render_html`（列駆動の検索可能HTML）、`render_tsv`、`hub_html`、`nav`
+- `keybindings/` `shortcuts/` `tasks/` `claude/`: 各ドメインのパーサ + `page.py`（`PAGE_CONFIG` / `TSV_FIELDS` / `build_meta`）
+- ルートの `extract_*.py` / `extract.sh` / `render.py` / `render_hub.py` / `build_site.sh` / `validate.py` / `search.sh`: I/O境界（CLI）
 
-パース・diff・レンダリングはすべて純粋関数（Python 3.14 標準ライブラリのみ）。プロセス起動とファイルI/OはCLIラッパとbashに分離（Functional Core, Imperative Shell）。
+パース・diff・レンダリングはすべて純粋関数（Python 3.14 標準ライブラリのみ）。
+プロセス起動とファイルI/OはCLIラッパとbashに分離（Functional Core, Imperative Shell）。
 
-新ドメインの追加は「`<domain>/` パッケージ + `page.py` + `extract_<domain>` を足す」だけ。共通レンダラとCIはそのまま再利用される。
+新ドメインの追加は「`<domain>/` パッケージ + `page.py` + `extract_<domain>` を足す」だけ。
+共通レンダラとCIはそのまま再利用される。
 
 ## mise タスク
 
@@ -51,10 +53,10 @@
 
 ## ドメイン別の要点
 
-- keybindings: `origin`（custom/default、既定フィルタは custom）と `change`（added/overridden/unchanged）でタグ付け。重複判定キー `tool+context+mode+key`。Neovim は v1 では global マップのみ、`<Plug>` は除外。zsh の同義端末シーケンス（`\e[A`/`\eOA`→Up）は集約。
-- shortcuts: `kind`（alias/abbr/function）でフィルタ。同名関数（ch, pop 等）は集約せず両方表示し衝突を可視化。
-- tasks: `mise tasks --json` を正準ソースに、名前 prefix で category 分類。リポジトリ外のグローバルタスクは `global:<name>` に正規化。
-- claude: frontmatter（`description: |` ブロックスカラー対応の自前パーサ）から抽出。frontmatter の無い rule / command は先頭見出しをフォールバック。
+- keybindings: `origin`（custom/default、既定フィルタは custom）と `change`（added/overridden/unchanged）でタグ付け。重複判定キー `tool+context+mode+key`。Neovim は v1 では global マップのみ、`<Plug>` は除外。zsh の同義端末シーケンス（`\e[A`/`\eOA`→Up）は集約
+- shortcuts: `kind`（alias/abbr/function）でフィルタ。同名関数（ch, pop 等）は集約せず両方表示し衝突を可視化
+- tasks: `mise tasks --json` を正準ソースに、名前 prefix で category 分類。リポジトリ外のグローバルタスクは `global:<name>` に正規化
+- claude: frontmatter（`description: |` ブロックスカラー対応の自前パーサ）から抽出。frontmatter の無い rule / command は先頭見出しをフォールバック
 
 ## CI（.github/workflows/reference.yml）
 

@@ -1,0 +1,134 @@
+name: Body Lint
+
+# Issue と PR は別イベントで、issues は PR では発火しない。両方を並べる。
+#
+# PR 側が pull_request ではなく pull_request_target なのは、fork PR では
+# GITHUB_TOKEN が read-only に落ちてコメントを投稿できないため。
+# この workflow は PR の head を一切 checkout しないので、write token と
+# 未レビューのコードが同居しない。
+on:
+  issues:
+    types: [opened, edited]
+  pull_request_target:
+    types: [opened, edited]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: body-lint-${{ github.event.issue.number || github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  body:
+    # edited はタイトルだけ、base ブランチだけの編集でも飛ぶ。
+    # そのとき changes.body は null になる（opened では存在しない）。
+    if: github.event.action != 'edited' || github.event.changes.body
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # pull_request_target の既定は base ブランチ。ref を書かないことが
+      # そのまま安全策になっている。ここに head の ref を足してはいけない。
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: .claude/package-lock.json
+
+      # --ignore-scripts: install lifecycle script の実行を止める。
+      # 現在の依存に install script を持つパッケージは無いので副作用は無い。
+      - name: Install textlint
+        run: npm ci --prefix .claude --no-audit --no-fund --ignore-scripts
+
+      # textlint は設定エラーでも exit 1 を返し、lint 指摘と区別が付かない。
+      # 空ファイルは健全なら必ず 0 件なので、これを設定の生存確認に使う。
+      - name: Check lint config
+        run: |
+          : >"$RUNNER_TEMP/sentinel.md"
+          if ! bash scripts/md-lint.sh "$RUNNER_TEMP/sentinel.md"; then
+            echo "textlint の設定が読めていません" >&2
+            exit 1
+          fi
+
+      # 本文は投稿者が書いた任意の文字列。run: の式展開へ埋めるとシェルの
+      # ソースに混ざる（script injection）ので、payload から JS で直接書き出す。
+      - name: Write body to file
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const fs = require("fs");
+            const target = context.payload.issue ?? context.payload.pull_request;
+            fs.writeFileSync("body.md", target.body ?? "");
+
+      - name: Lint body
+        # 本文の文体で PR をブロックしない。指摘はコメントで伝える。
+        run: |
+          MD_LINT_FORMAT=compact bash scripts/md-lint.sh body.md \
+            >"$RUNNER_TEMP/report.txt" 2>&1 || true
+          sed -i "s#${PWD}/##g" "$RUNNER_TEMP/report.txt"
+          cat "$RUNNER_TEMP/report.txt"
+
+      - name: Upsert report comment
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const fs = require("fs");
+            const marker = "<!-- textlint-body-report -->";
+            const issueNumber =
+              context.payload.issue?.number ?? context.payload.pull_request?.number;
+            const report = fs
+              .readFileSync(process.env.RUNNER_TEMP + "/report.txt", "utf8")
+              .trim();
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              ...context.repo,
+              issue_number: issueNumber,
+              per_page: 100,
+            });
+            // 1件を編集のたびに使い回す。user.type で絞ることで、marker を
+            // 本文にコピーした人間のコメントを乗っ取り先にされない。
+            const existing = comments.find(
+              (c) => c.user?.type === "Bot" && c.body?.includes(marker),
+            );
+            if (report === "") {
+              if (existing) {
+                await github.rest.issues.updateComment({
+                  ...context.repo,
+                  comment_id: existing.id,
+                  body: marker + "\ntextlint: 本文に指摘はありません。",
+                });
+              }
+              return;
+            }
+            // report は本文の断片を引用する。中の最長バッククォート連続より
+            // 長いフェンスで囲むとフェンス破りを防げる。コードブロックは
+            // メンションと issue 番号の自動リンクも抑止する。
+            const longest = Math.max(
+              0,
+              ...[...report.matchAll(/`+/g)].map((m) => m[0].length),
+            );
+            const fence = "`".repeat(Math.max(3, longest + 1));
+            const body = [
+              marker,
+              "textlint が本文に指摘を出しました。このチェックは失敗しません。",
+              "",
+              fence,
+              report,
+              fence,
+            ].join("\n");
+            if (existing) {
+              await github.rest.issues.updateComment({
+                ...context.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                ...context.repo,
+                issue_number: issueNumber,
+                body,
+              });
+            }

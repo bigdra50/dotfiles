@@ -237,7 +237,8 @@ graph TD
 
 ## リファレンスハブ
 
-詳細は [reference.md](reference.md)。1つの列駆動レンダラ（`scripts/reference/common/`）を4ドメインで共有する。
+詳細は [reference.md](reference.md)。
+1つの列駆動レンダラ（`scripts/reference/common/`）を4ドメインで共有する。
 
 ```mermaid
 flowchart LR
@@ -257,3 +258,77 @@ flowchart LR
     render --> pages["GitHub Pages<br/>hub + /<domain>/"]
     render --> fzf["mise run keys<br/>(fzf検索)"]
 ```
+
+## Markdown 文体検査
+
+`.claude/rules/writing-style.md` の規範のうち、静的に検査できる部分を textlint に移した層。
+検出は決定論的な textlint が担い、修正は文脈を読める LLM が担う。
+
+設定の正本は `.claude/.textlintrc.json` と `.claude/prh-writing-style.yml` の 2 つ。
+prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続、`Phase N`、執筆時系列、曖昧語、空虚な強調）。
+一文一行は `scripts/sembr-check.sh` が別途見る。
+箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
+
+`scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・2 つの hook すべてがここを通る。
+手元と CI で結果が食い違わないようにするための集約点。
+
+```mermaid
+flowchart TB
+    subgraph canon["設定の正本"]
+        rc[".claude/.textlintrc.json"]
+        prh[".claude/prh-writing-style.yml"]
+        ign[".claude/.textlintignore"]
+    end
+
+    subgraph runner["共有ランナー"]
+        ml["scripts/md-lint.sh"]
+        tl["textlint<br/>(.claude/node_modules)"]
+        sb["scripts/sembr-check.sh<br/>(一文一行)"]
+        ml --> tl
+        ml --> sb
+    end
+
+    canon --> ml
+
+    subgraph local["ローカル (書いた瞬間)"]
+        h1["PostToolUse: Write|Edit<br/>textlint-md.sh → decision:block"]
+        h2["PreToolUse: Bash<br/>textlint-gh-body.sh → deny"]
+        mt["mise run md:lint"]
+    end
+
+    subgraph server["サーバサイド (取りこぼし回収)"]
+        ci["repo-lint.yml / markdown job<br/>追跡 md 全件・CI を落とす"]
+        bl["body-lint.yml<br/>Issue / PR 本文・コメントで報告"]
+    end
+
+    h1 --> ml
+    h2 --> ml
+    mt --> ml
+    ci --> ml
+    bl --> ml
+```
+
+hook はユーザスコープ（`~/.claude/settings.json`）に登録するため、dotfiles 以外のプロジェクトでも動く。
+`~/.claude/hooks` が dotfiles へのシンボリックリンクなので、hook は自分の実体パスから repo とランナーを解決できる。
+
+2 つの hook はプロジェクト設定の扱いが違う。
+
+| hook | 自前の `.textlintrc*` を持つプロジェクトでの挙動 | 理由 |
+| --- | --- | --- |
+| `textlint-md.sh` | 譲って何もしない | md はその repo の成果物なので、repo の規範が正 |
+| `textlint-gh-body.sh` | 譲らず個人の規範を当てる | repo の設定はファイルを統べるもので、GitHub 上の本文は管轄しない |
+
+サーバサイドの `body-lint.yml` はこのリポジトリでしか動かない。
+GitHub Actions は自分のリポジトリのイベントにしか反応しないため、他リポジトリの Issue / PR 本文は
+ローカルの `textlint-gh-body.sh` だけが見る。
+
+安全弁は 3 つ。
+同一ファイルへの差し戻しは既定 2 回まで、textlint が無い環境ではフェイルオープン、`CLAUDE_TEXTLINT_DISABLE=1` で無効化できる。
+
+`--fix` は使わない。
+prh の `expected` はリライト方針のヒントであって置換文字列ではないため、自動修正すると文章が壊れる。
+
+エージェント向けプロンプト（`.apm/agents/`、`.claude/commands/`、`.claude/output-styles/`、`.claude/tools/`）は
+`.textlintignore` で除外する。
+`- **ラベル**: 説明` を意図的に使うため、人間向け散文の規範を当てても直す意味がない。
+一文一行だけは除外を受けず全 md に適用する。

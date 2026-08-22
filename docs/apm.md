@@ -1,4 +1,4 @@
-# apm — エージェント資産の配布
+# apm: エージェント資産の配布
 
 skills と agents を apm (Microsoft Agent Package Manager) で管理し、claude / codex / copilot / cursor へまとめて展開する。
 
@@ -36,7 +36,7 @@ mise run setup:claude
 ```
 
 `apm install -g` を直接叩いてもよい。
-`setup:claude` はそれに加えて agents のミラーと symlink の検証を行う。
+`setup:claude` はそれに加えて agents をミラーし、symlink を検証する。
 
 ## コマンド
 
@@ -90,7 +90,8 @@ apm update -g             # y/N に答える
 `mise run setup:claude` が検出して再リンクする。
 内容が正本と違えば `~/.apm/apm.yml.detached.<timestamp>` へ退避する。
 
-**退避ファイルは捨てる前に diff する。** pin が書き換わっている可能性がある。
+**退避ファイルは捨てる前に diff する**。
+pin が書き換わっている可能性がある。
 
 ### スキルが勝手に消えた
 
@@ -112,15 +113,16 @@ GITHUB_APM_PAT_<OWNER>=<token> apm install -g
 ```
 
 対話的に叩く場合は、対象 repo の dir で `gh` を一度実行して名義を確定させてから apm を叩く。
-ただしそれでも 404 が続くことがある。切り分けは `apm install --dry-run --verbose <pkg>` の
-`Auth resolved:` 行を見て、apm がどの org のどの source で解決したかを確認する。
+ただしそれでも 404 が続く場合もある。
+切り分けは `apm install --dry-run --verbose <pkg>` の `Auth resolved:` 行を見て、apm がどの org のどの source で解決したかを確認する。
 
 ### `apm outdated -g` が同じ依存を常に outdated と言う
 
 pin した commit がタグより新しいときに起きる。
-タグと比較しているだけなので誤報告。無視してよい。
+タグと比較しているだけなので誤報告。
+無視してよい。
 
 ## 参考
 
-- [apm docs](https://microsoft.github.io/apm/) — 依存管理、pin、lockfile の仕様
-- [bigdra50/skills](https://github.com/bigdra50/skills) — 自作 skills の配布元
+- [apm docs](https://microsoft.github.io/apm/): 依存管理、pin、lockfile の仕様
+- [bigdra50/skills](https://github.com/bigdra50/skills): 自作 skills の配布元

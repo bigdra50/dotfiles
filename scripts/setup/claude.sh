@@ -336,10 +336,39 @@ sync_apm_lockfile() {
     info "apm.lock.yaml updated; review 'git diff .apm/apm.lock.yaml' for pin changes"
 }
 
+# ---- Install textlint (Markdown の文体検査) ----
+
+# .claude/hooks/textlint-*.sh は $CLAUDE_DIR/node_modules/.bin/textlint を
+# 見つけられないと黙って素通しする（フェイルオープン）。設定だけ追跡されていて
+# 実体が入っていない状態を避けるため、セットアップで必ず入れる。
+#
+# setup:claude は setup:platform-tools に依存していないので、初回 setup の時点で
+# node が未導入のことがある。その場合は入れずに進む。2回目の setup:claude で入る。
+ensure_textlint() {
+    if ! command_exists npm; then
+        warning "npm not found; skipping textlint install (md lint hooks will no-op)"
+        return 0
+    fi
+    if [[ ! -f "$CLAUDE_DIR/package-lock.json" ]]; then
+        warning "$CLAUDE_DIR/package-lock.json not found; skipping textlint install"
+        return 0
+    fi
+
+    info "Installing textlint into $CLAUDE_DIR/node_modules..."
+    # --ignore-scripts: 依存の install lifecycle script を走らせない。
+    # 現在の依存に install script を持つパッケージは無いので副作用は無い。
+    if npm ci --prefix "$CLAUDE_DIR" --no-audit --no-fund --ignore-scripts >/dev/null 2>&1; then
+        success "textlint installed"
+    else
+        warning "npm ci failed in $CLAUDE_DIR; md lint hooks will no-op"
+    fi
+}
+
 # ---- Main ----
 
 link_claude
 apply_claude_settings
+ensure_textlint
 install_skills
 
 # Sync rules to Codex/Copilot

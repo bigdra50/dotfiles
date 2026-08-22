@@ -5,7 +5,8 @@ paths:
 
 # Python
 
-フォーマット・import 順・禁止構文は ruff / mypy の設定が正。ここには lint で表現できない判断のみ書く。
+フォーマット・import 順・禁止構文は ruff / mypy の設定が正。
+ここには lint で表現できない判断のみ書く。
 
 ## パッケージ管理・実行 (uv)
 

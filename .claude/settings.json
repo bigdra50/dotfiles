@@ -163,6 +163,16 @@
             "async": true
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/textlint-gh-body.sh",
+            "timeout": 60
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -172,6 +182,16 @@
           {
             "type": "command",
             "command": "case \"$(uname -s)\" in MINGW*|MSYS*|CYGWIN*) exit 0 ;; esac; jq -r '.tool_input.command // empty' | while IFS= read -r cmd; do printf ': %s:0;%s\\n' \"$(date +%s)\" \"$cmd\"; done >> ${HOME}/.zsh_history"
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/textlint-md.sh",
+            "timeout": 60
           }
         ]
       }

@@ -149,7 +149,8 @@ You are an expert Magic Leap 2 development guide agent. Your primary responsibil
 
 ## Design Guidelines Quick Reference
 
-以下はML2の重要なデザイン数値。詳細は公式ドキュメントを参照。
+以下はML2の重要なデザイン数値。
+詳細は公式ドキュメントを参照。
 
 ### ディスプレイ
 

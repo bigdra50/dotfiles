@@ -4,7 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-個人用dotfilesリポジトリ。シンボリックリンクベースで設定ファイルを管理。
+個人用dotfilesリポジトリ。
+シンボリックリンクベースで設定ファイルを管理。
 
 - リポジトリ: `~/dev/github.com/bigdra50/dotfiles`
 - 対応OS: macOS, Linux, WSL
@@ -22,6 +23,10 @@ mise run setup:claude               # Claude設定のみ
 
 # 新規マシンセットアップ（ワンライナー）
 curl -fsSL https://raw.githubusercontent.com/bigdra50/dotfiles/master/bootstrap | bash
+
+# Markdown 文体検査（textlint + 一文一行）
+mise run md:lint                    # 追跡している *.md 全件
+bash scripts/md-lint.sh <file.md>   # 指定ファイルだけ
 ```
 
 ## Architecture
@@ -54,10 +59,10 @@ PATH・環境変数・常時関数は `.zshrc` チェーンではなく `env.zsh
 miseがオーケストレーター。
 
 mise 活用パターン:
-- `MISE_ENV=staging mise run deploy` — 環境プロファイル切り替え（`.mise.staging.toml`）
-- `mise lock` — ツールバージョンをチェックサム付きでロック
-- `mise prepare` — lockfile変更を検知して依存インストールを自動実行
-- hk（git hookマネージャ） — `.hk.toml` or `.mise.toml` 内でフック定義
+- `MISE_ENV=staging mise run deploy`: 環境プロファイル切り替え（`.mise.staging.toml`）
+- `mise lock`: ツールバージョンをチェックサム付きでロック
+- `mise prepare`: lockfile変更を検知して依存インストールを自動実行
+- hk（git hookマネージャ）: `.hk.toml` or `.mise.toml` 内でフック定義
 
 ### シンボリンク対象
 
@@ -68,17 +73,18 @@ mise 活用パターン:
 | `.claude/` | `~/.claude/` |
 | `.ssh/config` | `~/.ssh/config` (config のみ。鍵は管理しない) |
 
-Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照。
+Zsh設定は `.config/zsh/` に統合。
+`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照。
 
 プラットフォーム固有の除外:
 - Linux/WSL: `.yabairc`, `.skhdrc`（macOS専用）
 
 ### ローカルオーバーライド
 
-マシン固有の設定は以下に記述（git 追跡外）:
+マシン固有の設定は次のファイルに記述する（git 追跡外）。
 - `$ZDOTDIR/.zshrc_local` (`~/.config/zsh/.zshrc_local`)
-- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`) — 秘密情報はここに限る
-- `~/.ssh/config.d/local.conf` — マシン固有 ssh ホスト
+- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`): 秘密情報はここに限る
+- `~/.ssh/config.d/local.conf`: マシン固有 ssh ホスト
 - `~/.claude/local-instructions.md`（Claude のマシンローカルメモリ。`.claude/CLAUDE.md` から import され、無いマシンでは無視。repo 外に平置きのため gitignore 不要）
 
 プロファイル固有の設定（`~/.gitconfig_local`、`~/.gitconfig-<profile>`、`~/.ssh/config.d/<profile>.conf`）は
@@ -98,6 +104,10 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 ├── rules/          # コーディングルール（言語別）
 ├── scripts/        # hooks/skills が参照する補助スクリプト（セッションID解決等）
 ├── tools/          # 補助スクリプト（statusline 用）
+├── .textlintrc.json        # Markdown 文体検査の設定（正本）
+├── .textlintignore         # エージェント向けプロンプトの除外
+├── prh-writing-style.yml   # writing-style.md を機械検査へ移した辞書
+├── package.json            # textlint の依存（lockfile も追跡）
 ├── settings.json
 └── statusline.sh
 ```
@@ -105,10 +115,36 @@ Zsh設定は `.config/zsh/` に統合。`ZDOTDIR=$XDG_CONFIG_HOME/zsh` で参照
 セットアップは `mise run setup:claude`（`scripts/setup/claude.sh`）で実行。
 
 skills は [bigdra50/skills](https://github.com/bigdra50/skills) と [bigdra50/unity-cli](https://github.com/bigdra50/unity-cli) で管理し、このリポジトリには置かない。
-導入は apm（[Microsoft Agent Package Manager](https://github.com/microsoft/apm)）で行う。宣言的マニフェスト `.apm/apm.yml` に各スキルを `<owner/repo>/<skill-dir>` のサブパスで列挙し（リポジトリ直下は apm パッケージではないため個別のスキルフォルダを指す）、`scripts/setup/claude.sh` が apm を `~/.local`（sudo 不要）へ導入したうえで `apm install -g` でユーザスコープ `~/.claude/skills` へ展開する。
-スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
+導入は apm（[Microsoft Agent Package Manager](https://github.com/microsoft/apm)）で行う。
+宣言的マニフェスト `.apm/apm.yml` に各スキルを `<owner/repo>/<skill-dir>` のサブパスで列挙する。
+リポジトリ直下は apm パッケージではないため、個別のスキルフォルダを指す。
+`scripts/setup/claude.sh` が apm を `~/.local`（sudo 不要）へ導入し、`apm install -g` でユーザスコープ `~/.claude/skills` へ展開する。
+スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。
+旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
 
 settings.json だけは symlink ではなく **jq マージ適用**（`apply_claude_settings`）。
 Claude Code が実行時に atomic write で保存するため symlink は保存のたびに実ファイル化して乖離する。
 dotfiles 版が定義するキーは dotfiles が勝ち、live 側だけにあるランタイムキーは保持される。
 設定を恒久変更するときは dotfiles 側を編集して `mise run setup:claude` で適用する。
+
+### Markdown 文体検査
+
+`.claude/rules/writing-style.md` の規範のうち静的に検査できる部分を textlint に移してある。
+詳細と全体図は [architecture.md](docs/architecture.md) の「Markdown 文体検査」を参照。
+
+`scripts/md-lint.sh` が唯一の実行経路で、`mise run md:lint`・CI・2 つの hook すべてがここを通る。
+hook はユーザスコープに登録してあるため、dotfiles 以外のプロジェクトでも効く。
+md を書く hook は、自前の `.textlintrc*` を持つプロジェクトではそちらのルールが正として譲る。
+Issue / PR 本文の hook は譲らず、どの repo でも個人の規範を当てる（repo の設定はファイルを統べるもので、GitHub 上の本文は管轄しないため）。
+サーバサイドの `body-lint.yml` はこのリポジトリでしか動かない。
+
+- `PostToolUse`（`Write|Edit`）: md を書いた直後に検査し、指摘があればモデルへ差し戻す
+- `PreToolUse`（`Bash`）: `gh issue/pr create|edit|comment` の `--body-file` を投稿前に検査する
+- `body-lint.yml`: Issue / PR 本文を投稿・編集のたびに検査し、コメントで報告する（CI は落とさない）
+
+Issue / PR の本文は一時 md に書いて `--body-file` で渡す。
+インライン `--body` はシェル文字列から本文を安全に取り出せないため hook が検査できない。
+
+規範を変えるときは `.claude/rules/writing-style.md` と `.claude/prh-writing-style.yml` の両方を直す。
+`--fix` は使わない（prh の `expected` は方針のヒントであって置換文字列ではない）。
+一時的に外すときは `CLAUDE_TEXTLINT_DISABLE=1`、文書内の例外は `<!-- textlint-disable prh -->` で囲む。

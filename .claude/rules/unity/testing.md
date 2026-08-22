@@ -5,11 +5,12 @@ paths:
 
 # Unity Testing
 
-詳細な手順・API リファレンスは unity-coding-skills プラグイン（test-designing-guide / test-writing-guide / run-tests）を参照。ここには常時適用する要点のみ書く。
+詳細な手順・API リファレンスは unity-coding-skills プラグイン（test-designing-guide / test-writing-guide / run-tests）を参照。
+ここには常時適用する要点のみ書く。
 
 ## 原則
 
-- 実装ではなく振る舞いをテストする（リトマス試験: テスト失敗時にユーザーにとって何が壊れたか説明できるか）
+- 実装ではなく振る舞いをテストする（リトマス試験: テスト失敗時にユーザーにとって何が壊れたかを説明できること）
 - 可能な限り本物のプロダクトコードを使う。テストダブルはやむを得ないときのみ
 - private メンバーはテストしない（リフレクション経由も禁止）。internal は `InternalsVisibleTo` + テストに `[Category("Internal")]`
 - MonoBehaviour のロジックは Humble Object パターンで抽出してテストする。`MonoBehaviourTest<T>` はライフサイクル進行自体の観察が必要な場合のみ

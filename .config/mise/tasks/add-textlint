@@ -1,65 +1,66 @@
 #!/usr/bin/env bash
 
-# AI用textlint環境自動セットアップタスク
-# このプロジェクトで設定されているtextlint設定を任意のプロジェクトに適用
+#MISE description="Apply the dotfiles textlint config to the current project"
+
+# dotfiles の textlint 設定を任意のプロジェクトへ配る。
+#
+# 設定の正本は dotfiles 側の .claude/.textlintrc.json と .claude/prh-writing-style.yml。
+# ここでは複製するだけで、内容をこのファイルに持たない。両方に設定を書くと
+# 「どちらが正か」が失われ、規範を更新しても配布先に反映されなくなる。
+#
+# 依存も dotfiles の .claude/package.json から読む。バージョンの二重管理を避ける。
 
 set -euo pipefail
 
+# ~/.config/mise は dotfiles へのシンボリックリンクなので -P で実体を辿る。
+TASK_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="$(cd -P "$TASK_DIR/../../.." && pwd)"
+SRC="$DOTFILES_DIR/.claude"
 PROJECT_DIR="$(pwd)"
-echo "🔧 AI用textlint環境をセットアップ中: $PROJECT_DIR"
 
-# package.jsonの存在確認・作成
-if [[ ! -f "package.json" ]]; then
-    echo "📦 package.jsonを作成中..."
-    npm init -y > /dev/null
-    echo "✅ package.jsonを作成しました"
+if [[ "$PROJECT_DIR" == "$DOTFILES_DIR" ]]; then
+    echo "dotfiles 自身には既に設定がある。別のプロジェクトで実行すること。" >&2
+    exit 1
+fi
+for f in .textlintrc.json prh-writing-style.yml package.json; do
+    if [[ ! -f "$SRC/$f" ]]; then
+        echo "正本が見つからない: $SRC/$f" >&2
+        exit 1
+    fi
+done
+
+echo "textlint 環境をセットアップ: $PROJECT_DIR"
+
+if [[ ! -f package.json ]]; then
+    npm init -y >/dev/null
+    echo "  package.json を作成"
 fi
 
-# textlintとAI用ルールのインストール
-echo "📚 textlintとAI用ルールをインストール中..."
-npm install --save-dev \
-    textlint@^15.1.0 \
-    textlint-rule-preset-ja-technical-writing@^12.0.2 \
-    @textlint-ja/textlint-rule-preset-ai-writing@^1.4.0
+# 依存は正本の package.json から名前@レンジで組み立てる。
+deps=$(node -e '
+const d = require(process.argv[1]).dependencies || {};
+console.log(Object.entries(d).map(([k, v]) => k + "@" + v).join(" "));
+' "$SRC/package.json")
+# shellcheck disable=SC2086
+# deps は「pkg@range pkg@range …」で、個別の引数へ分割させたいので展開する。
+npm install --save-dev $deps
 
-# .textlintrc.jsonの作成
-echo "⚙️ textlint設定ファイルを作成中..."
-cat > .textlintrc.json << 'EOF'
-{
-  "rules": {
-    "@textlint-ja/preset-ai-writing": true,
-    "preset-ja-technical-writing": true
-  }
-}
-EOF
+cp "$SRC/.textlintrc.json" .textlintrc.json
+cp "$SRC/prh-writing-style.yml" prh-writing-style.yml
+echo "  .textlintrc.json と prh-writing-style.yml を配置"
 
-# package.jsonにscriptsを追加
-echo "📝 package.jsonにtextlintスクリプトを追加中..."
-node -e "
-const fs = require('fs');
-const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-pkg.scripts = pkg.scripts || {};
-pkg.scripts['lint:text'] = 'textlint \"docs/**/*.md\" \"*.md\"';
-pkg.scripts['lint:text:fix'] = 'textlint --fix \"docs/**/*.md\" \"*.md\"';
-fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n');
-"
-
-# .gitignoreにnode_modulesを追加（存在しない場合）
-if [[ ! -f ".gitignore" ]] || ! grep -q "node_modules" .gitignore; then
-    echo "📝 .gitignoreにnode_modulesを追加中..."
-    echo -e "\n# Dependencies\nnode_modules/\nnpm-debug.log*" >> .gitignore
+if [[ ! -f .gitignore ]] || ! grep -q '^node_modules/' .gitignore; then
+    printf '\n# Dependencies\nnode_modules/\n' >>.gitignore
+    echo "  .gitignore に node_modules/ を追加"
 fi
 
-echo ""
-echo "🎉 AI用textlint環境のセットアップが完了しました！"
-echo ""
-echo "📋 利用方法:"
-echo "  npm run lint:text      # MarkdownファイルのLint実行"
-echo "  npm run lint:text:fix  # 自動修正付きLint実行"
-echo ""
-echo "📂 作成されたファイル:"
-echo "  ✅ .textlintrc.json (AI用textlint設定)"
-echo "  ✅ package.json (scriptsセクション追加)"
-echo "  ✅ node_modules/ (textlint関連パッケージ)"
-echo ""
-echo "💡 ヒント: VSCodeでtextlint拡張機能を使用すると、リアルタイムでLintが実行されます"
+cat <<'USAGE'
+
+セットアップ完了。
+
+  npx textlint '**/*.md'    # 検査
+  npx textlint --stdin --stdin-filename body.md < body.md
+
+--fix は使わないこと。prh の expected はリライト方針のヒントであって
+置換文字列ではないため、自動修正すると文章が壊れる。
+USAGE
