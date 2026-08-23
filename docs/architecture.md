@@ -264,19 +264,30 @@ flowchart LR
 `.claude/rules/writing-style.md` の規範のうち、静的に検査できる部分を textlint に移した層。
 検出は決定論的な textlint が担い、修正は文脈を読める LLM が担う。
 
-設定の正本は `.claude/.textlintrc.json` と `.claude/prh-writing-style.yml` の 2 つ。
-prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続、`Phase N`、執筆時系列、曖昧語、空虚な強調）。
+設定の正本は `.claude/.textlintrc.json` と 2 つの prh 辞書（`.claude/prh-writing-style.yml`・`.claude/prh-business.yml`）。
+prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続・`Phase N`・執筆時系列・曖昧語・空虚な強調・LLM 特有の空語）。
+辞書は誤検知の実測で 2 段に分けてある。
+人が書いた md で 0 件だったパターンだけを `prh-writing-style.yml` に error として置き、機械では黒と断定できない語は `prh-business.yml` に warning として置く。
+warning は exit code を変えないため CI と PR は落ちないが、書いた直後の hook には届く。
+textlint は同じルール id を 1 つしか持てないので、2 つ目の辞書は package 名 `textlint-rule-prh` を key にした別インスタンスとして読ませている。
 一文一行は `scripts/sembr-check.sh` が別途見る。
 箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
 
-`scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・2 つの hook すべてがここを通る。
+文体プロファイルは環境変数 `JA_STYLE_SCENE` で切り替える。
+既定の business は業務・技術文書向けで、`JA_STYLE_SCENE=novel` は `.claude/.textlintrc.novel.json` を使う。
+小説では長い一文・反復・誇張が技法なので、それらを見るルールと prh 辞書を落とし、表記の壊れ（半角カナ・NFD・対応しない括弧）だけを残す。
+一文一行も diff を読みやすくするための文書の規約なので、novel では走らせない。
+
+`scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・3 つの hook すべてがここを通る。
 手元と CI で結果が食い違わないようにするための集約点。
 
 ```mermaid
 flowchart TB
     subgraph canon["設定の正本"]
-        rc[".claude/.textlintrc.json"]
-        prh[".claude/prh-writing-style.yml"]
+        rc[".claude/.textlintrc.json<br/>(business・既定)"]
+        rcn[".claude/.textlintrc.novel.json<br/>(novel)"]
+        prh[".claude/prh-writing-style.yml<br/>(error)"]
+        prhb[".claude/prh-business.yml<br/>(warning)"]
         ign[".claude/.textlintignore"]
     end
 
@@ -290,9 +301,10 @@ flowchart TB
 
     canon --> ml
 
-    subgraph local["ローカル (書いた瞬間)"]
+    subgraph local["ローカル (書いた瞬間と終了時)"]
         h1["PostToolUse: Write|Edit<br/>textlint-md.sh → decision:block"]
         h2["PreToolUse: Bash<br/>textlint-gh-body.sh → deny"]
+        h3["Stop<br/>ja-style-stop.sh → decision:block"]
         mt["mise run md:lint"]
     end
 
@@ -303,6 +315,7 @@ flowchart TB
 
     h1 --> ml
     h2 --> ml
+    h3 --> ml
     mt --> ml
     ci --> ml
     bl --> ml
@@ -311,7 +324,13 @@ flowchart TB
 hook はユーザスコープ（`~/.claude/settings.json`）に登録するため、dotfiles 以外のプロジェクトでも動く。
 `~/.claude/hooks` が dotfiles へのシンボリックリンクなので、hook は自分の実体パスから repo とランナーを解決できる。
 
-2 つの hook はプロジェクト設定の扱いが違う。
+3 つ目の hook は Stop に置いてある。
+`ja-style-stop.sh` は、そのセッションで PostToolUse が検査した md だけを再検査する。
+差し戻し上限に達して通過した指摘や、あとから別のファイルへ混入した指摘を、終了前にもう一度拾う。
+全件走査はしない。
+触ったパスは `${TMPDIR}/claude-textlint/<session_id>/` に記録してある。
+
+md を書く hook と body の hook はプロジェクト設定の扱いが違う。
 
 | hook | 自前の `.textlintrc*` を持つプロジェクトでの挙動 | 理由 |
 | --- | --- | --- |

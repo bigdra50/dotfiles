@@ -142,13 +142,23 @@ dir = "{{cwd}}"
 run = "mise x shfmt@latest -- shfmt -w -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh"
 
 [tasks."md:lint"]
-description = "Lint Markdown prose (textlint + 一文一行)"
+description = "Lint Markdown prose (textlint + 一文一行 + 文書全体の集計)"
 dir = "{{cwd}}"
 run = "bash scripts/md-lint.sh"
 
 # md:lint:fix は作らない。ai-writing preset のルールは fixable でなく、
 # prh の expected はリライト方針のヒントであって置換文字列ではない。
 # textlint --fix を走らせると文章が壊れる。
+
+[tasks."md:lint:test"]
+description = "Lint and test the document-level Japanese checker (ruff + mypy + unittest)"
+dir = "{{cwd}}"
+run = """
+uvx ruff check scripts/ja-doc-stats.py scripts/tests/
+uvx ruff format --check scripts/ja-doc-stats.py scripts/tests/
+uvx mypy --strict scripts/ja-doc-stats.py scripts/tests/
+python -m unittest discover -s scripts/tests
+"""
 
 [tasks."lint:paths"]
 description = "Verify scripts/ path references in CI and task definitions resolve to real files"

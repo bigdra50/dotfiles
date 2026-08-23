@@ -5,6 +5,8 @@
 #
 # ユーザスコープ (~/.claude/settings.json) に登録するため、dotfiles 以外の
 # プロジェクトでも動く。自前の textlint 設定を持つプロジェクトでは譲る。
+# 検査した md のパスはセッション単位で記録し、Stop hook (ja-style-stop.sh) が
+# ターンの終わりに同じ範囲だけを見直せるようにする。
 #
 # 安全弁:
 #   1. 同一ファイルへの block は CLAUDE_TEXTLINT_MAX_BLOCKS 回まで（既定 2）。
@@ -76,6 +78,21 @@ COUNTER_DIR="${TMPDIR:-/tmp}/claude-textlint/$SESSION_ID"
 mkdir -p "$COUNTER_DIR" 2>/dev/null || exit 0
 COUNTER="$COUNTER_DIR/$KEY"
 
+# このセッションで検査した md のパスを Stop hook (ja-style-stop.sh) へ引き継ぐ。
+# Stop で repo 全体を走査せず、触れたものだけを見直させるための記録。
+# 本来の検査の付随物なので、記録に失敗しても検査はそのまま続ける。
+TOUCHED="$COUNTER_DIR/touched-md"
+if [[ ! -f "$TOUCHED" ]]; then
+    : >"$TOUCHED" 2>/dev/null || true
+fi
+# 上限は Stop での再検査にかかる時間の頭打ち（実測 32 件で 1.3 秒）。
+# 改行を含むパスは行単位の記録を壊すので記録しない。
+if [[ -f "$TOUCHED" && "$FILE" != *$'\n'* ]] && ! grep -qxF -- "$FILE" "$TOUCHED"; then
+    if [[ "$(wc -l <"$TOUCHED")" -lt 200 ]]; then
+        printf '%s\n' "$FILE" >>"$TOUCHED" 2>/dev/null || true
+    fi
+fi
+
 OUTPUT=$(MD_LINT_FORMAT=compact "$RUNNER" "$FILE" 2>/dev/null)
 if [[ -z "$OUTPUT" ]]; then
     # 直ったら予算を戻す。同じファイルを後で壊したときに再び差し戻せる。
@@ -94,7 +111,14 @@ if [[ "$COUNT" -ge "$BLOCK_LIMIT" ]]; then
 fi
 printf '%s\n' "$((COUNT + 1))" >"$COUNTER" 2>/dev/null || true
 
-REASON="textlint が $FILE に指摘を出しました。該当行を直してから次へ進んでください。
+REASON="textlint が $FILE に指摘を出しました。
+
+直し方: 指摘された語だけを別の語へ差し替えないこと。 指摘を含む文を丸ごと書き直す。
+多くの指摘は「語が悪い」のではなく「書くべき中身が抜けている」ことを示す。
+たとえば「効く」への指摘は、効果の中身（何が・どれだけ変わるか）が書かれていないという意味なので、
+語を言い換えても解決しない。各指摘の「こう書く:」が書き換え後の形を示しているので、その形へ文ごと寄せる。
+textlint --fix は使わないこと。prh の置換候補はリライト方針のヒントであって置換文字列ではない。
+
 指摘が妥当でない場合は直さずに理由を述べてください（差し戻しは同一ファイルにつき ${BLOCK_LIMIT} 回で打ち切ります）。
 
 $OUTPUT"

@@ -1,0 +1,76 @@
+{
+  "//": [
+    "小説向けプロファイル。JA_STYLE_SCENE=novel のとき scripts/md-lint.sh が使う。",
+    "業務文書向けの .textlintrc.json が正本で、これはその派生。ルールの追加は正本側で行い、",
+    "ここには『小説では検査しない』という差分だけを持つ。",
+    "",
+    "落とす基準: 文体を規制するルール（長さ・反復・強調・断定の強さ）は創作では技法なので落とす。",
+    "残す基準: 表記の壊れ（半角カナ・NFD・ゼロ幅空白・対応しない括弧・制御文字）は作品でも壊れなので残す。",
+    "",
+    "落としたルールと理由:",
+    "  sentence-length / max-ten / max-kanji-continuous-len: 一文の長さも読点の数も漢字の連なりも文章のリズム",
+    "  no-doubled-joshi / ja-no-successive-word: 同じ助詞や語の反復は強調と韻律の技法",
+    "  no-double-negative-ja: 二重否定は断定を避けて含みを残す技法",
+    "  no-doubled-conjunction / no-doubled-conjunctive-particle-ga: 接続の反復は語りの癖として使う",
+    "  ja-no-weak-phrase: 「かもしれない」は語り手と登場人物の声",
+    "  ja-no-redundant-expression: 冗長さも文体（「〜することができる」を残す判断がありうる）",
+    "  no-ai-hype-expressions / no-ai-emphasis-patterns: 誇張と強調は創作の技法",
+    "  no-ai-list-formatting: 作中の書類やメモを描くとき、箇条書きの体裁は作品の一部",
+    "  period-in-list-item: 箇条書きの句点規約は文書の体裁の話で、地の文には無関係",
+    "  prh / textlint-rule-prh: 辞書の中身が文書執筆の規範（Phase N・執筆時系列・空虚な強調）に特化しており、",
+    "    小説に当てはまるパターンが 1 つも無い。小説用の辞書を作るなら、実際の原稿で件数を数えてから足す。",
+    "",
+    "残したが割り切りがあるルール:",
+    "  ja-no-abusage: 誤用は創作でも誤用として拾う。会話文の意図的な誤用は書き手が指摘を捨てる。",
+    "  no-ai-colon-continuation: コロンで受ける説明は技法ではなく機械の癖なので残す。",
+    "",
+    "検査できないもの: 体言止めと造語を見るルールは business 側にも無い。",
+    "そのため novel 側で落とすものも無い（設定の欠落ではない）。",
+    "",
+    "元記事「AI の変な日本語を Hooks で検査する」からの推定実装。元記事は参照できておらず、",
+    "シーン切替という要求から起こした構成である。"
+  ],
+  "filters": {
+    "comments": true
+  },
+  "rules": {
+    "preset-ja-technical-writing": {
+      "no-hankaku-kana": true,
+      "no-zero-width-spaces": true,
+      "no-invalid-control-character": true,
+      "no-nfd": true,
+      "no-unmatched-pair": true,
+      "ja-no-abusage": true,
+
+      "sentence-length": false,
+      "max-ten": false,
+      "max-kanji-continuous-len": false,
+      "no-doubled-joshi": false,
+      "no-double-negative-ja": false,
+      "no-doubled-conjunction": false,
+      "no-doubled-conjunctive-particle-ga": false,
+      "ja-no-weak-phrase": false,
+      "ja-no-redundant-expression": false,
+      "ja-no-successive-word": false,
+
+      "ja-no-mixed-period": false,
+      "max-comma": false,
+      "arabic-kanji-numbers": false,
+      "no-mix-dearu-desumasu": false,
+      "no-dropping-the-ra": false,
+      "no-exclamation-question-mark": false,
+      "ja-unnatural-alphabet": false
+    },
+    "@textlint-ja/preset-ai-writing": {
+      "no-ai-colon-continuation": true,
+
+      "no-ai-list-formatting": false,
+      "no-ai-hype-expressions": false,
+      "no-ai-emphasis-patterns": false,
+      "ai-tech-writing-guideline": false
+    },
+    "period-in-list-item": false,
+    "prh": false,
+    "textlint-rule-prh": false
+  }
+}

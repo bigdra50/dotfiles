@@ -128,6 +128,15 @@
             "async": true
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/ja-style-stop.sh",
+            "timeout": 60
+          }
+        ]
       }
     ],
     "PermissionRequest": [

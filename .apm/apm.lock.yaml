@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-08-22T13:35:32.571215+00:00'
+generated_at: '2026-08-23T05:11:37.986168+00:00'
 apm_version: 0.28.0
 dependencies:
 - repo_url: bigdra50/skills
@@ -380,6 +380,27 @@ dependencies:
     .claude/skills/html-reports-arch/SKILL.md: sha256:63ebfc3ab69173cd4a0cd4731a8b040303d238edffd080828c8853d431e5266b
     .claude/skills/html-reports-arch/scripts/detect-changes.sh: sha256:693ff88696a83737d1bd04dcd41d82b81585d4e7f69a05c0f45be81f25f327ab
   content_hash: sha256:8e5c3016ef798ad72863e5eb04033efa3082729fdfd9489e4c8f541ab3fee152
+- repo_url: bigdra50/skills
+  name: ja-ng-rule-register
+  host: github.com
+  resolved_commit: b1968e1614e73cb880efabdc3cdf3165f6fa127b
+  version: unknown
+  virtual_path: docs/ja-ng-rule-register
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/ja-ng-rule-register
+  - .agents/skills/ja-ng-rule-register/README.md
+  - .agents/skills/ja-ng-rule-register/SKILL.md
+  - .claude/skills/ja-ng-rule-register
+  - .claude/skills/ja-ng-rule-register/README.md
+  - .claude/skills/ja-ng-rule-register/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/ja-ng-rule-register/README.md: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+    .agents/skills/ja-ng-rule-register/SKILL.md: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+    .claude/skills/ja-ng-rule-register/README.md: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+    .claude/skills/ja-ng-rule-register/SKILL.md: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+  content_hash: sha256:24c9d04f1f8708e6bbfd08d8715833959da5f6a35bb557908ceca502b3fb42a1
 - repo_url: bigdra50/skills
   name: japanese-tech-writing
   host: github.com
@@ -2822,6 +2843,33 @@ deployments:
   - bigdra50/survey-any-tools
   active_owner: bigdra50/survey-any-tools
   content_hash: sha256:6a416532f3a86e41be4197dc05f4190d0423ebedaa5853b5a5e4f424f86b6104
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ja-ng-rule-register
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ja-ng-rule-register/README.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+- kind: project-relative
+  target: claude
+  value: .claude/skills/ja-ng-rule-register/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
 - kind: project-relative
   target: claude
   value: .claude/skills/japanese-tech-writing
@@ -5477,6 +5525,33 @@ deployments:
   - unity-technologies/skills
   active_owner: unity-technologies/skills
   content_hash: sha256:764b0f2928a3008bda13be9dc6deb0b46c76f045d2474d853a4a7dbab4e78ac7
+- kind: project-relative
+  target: codex
+  value: .agents/skills/ja-ng-rule-register
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/ja-ng-rule-register/README.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+- kind: project-relative
+  target: codex
+  value: .agents/skills/ja-ng-rule-register/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/skills/docs/ja-ng-rule-register
+  active_owner: bigdra50/skills/docs/ja-ng-rule-register
+  content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
 - kind: project-relative
   target: codex
   value: .agents/skills/japanese-tech-writing
