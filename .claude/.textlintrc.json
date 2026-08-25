@@ -48,6 +48,7 @@
 
       "ai-tech-writing-guideline": false
     },
+    "no-strong-emphasis": true,
     "period-in-list-item": {
       "periodMark": "",
       "periodMarks": ["。", "．"],

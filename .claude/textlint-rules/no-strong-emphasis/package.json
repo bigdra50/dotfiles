@@ -1,0 +1,8 @@
+{
+  "name": "textlint-rule-no-strong-emphasis",
+  "version": "1.0.0",
+  "description": "textlint rule that disallows Markdown Strong emphasis (** ... **)",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true
+}

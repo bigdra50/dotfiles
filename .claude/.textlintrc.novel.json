@@ -14,7 +14,7 @@
     "  no-doubled-conjunction / no-doubled-conjunctive-particle-ga: 接続の反復は語りの癖として使う",
     "  ja-no-weak-phrase: 「かもしれない」は語り手と登場人物の声",
     "  ja-no-redundant-expression: 冗長さも文体（「〜することができる」を残す判断がありうる）",
-    "  no-ai-hype-expressions / no-ai-emphasis-patterns: 誇張と強調は創作の技法",
+    "  no-ai-hype-expressions / no-ai-emphasis-patterns / no-strong-emphasis: 誇張と強調は創作の技法",
     "  no-ai-list-formatting: 作中の書類やメモを描くとき、箇条書きの体裁は作品の一部",
     "  period-in-list-item: 箇条書きの句点規約は文書の体裁の話で、地の文には無関係",
     "  prh / textlint-rule-prh: 辞書の中身が文書執筆の規範（Phase N・執筆時系列・空虚な強調）に特化しており、",
@@ -69,6 +69,7 @@
       "no-ai-emphasis-patterns": false,
       "ai-tech-writing-guideline": false
     },
+    "no-strong-emphasis": false,
     "period-in-list-item": false,
     "prh": false,
     "textlint-rule-prh": false
