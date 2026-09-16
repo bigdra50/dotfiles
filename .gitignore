@@ -74,6 +74,9 @@ yarn-error.log*
 # config.yml だけを追跡するホワイトリスト方式にする
 .config/gh/*
 !.config/gh/config.yml
+# cursor は auth / 実験キャッシュを同 dir に書くため、cli-config.json だけ追跡する
+.config/cursor/*
+!.config/cursor/cli-config.json
 .config/mise/*.lock
 .config/zsh/.zcompdump*
 .config/zsh/.zsh_sessions/
