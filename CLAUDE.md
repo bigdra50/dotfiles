@@ -122,7 +122,7 @@ skills は [bigdra50/skills](https://github.com/bigdra50/skills) と [bigdra50/u
 スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。
 旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
 
-settings.json だけは symlink ではなく **jq マージ適用**（`apply_claude_settings`）。
+settings.json だけは symlink にせず、`apply_claude_settings` が jq で live 側へマージして適用する。
 Claude Code が実行時に atomic write で保存するため symlink は保存のたびに実ファイル化して乖離する。
 dotfiles 版が定義するキーは dotfiles が勝ち、live 側だけにあるランタイムキーは保持される。
 設定を恒久変更するときは dotfiles 側を編集して `mise run setup:claude` で適用する。
