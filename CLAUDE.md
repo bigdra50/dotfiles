@@ -35,7 +35,7 @@ bash scripts/md-lint.sh <file.md>   # 指定ファイルだけ
 
 ロード順序:
 1. `~/.zshenv` - ZDOTDIR設定のみ → `$ZDOTDIR/.zshenv` に委譲
-2. `$ZDOTDIR/.zshenv` (全 zsh) - XDG設定、FPATH → `env.zsh` + `func-core.zsh` → `.zshenv_local`
+2. `$ZDOTDIR/.zshenv` (全 zsh) - XDG設定、FPATH → `env.zsh` + `func-core.zsh` → `$ZDOTDIR/.zshenv_local` → `~/.zshenv_local`
    - `env.zsh` - 正準PATH順序 (mise shims 静的prepend)、GOPATH 等の常時 export
    - `func-core.zsh` - 非対話でも必要な関数 (gh のアカウント自動選択)
 3. `$ZDOTDIR/.zprofile` (login) - path_helper が PATH を再構成した後に `env.zsh` を再 source
@@ -83,7 +83,8 @@ Zsh設定は `.config/zsh/` に統合。
 
 マシン固有の設定は次のファイルに記述する（git 追跡外）。
 - `$ZDOTDIR/.zshrc_local` (`~/.config/zsh/.zshrc_local`)
-- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`): 秘密情報はここに限る
+- `$ZDOTDIR/.zshenv_local` (`~/.config/zsh/.zshenv_local`): repo の作業ツリー内にあり、`.gitignore` の `*_local` だけで追跡外になっている
+- `~/.zshenv_local`: 秘密情報はここに限る。`$ZDOTDIR/.zshenv_local` の後に読むので、同じ変数はこちらが勝つ
 - `~/.ssh/config.d/local.conf`: マシン固有 ssh ホスト
 - `~/.claude/local-instructions.md`（Claude のマシンローカルメモリ。`.claude/CLAUDE.md` から import され、無いマシンでは無視。repo 外に平置きのため gitignore 不要）
 

@@ -59,4 +59,7 @@ fi
 # ここでの1回の source でよい。
 [[ -f "$ZDOTDIR/func-core.zsh" ]] && . "$ZDOTDIR/func-core.zsh"
 
+# 秘密情報は repo 外の ~/.zshenv_local に置く。$ZDOTDIR はこの repo へのリンクなので、
+# その下に置くと .gitignore だけで公開を防ぐことになる。同じ変数は後に読む ~/.zshenv_local が勝つ。
 [[ -e "$ZDOTDIR/.zshenv_local" ]] && . "$ZDOTDIR/.zshenv_local"
+[[ -e "$HOME/.zshenv_local" ]] && . "$HOME/.zshenv_local"
