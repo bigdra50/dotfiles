@@ -62,22 +62,6 @@ jobs:
       - name: Lint markdown
         run: bash scripts/md-lint.sh
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.14"
-
-      # 文書全体の集計チェッカーは自前実装なので、単体テストと型検査を CI で担保する。
-      # md-lint.sh は壊れていても静かに 0 件を返しうるため、
-      # 「指摘が出ないこと」だけではチェッカーの健全性を確認できない。
-      - name: Test the document-level Japanese checker
-        run: |
-          pip install --quiet ruff==0.16.1 mypy==2.3.0
-          ruff check scripts/ja-doc-stats.py scripts/tests/
-          ruff format --check scripts/ja-doc-stats.py scripts/tests/
-          mypy --strict scripts/ja-doc-stats.py scripts/tests/
-          python -m unittest discover -s scripts/tests
-
   claude-config:
     runs-on: ubuntu-latest
     timeout-minutes: 5

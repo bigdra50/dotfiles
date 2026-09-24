@@ -273,7 +273,7 @@ textlint は同じルール id を 1 つしか持てないので、2 つ目の�
 一文一行は `scripts/sembr-check.sh` が別途見る。
 箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
 
-`scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・3 つの hook すべてがここを通る。
+`scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・2 つの hook すべてがここを通る。
 手元と CI で結果が食い違わないようにするための集約点。
 
 ```mermaid
@@ -295,10 +295,9 @@ flowchart TB
 
     canon --> ml
 
-    subgraph local["ローカル (書いた瞬間と終了時)"]
+    subgraph local["ローカル (書いた瞬間)"]
         h1["PostToolUse: Write|Edit<br/>textlint-md.sh → decision:block"]
         h2["PreToolUse: Bash<br/>textlint-gh-body.sh → deny"]
-        h3["Stop<br/>ja-style-stop.sh → decision:block"]
         mt["mise run md:lint"]
     end
 
@@ -309,7 +308,6 @@ flowchart TB
 
     h1 --> ml
     h2 --> ml
-    h3 --> ml
     mt --> ml
     ci --> ml
     bl --> ml
@@ -317,12 +315,6 @@ flowchart TB
 
 hook はユーザスコープ（`~/.claude/settings.json`）に登録するため、dotfiles 以外のプロジェクトでも動く。
 `~/.claude/hooks` が dotfiles へのシンボリックリンクなので、hook は自分の実体パスから repo とランナーを解決できる。
-
-3 つ目の hook は Stop に置いてある。
-`ja-style-stop.sh` は、そのセッションで PostToolUse が検査した md だけを再検査する。
-差し戻し上限に達して通過した指摘や、あとから別のファイルへ混入した指摘を、終了前にもう一度拾う。
-全件走査はしない。
-触ったパスは `${TMPDIR}/claude-textlint/<session_id>/` に記録してある。
 
 md を書く hook と body の hook はプロジェクト設定の扱いが違う。
 

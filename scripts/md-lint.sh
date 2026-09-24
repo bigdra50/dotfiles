@@ -23,20 +23,10 @@ TEXTLINT="$REPO_ROOT/.claude/node_modules/.bin/textlint"
 CONFIG="$REPO_ROOT/.claude/.textlintrc.json"
 IGNORE="$REPO_ROOT/.claude/.textlintignore"
 SEMBR="$REPO_ROOT/scripts/sembr-check.sh"
-# 文書全体を数えて初めて分かる癖 (同一文末の連続・文体混在) の検査。textlint の
-# ルールは 1 文または 1 ノードしか見られないため、ここだけ別プロセスに出している。
-STATS="$REPO_ROOT/scripts/ja-doc-stats.py"
 FORMAT="${MD_LINT_FORMAT:-stylish}"
 
 if [[ ! -x "$TEXTLINT" ]]; then
     echo "textlint not installed. Run: npm ci --prefix '$REPO_ROOT/.claude' --ignore-scripts" >&2
-    exit 2
-fi
-
-# 検査を黙って素通りさせないため、python3 が無ければ「検査できない」として落とす。
-# 標準ライブラリだけで動くので、あるかないかだけ見れば足りる。
-if ! command -v python3 >/dev/null 2>&1; then
-    echo "python3 not found. $STATS の実行に必要" >&2
     exit 2
 fi
 
@@ -65,7 +55,6 @@ if [[ $# -gt 0 ]]; then
     # 案内が読み手（人・モデル）へ届かないよう落とす。
     "$TEXTLINT" -c "$CONFIG" --ignore-path "$IGNORE" -f "$FORMAT" "${targets[@]}" | drop_fix_hint || status=1
     "$SEMBR" "${targets[@]}" || status=1
-    python3 "$STATS" "${targets[@]}" || status=1
     exit "$status"
 fi
 
@@ -75,7 +64,4 @@ git ls-files -z -- '*.md' |
 # 一文一行は .textlintignore の除外を受けない。箇条書きの体裁が意図的な
 # エージェント向け文書でも、句点で改行する規範は同じように適用されるため。
 git ls-files -z -- '*.md' | xargs -0 -r "$SEMBR" || status=1
-# 集計検査も .textlintignore の除外を受けない。文末の反復や文体の混在は、
-# エージェント向け文書でも読みにくさとして同じように効く。
-git ls-files -z -- '*.md' | xargs -0 -r python3 "$STATS" || status=1
 exit "$status"

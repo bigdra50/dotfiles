@@ -5,8 +5,6 @@
 #
 # ユーザスコープ (~/.claude/settings.json) に登録するため、dotfiles 以外の
 # プロジェクトでも動く。自前の textlint 設定を持つプロジェクトでは譲る。
-# 検査した md のパスはセッション単位で記録し、Stop hook (ja-style-stop.sh) が
-# ターンの終わりに同じ範囲だけを見直せるようにする。
 #
 # 安全弁:
 #   1. 同一ファイルへの block は CLAUDE_TEXTLINT_MAX_BLOCKS 回まで（既定 2）。
@@ -77,21 +75,6 @@ fi
 COUNTER_DIR="${TMPDIR:-/tmp}/claude-textlint/$SESSION_ID"
 mkdir -p "$COUNTER_DIR" 2>/dev/null || exit 0
 COUNTER="$COUNTER_DIR/$KEY"
-
-# このセッションで検査した md のパスを Stop hook (ja-style-stop.sh) へ引き継ぐ。
-# Stop で repo 全体を走査せず、触れたものだけを見直させるための記録。
-# 本来の検査の付随物なので、記録に失敗しても検査はそのまま続ける。
-TOUCHED="$COUNTER_DIR/touched-md"
-if [[ ! -f "$TOUCHED" ]]; then
-    : >"$TOUCHED" 2>/dev/null || true
-fi
-# 上限は Stop での再検査にかかる時間の頭打ち（実測 32 件で 1.3 秒）。
-# 改行を含むパスは行単位の記録を壊すので記録しない。
-if [[ -f "$TOUCHED" && "$FILE" != *$'\n'* ]] && ! grep -qxF -- "$FILE" "$TOUCHED"; then
-    if [[ "$(wc -l <"$TOUCHED")" -lt 200 ]]; then
-        printf '%s\n' "$FILE" >>"$TOUCHED" 2>/dev/null || true
-    fi
-fi
 
 OUTPUT=$(MD_LINT_FORMAT=compact "$RUNNER" "$FILE" 2>/dev/null)
 if [[ -z "$OUTPUT" ]]; then
