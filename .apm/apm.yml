@@ -22,11 +22,10 @@ targets:
 dependencies:
   apm:
     # カテゴリ直下を指すものは plugin bundle。配下の全スキルが 1 エントリで入る
-    # (claude-code=6 / github=3 / unity=22)。絞りたい場合は
+    # (github=3)。絞りたい場合は
     # bigdra50/skills/<category>/<skill> の個別指定も従来どおり使える。
-    - bigdra50/skills/3dcg/blender-export
-    - bigdra50/skills/3dcg/blender-inspect
-    - bigdra50/skills/claude-code
+    - bigdra50/skills/claude-code/compact-prep
+    - bigdra50/skills/claude-code/session-recap
     - bigdra50/skills/design/design-mockup
     - bigdra50/skills/design/drawio
     - bigdra50/skills/docs/docs-architect
@@ -41,12 +40,9 @@ dependencies:
     - bigdra50/skills/review/google-code-review
     - bigdra50/skills/review/second-opinion
     - bigdra50/skills/system/disk-usage
-    - bigdra50/skills/unity
-    # Unity 公式のスキル集 (6 スキル)。apm.yml も plugin.json も持たないが
-    # skills/<name>/SKILL.md レイアウトなので skill collection として解決される。
-    # 上流なのでタグは無く #sha で pin する。unity-cli スキルは公式 CLI の
-    # バージョンに追従しているため、CLI を上げるときはここも一緒に見る。
-    - Unity-Technologies/skills#62fadcaa7011de42e971842bc0d3cfe9e9466a5e
+    # Unity 公式のスキル集からは unity-cli だけを入れる。上流なのでタグは無く #sha で pin する。
+    # unity-cli スキルは公式 CLI のバージョンに追従しているため、CLI を上げるときはここも一緒に見る。
+    - Unity-Technologies/skills/skills/unity-cli#62fadcaa7011de42e971842bc0d3cfe9e9466a5e
     # 9 スキルを持つ apm パッケージなので、これ 1 行で全部入る。
     # スキルが読む内容リポジトリ (survey-any) は private かつ apm パッケージ構造を
     # 持たないため、ここには載らない。install は通るが、ghq で survey-any を
@@ -65,7 +61,6 @@ dependencies:
     # 直接見て、この pin を手で書き換える。
     - mattpocock/skills/skills/productivity/grilling#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mattpocock/skills/skills/productivity/grill-me#2ab958093e83e0ec752e6c1c5932da465bf23e0c
-    - mizchi/skills/devops/actions-ci-tuning
     - mizchi/skills/devops/gh-fix-ci
     - mizchi/skills/meta/empirical-prompt-tuning
     - mizchi/skills/meta/tech-article-reproducibility
