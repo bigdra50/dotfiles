@@ -13,6 +13,9 @@
 # unity-cli のように SHA で pin した依存があると、引数なしの `apm update -g` は plan の段階で
 # 止まる (apm 0.28.0 は注釈付き tag の無い revision pin を更新できない)。その間は依存名を並べて更新する。
 # 他マシンでの再現は `apm install -g --frozen` (lockfile 固定・drift で fail)。
+# 更新したら ~/.apm/apm.lock.yaml を .apm/apm.lock.yaml へ写してコミットする。写す前に
+# setup を走らせると、setup が dotfiles の古い lock で上書きして更新が戻る (上書き前の
+# lock は ~/.apm/apm.lock.yaml.detached.* に残る)。
 name: bigdra-skills
 version: 1.0.0
 description: Global agent primitives (skills + agents) managed by apm
@@ -57,16 +60,15 @@ dependencies:
     # 無いと動かない。片方だけ消さないこと。
     # 自リポジトリと違い上流の更新は制御できないため #sha で pin する。
     #
-    # この 2 件だけは `apm update` に任せられない。update は #sha pin を「最新の
-    # annotated tag が指す commit」へ移すが、上流はタグが main より 42 コミット
-    # 遅れているため、更新すると依存が巻き戻る。同じ理由で `apm outdated -g` は
-    # この 2 件を常に outdated と報告する (pin の方が新しい)。追従は上流 main を
-    # 直接見て、この pin を手で書き換える。
+    # 上流の v1.2.3 以降の grilling は、質問の見出しに太字を必須にしている。
+    # writing-style.md の「太字を使わない」とぶつかるので、この pin に留めている。
+    # `apm outdated -g` はこの 2 件を outdated と報告する。追従するときは上流の形式を
+    # 読んでから、この pin を手で書き換える。
     - mattpocock/skills/skills/productivity/grilling#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mattpocock/skills/skills/productivity/grill-me#2ab958093e83e0ec752e6c1c5932da465bf23e0c
-    - mizchi/skills/devops/gh-fix-ci
-    - mizchi/skills/meta/empirical-prompt-tuning
-    - mizchi/skills/meta/tech-article-reproducibility
+    - mizchi/skills/gh-fix-ci
+    - mizchi/skills/empirical-prompt-tuning
+    - mizchi/skills/tech-article-reproducibility
     # マシン固有のスキルはこの正本に載せない。ただし apm は manifest に無い配置
     # ファイルを install 時に削除するため、管理外で残したいものは ~/.claude/skills
     # へ直接置くこと (apm は "local files not managed by APM" として skip する)。
