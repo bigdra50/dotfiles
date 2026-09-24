@@ -1,0 +1,26 @@
+# Cursor CLI 向け。Claude Code の config.toml は触らない。
+# $usage (Claude OAuth) を ${custom.cursor_usage} に差し替えただけ。
+
+format = """
+$directory $memory $time $git
+$model $ctx ${custom.cursor_usage} ${custom.compact_warn}
+$project ${custom.unilyze}
+"""
+
+[custom.cursor_usage]
+command = '/usr/bin/python3 "$HOME/.config/ccstatuskit/cursor-usage.py"'
+
+[custom.unilyze]
+command = 'unilyze statusline -p "${CCSK_PROJECT_DIR:-.}"'
+when_dir = ["Assets"]
+
+[custom.compact_warn]
+command = '''
+t="${TMPDIR:-/tmp}"
+sid=$(printf '%s' "${CCSK_SESSION_ID:-}" | tr -c 'A-Za-z0-9._-' '_')
+if [ -n "$sid" ] && [ "${CCSK_CTX_PCT:-0}" -ge 60 ] && [ ! -f "$t/claude-compact-warned/$sid" ]; then
+  mkdir -p "$t/claude-compact-warn"
+  printf '%s\n' "$CCSK_CTX_PCT" > "$t/claude-compact-warn/$sid"
+fi
+true
+'''
