@@ -6,7 +6,13 @@
     "                       つまり人が書いた文には出てこなかったパターンだけを入れてある。",
     "  textlint-rule-prh  → prh-business.yml を warning で当てる。黒と断定できない語を置く。",
     "warning は exit code に影響しない。CI も PR body lint も落ちないが、Write|Edit の hook は",
-    "出力の有無で差し戻すため、書いた直後のモデルには届く。"
+    "出力の有無で差し戻すため、書いた直後のモデルには届く。",
+    "",
+    "preset-ai-words-ja は語そのものを形態素で拾う (ai-writing は構造を見る)。黒と断定できない語が",
+    "多いので warning。allows には、このリポジトリの md 51 件に当てて 37 件すべてが正当な用法だった",
+    "語を置く (2026-09-15 の測定。検査・実測・正本はこの repo の用語)。効く は prh-business が",
+    "言い換え先付きで扱うので、二重に指摘しないよう allows に入れる。no-short-topic-comma は",
+    "「結論は、」のような短い主題の読点を見るルールで、指摘が多くなるので入れない。"
   ],
   "filters": {
     "comments": true
@@ -45,6 +51,13 @@
       "no-ai-colon-continuation": true,
 
       "ai-tech-writing-guideline": false
+    },
+    "preset-ai-words-ja": {
+      "no-ai-words": {
+        "severity": "warning",
+        "allows": ["効く", "検査", "実測", "経路", "正本", "/壊れ/", "漏れ", "/走[るらりっれろ]/", "潰す", "断定"]
+      },
+      "no-short-topic-comma": false
     },
     "no-strong-emphasis": true,
     "period-in-list-item": {

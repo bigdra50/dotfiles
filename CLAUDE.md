@@ -134,7 +134,7 @@ dotfiles 版が定義するキーは dotfiles が勝ち、live 側だけにあ�
 詳細と全体図は [architecture.md](docs/architecture.md) の「Markdown 文体検査」を参照。
 
 `scripts/md-lint.sh` が唯一の実行経路で、`mise run md:lint`・CI・2 つの hook すべてがここを通る。
-hook はユーザスコープに登録してあるため、dotfiles 以外のプロジェクトでも効く。
+hook はユーザスコープに登録してあるため、dotfiles 以外のプロジェクトでも動く。
 md を書く hook は、自前の `.textlintrc*` を持つプロジェクトではそちらのルールが正として譲る。
 Issue / PR 本文の hook は譲らず、どの repo でも個人の規範を当てる（repo の設定はファイルを統べるもので、GitHub 上の本文は管轄しないため）。
 サーバサイドの `body-lint.yml` はこのリポジトリでしか動かない。

@@ -265,7 +265,10 @@ flowchart LR
 検出は決定論的な textlint が担い、修正は文脈を読める LLM が担う。
 
 設定の正本は `.claude/.textlintrc.json` と 2 つの prh 辞書（`.claude/prh-writing-style.yml`・`.claude/prh-business.yml`）。
-prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続・`Phase N`・執筆時系列・曖昧語・空虚な強調・LLM 特有の空語）。
+prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続・`Phase N`・執筆時系列・曖昧語・空虚な強調・LLM 特有の空語・英語の直訳調）。
+語そのものは `textlint-rule-preset-ai-words-ja` が形態素で拾う（warning）。
+AI の日本語に出やすい語の辞書で、構造を見る ai-writing preset を補う。
+このリポジトリの用語として使う語（検査・実測・正本など）は `allows` で外してある。
 辞書は誤検知の実測で 2 段に分けてある。
 人が書いた md で 0 件だったパターンだけを `prh-writing-style.yml` に error として置き、機械では黒と断定できない語は `prh-business.yml` に warning として置く。
 warning は exit code を変えないため CI と PR は落ちないが、書いた直後の hook には届く。
