@@ -95,8 +95,12 @@ jobs:
       - name: Lint (ruff + mypy)
         # Install into the setup-python 3.14 env: pipx would run mypy under
         # the runner's system Python 3.10, where datetime.UTC does not exist
+        #
+        # Pinned: unpinned, a linter release lands new rules on an unrelated
+        # commit and turns main red with nothing local to reproduce it against.
+        # Bump deliberately and fix the new findings in that same commit.
         run: |
-          pip install --quiet ruff mypy
+          pip install --quiet ruff==0.16.1 mypy==2.3.0
           ruff check scripts/reference/
           ruff format --check scripts/reference/
           mypy --strict scripts/reference/
