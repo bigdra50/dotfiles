@@ -39,6 +39,10 @@ jobs:
         # Scoped to real scripts; tests/fixtures hold parser input data, not code
         run: shfmt -d -i 4 -ci scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh
 
+      # The tests run setup functions against a throwaway HOME; jq and python3 ship with the runner
+      - name: Test setup scripts
+        run: python3 -m unittest scripts/tests/test_setup_config_merge.py
+
   markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 10

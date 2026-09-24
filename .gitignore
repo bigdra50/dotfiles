@@ -74,7 +74,8 @@ yarn-error.log*
 # config.yml だけを追跡するホワイトリスト方式にする
 .config/gh/*
 !.config/gh/config.yml
-# cursor は auth / 実験キャッシュを同 dir に書くため、cli-config.json だけ追跡する
+# ~/.config/cursor はリンクせず、setup が cli-config.json の一部を合成で当てる（apply_cursor_config）。
+# 以前の構成でリンクしていたマシンでは、Cursor の認証や会話履歴がここに残るので無視する
 .config/cursor/*
 !.config/cursor/cli-config.json
 .config/mise/*.lock

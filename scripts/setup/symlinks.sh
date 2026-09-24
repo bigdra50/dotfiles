@@ -87,6 +87,12 @@ link_config() {
             continue
         fi
 
+        # Cursor は cli-config.json へ認証情報を書き込み、同じディレクトリに会話履歴も置く。
+        # リンクするとそれらがリポジトリへ書かれるので、apply_cursor_config が合成で当てる。
+        if [[ "$basename" == "cursor" ]]; then
+            continue
+        fi
+
         case "$PLATFORM" in
             linux | wsl)
                 if [[ "$basename" == "posh" || "$basename" == "yashiki" ]]; then
@@ -98,6 +104,47 @@ link_config() {
 
         create_symlink "$config" "$HOME/.config/$basename"
     done
+}
+
+# ---- Cursor CLI config ----
+
+# 追跡中の cli-config.json には、最初にディレクトリごとリンクしたマシンの設定が丸ごと入っている。
+# statusLine や sandbox はマシンごとに違うので、全マシンへ当てるのは attribution だけにする。
+CURSOR_MANAGED_KEYS='["attribution"]'
+
+apply_cursor_config() {
+    local repo_dir="$DOTFILES_DIR/.config/cursor"
+    local live_dir="$HOME/.config/cursor"
+    [[ -f "$repo_dir/cli-config.json" ]] || return 0
+    if ! command_exists jq; then
+        warning "jq not found; skipping Cursor CLI config"
+        return 0
+    fi
+
+    # 以前の構成では ~/.config/cursor がリポジトリを指していた。
+    # Cursor が書いた設定と実行時ファイルを写し取り、実ディレクトリへ置き換える。
+    # リポジトリ側に残る実行時ファイルは .gitignore 済みなので、消すのは本人の判断に任せる。
+    if [[ -L "$live_dir" ]] && [[ "$live_dir" -ef "$repo_dir" ]]; then
+        rm "$live_dir"
+        mkdir -p "$live_dir"
+        cp -a "$repo_dir/." "$live_dir/"
+        warning "Replaced the $live_dir symlink with a real directory (copied from $repo_dir)"
+    fi
+
+    # Cursor が最初の起動で書く前に部分的なファイルを置かない。version などの初期値は Cursor に任せる。
+    if [[ ! -f "$live_dir/cli-config.json" ]]; then
+        info "Cursor CLI config not found; skipping (run setup again after starting Cursor once)"
+        return 0
+    fi
+
+    local managed status=0
+    managed="$(mktemp)"
+    jq --argjson keys "$CURSOR_MANAGED_KEYS" \
+        'with_entries(select(.key as $k | $keys | index($k)))' \
+        "$repo_dir/cli-config.json" >"$managed"
+    merge_json_onto "$managed" "$live_dir/cli-config.json" || status=$?
+    rm -f "$managed"
+    return "$status"
 }
 
 # ---- .ssh ----
@@ -117,9 +164,17 @@ link_ssh() {
 
 # ---- Main ----
 
-cleanup_obsolete_links
-link_dotfiles
-link_config
-link_ssh
+main() {
+    cleanup_obsolete_links
+    link_dotfiles
+    link_config
+    apply_cursor_config
+    link_ssh
 
-success "Symlinks created"
+    success "Symlinks created"
+}
+
+# テストが source して関数単位で呼べるよう、直接実行したときだけ main を走らせる
+if [[ "${BASH_SOURCE[0]}" == "$0" ]]; then
+    main "$@"
+fi

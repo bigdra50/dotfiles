@@ -151,6 +151,65 @@ create_symlink() {
 }
 
 # =============================================================================
+# JSON Config Merge
+# =============================================================================
+
+# Deep-merge a dotfiles JSON file onto a live config file.
+# Use this instead of a symlink for configs that the app rewrites at runtime:
+# an atomic save (tmp file + rename) replaces the symlink with a real file,
+# and runtime state (auth, caches) would otherwise be written into the repo.
+#   - keys defined in <source> win (desired state)
+#   - keys only in <target> are preserved (runtime state, per-machine choices)
+#   - arrays are replaced wholesale, as jq's `*` does
+# Usage: merge_json_onto <source> <target>
+merge_json_onto() {
+    local source="$1"
+    local target="$2"
+
+    if ! command_exists jq; then
+        warning "jq not found; skipping $target"
+        return 0
+    fi
+
+    if ! jq empty "$source" 2>/dev/null; then
+        error "Invalid JSON in $source; not applying"
+        return 1
+    fi
+
+    # Legacy: target may still be a symlink into the repo — materialize it
+    if [[ -L "$target" ]]; then
+        rm "$target"
+    fi
+
+    if [[ ! -f "$target" ]]; then
+        mkdir -p "$(dirname "$target")"
+        install -m 600 "$source" "$target"
+        success "$target (created from dotfiles)"
+        return 0
+    fi
+
+    if ! jq empty "$target" 2>/dev/null; then
+        error "Invalid JSON in $target; fix it before applying"
+        return 1
+    fi
+
+    local merged
+    merged="$(jq -s '.[0] * .[1]' "$target" "$source")" || return 1
+
+    if [[ "$(printf '%s' "$merged" | jq -S .)" == "$(jq -S . "$target")" ]]; then
+        success "$target (already up to date)"
+        return 0
+    fi
+
+    local tmp
+    tmp="$(mktemp)"
+    printf '%s\n' "$merged" >"$tmp"
+    chmod 600 "$tmp"
+    mv "$tmp" "$target"
+    success "$target (merged dotfiles settings)"
+}
+
+# =============================================================================
 # Network Helpers
 # =============================================================================
 

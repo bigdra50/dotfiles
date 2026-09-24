@@ -72,53 +72,11 @@ link_claude() {
 
 # Claude Code rewrites settings.json atomically at runtime (tmp file + rename),
 # which replaces a symlink with a real file and lets it drift from dotfiles.
-# Instead, deep-merge the dotfiles version onto the live file:
-#   - keys defined in dotfiles win (desired state)
-#   - runtime-only keys in the live file are preserved
+# Instead, deep-merge the dotfiles version onto the live file (merge_json_onto).
+# Keys absent from dotfiles keep their live value, so a per-machine choice
+# (for example the effort level) survives setup as long as dotfiles omits it.
 apply_claude_settings() {
-    local source="$CLAUDE_DIR/settings.json"
-    local target="$HOME/.claude/settings.json"
-
-    if ! command_exists jq; then
-        warning "jq not found; skipping settings.json apply"
-        return 0
-    fi
-
-    if ! jq empty "$source" 2>/dev/null; then
-        error "Invalid JSON in $source; not applying"
-        return 1
-    fi
-
-    # Legacy: target may still be a symlink into the repo — materialize it
-    if [[ -L "$target" ]]; then
-        rm "$target"
-    fi
-
-    if [[ ! -f "$target" ]]; then
-        install -m 600 "$source" "$target"
-        success "$target (created from dotfiles)"
-        return 0
-    fi
-
-    if ! jq empty "$target" 2>/dev/null; then
-        error "Invalid JSON in $target; fix it before applying settings"
-        return 1
-    fi
-
-    local merged
-    merged="$(jq -s '.[0] * .[1]' "$target" "$source")" || return 1
-
-    if [[ "$(printf '%s' "$merged" | jq -S .)" == "$(jq -S . "$target")" ]]; then
-        success "$target (settings already up to date)"
-        return 0
-    fi
-
-    local tmp
-    tmp="$(mktemp)"
-    printf '%s\n' "$merged" >"$tmp"
-    chmod 600 "$tmp"
-    mv "$tmp" "$target"
-    success "$target (merged dotfiles settings)"
+    merge_json_onto "$CLAUDE_DIR/settings.json" "$HOME/.claude/settings.json"
 }
 
 # ---- Install skills (via apm) ----

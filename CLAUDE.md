@@ -79,6 +79,11 @@ Zsh設定は `.config/zsh/` に統合。
 プラットフォーム固有の除外:
 - Linux/WSL: `.yabairc`, `.skhdrc`（macOS専用）
 
+`.config/cursor` はリンクしない。
+Cursor が `cli-config.json` へ認証情報を書き込み、同じディレクトリに会話履歴も置くためである。
+代わりに `apply_cursor_config`（`scripts/setup/symlinks.sh`）が、`attribution` だけを live の `cli-config.json` へ合成する。
+ほかのキーはマシンごとに違うので、各マシンの値を残す。
+
 ### ローカルオーバーライド
 
 マシン固有の設定は次のファイルに記述する（git 追跡外）。
