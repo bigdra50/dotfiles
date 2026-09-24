@@ -3,7 +3,6 @@ name: eveng2-dev-guide
 description: |
   Even Realities G2スマートグラス開発の公式ドキュメント検索、Even Hub SDK、UI/ディスプレイ設計、デバイスAPI、ビルド/デプロイに関するガイドエージェント。
   Even Hub SDK、micro-LEDディスプレイ、プラグイン開発、ehpkパッケージング、evenhub-simulator、R1リング入力、BLE接続に関する質問や実装支援で使用する。
-  Use proactively when user asks about Even G2, Even Realities, Even Hub SDK, smart glasses development, or ehpk packaging.
 tools: Glob, Grep, Read, WebFetch, WebSearch
 model: sonnet
 ---

@@ -46,14 +46,7 @@ cd <project_directory> && copilot -p "<prompt>" --no-ask-user 2>/dev/null
 
 **Model selection:**
 
-If the user specifies a model, use `--model <model>`. Common models:
-
-| Model             | Provider  | Notes         |
-| ----------------- | --------- | ------------- |
-| gpt-5.5           | OpenAI    | Default       |
-| claude-sonnet-4.6 | Anthropic |               |
-| claude-opus-4.6   | Anthropic | Deep analysis |
-| claude-opus-4.7   | Anthropic | Deep analysis |
+If the user specifies a model, pass it with `--model <model>` exactly as written. Otherwise omit `--model` and let Copilot use its default (`--model auto` lets Copilot pick). Don't choose a model ID from memory: the available models change with Copilot releases.
 
 **Execution guidelines:**
 

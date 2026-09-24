@@ -2,7 +2,8 @@
 # usage-warn-hook — UserPromptSubmit hook。
 # ccstatuskit (https://github.com/bigdra50/ccstatuskit) が維持する usage キャッシュを
 # 読み、利用枠が逼迫したときだけ警告をプロンプトへ注入する。
-# 残量デルタゲート付き: 初回・severity 悪化・残量が一定幅減ったときのみ再注入。
+# 注入するのは初回と severity が上がったときだけ。残量の数字を刻みごとに入れ直すと、
+# モデルが作業を早く切り上げたり新しいセッションを勧めたりする原因になるため。
 # キャッシュの更新は ccstatuskit の statusline 描画側が担う。ここでは読むだけ。
 
 set -uo pipefail
@@ -61,11 +62,10 @@ last_rem, last_sev = None, -1
 try:
     a,b=open(state).read().split(); last_rem=float(a); last_sev=int(b)
 except Exception: pass
-step = 1 if trigger<=10 else 5              # 残10%以下は1%刻み、それ以上は5%刻み
-inject = (last_rem is None) or (sevrank>last_sev) or ((last_rem-trigger)>=step)
+inject = (last_rem is None) or (sevrank>last_sev)
 if not inject: sys.exit(0)
 open(state,"w").write(f"{trigger} {sevrank}")
-lines=[f"- {label(l)}: {pc(l)}% 使用 / 残 {rem(l)}% ({l.get('severity')}, {reset_short(l)}でリセット)" for l in sorted(hot,key=rem)]
-print("[Claude 利用枠 警告] 以下の枠が逼迫。逼迫しているモデル(特に scoped 枠)の使用は必要な場面に限定すること:")
+lines=[f"- {label(l)}: {l.get('severity')} ({reset_short(l)}でリセット)" for l in sorted(hot,key=rem)]
+print("[Claude 利用枠] 次の枠が逼迫している。逼迫した枠のモデル（モデル別の週次枠は特に）をサブエージェントやレビューで選ぶのは必要なときに限る。今の作業を切り上げたり、新しいセッションを勧めたりする必要はない:")
 print("\n".join(lines))
 PY
