@@ -4,10 +4,14 @@
 # 各エントリは <owner/repo>/<path> のサブパス指定。path は SKILL.md を持つスキル
 # フォルダか、plugin manifest を持つカテゴリ (bundle) を指す。
 # 追加/削除はこのファイルを編集して `mise run setup:claude` で反映する。
+# 削除に `apm uninstall -g` は使わない。apm 0.28.0 では対象と無関係なローカルの
+# hook (.apm/hooks) の統合まで外す。行を消して install すれば hook は残る。
 #
 # 更新は `apm update -g --dry-run` で plan を読んでから、引数なしの `apm update -g`。
 # --yes は付けないこと。既定 No のプロンプトが SHA/tag 書き換えを見せる唯一の関門で、
 # 潰すと pin が黙って動く。特定の依存だけ更新するなら `apm update -g <pkg>...`。
+# unity-cli のように SHA で pin した依存があると、引数なしの `apm update -g` は plan の段階で
+# 止まる (apm 0.28.0 は注釈付き tag の無い revision pin を更新できない)。その間は依存名を並べて更新する。
 # 他マシンでの再現は `apm install -g --frozen` (lockfile 固定・drift で fail)。
 name: bigdra-skills
 version: 1.0.0
@@ -29,8 +33,6 @@ dependencies:
     - bigdra50/skills/design/design-mockup
     - bigdra50/skills/design/drawio
     - bigdra50/skills/docs/docs-architect
-    - bigdra50/skills/docs/html-reports
-    - bigdra50/skills/docs/html-reports-arch
     - bigdra50/skills/docs/ja-ng-rule-register
     - bigdra50/skills/docs/japanese-tech-writing
     - bigdra50/skills/docs/md-prose-cleanup
