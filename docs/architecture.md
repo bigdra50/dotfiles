@@ -273,19 +273,13 @@ textlint は同じルール id を 1 つしか持てないので、2 つ目の�
 一文一行は `scripts/sembr-check.sh` が別途見る。
 箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
 
-文体プロファイルは環境変数 `JA_STYLE_SCENE` で切り替える。
-既定の business は業務・技術文書向けで、`JA_STYLE_SCENE=novel` は `.claude/.textlintrc.novel.json` を使う。
-小説では長い一文・反復・誇張が技法なので、それらを見るルールと prh 辞書を落とし、表記の壊れ（半角カナ・NFD・対応しない括弧）だけを残す。
-一文一行も diff を読みやすくするための文書の規約なので、novel では走らせない。
-
 `scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・3 つの hook すべてがここを通る。
 手元と CI で結果が食い違わないようにするための集約点。
 
 ```mermaid
 flowchart TB
     subgraph canon["設定の正本"]
-        rc[".claude/.textlintrc.json<br/>(business・既定)"]
-        rcn[".claude/.textlintrc.novel.json<br/>(novel)"]
+        rc[".claude/.textlintrc.json"]
         prh[".claude/prh-writing-style.yml<br/>(error)"]
         prhb[".claude/prh-business.yml<br/>(warning)"]
         ign[".claude/.textlintignore"]
