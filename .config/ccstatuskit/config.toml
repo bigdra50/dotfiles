@@ -5,12 +5,13 @@
 # 各行はモジュールが全部隠れると行ごと消える（非Unityでは3行目が自動で消滅）
 format = """
 $directory $memory $time $git
-$model $ctx $usage ${custom.compact_warn}
+$model $ctx $usage ${custom.output_style} ${custom.compact_warn}
 $project ${custom.unilyze}
 """
 
 [usage]
 scoped = true
+show_reset = true
 
 # Unity プロジェクトのみ CodeHealth を表示。
 # -p を明示: cwd 任せだと Claude Code の起動ディレクトリ次第で別の場所を分析してしまう
@@ -30,3 +31,7 @@ if [ -n "$sid" ] && [ "${CCSK_CTX_PCT:-0}" -ge 60 ] && [ ! -f "$t/claude-compact
 fi
 true
 '''
+
+# 現在の Output Style。default のときは隠す
+[custom.output_style]
+command = '''jq -r '.output_style.name // empty | select(. != "default") | "🎨 " + .' '''
