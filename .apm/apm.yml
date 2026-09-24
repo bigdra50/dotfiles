@@ -31,6 +31,7 @@ dependencies:
     - bigdra50/skills/docs/docs-architect
     - bigdra50/skills/docs/html-reports
     - bigdra50/skills/docs/html-reports-arch
+    - bigdra50/skills/docs/ja-ng-rule-register
     - bigdra50/skills/docs/japanese-tech-writing
     - bigdra50/skills/docs/md-prose-cleanup
     - bigdra50/skills/docs/sync-docs

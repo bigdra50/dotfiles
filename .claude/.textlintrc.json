@@ -1,4 +1,13 @@
 {
+  "//": [
+    "prh を 2 つ読んでいる。textlint は同じルール id を 1 つしか持てないため、2 つ目は",
+    "package 名そのもの (textlint-rule-prh) を key にして別インスタンスとして読ませる。",
+    "  prh                → prh-writing-style.yml を error で当てる。実測 0 件、",
+    "                       つまり人が書いた文には出てこなかったパターンだけを入れてある。",
+    "  textlint-rule-prh  → prh-business.yml を warning で当てる。黒と断定できない語を置く。",
+    "warning は exit code に影響しない。CI も PR body lint も落ちないが、Write|Edit の hook は",
+    "出力の有無で差し戻すため、書いた直後のモデルには届く。"
+  ],
   "filters": {
     "comments": true
   },
@@ -37,6 +46,7 @@
 
       "ai-tech-writing-guideline": false
     },
+    "no-strong-emphasis": true,
     "period-in-list-item": {
       "periodMark": "",
       "periodMarks": ["。", "．"],
@@ -46,6 +56,10 @@
     },
     "prh": {
       "rulePaths": ["./prh-writing-style.yml"]
+    },
+    "textlint-rule-prh": {
+      "severity": "warning",
+      "rulePaths": ["./prh-business.yml"]
     }
   }
 }

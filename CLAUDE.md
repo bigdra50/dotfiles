@@ -123,7 +123,7 @@ skills は [bigdra50/skills](https://github.com/bigdra50/skills) と [bigdra50/u
 スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。
 旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
 
-settings.json だけは symlink ではなく **jq マージ適用**（`apply_claude_settings`）。
+settings.json だけは symlink にせず、`apply_claude_settings` が jq で live 側へマージして適用する。
 Claude Code が実行時に atomic write で保存するため symlink は保存のたびに実ファイル化して乖離する。
 dotfiles 版が定義するキーは dotfiles が勝ち、live 側だけにあるランタイムキーは保持される。
 設定を恒久変更するときは dotfiles 側を編集して `mise run setup:claude` で適用する。
@@ -149,3 +149,14 @@ Issue / PR の本文は一時 md に書いて `--body-file` で渡す。
 規範を変えるときは `.claude/rules/writing-style.md` と `.claude/prh-writing-style.yml` の両方を直す。
 `--fix` は使わない（prh の `expected` は方針のヒントであって置換文字列ではない）。
 一時的に外すときは `CLAUDE_TEXTLINT_DISABLE=1`、文書内の例外は `<!-- textlint-disable prh -->` で囲む。
+
+### 書く前の文体契約
+
+検査は書き終えたあとの網でしかない。
+textlint が拾えるのは語の表層だけなので、文の組み立ては書き始める前に決めておく。
+書く前と書く最中の決めごとは、`.claude/rules/writing-style.md` の「書く前と書くときの制約」にある。
+このファイルは `~/.claude/rules` を通じて、すべてのプロジェクトが読み込む。
+
+指摘されたら語だけ差し替えない。
+検出された語は、文の組み立てが崩れている合図として出てくる。
+該当する文を丸ごと書き直す。

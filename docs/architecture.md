@@ -264,8 +264,12 @@ flowchart LR
 `.claude/rules/writing-style.md` の規範のうち、静的に検査できる部分を textlint に移した層。
 検出は決定論的な textlint が担い、修正は文脈を読める LLM が担う。
 
-設定の正本は `.claude/.textlintrc.json` と `.claude/prh-writing-style.yml` の 2 つ。
-prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続、`Phase N`、執筆時系列、曖昧語、空虚な強調）。
+設定の正本は `.claude/.textlintrc.json` と 2 つの prh 辞書（`.claude/prh-writing-style.yml`・`.claude/prh-business.yml`）。
+prh 辞書には既製プリセットに無い規範を入れている（em ダッシュ接続・`Phase N`・執筆時系列・曖昧語・空虚な強調・LLM 特有の空語）。
+辞書は誤検知の実測で 2 段に分けてある。
+人が書いた md で 0 件だったパターンだけを `prh-writing-style.yml` に error として置き、機械では黒と断定できない語は `prh-business.yml` に warning として置く。
+warning は exit code を変えないため CI と PR は落ちないが、書いた直後の hook には届く。
+textlint は同じルール id を 1 つしか持てないので、2 つ目の辞書は package 名 `textlint-rule-prh` を key にした別インスタンスとして読ませている。
 一文一行は `scripts/sembr-check.sh` が別途見る。
 箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
 
@@ -276,7 +280,8 @@ prh 辞書には既製プリセットに無い規範を入れている（em ダ�
 flowchart TB
     subgraph canon["設定の正本"]
         rc[".claude/.textlintrc.json"]
-        prh[".claude/prh-writing-style.yml"]
+        prh[".claude/prh-writing-style.yml<br/>(error)"]
+        prhb[".claude/prh-business.yml<br/>(warning)"]
         ign[".claude/.textlintignore"]
     end
 
@@ -311,7 +316,7 @@ flowchart TB
 hook はユーザスコープ（`~/.claude/settings.json`）に登録するため、dotfiles 以外のプロジェクトでも動く。
 `~/.claude/hooks` が dotfiles へのシンボリックリンクなので、hook は自分の実体パスから repo とランナーを解決できる。
 
-2 つの hook はプロジェクト設定の扱いが違う。
+md を書く hook と body の hook はプロジェクト設定の扱いが違う。
 
 | hook | 自前の `.textlintrc*` を持つプロジェクトでの挙動 | 理由 |
 | --- | --- | --- |

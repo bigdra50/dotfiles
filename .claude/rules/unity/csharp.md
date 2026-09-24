@@ -39,7 +39,7 @@ paths:
 ## 非同期処理
 
 - UniTaskを優先（Coroutineより）
-- CancellationTokenを適切に伝播
+- CancellationTokenは呼び出し先まで引き渡し、破棄時にキャンセルする
 - async voidは避ける（UniTaskVoidを使用）
 
 ## パフォーマンス

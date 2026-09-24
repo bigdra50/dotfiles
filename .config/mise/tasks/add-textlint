@@ -4,7 +4,8 @@
 
 # dotfiles の textlint 設定を任意のプロジェクトへ配る。
 #
-# 設定の正本は dotfiles 側の .claude/.textlintrc.json と .claude/prh-writing-style.yml。
+# 設定の正本は dotfiles 側の .claude/.textlintrc.json と 2 つの prh 辞書
+# (.claude/prh-writing-style.yml, .claude/prh-business.yml)。
 # ここでは複製するだけで、内容をこのファイルに持たない。両方に設定を書くと
 # 「どちらが正か」が失われ、規範を更新しても配布先に反映されなくなる。
 #
@@ -22,7 +23,9 @@ if [[ "$PROJECT_DIR" == "$DOTFILES_DIR" ]]; then
     echo "dotfiles 自身には既に設定がある。別のプロジェクトで実行すること。" >&2
     exit 1
 fi
-for f in .textlintrc.json prh-writing-style.yml package.json; do
+# .textlintrc.json が 2 つの辞書を rulePaths で参照しているので、片方でも欠けると
+# 配布先の textlint が設定エラーで落ちる。存在確認と cp は必ず両方に対して行う。
+for f in .textlintrc.json prh-writing-style.yml prh-business.yml package.json; do
     if [[ ! -f "$SRC/$f" ]]; then
         echo "正本が見つからない: $SRC/$f" >&2
         exit 1
@@ -47,7 +50,8 @@ npm install --save-dev $deps
 
 cp "$SRC/.textlintrc.json" .textlintrc.json
 cp "$SRC/prh-writing-style.yml" prh-writing-style.yml
-echo "  .textlintrc.json と prh-writing-style.yml を配置"
+cp "$SRC/prh-business.yml" prh-business.yml
+echo "  .textlintrc.json と prh 辞書 2 つを配置"
 
 if [[ ! -f .gitignore ]] || ! grep -q '^node_modules/' .gitignore; then
     printf '\n# Dependencies\nnode_modules/\n' >>.gitignore

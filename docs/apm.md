@@ -90,7 +90,7 @@ apm update -g             # y/N に答える
 `mise run setup:claude` が検出して再リンクする。
 内容が正本と違えば `~/.apm/apm.yml.detached.<timestamp>` へ退避する。
 
-**退避ファイルは捨てる前に diff する**。
+退避ファイルは、捨てる前に正本との diff を確かめる。
 pin が書き換わっている可能性がある。
 
 ### スキルが勝手に消えた
