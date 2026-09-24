@@ -161,5 +161,21 @@ python -m unittest discover -s scripts/lint/tests -t scripts/lint
 python scripts/lint/check_path_refs.py
 """
 
+[tasks."claude-vanilla:test"]
+description = "Test the claude-vanilla launcher against a stubbed claude (ruff + mypy + unittest)"
+dir = "{{cwd}}"
+run = """
+uvx ruff check scripts/tests/test_claude_vanilla.py scripts/tests/test_claude_vanilla_e2e.py
+uvx ruff format --check scripts/tests/test_claude_vanilla.py scripts/tests/test_claude_vanilla_e2e.py
+uvx mypy --strict scripts/tests/test_claude_vanilla.py scripts/tests/test_claude_vanilla_e2e.py
+python -m unittest scripts/tests/test_claude_vanilla.py
+"""
+
+[tasks."claude-vanilla:e2e"]
+description = "Check what the real claude loads in each claude-vanilla mode (uses your auth and a little Haiku quota)"
+dir = "{{cwd}}"
+env = { CLAUDE_VANILLA_E2E = "1" }
+run = "python -m unittest -v scripts/tests/test_claude_vanilla_e2e.py"
+
 [settings]
 experimental = true

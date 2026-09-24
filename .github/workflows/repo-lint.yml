@@ -109,6 +109,11 @@ jobs:
             exit 1
           fi
 
+      # claude へ渡す引数の組み立てはスタブで検査できるので、zsh のあるこのジョブで回す。
+      # 実物の claude で読み込み内容を見る e2e は認証が要るのでローカル専用（mise run claude-vanilla:e2e）。
+      - name: Test claude-vanilla
+        run: python3 -m unittest scripts/tests/test_claude_vanilla.py
+
   workflows-lint:
     runs-on: ubuntu-latest
     timeout-minutes: 5

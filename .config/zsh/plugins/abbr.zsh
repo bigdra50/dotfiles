@@ -42,6 +42,8 @@ abbr -S -q add h="history"
 abbr -S -q add so="source"
 abbr -S -q add soz="source $HOME/.zshenv && source $ZDOTDIR/.zshrc"
 abbr -S -q add yolo="claude --dangerously-skip-permissions"
+abbr -S -q add vanilla="claude-vanilla"
+abbr -S -q add vyolo="claude-vanilla --dangerously-skip-permissions"
 abbr -S -q add cccommit="~/bin/cccommit.sh"
 }
 
