@@ -140,6 +140,51 @@ M.common = {
       end,
     })
   end,
+
+  -- 外部プロセス(Claude Code等)によるファイル変更をバッファへ自動反映
+  -- autoread は checktime が呼ばれた時しか働かず、既定トリガーはフォーカス系のみのため、
+  -- タイマーでも checktime を回し、ペイン/タブが非アクティブでも反映されるようにする
+  setup_external_file_reload = function(interval_ms)
+    -- Claude Code の書き込みから体感リアルタイムで反映しつつ stat 負荷を無視できる間隔
+    interval_ms = interval_ms or 1000
+
+    M.create_autocmd({ "FocusGained", "TermLeave", "TermClose", "BufEnter", "WinEnter" }, {
+      group = M.create_augroup("ExternalFileReload"),
+      callback = function()
+        -- コマンドライン入力中の checktime は E11 になるため実行しない
+        if vim.fn.mode() ~= "c" then
+          vim.cmd("silent! checktime")
+        end
+      end,
+    })
+
+    local timer = vim.uv.new_timer()
+    timer:start(
+      interval_ms,
+      interval_ms,
+      vim.schedule_wrap(function()
+        if vim.fn.mode() == "c" then
+          return
+        end
+        for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+          -- 未保存変更のあるバッファは対象外にする
+          -- (タイマー起点だと W12 警告が interval 毎に連打されるため。
+          --  衝突はフォーカス系イベント経由の checktime で気づける)
+          if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].buftype == "" and not vim.bo[buf].modified then
+            vim.cmd("silent! checktime " .. buf)
+          end
+        end
+      end)
+    )
+
+    -- リロードは無音で起きるため、どのファイルが外部変更されたかを通知で残す
+    M.create_autocmd("FileChangedShellPost", {
+      group = M.create_augroup("ExternalFileReloadNotify"),
+      callback = function(args)
+        vim.notify("Reloaded: " .. vim.fn.fnamemodify(args.file, ":~:."), vim.log.levels.INFO)
+      end,
+    })
+  end,
 }
 
 return M

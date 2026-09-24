@@ -120,3 +120,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- Autocmd設定
 local autocmd = require("utils.autocmd")
 autocmd.common.setup_diagnostic_float()
+autocmd.common.setup_external_file_reload()

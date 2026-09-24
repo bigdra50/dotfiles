@@ -36,7 +36,7 @@ init.lua
               ├── ui.lua      - カラースキーム、Snacks.nvim、Oil、ステータスライン
               ├── lsp.lua     - Mason、LSP、Formatter、Linter、補完
               ├── editor.lua  - Treesitter、Telescope、Git統合、デバッグ
-              ├── ai.lua      - AI関連（現在無効）
+              ├── ai.lua      - Claude Code IDE統合（claudecode.nvim、外部ターミナル運用）
               └── go.lua      - Go固有設定
 ```
 
@@ -86,6 +86,10 @@ Mason経由で自動インストールするツールは次のとおり（`mason
 | `-` | 親ディレクトリ（Oil） | ui.lua |
 | `F1` | init.luaを開く | base.lua |
 | `jj` | Escapeへマップ（挿入モード） | base.lua |
+| `<leader>as` | 選択範囲をClaudeへ送信（ビジュアル） | ai.lua |
+| `<leader>ab` | 現在バッファをClaudeへ追加 | ai.lua |
+| `<leader>aa` / `<leader>ad` | Claude diffを承認 / 却下 | ai.lua |
+| `<leader>ai` | Claude接続状態 | ai.lua |
 
 デバッグ関連（nvim-dap + xcodebuild.nvim）のキーバインドは次のとおり。
 
@@ -106,3 +110,5 @@ Mason経由で自動インストールするツールは次のとおり（`mason
 - Python環境: `~/.venvs/nvim/bin/python`を優先、なければuvプロジェクト
 - Snacks.nvim: dashboard、picker、notifier、image preview（wezterm）等を統合
 - Goファイルはinlay hintsがデフォルト有効
+- 外部プロセス（Claude Code等）のファイル変更は1秒間隔のタイマー + フォーカス系イベントの`checktime`で自動反映（`utils/autocmd.lua`の`setup_external_file_reload`。非アクティブなペイン/タブでも反映される）
+- claudecode.nvimは`terminal.provider = "none"`。Claude CLIはWezTermの別ペインで起動し、`~/.claude/ide/<port>.lock`経由でWebSocket自動接続される
