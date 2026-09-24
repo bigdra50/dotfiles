@@ -315,6 +315,8 @@ flowchart TB
 
 hook はユーザスコープ（`~/.claude/settings.json`）に登録するため、dotfiles 以外のプロジェクトでも動く。
 `~/.claude/hooks` が dotfiles へのシンボリックリンクなので、hook は自分の実体パスから repo とランナーを解決できる。
+ただし Claude のメモリ（`~/.claude/projects/<project>/memory/`）と scratchpad（`/tmp/claude-<uid>/.../scratchpad/`）の md は、`textlint-md.sh` が検査せずに通す。
+どちらも人が読む文書ではないので、差し戻しを直す往復は作業を止めるだけになる。
 
 md を書く hook と body の hook はプロジェクト設定の扱いが違う。
 

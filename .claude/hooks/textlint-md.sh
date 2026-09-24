@@ -5,6 +5,7 @@
 #
 # ユーザスコープ (~/.claude/settings.json) に登録するため、dotfiles 以外の
 # プロジェクトでも動く。自前の textlint 設定を持つプロジェクトでは譲る。
+# Claude のメモリと scratchpad の md は人が読む文書ではないので検査しない。
 #
 # 安全弁:
 #   1. 同一ファイルへの block は CLAUDE_TEXTLINT_MAX_BLOCKS 回まで（既定 2）。
@@ -45,6 +46,12 @@ FILE="${FILE//\\//}"
 case "$FILE" in
     *.md | *.markdown) ;;
     *) exit 0 ;;
+esac
+# 人が読む文書ではない 2 か所は検査しない。差し戻しを直す往復が作業を止めるだけになる。
+#   - Claude のメモリ（~/.claude/projects/<project>/memory/）: 次のセッションの Claude が読む作業記録
+#   - scratchpad（/tmp/claude-<uid>/<project>/<session>/scratchpad/）: セッション限りの一時置き場
+case "$FILE" in
+    */.claude/projects/*/memory/* | */claude-[0-9]*/scratchpad/*) exit 0 ;;
 esac
 if [[ ! -f "$FILE" ]]; then
     exit 0
