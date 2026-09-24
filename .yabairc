@@ -32,4 +32,10 @@ yabai -m config window_gap                   0
 # add 20 padding to the top and bottom of all spaces regardless of the display it belongs to
 #yabai -m config external_bar all:20:0
 
+# unmanaged apps (float instead of tile)
+# Android Emulator / Android XR Emulator は qemu として見える。
+# タイル化するとリサイズループで点滅するため対象外にする。
+yabai -m rule --add app="^qemu-system-" manage=off
+yabai -m rule --add app="^Android Emulator$" manage=off
+
 echo "yabai configuration loaded.."
