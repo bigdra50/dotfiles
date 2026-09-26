@@ -5,7 +5,7 @@ case ${OSTYPE} in
     ;;
   linux*)
     # Linux(wsl)
-    alias c='/mnt/c'
+    # c は abbr.zsh で claude に割り当てているので /mnt/c には張らない
     alias d='/mnt/d'
     alias e='/mnt/e'
     #alias ls='LC_COLLATE=C ls --color=auto --group-directories-first'
