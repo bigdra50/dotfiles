@@ -24,14 +24,16 @@ if [[ -o interactive && -o zle ]]; then
   bindkey "^ " magic-space
 fi
 
-abbr -S -q add cp="cp -r"
-abbr -S -q add mkdir="mkdir -p"
-abbr -S -q add cut="choose"
-abbr -S -q add df="duf"
-abbr -S -q add du="dust"
+# 同名コマンドと重なる略語は、-f が無ければ登録されない
+# -q だと -f の通知が起動のたびに出るので、-qq で抑える
+abbr -S -qq -f add cp="cp -r"
+abbr -S -qq -f add mkdir="mkdir -p"
+abbr -S -qq -f add cut="choose"
+abbr -S -qq -f add df="duf"
+abbr -S -qq -f add du="dust"
 abbr -S -q add restart="exec $SHELL -l"
-abbr -S -q add top="btm"
-abbr -S -q add diff="delta"
+abbr -S -qq -f add top="btm"
+abbr -S -qq -f add diff="delta"
 
 abbr -S -q add g="git"
 abbr -S -q add v="nvim"
