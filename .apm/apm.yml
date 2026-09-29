@@ -28,9 +28,8 @@ targets:
   - cursor
 dependencies:
   apm:
-    # カテゴリ直下を指すものは plugin bundle。配下の全スキルが 1 エントリで入る
-    # (github=3)。絞りたい場合は
-    # bigdra50/skills/<category>/<skill> の個別指定も従来どおり使える。
+    # カテゴリ直下を指すものは plugin bundle。配下の全スキルが 1 エントリで入る。
+    # 絞りたい場合は bigdra50/skills/<category>/<skill> の個別指定も従来どおり使える。
     - bigdra50/skills/claude-code/compact-prep
     - bigdra50/skills/claude-code/session-recap
     - bigdra50/skills/design/design-mockup
@@ -41,9 +40,10 @@ dependencies:
     - bigdra50/skills/docs/md-prose-cleanup
     - bigdra50/skills/docs/sync-docs
     - bigdra50/skills/even/evenhub-upload
-    - bigdra50/skills/github
+    # github カテゴリは pr-brief を入れないため、bundle ではなく個別に指定する。
+    - bigdra50/skills/github/creating-pull-requests
+    - bigdra50/skills/github/report-issue
     - bigdra50/skills/research/x-research
-    - bigdra50/skills/review/google-code-review
     - bigdra50/skills/review/second-opinion
     - bigdra50/skills/system/disk-usage
     # Unity 公式のスキル集からは unity-cli だけを入れる。上流なのでタグは無く #sha で pin する。
@@ -66,7 +66,6 @@ dependencies:
     # 読んでから、この pin を手で書き換える。
     - mattpocock/skills/skills/productivity/grilling#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mattpocock/skills/skills/productivity/grill-me#2ab958093e83e0ec752e6c1c5932da465bf23e0c
-    - mizchi/skills/gh-fix-ci
     - mizchi/skills/empirical-prompt-tuning
     - mizchi/skills/tech-article-reproducibility
     # マシン固有のスキルはこの正本に載せない。ただし apm は manifest に無い配置

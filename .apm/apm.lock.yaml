@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-09-24T09:03:44.516862+00:00'
+generated_at: '2026-09-29T00:01:34.557076+00:00'
 apm_version: 0.28.0
 dependencies:
 - repo_url: bigdra50/skills
@@ -309,58 +309,51 @@ dependencies:
     .claude/skills/evenhub-upload/upload.mjs: sha256:4ee9c872e76dcc0f38476ce5da9e57c537b3d63f321f1c721b3cb18e4ff0f427
   content_hash: sha256:394d4e60b43de976c5d4303dc5af2e030081ec1c16770067a884cf67ee9d211b
 - repo_url: bigdra50/skills
-  name: bigdra50-github
+  name: creating-pull-requests
   host: github.com
-  resolved_commit: 9008523567dddcc481ab599d7b51027c86035d95
-  version: 0.1.0
-  virtual_path: github
+  resolved_commit: 0d98d649c3d0f8778ebfc04a911243d4ce127b24
+  version: unknown
+  virtual_path: github/creating-pull-requests
   is_virtual: true
-  package_type: marketplace_plugin
+  package_type: claude_skill
   deployed_files:
   - .agents/skills/creating-pull-requests
   - .agents/skills/creating-pull-requests/PROSE.md
   - .agents/skills/creating-pull-requests/README.md
   - .agents/skills/creating-pull-requests/SKILL.md
-  - .agents/skills/pr-brief
-  - .agents/skills/pr-brief/README.md
-  - .agents/skills/pr-brief/SKILL.md
-  - .agents/skills/pr-brief/assets/skeleton.md
-  - .agents/skills/pr-brief/references/templates.md
-  - .agents/skills/report-issue
-  - .agents/skills/report-issue/README.md
-  - .agents/skills/report-issue/SKILL.md
   - .claude/skills/creating-pull-requests
   - .claude/skills/creating-pull-requests/PROSE.md
   - .claude/skills/creating-pull-requests/README.md
   - .claude/skills/creating-pull-requests/SKILL.md
-  - .claude/skills/pr-brief
-  - .claude/skills/pr-brief/README.md
-  - .claude/skills/pr-brief/SKILL.md
-  - .claude/skills/pr-brief/assets/skeleton.md
-  - .claude/skills/pr-brief/references/templates.md
-  - .claude/skills/report-issue
-  - .claude/skills/report-issue/README.md
-  - .claude/skills/report-issue/SKILL.md
   deployed_file_hashes:
     .agents/skills/creating-pull-requests/PROSE.md: sha256:9146be4cab9a99579069f59b19fc02094f38e983f99dce35d4ece2d52511866c
     .agents/skills/creating-pull-requests/README.md: sha256:003d4ee1a3ca5f139efc0b94f0d448e2796241a86afd5ec39e31dbf5dff14d7d
     .agents/skills/creating-pull-requests/SKILL.md: sha256:b30b06c3e6af3337ac0a31369baf07cb03cc26876333edd4a735d76abb832497
-    .agents/skills/pr-brief/README.md: sha256:3a7bec0dd0ac78d90d7060eb761901562922e482a6bc9e0f418b5834a2a82da3
-    .agents/skills/pr-brief/SKILL.md: sha256:eea42ded306ada40225f642b9f3fcb54f685c1ec4284ee0fa565e33ffca9d4db
-    .agents/skills/pr-brief/assets/skeleton.md: sha256:fa7d4fce0fc3a35ba7b21faa6cfca99634fbc48d3d8fafbd923b3ff5df3e95f4
-    .agents/skills/pr-brief/references/templates.md: sha256:7a2ec5f3fa141239a41681b936e5ba4325f1364c3342286f5774a6a3c7891979
-    .agents/skills/report-issue/README.md: sha256:bb99c1428884caac8248d3bcf02ea73b2daafd509b1216d75e16678580f16a4c
-    .agents/skills/report-issue/SKILL.md: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
     .claude/skills/creating-pull-requests/PROSE.md: sha256:9146be4cab9a99579069f59b19fc02094f38e983f99dce35d4ece2d52511866c
     .claude/skills/creating-pull-requests/README.md: sha256:003d4ee1a3ca5f139efc0b94f0d448e2796241a86afd5ec39e31dbf5dff14d7d
     .claude/skills/creating-pull-requests/SKILL.md: sha256:b30b06c3e6af3337ac0a31369baf07cb03cc26876333edd4a735d76abb832497
-    .claude/skills/pr-brief/README.md: sha256:3a7bec0dd0ac78d90d7060eb761901562922e482a6bc9e0f418b5834a2a82da3
-    .claude/skills/pr-brief/SKILL.md: sha256:eea42ded306ada40225f642b9f3fcb54f685c1ec4284ee0fa565e33ffca9d4db
-    .claude/skills/pr-brief/assets/skeleton.md: sha256:fa7d4fce0fc3a35ba7b21faa6cfca99634fbc48d3d8fafbd923b3ff5df3e95f4
-    .claude/skills/pr-brief/references/templates.md: sha256:7a2ec5f3fa141239a41681b936e5ba4325f1364c3342286f5774a6a3c7891979
+  content_hash: sha256:34f463fbc6ed1b48e237c0db39663274e73ffa16e2a2c08ae6bf82aaaed11c1c
+- repo_url: bigdra50/skills
+  name: report-issue
+  host: github.com
+  resolved_commit: 0d98d649c3d0f8778ebfc04a911243d4ce127b24
+  version: unknown
+  virtual_path: github/report-issue
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/report-issue
+  - .agents/skills/report-issue/README.md
+  - .agents/skills/report-issue/SKILL.md
+  - .claude/skills/report-issue
+  - .claude/skills/report-issue/README.md
+  - .claude/skills/report-issue/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/report-issue/README.md: sha256:bb99c1428884caac8248d3bcf02ea73b2daafd509b1216d75e16678580f16a4c
+    .agents/skills/report-issue/SKILL.md: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
     .claude/skills/report-issue/README.md: sha256:bb99c1428884caac8248d3bcf02ea73b2daafd509b1216d75e16678580f16a4c
     .claude/skills/report-issue/SKILL.md: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
-  content_hash: sha256:29b6c75a4d420c47891bafdbf2cc6f0062c073a10837462c43f7c93bc663c8e9
+  content_hash: sha256:4b1c5b07561a30d85d0863487e9cf045939a88d9c1a05f2f87f62ba7d4759bdb
 - repo_url: bigdra50/skills
   name: x-research
   host: github.com
@@ -386,51 +379,6 @@ dependencies:
     .claude/skills/x-research/SKILL.md: sha256:e5f0f6ec573e9c47e72c1f313f653772d6f79ea38916df2c06271e58da83eb8b
     .claude/skills/x-research/references/search-patterns.md: sha256:fb6b2fe4865a7193f982389bc4e545f468ef04d185e6981cccfda7cab09fff90
   content_hash: sha256:0020243cc736ff6a5d2d0073674f1c6b43c73b5c08e0a76973ec5541cba7d001
-- repo_url: bigdra50/skills
-  name: google-code-review
-  host: github.com
-  resolved_commit: 9008523567dddcc481ab599d7b51027c86035d95
-  version: unknown
-  virtual_path: review/google-code-review
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .agents/skills/google-code-review
-  - .agents/skills/google-code-review/README.md
-  - .agents/skills/google-code-review/SKILL.md
-  - .agents/skills/google-code-review/references/comments.md
-  - .agents/skills/google-code-review/references/looking-for.md
-  - .agents/skills/google-code-review/references/navigate.md
-  - .agents/skills/google-code-review/references/pushback.md
-  - .agents/skills/google-code-review/references/speed.md
-  - .agents/skills/google-code-review/references/standard.md
-  - .claude/skills/google-code-review
-  - .claude/skills/google-code-review/README.md
-  - .claude/skills/google-code-review/SKILL.md
-  - .claude/skills/google-code-review/references/comments.md
-  - .claude/skills/google-code-review/references/looking-for.md
-  - .claude/skills/google-code-review/references/navigate.md
-  - .claude/skills/google-code-review/references/pushback.md
-  - .claude/skills/google-code-review/references/speed.md
-  - .claude/skills/google-code-review/references/standard.md
-  deployed_file_hashes:
-    .agents/skills/google-code-review/README.md: sha256:e97d48c5fa3190a9e20f7d209082f444bf6c68468b78bb3a9d080ae55c4cb406
-    .agents/skills/google-code-review/SKILL.md: sha256:c58bcd52fd6237180838862c7056cce3714276fb2bf1516de2c29c25f827dcc7
-    .agents/skills/google-code-review/references/comments.md: sha256:cbb22badd5d0b16065fb19fc5d648fc03d783f5366658640373d2100c1c03493
-    .agents/skills/google-code-review/references/looking-for.md: sha256:e4e8c36f366a9d3a0491deeb7e7c1705998ba02f84bd1b87886ccfc35b9659ce
-    .agents/skills/google-code-review/references/navigate.md: sha256:23bed1130436d18f7fc52d67421c8d632e35564adf2b74d171bf43919b7b35cd
-    .agents/skills/google-code-review/references/pushback.md: sha256:36321a68880900e0729198d93d43b15a281cca1515adc38fd6c7e4db49c41192
-    .agents/skills/google-code-review/references/speed.md: sha256:671a19c1d4e1c56d1afae6d22447c549d142eb5b41663e9595052f9ae6422078
-    .agents/skills/google-code-review/references/standard.md: sha256:e12262cfe9c3dc18c67afc86fc83e4591dd4099b86f8c56dfb6ea3c27a856efc
-    .claude/skills/google-code-review/README.md: sha256:e97d48c5fa3190a9e20f7d209082f444bf6c68468b78bb3a9d080ae55c4cb406
-    .claude/skills/google-code-review/SKILL.md: sha256:c58bcd52fd6237180838862c7056cce3714276fb2bf1516de2c29c25f827dcc7
-    .claude/skills/google-code-review/references/comments.md: sha256:cbb22badd5d0b16065fb19fc5d648fc03d783f5366658640373d2100c1c03493
-    .claude/skills/google-code-review/references/looking-for.md: sha256:e4e8c36f366a9d3a0491deeb7e7c1705998ba02f84bd1b87886ccfc35b9659ce
-    .claude/skills/google-code-review/references/navigate.md: sha256:23bed1130436d18f7fc52d67421c8d632e35564adf2b74d171bf43919b7b35cd
-    .claude/skills/google-code-review/references/pushback.md: sha256:36321a68880900e0729198d93d43b15a281cca1515adc38fd6c7e4db49c41192
-    .claude/skills/google-code-review/references/speed.md: sha256:671a19c1d4e1c56d1afae6d22447c549d142eb5b41663e9595052f9ae6422078
-    .claude/skills/google-code-review/references/standard.md: sha256:e12262cfe9c3dc18c67afc86fc83e4591dd4099b86f8c56dfb6ea3c27a856efc
-  content_hash: sha256:f26b179d4122311f863cb9c7d727c64a8c614db1679c8dc2d3abc90ab7c4c237
 - repo_url: bigdra50/skills
   name: second-opinion
   host: github.com
@@ -652,47 +600,6 @@ dependencies:
     .claude/skills/empirical-prompt-tuning/SKILL-ja.md: sha256:0a38d830802c2e08a7faca13928fedf6911e00b896946b4b03910d662de6dea5
     .claude/skills/empirical-prompt-tuning/SKILL.md: sha256:252418e7ef022981d2dda2e3ec57fa1c786d30af68c50b7e062edf1d7361b0cb
   content_hash: sha256:26042612e2d8b6ee1deebcdfc556da494640488e03471aaae74da587ae84fa2b
-- repo_url: mizchi/skills
-  name: gh-fix-ci
-  host: github.com
-  resolved_commit: a3f2f1bac20fc500c2688ffe6ca4ce048d0cfedc
-  version: unknown
-  virtual_path: gh-fix-ci
-  is_virtual: true
-  package_type: claude_skill
-  deployed_files:
-  - .agents/skills/gh-fix-ci
-  - .agents/skills/gh-fix-ci/LICENSE.txt
-  - .agents/skills/gh-fix-ci/README.md
-  - .agents/skills/gh-fix-ci/SKILL.md
-  - .agents/skills/gh-fix-ci/agents/openai.yaml
-  - .agents/skills/gh-fix-ci/assets/github-small.svg
-  - .agents/skills/gh-fix-ci/assets/github.png
-  - .agents/skills/gh-fix-ci/scripts/inspect_pr_checks.py
-  - .claude/skills/gh-fix-ci
-  - .claude/skills/gh-fix-ci/LICENSE.txt
-  - .claude/skills/gh-fix-ci/README.md
-  - .claude/skills/gh-fix-ci/SKILL.md
-  - .claude/skills/gh-fix-ci/agents/openai.yaml
-  - .claude/skills/gh-fix-ci/assets/github-small.svg
-  - .claude/skills/gh-fix-ci/assets/github.png
-  - .claude/skills/gh-fix-ci/scripts/inspect_pr_checks.py
-  deployed_file_hashes:
-    .agents/skills/gh-fix-ci/LICENSE.txt: sha256:4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9
-    .agents/skills/gh-fix-ci/README.md: sha256:f1ba1875d9f0a9ac77ec8216d2bca4f6dc5ca8a6ed90bc78491844ba7f2a243a
-    .agents/skills/gh-fix-ci/SKILL.md: sha256:9bb7f0a67de15a4b69ad793e8169cae34ae5e0ac76a9403a483bafd418233ea4
-    .agents/skills/gh-fix-ci/agents/openai.yaml: sha256:36f73b9450504983d1647c960689596f59bf9147c14b1b43162912ed7ada9af6
-    .agents/skills/gh-fix-ci/assets/github-small.svg: sha256:ee05e92d373d4d84f4612af3c1090ef67698d421bbe30896a4ed5a00cb86a069
-    .agents/skills/gh-fix-ci/assets/github.png: sha256:d55a9baa41798d8b5108e3058df3a5bda09914ea9fd73b49929cc38a8832424f
-    .agents/skills/gh-fix-ci/scripts/inspect_pr_checks.py: sha256:9459e5b03f86785d184a83e5cd8d621b832e918ec04158a2962d867785812c6c
-    .claude/skills/gh-fix-ci/LICENSE.txt: sha256:4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9
-    .claude/skills/gh-fix-ci/README.md: sha256:f1ba1875d9f0a9ac77ec8216d2bca4f6dc5ca8a6ed90bc78491844ba7f2a243a
-    .claude/skills/gh-fix-ci/SKILL.md: sha256:9bb7f0a67de15a4b69ad793e8169cae34ae5e0ac76a9403a483bafd418233ea4
-    .claude/skills/gh-fix-ci/agents/openai.yaml: sha256:36f73b9450504983d1647c960689596f59bf9147c14b1b43162912ed7ada9af6
-    .claude/skills/gh-fix-ci/assets/github-small.svg: sha256:ee05e92d373d4d84f4612af3c1090ef67698d421bbe30896a4ed5a00cb86a069
-    .claude/skills/gh-fix-ci/assets/github.png: sha256:d55a9baa41798d8b5108e3058df3a5bda09914ea9fd73b49929cc38a8832424f
-    .claude/skills/gh-fix-ci/scripts/inspect_pr_checks.py: sha256:9459e5b03f86785d184a83e5cd8d621b832e918ec04158a2962d867785812c6c
-  content_hash: sha256:83c195179438afae3591bb9883f42e07689092fa8b933c5a4757cbdbbe382ac3
 - repo_url: mizchi/skills
   name: tech-article-reproducibility
   host: github.com
@@ -1019,8 +926,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: null
 - kind: project-relative
   target: claude
@@ -1028,8 +935,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:9146be4cab9a99579069f59b19fc02094f38e983f99dce35d4ece2d52511866c
 - kind: project-relative
   target: claude
@@ -1037,8 +944,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:003d4ee1a3ca5f139efc0b94f0d448e2796241a86afd5ec39e31dbf5dff14d7d
 - kind: project-relative
   target: claude
@@ -1046,8 +953,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:b30b06c3e6af3337ac0a31369baf07cb03cc26876333edd4a735d76abb832497
 - kind: project-relative
   target: claude
@@ -1402,159 +1309,6 @@ deployments:
   content_hash: sha256:4ee9c872e76dcc0f38476ce5da9e57c537b3d63f321f1c721b3cb18e4ff0f427
 - kind: project-relative
   target: claude
-  value: .claude/skills/gh-fix-ci
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: null
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/LICENSE.txt
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/README.md
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:f1ba1875d9f0a9ac77ec8216d2bca4f6dc5ca8a6ed90bc78491844ba7f2a243a
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:9bb7f0a67de15a4b69ad793e8169cae34ae5e0ac76a9403a483bafd418233ea4
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/agents/openai.yaml
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:36f73b9450504983d1647c960689596f59bf9147c14b1b43162912ed7ada9af6
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/assets/github-small.svg
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:ee05e92d373d4d84f4612af3c1090ef67698d421bbe30896a4ed5a00cb86a069
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/assets/github.png
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:d55a9baa41798d8b5108e3058df3a5bda09914ea9fd73b49929cc38a8832424f
-- kind: project-relative
-  target: claude
-  value: .claude/skills/gh-fix-ci/scripts/inspect_pr_checks.py
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:9459e5b03f86785d184a83e5cd8d621b832e918ec04158a2962d867785812c6c
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: null
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/README.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e97d48c5fa3190a9e20f7d209082f444bf6c68468b78bb3a9d080ae55c4cb406
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:c58bcd52fd6237180838862c7056cce3714276fb2bf1516de2c29c25f827dcc7
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/comments.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:cbb22badd5d0b16065fb19fc5d648fc03d783f5366658640373d2100c1c03493
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/looking-for.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e4e8c36f366a9d3a0491deeb7e7c1705998ba02f84bd1b87886ccfc35b9659ce
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/navigate.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:23bed1130436d18f7fc52d67421c8d632e35564adf2b74d171bf43919b7b35cd
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/pushback.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:36321a68880900e0729198d93d43b15a281cca1515adc38fd6c7e4db49c41192
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/speed.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:671a19c1d4e1c56d1afae6d22447c549d142eb5b41663e9595052f9ae6422078
-- kind: project-relative
-  target: claude
-  value: .claude/skills/google-code-review/references/standard.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e12262cfe9c3dc18c67afc86fc83e4591dd4099b86f8c56dfb6ea3c27a856efc
-- kind: project-relative
-  target: claude
   value: .claude/skills/grill-me
   runtime: null
   scope: project
@@ -1771,51 +1525,6 @@ deployments:
   content_hash: sha256:fdf29912280e4c43e700f0dd879e14f5671f8f330c08cf875f6c1bbf729c8f78
 - kind: project-relative
   target: claude
-  value: .claude/skills/pr-brief
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: null
-- kind: project-relative
-  target: claude
-  value: .claude/skills/pr-brief/README.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:3a7bec0dd0ac78d90d7060eb761901562922e482a6bc9e0f418b5834a2a82da3
-- kind: project-relative
-  target: claude
-  value: .claude/skills/pr-brief/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:eea42ded306ada40225f642b9f3fcb54f685c1ec4284ee0fa565e33ffca9d4db
-- kind: project-relative
-  target: claude
-  value: .claude/skills/pr-brief/assets/skeleton.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:fa7d4fce0fc3a35ba7b21faa6cfca99634fbc48d3d8fafbd923b3ff5df3e95f4
-- kind: project-relative
-  target: claude
-  value: .claude/skills/pr-brief/references/templates.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:7a2ec5f3fa141239a41681b936e5ba4325f1364c3342286f5774a6a3c7891979
-- kind: project-relative
-  target: claude
   value: .claude/skills/preview
   runtime: null
   scope: project
@@ -1892,8 +1601,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: null
 - kind: project-relative
   target: claude
@@ -1901,8 +1610,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:bb99c1428884caac8248d3bcf02ea73b2daafd509b1216d75e16678580f16a4c
 - kind: project-relative
   target: claude
@@ -1910,8 +1619,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
 - kind: project-relative
   target: claude
@@ -2252,8 +1961,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: null
 - kind: project-relative
   target: codex
@@ -2261,8 +1970,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:9146be4cab9a99579069f59b19fc02094f38e983f99dce35d4ece2d52511866c
 - kind: project-relative
   target: codex
@@ -2270,8 +1979,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:003d4ee1a3ca5f139efc0b94f0d448e2796241a86afd5ec39e31dbf5dff14d7d
 - kind: project-relative
   target: codex
@@ -2279,8 +1988,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/creating-pull-requests
+  active_owner: bigdra50/skills/github/creating-pull-requests
   content_hash: sha256:b30b06c3e6af3337ac0a31369baf07cb03cc26876333edd4a735d76abb832497
 - kind: project-relative
   target: codex
@@ -2635,159 +2344,6 @@ deployments:
   content_hash: sha256:4ee9c872e76dcc0f38476ce5da9e57c537b3d63f321f1c721b3cb18e4ff0f427
 - kind: project-relative
   target: codex
-  value: .agents/skills/gh-fix-ci
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: null
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/LICENSE.txt
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:4dd13869245e356246a5b770723247bbb80a8f07a181d1d3d873a1734297cdb9
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/README.md
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:f1ba1875d9f0a9ac77ec8216d2bca4f6dc5ca8a6ed90bc78491844ba7f2a243a
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:9bb7f0a67de15a4b69ad793e8169cae34ae5e0ac76a9403a483bafd418233ea4
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/agents/openai.yaml
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:36f73b9450504983d1647c960689596f59bf9147c14b1b43162912ed7ada9af6
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/assets/github-small.svg
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:ee05e92d373d4d84f4612af3c1090ef67698d421bbe30896a4ed5a00cb86a069
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/assets/github.png
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:d55a9baa41798d8b5108e3058df3a5bda09914ea9fd73b49929cc38a8832424f
-- kind: project-relative
-  target: codex
-  value: .agents/skills/gh-fix-ci/scripts/inspect_pr_checks.py
-  runtime: null
-  scope: project
-  owners:
-  - mizchi/skills/gh-fix-ci
-  active_owner: mizchi/skills/gh-fix-ci
-  content_hash: sha256:9459e5b03f86785d184a83e5cd8d621b832e918ec04158a2962d867785812c6c
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: null
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/README.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e97d48c5fa3190a9e20f7d209082f444bf6c68468b78bb3a9d080ae55c4cb406
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:c58bcd52fd6237180838862c7056cce3714276fb2bf1516de2c29c25f827dcc7
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/comments.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:cbb22badd5d0b16065fb19fc5d648fc03d783f5366658640373d2100c1c03493
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/looking-for.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e4e8c36f366a9d3a0491deeb7e7c1705998ba02f84bd1b87886ccfc35b9659ce
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/navigate.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:23bed1130436d18f7fc52d67421c8d632e35564adf2b74d171bf43919b7b35cd
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/pushback.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:36321a68880900e0729198d93d43b15a281cca1515adc38fd6c7e4db49c41192
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/speed.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:671a19c1d4e1c56d1afae6d22447c549d142eb5b41663e9595052f9ae6422078
-- kind: project-relative
-  target: codex
-  value: .agents/skills/google-code-review/references/standard.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/review/google-code-review
-  active_owner: bigdra50/skills/review/google-code-review
-  content_hash: sha256:e12262cfe9c3dc18c67afc86fc83e4591dd4099b86f8c56dfb6ea3c27a856efc
-- kind: project-relative
-  target: codex
   value: .agents/skills/grill-me
   runtime: null
   scope: project
@@ -2950,51 +2506,6 @@ deployments:
   content_hash: sha256:d622bab34caaf40b249773ce59d2d50971c4d3033ec8cae65027088fc47b2901
 - kind: project-relative
   target: codex
-  value: .agents/skills/pr-brief
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: null
-- kind: project-relative
-  target: codex
-  value: .agents/skills/pr-brief/README.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:3a7bec0dd0ac78d90d7060eb761901562922e482a6bc9e0f418b5834a2a82da3
-- kind: project-relative
-  target: codex
-  value: .agents/skills/pr-brief/SKILL.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:eea42ded306ada40225f642b9f3fcb54f685c1ec4284ee0fa565e33ffca9d4db
-- kind: project-relative
-  target: codex
-  value: .agents/skills/pr-brief/assets/skeleton.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:fa7d4fce0fc3a35ba7b21faa6cfca99634fbc48d3d8fafbd923b3ff5df3e95f4
-- kind: project-relative
-  target: codex
-  value: .agents/skills/pr-brief/references/templates.md
-  runtime: null
-  scope: project
-  owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
-  content_hash: sha256:7a2ec5f3fa141239a41681b936e5ba4325f1364c3342286f5774a6a3c7891979
-- kind: project-relative
-  target: codex
   value: .agents/skills/quality-audit
   runtime: null
   scope: project
@@ -3053,8 +2564,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: null
 - kind: project-relative
   target: codex
@@ -3062,8 +2573,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:bb99c1428884caac8248d3bcf02ea73b2daafd509b1216d75e16678580f16a4c
 - kind: project-relative
   target: codex
@@ -3071,8 +2582,8 @@ deployments:
   runtime: null
   scope: project
   owners:
-  - bigdra50/skills/github
-  active_owner: bigdra50/skills/github
+  - bigdra50/skills/github/report-issue
+  active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
 - kind: project-relative
   target: codex
