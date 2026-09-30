@@ -68,9 +68,17 @@ dependencies:
     - mattpocock/skills/skills/productivity/grill-me#2ab958093e83e0ec752e6c1c5932da465bf23e0c
     - mizchi/skills/empirical-prompt-tuning
     - mizchi/skills/tech-article-reproducibility
+    # explainer は explainer、explainer-book、first-reader の 3 スキルを持つ plugin bundle。
+    # explainer-book は隣の explainer の scripts/ を相対パスで呼ぶため、個別指定で片方だけ入れない。
+    - mizchi/explainer
     # マシン固有のスキルはこの正本に載せない。ただし apm は manifest に無い配置
     # ファイルを install 時に削除するため、管理外で残したいものは ~/.claude/skills
     # へ直接置くこと (apm は "local files not managed by APM" として skip する)。
+    - minorun365/minorun-marp-skill/skills/slide-story
+    - minorun365/minorun-marp-skill/skills/slide-figures
+    - minorun365/minorun-marp-skill/skills/slide-design-dark
+    - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+    - antfu/skills/skills/slidev
   mcp: []
 includes: auto
 scripts: {}

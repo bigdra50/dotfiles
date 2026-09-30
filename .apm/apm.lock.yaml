@@ -1,7 +1,244 @@
 lockfile_version: '1'
-generated_at: '2026-09-29T00:01:34.557076+00:00'
+generated_at: '2026-09-30T07:32:38.554769+00:00'
 apm_version: 0.28.0
 dependencies:
+- repo_url: antfu/skills
+  name: slidev
+  host: github.com
+  resolved_commit: a74f281a27dadc02397bc1a174b0f2c97531b6ae
+  version: unknown
+  virtual_path: skills/slidev
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/slidev
+  - .agents/skills/slidev/LICENSE.md
+  - .agents/skills/slidev/README.md
+  - .agents/skills/slidev/SKILL.md
+  - .agents/skills/slidev/SYNC.md
+  - .agents/skills/slidev/references/animation-click-marker.md
+  - .agents/skills/slidev/references/animation-drawing.md
+  - .agents/skills/slidev/references/animation-rough-marker.md
+  - .agents/skills/slidev/references/api-slide-hooks.md
+  - .agents/skills/slidev/references/build-og-image.md
+  - .agents/skills/slidev/references/build-pdf.md
+  - .agents/skills/slidev/references/build-remote-assets.md
+  - .agents/skills/slidev/references/build-seo-meta.md
+  - .agents/skills/slidev/references/code-groups.md
+  - .agents/skills/slidev/references/code-import-snippet.md
+  - .agents/skills/slidev/references/code-line-highlighting.md
+  - .agents/skills/slidev/references/code-line-numbers.md
+  - .agents/skills/slidev/references/code-magic-move.md
+  - .agents/skills/slidev/references/code-max-height.md
+  - .agents/skills/slidev/references/code-twoslash.md
+  - .agents/skills/slidev/references/core-animations.md
+  - .agents/skills/slidev/references/core-cli.md
+  - .agents/skills/slidev/references/core-components.md
+  - .agents/skills/slidev/references/core-exporting.md
+  - .agents/skills/slidev/references/core-frontmatter.md
+  - .agents/skills/slidev/references/core-global-context.md
+  - .agents/skills/slidev/references/core-headmatter.md
+  - .agents/skills/slidev/references/core-hosting.md
+  - .agents/skills/slidev/references/core-layouts.md
+  - .agents/skills/slidev/references/core-syntax.md
+  - .agents/skills/slidev/references/diagram-latex.md
+  - .agents/skills/slidev/references/diagram-mermaid.md
+  - .agents/skills/slidev/references/diagram-plantuml.md
+  - .agents/skills/slidev/references/editor-monaco-run.md
+  - .agents/skills/slidev/references/editor-monaco-write.md
+  - .agents/skills/slidev/references/editor-monaco.md
+  - .agents/skills/slidev/references/editor-prettier.md
+  - .agents/skills/slidev/references/editor-side.md
+  - .agents/skills/slidev/references/editor-vscode.md
+  - .agents/skills/slidev/references/layout-canvas-size.md
+  - .agents/skills/slidev/references/layout-draggable.md
+  - .agents/skills/slidev/references/layout-global-layers.md
+  - .agents/skills/slidev/references/layout-slots.md
+  - .agents/skills/slidev/references/layout-transform.md
+  - .agents/skills/slidev/references/layout-zoom.md
+  - .agents/skills/slidev/references/presenter-notes-ruby.md
+  - .agents/skills/slidev/references/presenter-recording.md
+  - .agents/skills/slidev/references/presenter-remote.md
+  - .agents/skills/slidev/references/presenter-timer.md
+  - .agents/skills/slidev/references/style-direction.md
+  - .agents/skills/slidev/references/style-icons.md
+  - .agents/skills/slidev/references/style-scoped.md
+  - .agents/skills/slidev/references/syntax-block-frontmatter.md
+  - .agents/skills/slidev/references/syntax-comark.md
+  - .agents/skills/slidev/references/syntax-frontmatter-merging.md
+  - .agents/skills/slidev/references/syntax-importing-slides.md
+  - .agents/skills/slidev/references/tool-eject-theme.md
+  - .claude/skills/slidev
+  - .claude/skills/slidev/LICENSE.md
+  - .claude/skills/slidev/README.md
+  - .claude/skills/slidev/SKILL.md
+  - .claude/skills/slidev/SYNC.md
+  - .claude/skills/slidev/references/animation-click-marker.md
+  - .claude/skills/slidev/references/animation-drawing.md
+  - .claude/skills/slidev/references/animation-rough-marker.md
+  - .claude/skills/slidev/references/api-slide-hooks.md
+  - .claude/skills/slidev/references/build-og-image.md
+  - .claude/skills/slidev/references/build-pdf.md
+  - .claude/skills/slidev/references/build-remote-assets.md
+  - .claude/skills/slidev/references/build-seo-meta.md
+  - .claude/skills/slidev/references/code-groups.md
+  - .claude/skills/slidev/references/code-import-snippet.md
+  - .claude/skills/slidev/references/code-line-highlighting.md
+  - .claude/skills/slidev/references/code-line-numbers.md
+  - .claude/skills/slidev/references/code-magic-move.md
+  - .claude/skills/slidev/references/code-max-height.md
+  - .claude/skills/slidev/references/code-twoslash.md
+  - .claude/skills/slidev/references/core-animations.md
+  - .claude/skills/slidev/references/core-cli.md
+  - .claude/skills/slidev/references/core-components.md
+  - .claude/skills/slidev/references/core-exporting.md
+  - .claude/skills/slidev/references/core-frontmatter.md
+  - .claude/skills/slidev/references/core-global-context.md
+  - .claude/skills/slidev/references/core-headmatter.md
+  - .claude/skills/slidev/references/core-hosting.md
+  - .claude/skills/slidev/references/core-layouts.md
+  - .claude/skills/slidev/references/core-syntax.md
+  - .claude/skills/slidev/references/diagram-latex.md
+  - .claude/skills/slidev/references/diagram-mermaid.md
+  - .claude/skills/slidev/references/diagram-plantuml.md
+  - .claude/skills/slidev/references/editor-monaco-run.md
+  - .claude/skills/slidev/references/editor-monaco-write.md
+  - .claude/skills/slidev/references/editor-monaco.md
+  - .claude/skills/slidev/references/editor-prettier.md
+  - .claude/skills/slidev/references/editor-side.md
+  - .claude/skills/slidev/references/editor-vscode.md
+  - .claude/skills/slidev/references/layout-canvas-size.md
+  - .claude/skills/slidev/references/layout-draggable.md
+  - .claude/skills/slidev/references/layout-global-layers.md
+  - .claude/skills/slidev/references/layout-slots.md
+  - .claude/skills/slidev/references/layout-transform.md
+  - .claude/skills/slidev/references/layout-zoom.md
+  - .claude/skills/slidev/references/presenter-notes-ruby.md
+  - .claude/skills/slidev/references/presenter-recording.md
+  - .claude/skills/slidev/references/presenter-remote.md
+  - .claude/skills/slidev/references/presenter-timer.md
+  - .claude/skills/slidev/references/style-direction.md
+  - .claude/skills/slidev/references/style-icons.md
+  - .claude/skills/slidev/references/style-scoped.md
+  - .claude/skills/slidev/references/syntax-block-frontmatter.md
+  - .claude/skills/slidev/references/syntax-comark.md
+  - .claude/skills/slidev/references/syntax-frontmatter-merging.md
+  - .claude/skills/slidev/references/syntax-importing-slides.md
+  - .claude/skills/slidev/references/tool-eject-theme.md
+  deployed_file_hashes:
+    .agents/skills/slidev/LICENSE.md: sha256:42ccc89fea49360da73708efaad553c018a4959baa1d7e51e4ff7b721e31b1a2
+    .agents/skills/slidev/README.md: sha256:0348a9c6c8244db73ecb8971a8a73b25bb917168ffd3524bc409b505fc293849
+    .agents/skills/slidev/SKILL.md: sha256:4da03b00af5f60beaf9e6aa65113d7f1c1fbdc49dc1bcef7556ae77dc90a1ee1
+    .agents/skills/slidev/SYNC.md: sha256:3fac875942ed87ce6b123476169464159062814ff5382a275775069e371dab5d
+    .agents/skills/slidev/references/animation-click-marker.md: sha256:ca20897bad85b12e976bbb4161597b0dcc4c5a9cf604d69d13cc0bdc922696eb
+    .agents/skills/slidev/references/animation-drawing.md: sha256:5fd91b06a9fa0c7a47e20c6eb7fdc4d7bd31de88c4ad792132cf721ab884642e
+    .agents/skills/slidev/references/animation-rough-marker.md: sha256:ef8c8d007d0763288679a18892fcf7a013025adbbd78ea6d70b5b706f6af5ec0
+    .agents/skills/slidev/references/api-slide-hooks.md: sha256:1477fce45bb0c36a75976fe6d4e329da1b0c8b707c9c5cab15456a99d149f67c
+    .agents/skills/slidev/references/build-og-image.md: sha256:b47dd5bd8dc2123eb1cd1e4e1d35fa2b1ce63f206765751d9f8b6be9a386d9ba
+    .agents/skills/slidev/references/build-pdf.md: sha256:023e028653116dcbdc1d51c21b51d5a7139e3b4fbfea108bc8d9118e430157a5
+    .agents/skills/slidev/references/build-remote-assets.md: sha256:a0fa11b7ffde2c5264c1b2c2143a375fc103beee3a4dc97f140c71a319c95efd
+    .agents/skills/slidev/references/build-seo-meta.md: sha256:5188fb1378c640fe87714cbb72fb0de8ac9c82ef05c78f369cb87819feac3519
+    .agents/skills/slidev/references/code-groups.md: sha256:c46d38d1e3606961068d264492474e61cbb636deb9c4f064802c81011ebc2328
+    .agents/skills/slidev/references/code-import-snippet.md: sha256:3f794e2387c70415f436ce70b248a6101122fa2b6e2dd983b3557a97f5e58510
+    .agents/skills/slidev/references/code-line-highlighting.md: sha256:4571a5faf1111fd4bf0a30d331cfa5623d4052cc084ee83831e02abb6873968f
+    .agents/skills/slidev/references/code-line-numbers.md: sha256:f69d767362dc135062899bb15037aba8f2be78e428daff55c4863732b1584858
+    .agents/skills/slidev/references/code-magic-move.md: sha256:78121e4b2006bb3dae3b09c32fc547c42eca452935a6e4dcecad6add570f088d
+    .agents/skills/slidev/references/code-max-height.md: sha256:6f7ec03bf10559f37c9d144d0339de0a850590a6f40e3bfc1471561ba1f0505b
+    .agents/skills/slidev/references/code-twoslash.md: sha256:12d80b5fbdd8fcf1a60e8a97d2cbb6861745d9839aa6d5c826d28550a771b3b7
+    .agents/skills/slidev/references/core-animations.md: sha256:a3f8d12f06af0164025dcdbe450c198689f3a8a69eb1dc62fca0850ebcb2685d
+    .agents/skills/slidev/references/core-cli.md: sha256:f94193da70776c78753c8894a25be2053740bca9bdff4622235b14e48a98d260
+    .agents/skills/slidev/references/core-components.md: sha256:5e111844fbbe7cded2adfb630fc42d6f254d0d2d2106c2c4452e060cb10d957d
+    .agents/skills/slidev/references/core-exporting.md: sha256:6c22209942852d60f18d8be7fc429446ec513dfd12a45cbc0335e8419d61987d
+    .agents/skills/slidev/references/core-frontmatter.md: sha256:044861667fee30b63358429d555770552913cc5f3e59569ec0c82d6347716513
+    .agents/skills/slidev/references/core-global-context.md: sha256:1bd3884b31819b9cb4b7957000d06dcbf56678b742aa1aa6bbc7145b4f8ff98d
+    .agents/skills/slidev/references/core-headmatter.md: sha256:1421e7bf36551e2c220a57c74eeec7755210916a6dc68c57de128a225fb2eb99
+    .agents/skills/slidev/references/core-hosting.md: sha256:69e8d015df1359924de9c1b157c1037a275d263a561a5af27d04d9a8aa31bb5e
+    .agents/skills/slidev/references/core-layouts.md: sha256:95fd7274b4d0055263938092db2115632a34636451bb651961d94c12f6bbb833
+    .agents/skills/slidev/references/core-syntax.md: sha256:cd4ef071b1ad40f3fb8ab5ed7c5f4743628456dd8e0bcfc25f246be64992726b
+    .agents/skills/slidev/references/diagram-latex.md: sha256:6fb51a8a3d5a1ab151e3d84950df0d38c609a30a53d82b1eb10dd0630369c093
+    .agents/skills/slidev/references/diagram-mermaid.md: sha256:2edfba65f4f46df2af20f504616b84e18d59fed47cc0c3008ceb7577a0d2e580
+    .agents/skills/slidev/references/diagram-plantuml.md: sha256:c006d564a031d1a76c6dc8d560c8bbafd14799512bf08d629f5e291f4413fc8b
+    .agents/skills/slidev/references/editor-monaco-run.md: sha256:f47be9b308f01006a95839eb6c54f94536e108af4f91909fa5d81e8856798221
+    .agents/skills/slidev/references/editor-monaco-write.md: sha256:fb17f1f5c8f40e53f12afc47a0dcf5e4530189ba3c8d9b1749e627d4c5589ab9
+    .agents/skills/slidev/references/editor-monaco.md: sha256:d54e5abbade63c837c9ab9c9515ceb5a0ceca157d2af3adbfbb84c68671833dc
+    .agents/skills/slidev/references/editor-prettier.md: sha256:126d048841dad13be1e1be7b2cff8c845bc0a78457c0f675b494b2815c0d94ca
+    .agents/skills/slidev/references/editor-side.md: sha256:0a5993ab5db99ae90ec83fa11e7bb53b4ed5baf4aa0d3dacc5a389e51f7547cf
+    .agents/skills/slidev/references/editor-vscode.md: sha256:54faab932076ee772032c9b89e8ecf3c1ae562e4b575ab565e7431a2f241427a
+    .agents/skills/slidev/references/layout-canvas-size.md: sha256:2d17e65933c63a8b7e8a9bd9c5b73478d19332f4da25b26195aaeb5a1bd1953b
+    .agents/skills/slidev/references/layout-draggable.md: sha256:cedf74ff840326b336f5846c7ec3603009fac2f8c126ee4a972a0b7d67b3019c
+    .agents/skills/slidev/references/layout-global-layers.md: sha256:1614c681cee8f50a362fe31c69f3fe6012b772e4b759771132f68a7325fa3580
+    .agents/skills/slidev/references/layout-slots.md: sha256:b77222cc46ae53abe750aacb916822033ac220b41bbde5954824b534906e8d8e
+    .agents/skills/slidev/references/layout-transform.md: sha256:3d6a90df9a48c657e3709ecc01610f222e04dfb9fa5d530444653345e29e733a
+    .agents/skills/slidev/references/layout-zoom.md: sha256:c0ab0c3242e0a99f6bbc7eea163f551054ca4ca9d900174ea7f4073218ce89c0
+    .agents/skills/slidev/references/presenter-notes-ruby.md: sha256:aeadf860f7f23c1a7fd199180ac519c2f8b9f9e8c0609578c909b52c0c9e99e0
+    .agents/skills/slidev/references/presenter-recording.md: sha256:f2adf9c92892d468fd7297246462b669a444a4c000131bbcfbd178004d941a5c
+    .agents/skills/slidev/references/presenter-remote.md: sha256:90683d6eedf25395c312cb7b8f893f456ba2c5e221ee6ed91e7a192944a78ecb
+    .agents/skills/slidev/references/presenter-timer.md: sha256:7d0306a69c5f55cf223d47acbafb6ed3739ca68f21928d61fd6ca255df7e5a87
+    .agents/skills/slidev/references/style-direction.md: sha256:aaa1a10000ef92f05b3d63c1e0126cd41aead53d72432261f541d72c9d57a381
+    .agents/skills/slidev/references/style-icons.md: sha256:881daa50e5c1bec53cbaaa93029a4b0ed12f9f6ea36b9ab645799ac3b4c1521b
+    .agents/skills/slidev/references/style-scoped.md: sha256:f2caa6d5a3482f1d9364b41e70217f2150950be51375c0472e2ea912cdae895f
+    .agents/skills/slidev/references/syntax-block-frontmatter.md: sha256:fafee6da3b24fe8dcc60b0c1b6e212859d2e047322dc5479ec2fef70ef35d2ce
+    .agents/skills/slidev/references/syntax-comark.md: sha256:89316f0e900d2c8262cab221549ffaf434b09eb092de5c8feb5881de774e6cc5
+    .agents/skills/slidev/references/syntax-frontmatter-merging.md: sha256:f92f3de298e7b6cdff5e085a4f1f9d2a154878e340063504bfd26a6c94fed336
+    .agents/skills/slidev/references/syntax-importing-slides.md: sha256:5121a7fa19dd0496c4f5f42be0204ada7fb17484665727a1d259e31451c5ef42
+    .agents/skills/slidev/references/tool-eject-theme.md: sha256:c25fb0debc1af89bfe7aad1be3f09c67a9f97eafb051cb852063eaf1c9b995b0
+    .claude/skills/slidev/LICENSE.md: sha256:42ccc89fea49360da73708efaad553c018a4959baa1d7e51e4ff7b721e31b1a2
+    .claude/skills/slidev/README.md: sha256:0348a9c6c8244db73ecb8971a8a73b25bb917168ffd3524bc409b505fc293849
+    .claude/skills/slidev/SKILL.md: sha256:4da03b00af5f60beaf9e6aa65113d7f1c1fbdc49dc1bcef7556ae77dc90a1ee1
+    .claude/skills/slidev/SYNC.md: sha256:3fac875942ed87ce6b123476169464159062814ff5382a275775069e371dab5d
+    .claude/skills/slidev/references/animation-click-marker.md: sha256:ca20897bad85b12e976bbb4161597b0dcc4c5a9cf604d69d13cc0bdc922696eb
+    .claude/skills/slidev/references/animation-drawing.md: sha256:5fd91b06a9fa0c7a47e20c6eb7fdc4d7bd31de88c4ad792132cf721ab884642e
+    .claude/skills/slidev/references/animation-rough-marker.md: sha256:ef8c8d007d0763288679a18892fcf7a013025adbbd78ea6d70b5b706f6af5ec0
+    .claude/skills/slidev/references/api-slide-hooks.md: sha256:1477fce45bb0c36a75976fe6d4e329da1b0c8b707c9c5cab15456a99d149f67c
+    .claude/skills/slidev/references/build-og-image.md: sha256:b47dd5bd8dc2123eb1cd1e4e1d35fa2b1ce63f206765751d9f8b6be9a386d9ba
+    .claude/skills/slidev/references/build-pdf.md: sha256:023e028653116dcbdc1d51c21b51d5a7139e3b4fbfea108bc8d9118e430157a5
+    .claude/skills/slidev/references/build-remote-assets.md: sha256:a0fa11b7ffde2c5264c1b2c2143a375fc103beee3a4dc97f140c71a319c95efd
+    .claude/skills/slidev/references/build-seo-meta.md: sha256:5188fb1378c640fe87714cbb72fb0de8ac9c82ef05c78f369cb87819feac3519
+    .claude/skills/slidev/references/code-groups.md: sha256:c46d38d1e3606961068d264492474e61cbb636deb9c4f064802c81011ebc2328
+    .claude/skills/slidev/references/code-import-snippet.md: sha256:3f794e2387c70415f436ce70b248a6101122fa2b6e2dd983b3557a97f5e58510
+    .claude/skills/slidev/references/code-line-highlighting.md: sha256:4571a5faf1111fd4bf0a30d331cfa5623d4052cc084ee83831e02abb6873968f
+    .claude/skills/slidev/references/code-line-numbers.md: sha256:f69d767362dc135062899bb15037aba8f2be78e428daff55c4863732b1584858
+    .claude/skills/slidev/references/code-magic-move.md: sha256:78121e4b2006bb3dae3b09c32fc547c42eca452935a6e4dcecad6add570f088d
+    .claude/skills/slidev/references/code-max-height.md: sha256:6f7ec03bf10559f37c9d144d0339de0a850590a6f40e3bfc1471561ba1f0505b
+    .claude/skills/slidev/references/code-twoslash.md: sha256:12d80b5fbdd8fcf1a60e8a97d2cbb6861745d9839aa6d5c826d28550a771b3b7
+    .claude/skills/slidev/references/core-animations.md: sha256:a3f8d12f06af0164025dcdbe450c198689f3a8a69eb1dc62fca0850ebcb2685d
+    .claude/skills/slidev/references/core-cli.md: sha256:f94193da70776c78753c8894a25be2053740bca9bdff4622235b14e48a98d260
+    .claude/skills/slidev/references/core-components.md: sha256:5e111844fbbe7cded2adfb630fc42d6f254d0d2d2106c2c4452e060cb10d957d
+    .claude/skills/slidev/references/core-exporting.md: sha256:6c22209942852d60f18d8be7fc429446ec513dfd12a45cbc0335e8419d61987d
+    .claude/skills/slidev/references/core-frontmatter.md: sha256:044861667fee30b63358429d555770552913cc5f3e59569ec0c82d6347716513
+    .claude/skills/slidev/references/core-global-context.md: sha256:1bd3884b31819b9cb4b7957000d06dcbf56678b742aa1aa6bbc7145b4f8ff98d
+    .claude/skills/slidev/references/core-headmatter.md: sha256:1421e7bf36551e2c220a57c74eeec7755210916a6dc68c57de128a225fb2eb99
+    .claude/skills/slidev/references/core-hosting.md: sha256:69e8d015df1359924de9c1b157c1037a275d263a561a5af27d04d9a8aa31bb5e
+    .claude/skills/slidev/references/core-layouts.md: sha256:95fd7274b4d0055263938092db2115632a34636451bb651961d94c12f6bbb833
+    .claude/skills/slidev/references/core-syntax.md: sha256:cd4ef071b1ad40f3fb8ab5ed7c5f4743628456dd8e0bcfc25f246be64992726b
+    .claude/skills/slidev/references/diagram-latex.md: sha256:6fb51a8a3d5a1ab151e3d84950df0d38c609a30a53d82b1eb10dd0630369c093
+    .claude/skills/slidev/references/diagram-mermaid.md: sha256:2edfba65f4f46df2af20f504616b84e18d59fed47cc0c3008ceb7577a0d2e580
+    .claude/skills/slidev/references/diagram-plantuml.md: sha256:c006d564a031d1a76c6dc8d560c8bbafd14799512bf08d629f5e291f4413fc8b
+    .claude/skills/slidev/references/editor-monaco-run.md: sha256:f47be9b308f01006a95839eb6c54f94536e108af4f91909fa5d81e8856798221
+    .claude/skills/slidev/references/editor-monaco-write.md: sha256:fb17f1f5c8f40e53f12afc47a0dcf5e4530189ba3c8d9b1749e627d4c5589ab9
+    .claude/skills/slidev/references/editor-monaco.md: sha256:d54e5abbade63c837c9ab9c9515ceb5a0ceca157d2af3adbfbb84c68671833dc
+    .claude/skills/slidev/references/editor-prettier.md: sha256:126d048841dad13be1e1be7b2cff8c845bc0a78457c0f675b494b2815c0d94ca
+    .claude/skills/slidev/references/editor-side.md: sha256:0a5993ab5db99ae90ec83fa11e7bb53b4ed5baf4aa0d3dacc5a389e51f7547cf
+    .claude/skills/slidev/references/editor-vscode.md: sha256:54faab932076ee772032c9b89e8ecf3c1ae562e4b575ab565e7431a2f241427a
+    .claude/skills/slidev/references/layout-canvas-size.md: sha256:2d17e65933c63a8b7e8a9bd9c5b73478d19332f4da25b26195aaeb5a1bd1953b
+    .claude/skills/slidev/references/layout-draggable.md: sha256:cedf74ff840326b336f5846c7ec3603009fac2f8c126ee4a972a0b7d67b3019c
+    .claude/skills/slidev/references/layout-global-layers.md: sha256:1614c681cee8f50a362fe31c69f3fe6012b772e4b759771132f68a7325fa3580
+    .claude/skills/slidev/references/layout-slots.md: sha256:b77222cc46ae53abe750aacb916822033ac220b41bbde5954824b534906e8d8e
+    .claude/skills/slidev/references/layout-transform.md: sha256:3d6a90df9a48c657e3709ecc01610f222e04dfb9fa5d530444653345e29e733a
+    .claude/skills/slidev/references/layout-zoom.md: sha256:c0ab0c3242e0a99f6bbc7eea163f551054ca4ca9d900174ea7f4073218ce89c0
+    .claude/skills/slidev/references/presenter-notes-ruby.md: sha256:aeadf860f7f23c1a7fd199180ac519c2f8b9f9e8c0609578c909b52c0c9e99e0
+    .claude/skills/slidev/references/presenter-recording.md: sha256:f2adf9c92892d468fd7297246462b669a444a4c000131bbcfbd178004d941a5c
+    .claude/skills/slidev/references/presenter-remote.md: sha256:90683d6eedf25395c312cb7b8f893f456ba2c5e221ee6ed91e7a192944a78ecb
+    .claude/skills/slidev/references/presenter-timer.md: sha256:7d0306a69c5f55cf223d47acbafb6ed3739ca68f21928d61fd6ca255df7e5a87
+    .claude/skills/slidev/references/style-direction.md: sha256:aaa1a10000ef92f05b3d63c1e0126cd41aead53d72432261f541d72c9d57a381
+    .claude/skills/slidev/references/style-icons.md: sha256:881daa50e5c1bec53cbaaa93029a4b0ed12f9f6ea36b9ab645799ac3b4c1521b
+    .claude/skills/slidev/references/style-scoped.md: sha256:f2caa6d5a3482f1d9364b41e70217f2150950be51375c0472e2ea912cdae895f
+    .claude/skills/slidev/references/syntax-block-frontmatter.md: sha256:fafee6da3b24fe8dcc60b0c1b6e212859d2e047322dc5479ec2fef70ef35d2ce
+    .claude/skills/slidev/references/syntax-comark.md: sha256:89316f0e900d2c8262cab221549ffaf434b09eb092de5c8feb5881de774e6cc5
+    .claude/skills/slidev/references/syntax-frontmatter-merging.md: sha256:f92f3de298e7b6cdff5e085a4f1f9d2a154878e340063504bfd26a6c94fed336
+    .claude/skills/slidev/references/syntax-importing-slides.md: sha256:5121a7fa19dd0496c4f5f42be0204ada7fb17484665727a1d259e31451c5ef42
+    .claude/skills/slidev/references/tool-eject-theme.md: sha256:c25fb0debc1af89bfe7aad1be3f09c67a9f97eafb051cb852063eaf1c9b995b0
+  content_hash: sha256:a1baf3e720fa6c9f9531a62bdf7c20336bd2c882774d3033a5b73c811a1f7696
 - repo_url: bigdra50/skills
   name: compact-prep
   host: github.com
@@ -531,6 +768,63 @@ dependencies:
     .agents/skills/refactor-loop/SKILL.md: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
     .claude/skills/refactor-loop/SKILL.md: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
   content_hash: sha256:a33e3a50a3e71515ca1bbfbac0c55aad03f1d5e8790b0b8570ca80cdc98175fb
+- repo_url: gonta223/japanese-corporate-pptx-skill
+  name: japanese-corporate-pptx
+  host: github.com
+  resolved_commit: 05480bfa2d8f097ab397861cbe390429e1dbb824
+  version: unknown
+  virtual_path: skills/japanese-corporate-pptx
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/japanese-corporate-pptx
+  - .agents/skills/japanese-corporate-pptx/SKILL.md
+  - .agents/skills/japanese-corporate-pptx/agents/openai.yaml
+  - .agents/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png
+  - .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png
+  - .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx
+  - .agents/skills/japanese-corporate-pptx/references/jtc-authenticity.md
+  - .agents/skills/japanese-corporate-pptx/references/layout-catalog.md
+  - .agents/skills/japanese-corporate-pptx/references/qa-checklist.md
+  - .agents/skills/japanese-corporate-pptx/references/research-backed-patterns.md
+  - .agents/skills/japanese-corporate-pptx/references/visual-style.md
+  - .agents/skills/japanese-corporate-pptx/references/writing-and-density.md
+  - .claude/skills/japanese-corporate-pptx
+  - .claude/skills/japanese-corporate-pptx/SKILL.md
+  - .claude/skills/japanese-corporate-pptx/agents/openai.yaml
+  - .claude/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png
+  - .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png
+  - .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx
+  - .claude/skills/japanese-corporate-pptx/references/jtc-authenticity.md
+  - .claude/skills/japanese-corporate-pptx/references/layout-catalog.md
+  - .claude/skills/japanese-corporate-pptx/references/qa-checklist.md
+  - .claude/skills/japanese-corporate-pptx/references/research-backed-patterns.md
+  - .claude/skills/japanese-corporate-pptx/references/visual-style.md
+  - .claude/skills/japanese-corporate-pptx/references/writing-and-density.md
+  deployed_file_hashes:
+    .agents/skills/japanese-corporate-pptx/SKILL.md: sha256:bc977eaf510f2a9605d3315090d124402ca7fdfe015d88fa3052c4e5fa227d73
+    .agents/skills/japanese-corporate-pptx/agents/openai.yaml: sha256:6709bd778be355d8c7da2a3099a1ab51bd1a5c207befd7a102b1ec72ec69c691
+    .agents/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png: sha256:337c6c5e490e2590f74f3fcea2d1a0729512101580d4a06c197e19d61b16d3ad
+    .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png: sha256:26734ac6e57efad2dd50c07c3e0f7aa07f1ec87fbfcf344921ee623a7658ddac
+    .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx: sha256:3d409d186cb0224632dd09d13e0f59425b0759ce2c2e34787d39ff18989b8012
+    .agents/skills/japanese-corporate-pptx/references/jtc-authenticity.md: sha256:2b6198d4c7fa57485a9967ae0506c01830fdfc3f41afad5355624b5415f60d6f
+    .agents/skills/japanese-corporate-pptx/references/layout-catalog.md: sha256:144aa66240789aaa20fe4eda80c5796153a2b53e738840b4f8db48780ba32955
+    .agents/skills/japanese-corporate-pptx/references/qa-checklist.md: sha256:ded3af117aa0a81bbe24983eeb91f03469d48d70d86abc1b1fe177eac6aa7e94
+    .agents/skills/japanese-corporate-pptx/references/research-backed-patterns.md: sha256:b0c62525a83b3f68e382813f44e9d5fbd714dc4407517cd9ae89cd7ec882928e
+    .agents/skills/japanese-corporate-pptx/references/visual-style.md: sha256:cee4b7d8e634a4d6cf498d5694329412ce138aab4e2cabb5357f16dfa46b8b2b
+    .agents/skills/japanese-corporate-pptx/references/writing-and-density.md: sha256:7f23e453688bcdff64ecba6ab47a39c59be53ee28acba8793461b6fd77e12e30
+    .claude/skills/japanese-corporate-pptx/SKILL.md: sha256:bc977eaf510f2a9605d3315090d124402ca7fdfe015d88fa3052c4e5fa227d73
+    .claude/skills/japanese-corporate-pptx/agents/openai.yaml: sha256:6709bd778be355d8c7da2a3099a1ab51bd1a5c207befd7a102b1ec72ec69c691
+    .claude/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png: sha256:337c6c5e490e2590f74f3fcea2d1a0729512101580d4a06c197e19d61b16d3ad
+    .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png: sha256:26734ac6e57efad2dd50c07c3e0f7aa07f1ec87fbfcf344921ee623a7658ddac
+    .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx: sha256:3d409d186cb0224632dd09d13e0f59425b0759ce2c2e34787d39ff18989b8012
+    .claude/skills/japanese-corporate-pptx/references/jtc-authenticity.md: sha256:2b6198d4c7fa57485a9967ae0506c01830fdfc3f41afad5355624b5415f60d6f
+    .claude/skills/japanese-corporate-pptx/references/layout-catalog.md: sha256:144aa66240789aaa20fe4eda80c5796153a2b53e738840b4f8db48780ba32955
+    .claude/skills/japanese-corporate-pptx/references/qa-checklist.md: sha256:ded3af117aa0a81bbe24983eeb91f03469d48d70d86abc1b1fe177eac6aa7e94
+    .claude/skills/japanese-corporate-pptx/references/research-backed-patterns.md: sha256:b0c62525a83b3f68e382813f44e9d5fbd714dc4407517cd9ae89cd7ec882928e
+    .claude/skills/japanese-corporate-pptx/references/visual-style.md: sha256:cee4b7d8e634a4d6cf498d5694329412ce138aab4e2cabb5357f16dfa46b8b2b
+    .claude/skills/japanese-corporate-pptx/references/writing-and-density.md: sha256:7f23e453688bcdff64ecba6ab47a39c59be53ee28acba8793461b6fd77e12e30
+  content_hash: sha256:0c7af74a1c7f7f05d1ff700d0e0c4d731e6610ab6bd458685c00703f18b75c69
 - repo_url: mattpocock/skills
   name: grill-me
   host: github.com
@@ -575,6 +869,185 @@ dependencies:
     .claude/skills/grilling/SKILL.md: sha256:44331dda57f461db4fec3f2efb6ddabe7aaaa0a57ae0f88a883bc61aed8a0587
     .claude/skills/grilling/agents/openai.yaml: sha256:cf29b9a8dbf35a58a908a6ca4f64dcd86c2b2130291eee0a78b9f706b138825b
   content_hash: sha256:1f05b0ffe26fb4d4457e3e40b41ec2f3e379ae2d6877613240bc6ffef5f7f338
+- repo_url: minorun365/minorun-marp-skill
+  name: slide-design-dark
+  host: github.com
+  resolved_commit: c6b20bbb8a1f2d2059e3764e2acd539c312785e4
+  version: unknown
+  virtual_path: skills/slide-design-dark
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/slide-design-dark
+  - .agents/skills/slide-design-dark/SKILL.md
+  - .claude/skills/slide-design-dark
+  - .claude/skills/slide-design-dark/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/slide-design-dark/SKILL.md: sha256:4a24aa475fb40d8dd97e3b7fc4c5f91d8f898a174df79551f021f18233664b53
+    .claude/skills/slide-design-dark/SKILL.md: sha256:4a24aa475fb40d8dd97e3b7fc4c5f91d8f898a174df79551f021f18233664b53
+  content_hash: sha256:16d1b082f1b71633165780ad4e2fb88b228dffe41b6b6fe6676f4fba23eb3fa4
+- repo_url: minorun365/minorun-marp-skill
+  name: slide-figures
+  host: github.com
+  resolved_commit: c6b20bbb8a1f2d2059e3764e2acd539c312785e4
+  version: unknown
+  virtual_path: skills/slide-figures
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/slide-figures
+  - .agents/skills/slide-figures/SKILL.md
+  - .claude/skills/slide-figures
+  - .claude/skills/slide-figures/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/slide-figures/SKILL.md: sha256:22ab3876ad2a304b6e88fbd9c7f85f7e1b76bb5eb461707fbcd1d6403da44d95
+    .claude/skills/slide-figures/SKILL.md: sha256:22ab3876ad2a304b6e88fbd9c7f85f7e1b76bb5eb461707fbcd1d6403da44d95
+  content_hash: sha256:561b8a3192139e5caa078938a82f7f9e86907bb05953d88ac5cdf1b413ff5ae1
+- repo_url: minorun365/minorun-marp-skill
+  name: slide-story
+  host: github.com
+  resolved_commit: c6b20bbb8a1f2d2059e3764e2acd539c312785e4
+  version: unknown
+  virtual_path: skills/slide-story
+  is_virtual: true
+  package_type: claude_skill
+  deployed_files:
+  - .agents/skills/slide-story
+  - .agents/skills/slide-story/SKILL.md
+  - .claude/skills/slide-story
+  - .claude/skills/slide-story/SKILL.md
+  deployed_file_hashes:
+    .agents/skills/slide-story/SKILL.md: sha256:684f8e1e1ca33f30e7d7463a3e8589a7222026ab3a02b776d17104575adcac60
+    .claude/skills/slide-story/SKILL.md: sha256:684f8e1e1ca33f30e7d7463a3e8589a7222026ab3a02b776d17104575adcac60
+  content_hash: sha256:0fb3fa9acf8b6bb31fdadb5520a85609c7454394bb0a007cfa3ddd6dd3b0919f
+- repo_url: mizchi/explainer
+  name: explainer
+  host: github.com
+  resolved_commit: 1e393e0b3039a8a38a77d436f387ea58ab48b2fb
+  version: 0.1.0
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/explainer
+  - .agents/skills/explainer-book
+  - .agents/skills/explainer-book/SKILL.md
+  - .agents/skills/explainer-book/references/book-json.md
+  - .agents/skills/explainer-book/scripts/verify-book.mjs
+  - .agents/skills/explainer/SKILL.md
+  - .agents/skills/explainer/references/figures.md
+  - .agents/skills/explainer/references/persona.md
+  - .agents/skills/explainer/references/writing.md
+  - .agents/skills/explainer/scripts/build-html.mjs
+  - .agents/skills/explainer/scripts/figure-arrows.mjs
+  - .agents/skills/explainer/scripts/figure-check.mjs
+  - .agents/skills/explainer/scripts/figure-variants.mjs
+  - .agents/skills/explainer/scripts/tlc-to-scene.mjs
+  - .agents/skills/explainer/scripts/verify-doc.mjs
+  - .agents/skills/first-reader
+  - .agents/skills/first-reader/LICENSE
+  - .agents/skills/first-reader/NOTICE
+  - .agents/skills/first-reader/README.md
+  - .agents/skills/first-reader/SKILL.md
+  - .agents/skills/first-reader/references/interview.md
+  - .agents/skills/first-reader/references/personas.md
+  - .agents/skills/first-reader/references/report.md
+  - .agents/skills/first-reader/references/room.md
+  - .agents/skills/first-reader/scripts/ask.py
+  - .agents/skills/first-reader/scripts/feed.py
+  - .agents/skills/first-reader/scripts/recall.py
+  - .agents/skills/first-reader/scripts/room.py
+  - .agents/skills/first-reader/scripts/room_template.html
+  - .agents/skills/first-reader/scripts/signals.py
+  - .agents/skills/first-reader/scripts/skim.py
+  - .claude/skills/explainer
+  - .claude/skills/explainer-book
+  - .claude/skills/explainer-book/SKILL.md
+  - .claude/skills/explainer-book/references/book-json.md
+  - .claude/skills/explainer-book/scripts/verify-book.mjs
+  - .claude/skills/explainer/SKILL.md
+  - .claude/skills/explainer/references/figures.md
+  - .claude/skills/explainer/references/persona.md
+  - .claude/skills/explainer/references/writing.md
+  - .claude/skills/explainer/scripts/build-html.mjs
+  - .claude/skills/explainer/scripts/figure-arrows.mjs
+  - .claude/skills/explainer/scripts/figure-check.mjs
+  - .claude/skills/explainer/scripts/figure-variants.mjs
+  - .claude/skills/explainer/scripts/tlc-to-scene.mjs
+  - .claude/skills/explainer/scripts/verify-doc.mjs
+  - .claude/skills/first-reader
+  - .claude/skills/first-reader/LICENSE
+  - .claude/skills/first-reader/NOTICE
+  - .claude/skills/first-reader/README.md
+  - .claude/skills/first-reader/SKILL.md
+  - .claude/skills/first-reader/references/interview.md
+  - .claude/skills/first-reader/references/personas.md
+  - .claude/skills/first-reader/references/report.md
+  - .claude/skills/first-reader/references/room.md
+  - .claude/skills/first-reader/scripts/ask.py
+  - .claude/skills/first-reader/scripts/feed.py
+  - .claude/skills/first-reader/scripts/recall.py
+  - .claude/skills/first-reader/scripts/room.py
+  - .claude/skills/first-reader/scripts/room_template.html
+  - .claude/skills/first-reader/scripts/signals.py
+  - .claude/skills/first-reader/scripts/skim.py
+  deployed_file_hashes:
+    .agents/skills/explainer-book/SKILL.md: sha256:3e6311339fe3be70e1e86a17642d03f7bf02d594793d105ebc8a2cbe8deee769
+    .agents/skills/explainer-book/references/book-json.md: sha256:30319f6413c00de8087f3465a22dabfa8188a24701ad830ba45a05e001ca20ec
+    .agents/skills/explainer-book/scripts/verify-book.mjs: sha256:cb73cbed478607247726b5c72f546a0e78e9115903969bad08e0fc1d79d972f6
+    .agents/skills/explainer/SKILL.md: sha256:486a6b4752e8a3127952eebae9bbc986a4c0b7abe2380c03119d6145994a981b
+    .agents/skills/explainer/references/figures.md: sha256:281cc45f4ddcc330f2e43836e6c08d90bcdd6c4109902209d5fff6810ea88790
+    .agents/skills/explainer/references/persona.md: sha256:701c296db39bf22c0afff3a97a256cf98f8ed5427d9408d241f0222f344d518e
+    .agents/skills/explainer/references/writing.md: sha256:f0d3828632506f9d52358d6aa8407ec835bdad5d376a1b20a01c76a0aef82ba8
+    .agents/skills/explainer/scripts/build-html.mjs: sha256:9637fd88be7b052ac77b1abb0bfbb181fce666901cef2becbffe7455342a0824
+    .agents/skills/explainer/scripts/figure-arrows.mjs: sha256:ea94cf63828931f54e77007d28e9b12c557a4776f9a40164f7a17f428b0afde1
+    .agents/skills/explainer/scripts/figure-check.mjs: sha256:686f2172dda02afaa2583fd5426ec6bedf7953358852ee4d45eb43e008002317
+    .agents/skills/explainer/scripts/figure-variants.mjs: sha256:330c1c9e2dd50aa1a533054270ddcbc4c53977919c48a0c78009549343c85d30
+    .agents/skills/explainer/scripts/tlc-to-scene.mjs: sha256:c4f2b204415f153cbbf86ca5c46dcbbed0a0ed95e04985ecb2a03b091a73b1c3
+    .agents/skills/explainer/scripts/verify-doc.mjs: sha256:fb5e7b89025a03f4e023d24018d24af24423f47505dda58ce2ce00e448453441
+    .agents/skills/first-reader/LICENSE: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    .agents/skills/first-reader/NOTICE: sha256:87ee09615b36efd2e9b1c60a93224441c2c9958f54b7fb6131249d472ba4b6d6
+    .agents/skills/first-reader/README.md: sha256:b21d577ae0c25a04fe1fbface5f19e18f79d8ddcf724198b700e3295b026e193
+    .agents/skills/first-reader/SKILL.md: sha256:51ead158e27a65eff7c1bacc5db8a89d1ed1101b44b3b57fa05440f60582d55d
+    .agents/skills/first-reader/references/interview.md: sha256:1cfe4df25d1f5db6e1ecb869172ed4cc59cdf7c1ce21036a521d6f7336513093
+    .agents/skills/first-reader/references/personas.md: sha256:80ed354630f231235f47b096b6d6feb0b2ae854ff0beb47c6e72ac99d892aa02
+    .agents/skills/first-reader/references/report.md: sha256:eb79fcd5800ee7500257bd01e9da09e38c9fb048a17242feaa81c7c053e66cb8
+    .agents/skills/first-reader/references/room.md: sha256:4ab04a5d7ed4fa0795de189d4e6cc0370d566aedf5aff5f2b6e9741133a907b9
+    .agents/skills/first-reader/scripts/ask.py: sha256:4f474f8e7e41808fba18152b0edc4d84333e6fdda877b622ad9ef6cc8c5c680e
+    .agents/skills/first-reader/scripts/feed.py: sha256:2f1267f7367f4bcf548fa28151ebdc713511a26a43f85dcc5ba7c3addcd669a7
+    .agents/skills/first-reader/scripts/recall.py: sha256:77d54c219d721f9cd56db710af17efed79750fde69a5647908861f212724ea9f
+    .agents/skills/first-reader/scripts/room.py: sha256:100b61bd9e1d8ac0af8e51c7c630e133bc1cd3b2f9acb3b5c5cf1c7c72030657
+    .agents/skills/first-reader/scripts/room_template.html: sha256:8631c113a79ff74c25df88267342a690badc634a3fe6d9e578d48d8d7da0f32e
+    .agents/skills/first-reader/scripts/signals.py: sha256:4e9096ac2e5dac1ff8707689e9b816f6cc52de9872b5ed42d2342cb012f981aa
+    .agents/skills/first-reader/scripts/skim.py: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
+    .claude/skills/explainer-book/SKILL.md: sha256:3e6311339fe3be70e1e86a17642d03f7bf02d594793d105ebc8a2cbe8deee769
+    .claude/skills/explainer-book/references/book-json.md: sha256:30319f6413c00de8087f3465a22dabfa8188a24701ad830ba45a05e001ca20ec
+    .claude/skills/explainer-book/scripts/verify-book.mjs: sha256:cb73cbed478607247726b5c72f546a0e78e9115903969bad08e0fc1d79d972f6
+    .claude/skills/explainer/SKILL.md: sha256:486a6b4752e8a3127952eebae9bbc986a4c0b7abe2380c03119d6145994a981b
+    .claude/skills/explainer/references/figures.md: sha256:281cc45f4ddcc330f2e43836e6c08d90bcdd6c4109902209d5fff6810ea88790
+    .claude/skills/explainer/references/persona.md: sha256:701c296db39bf22c0afff3a97a256cf98f8ed5427d9408d241f0222f344d518e
+    .claude/skills/explainer/references/writing.md: sha256:f0d3828632506f9d52358d6aa8407ec835bdad5d376a1b20a01c76a0aef82ba8
+    .claude/skills/explainer/scripts/build-html.mjs: sha256:9637fd88be7b052ac77b1abb0bfbb181fce666901cef2becbffe7455342a0824
+    .claude/skills/explainer/scripts/figure-arrows.mjs: sha256:ea94cf63828931f54e77007d28e9b12c557a4776f9a40164f7a17f428b0afde1
+    .claude/skills/explainer/scripts/figure-check.mjs: sha256:686f2172dda02afaa2583fd5426ec6bedf7953358852ee4d45eb43e008002317
+    .claude/skills/explainer/scripts/figure-variants.mjs: sha256:330c1c9e2dd50aa1a533054270ddcbc4c53977919c48a0c78009549343c85d30
+    .claude/skills/explainer/scripts/tlc-to-scene.mjs: sha256:c4f2b204415f153cbbf86ca5c46dcbbed0a0ed95e04985ecb2a03b091a73b1c3
+    .claude/skills/explainer/scripts/verify-doc.mjs: sha256:fb5e7b89025a03f4e023d24018d24af24423f47505dda58ce2ce00e448453441
+    .claude/skills/first-reader/LICENSE: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+    .claude/skills/first-reader/NOTICE: sha256:87ee09615b36efd2e9b1c60a93224441c2c9958f54b7fb6131249d472ba4b6d6
+    .claude/skills/first-reader/README.md: sha256:b21d577ae0c25a04fe1fbface5f19e18f79d8ddcf724198b700e3295b026e193
+    .claude/skills/first-reader/SKILL.md: sha256:51ead158e27a65eff7c1bacc5db8a89d1ed1101b44b3b57fa05440f60582d55d
+    .claude/skills/first-reader/references/interview.md: sha256:1cfe4df25d1f5db6e1ecb869172ed4cc59cdf7c1ce21036a521d6f7336513093
+    .claude/skills/first-reader/references/personas.md: sha256:80ed354630f231235f47b096b6d6feb0b2ae854ff0beb47c6e72ac99d892aa02
+    .claude/skills/first-reader/references/report.md: sha256:eb79fcd5800ee7500257bd01e9da09e38c9fb048a17242feaa81c7c053e66cb8
+    .claude/skills/first-reader/references/room.md: sha256:4ab04a5d7ed4fa0795de189d4e6cc0370d566aedf5aff5f2b6e9741133a907b9
+    .claude/skills/first-reader/scripts/ask.py: sha256:4f474f8e7e41808fba18152b0edc4d84333e6fdda877b622ad9ef6cc8c5c680e
+    .claude/skills/first-reader/scripts/feed.py: sha256:2f1267f7367f4bcf548fa28151ebdc713511a26a43f85dcc5ba7c3addcd669a7
+    .claude/skills/first-reader/scripts/recall.py: sha256:77d54c219d721f9cd56db710af17efed79750fde69a5647908861f212724ea9f
+    .claude/skills/first-reader/scripts/room.py: sha256:100b61bd9e1d8ac0af8e51c7c630e133bc1cd3b2f9acb3b5c5cf1c7c72030657
+    .claude/skills/first-reader/scripts/room_template.html: sha256:8631c113a79ff74c25df88267342a690badc634a3fe6d9e578d48d8d7da0f32e
+    .claude/skills/first-reader/scripts/signals.py: sha256:4e9096ac2e5dac1ff8707689e9b816f6cc52de9872b5ed42d2342cb012f981aa
+    .claude/skills/first-reader/scripts/skim.py: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
+  content_hash: sha256:31067d62262fc96a74b1843250b1d590c2960b67b93115f6ed1150094472eff6
+  declared_license: MIT
 - repo_url: mizchi/skills
   name: empirical-prompt-tuning
   host: github.com
@@ -1309,6 +1782,285 @@ deployments:
   content_hash: sha256:4ee9c872e76dcc0f38476ce5da9e57c537b3d63f321f1c721b3cb18e4ff0f427
 - kind: project-relative
   target: claude
+  value: .claude/skills/explainer
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer-book
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer-book/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:3e6311339fe3be70e1e86a17642d03f7bf02d594793d105ebc8a2cbe8deee769
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer-book/references/book-json.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:30319f6413c00de8087f3465a22dabfa8188a24701ad830ba45a05e001ca20ec
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer-book/scripts/verify-book.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:cb73cbed478607247726b5c72f546a0e78e9115903969bad08e0fc1d79d972f6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:486a6b4752e8a3127952eebae9bbc986a4c0b7abe2380c03119d6145994a981b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/references/figures.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:281cc45f4ddcc330f2e43836e6c08d90bcdd6c4109902209d5fff6810ea88790
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/references/persona.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:701c296db39bf22c0afff3a97a256cf98f8ed5427d9408d241f0222f344d518e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/references/writing.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:f0d3828632506f9d52358d6aa8407ec835bdad5d376a1b20a01c76a0aef82ba8
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/build-html.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:9637fd88be7b052ac77b1abb0bfbb181fce666901cef2becbffe7455342a0824
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/figure-arrows.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:ea94cf63828931f54e77007d28e9b12c557a4776f9a40164f7a17f428b0afde1
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/figure-check.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:686f2172dda02afaa2583fd5426ec6bedf7953358852ee4d45eb43e008002317
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/figure-variants.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:330c1c9e2dd50aa1a533054270ddcbc4c53977919c48a0c78009549343c85d30
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/tlc-to-scene.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:c4f2b204415f153cbbf86ca5c46dcbbed0a0ed95e04985ecb2a03b091a73b1c3
+- kind: project-relative
+  target: claude
+  value: .claude/skills/explainer/scripts/verify-doc.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:fb5e7b89025a03f4e023d24018d24af24423f47505dda58ce2ce00e448453441
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/NOTICE
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:87ee09615b36efd2e9b1c60a93224441c2c9958f54b7fb6131249d472ba4b6d6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/README.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:b21d577ae0c25a04fe1fbface5f19e18f79d8ddcf724198b700e3295b026e193
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:51ead158e27a65eff7c1bacc5db8a89d1ed1101b44b3b57fa05440f60582d55d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/references/interview.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:1cfe4df25d1f5db6e1ecb869172ed4cc59cdf7c1ce21036a521d6f7336513093
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/references/personas.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:80ed354630f231235f47b096b6d6feb0b2ae854ff0beb47c6e72ac99d892aa02
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/references/report.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:eb79fcd5800ee7500257bd01e9da09e38c9fb048a17242feaa81c7c053e66cb8
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/references/room.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4ab04a5d7ed4fa0795de189d4e6cc0370d566aedf5aff5f2b6e9741133a907b9
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/ask.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4f474f8e7e41808fba18152b0edc4d84333e6fdda877b622ad9ef6cc8c5c680e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/feed.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:2f1267f7367f4bcf548fa28151ebdc713511a26a43f85dcc5ba7c3addcd669a7
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/recall.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:77d54c219d721f9cd56db710af17efed79750fde69a5647908861f212724ea9f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/room.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:100b61bd9e1d8ac0af8e51c7c630e133bc1cd3b2f9acb3b5c5cf1c7c72030657
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/room_template.html
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:8631c113a79ff74c25df88267342a690badc634a3fe6d9e578d48d8d7da0f32e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/signals.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4e9096ac2e5dac1ff8707689e9b816f6cc52de9872b5ed42d2342cb012f981aa
+- kind: project-relative
+  target: claude
+  value: .claude/skills/first-reader/scripts/skim.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
+- kind: project-relative
+  target: claude
   value: .claude/skills/grill-me
   runtime: null
   scope: project
@@ -1406,6 +2158,114 @@ deployments:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
   content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:bc977eaf510f2a9605d3315090d124402ca7fdfe015d88fa3052c4e5fa227d73
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/agents/openai.yaml
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:6709bd778be355d8c7da2a3099a1ab51bd1a5c207befd7a102b1ec72ec69c691
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:337c6c5e490e2590f74f3fcea2d1a0729512101580d4a06c197e19d61b16d3ad
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:26734ac6e57efad2dd50c07c3e0f7aa07f1ec87fbfcf344921ee623a7658ddac
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:3d409d186cb0224632dd09d13e0f59425b0759ce2c2e34787d39ff18989b8012
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/jtc-authenticity.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:2b6198d4c7fa57485a9967ae0506c01830fdfc3f41afad5355624b5415f60d6f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/layout-catalog.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:144aa66240789aaa20fe4eda80c5796153a2b53e738840b4f8db48780ba32955
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/qa-checklist.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:ded3af117aa0a81bbe24983eeb91f03469d48d70d86abc1b1fe177eac6aa7e94
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/research-backed-patterns.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:b0c62525a83b3f68e382813f44e9d5fbd714dc4407517cd9ae89cd7ec882928e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/visual-style.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:cee4b7d8e634a4d6cf498d5694329412ce138aab4e2cabb5357f16dfa46b8b2b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/japanese-corporate-pptx/references/writing-and-density.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:7f23e453688bcdff64ecba6ab47a39c59be53ee28acba8793461b6fd77e12e30
 - kind: project-relative
   target: claude
   value: .claude/skills/japanese-tech-writing
@@ -1685,6 +2545,573 @@ deployments:
   - bigdra50/skills/claude-code/session-recap
   active_owner: bigdra50/skills/claude-code/session-recap
   content_hash: sha256:4fcc273e6fe77c30c54dbe5f977cf39ef0da636ce25e986bc94794cb05063b46
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-design-dark
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-design-dark
+  active_owner: minorun365/minorun-marp-skill/skills/slide-design-dark
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-design-dark/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-design-dark
+  active_owner: minorun365/minorun-marp-skill/skills/slide-design-dark
+  content_hash: sha256:4a24aa475fb40d8dd97e3b7fc4c5f91d8f898a174df79551f021f18233664b53
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-figures
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-figures
+  active_owner: minorun365/minorun-marp-skill/skills/slide-figures
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-figures/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-figures
+  active_owner: minorun365/minorun-marp-skill/skills/slide-figures
+  content_hash: sha256:22ab3876ad2a304b6e88fbd9c7f85f7e1b76bb5eb461707fbcd1d6403da44d95
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-story
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-story
+  active_owner: minorun365/minorun-marp-skill/skills/slide-story
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slide-story/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-story
+  active_owner: minorun365/minorun-marp-skill/skills/slide-story
+  content_hash: sha256:684f8e1e1ca33f30e7d7463a3e8589a7222026ab3a02b776d17104575adcac60
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/LICENSE.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:42ccc89fea49360da73708efaad553c018a4959baa1d7e51e4ff7b721e31b1a2
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/README.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:0348a9c6c8244db73ecb8971a8a73b25bb917168ffd3524bc409b505fc293849
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:4da03b00af5f60beaf9e6aa65113d7f1c1fbdc49dc1bcef7556ae77dc90a1ee1
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/SYNC.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3fac875942ed87ce6b123476169464159062814ff5382a275775069e371dab5d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/animation-click-marker.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:ca20897bad85b12e976bbb4161597b0dcc4c5a9cf604d69d13cc0bdc922696eb
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/animation-drawing.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5fd91b06a9fa0c7a47e20c6eb7fdc4d7bd31de88c4ad792132cf721ab884642e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/animation-rough-marker.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:ef8c8d007d0763288679a18892fcf7a013025adbbd78ea6d70b5b706f6af5ec0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/api-slide-hooks.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1477fce45bb0c36a75976fe6d4e329da1b0c8b707c9c5cab15456a99d149f67c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/build-og-image.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:b47dd5bd8dc2123eb1cd1e4e1d35fa2b1ce63f206765751d9f8b6be9a386d9ba
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/build-pdf.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:023e028653116dcbdc1d51c21b51d5a7139e3b4fbfea108bc8d9118e430157a5
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/build-remote-assets.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:a0fa11b7ffde2c5264c1b2c2143a375fc103beee3a4dc97f140c71a319c95efd
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/build-seo-meta.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5188fb1378c640fe87714cbb72fb0de8ac9c82ef05c78f369cb87819feac3519
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-groups.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c46d38d1e3606961068d264492474e61cbb636deb9c4f064802c81011ebc2328
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-import-snippet.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3f794e2387c70415f436ce70b248a6101122fa2b6e2dd983b3557a97f5e58510
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-line-highlighting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:4571a5faf1111fd4bf0a30d331cfa5623d4052cc084ee83831e02abb6873968f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-line-numbers.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f69d767362dc135062899bb15037aba8f2be78e428daff55c4863732b1584858
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-magic-move.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:78121e4b2006bb3dae3b09c32fc547c42eca452935a6e4dcecad6add570f088d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-max-height.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6f7ec03bf10559f37c9d144d0339de0a850590a6f40e3bfc1471561ba1f0505b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/code-twoslash.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:12d80b5fbdd8fcf1a60e8a97d2cbb6861745d9839aa6d5c826d28550a771b3b7
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-animations.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:a3f8d12f06af0164025dcdbe450c198689f3a8a69eb1dc62fca0850ebcb2685d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-cli.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f94193da70776c78753c8894a25be2053740bca9bdff4622235b14e48a98d260
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-components.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5e111844fbbe7cded2adfb630fc42d6f254d0d2d2106c2c4452e060cb10d957d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-exporting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6c22209942852d60f18d8be7fc429446ec513dfd12a45cbc0335e8419d61987d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-frontmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:044861667fee30b63358429d555770552913cc5f3e59569ec0c82d6347716513
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-global-context.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1bd3884b31819b9cb4b7957000d06dcbf56678b742aa1aa6bbc7145b4f8ff98d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-headmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1421e7bf36551e2c220a57c74eeec7755210916a6dc68c57de128a225fb2eb99
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-hosting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:69e8d015df1359924de9c1b157c1037a275d263a561a5af27d04d9a8aa31bb5e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-layouts.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:95fd7274b4d0055263938092db2115632a34636451bb651961d94c12f6bbb833
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/core-syntax.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:cd4ef071b1ad40f3fb8ab5ed7c5f4743628456dd8e0bcfc25f246be64992726b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/diagram-latex.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6fb51a8a3d5a1ab151e3d84950df0d38c609a30a53d82b1eb10dd0630369c093
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/diagram-mermaid.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:2edfba65f4f46df2af20f504616b84e18d59fed47cc0c3008ceb7577a0d2e580
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/diagram-plantuml.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c006d564a031d1a76c6dc8d560c8bbafd14799512bf08d629f5e291f4413fc8b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-monaco-run.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f47be9b308f01006a95839eb6c54f94536e108af4f91909fa5d81e8856798221
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-monaco-write.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:fb17f1f5c8f40e53f12afc47a0dcf5e4530189ba3c8d9b1749e627d4c5589ab9
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-monaco.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:d54e5abbade63c837c9ab9c9515ceb5a0ceca157d2af3adbfbb84c68671833dc
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-prettier.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:126d048841dad13be1e1be7b2cff8c845bc0a78457c0f675b494b2815c0d94ca
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-side.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:0a5993ab5db99ae90ec83fa11e7bb53b4ed5baf4aa0d3dacc5a389e51f7547cf
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/editor-vscode.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:54faab932076ee772032c9b89e8ecf3c1ae562e4b575ab565e7431a2f241427a
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-canvas-size.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:2d17e65933c63a8b7e8a9bd9c5b73478d19332f4da25b26195aaeb5a1bd1953b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-draggable.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:cedf74ff840326b336f5846c7ec3603009fac2f8c126ee4a972a0b7d67b3019c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-global-layers.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1614c681cee8f50a362fe31c69f3fe6012b772e4b759771132f68a7325fa3580
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-slots.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:b77222cc46ae53abe750aacb916822033ac220b41bbde5954824b534906e8d8e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-transform.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3d6a90df9a48c657e3709ecc01610f222e04dfb9fa5d530444653345e29e733a
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/layout-zoom.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c0ab0c3242e0a99f6bbc7eea163f551054ca4ca9d900174ea7f4073218ce89c0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/presenter-notes-ruby.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:aeadf860f7f23c1a7fd199180ac519c2f8b9f9e8c0609578c909b52c0c9e99e0
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/presenter-recording.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f2adf9c92892d468fd7297246462b669a444a4c000131bbcfbd178004d941a5c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/presenter-remote.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:90683d6eedf25395c312cb7b8f893f456ba2c5e221ee6ed91e7a192944a78ecb
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/presenter-timer.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:7d0306a69c5f55cf223d47acbafb6ed3739ca68f21928d61fd6ca255df7e5a87
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/style-direction.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:aaa1a10000ef92f05b3d63c1e0126cd41aead53d72432261f541d72c9d57a381
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/style-icons.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:881daa50e5c1bec53cbaaa93029a4b0ed12f9f6ea36b9ab645799ac3b4c1521b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/style-scoped.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f2caa6d5a3482f1d9364b41e70217f2150950be51375c0472e2ea912cdae895f
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/syntax-block-frontmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:fafee6da3b24fe8dcc60b0c1b6e212859d2e047322dc5479ec2fef70ef35d2ce
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/syntax-comark.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:89316f0e900d2c8262cab221549ffaf434b09eb092de5c8feb5881de774e6cc5
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/syntax-frontmatter-merging.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f92f3de298e7b6cdff5e085a4f1f9d2a154878e340063504bfd26a6c94fed336
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/syntax-importing-slides.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5121a7fa19dd0496c4f5f42be0204ada7fb17484665727a1d259e31451c5ef42
+- kind: project-relative
+  target: claude
+  value: .claude/skills/slidev/references/tool-eject-theme.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c25fb0debc1af89bfe7aad1be3f09c67a9f97eafb051cb852063eaf1c9b995b0
 - kind: project-relative
   target: claude
   value: .claude/skills/survey
@@ -2344,6 +3771,285 @@ deployments:
   content_hash: sha256:4ee9c872e76dcc0f38476ce5da9e57c537b3d63f321f1c721b3cb18e4ff0f427
 - kind: project-relative
   target: codex
+  value: .agents/skills/explainer
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer-book
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer-book/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:3e6311339fe3be70e1e86a17642d03f7bf02d594793d105ebc8a2cbe8deee769
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer-book/references/book-json.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:30319f6413c00de8087f3465a22dabfa8188a24701ad830ba45a05e001ca20ec
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer-book/scripts/verify-book.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:cb73cbed478607247726b5c72f546a0e78e9115903969bad08e0fc1d79d972f6
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:486a6b4752e8a3127952eebae9bbc986a4c0b7abe2380c03119d6145994a981b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/references/figures.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:281cc45f4ddcc330f2e43836e6c08d90bcdd6c4109902209d5fff6810ea88790
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/references/persona.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:701c296db39bf22c0afff3a97a256cf98f8ed5427d9408d241f0222f344d518e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/references/writing.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:f0d3828632506f9d52358d6aa8407ec835bdad5d376a1b20a01c76a0aef82ba8
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/build-html.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:9637fd88be7b052ac77b1abb0bfbb181fce666901cef2becbffe7455342a0824
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/figure-arrows.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:ea94cf63828931f54e77007d28e9b12c557a4776f9a40164f7a17f428b0afde1
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/figure-check.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:686f2172dda02afaa2583fd5426ec6bedf7953358852ee4d45eb43e008002317
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/figure-variants.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:330c1c9e2dd50aa1a533054270ddcbc4c53977919c48a0c78009549343c85d30
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/tlc-to-scene.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:c4f2b204415f153cbbf86ca5c46dcbbed0a0ed95e04985ecb2a03b091a73b1c3
+- kind: project-relative
+  target: codex
+  value: .agents/skills/explainer/scripts/verify-doc.mjs
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:fb5e7b89025a03f4e023d24018d24af24423f47505dda58ce2ce00e448453441
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/LICENSE
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/NOTICE
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:87ee09615b36efd2e9b1c60a93224441c2c9958f54b7fb6131249d472ba4b6d6
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/README.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:b21d577ae0c25a04fe1fbface5f19e18f79d8ddcf724198b700e3295b026e193
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:51ead158e27a65eff7c1bacc5db8a89d1ed1101b44b3b57fa05440f60582d55d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/references/interview.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:1cfe4df25d1f5db6e1ecb869172ed4cc59cdf7c1ce21036a521d6f7336513093
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/references/personas.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:80ed354630f231235f47b096b6d6feb0b2ae854ff0beb47c6e72ac99d892aa02
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/references/report.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:eb79fcd5800ee7500257bd01e9da09e38c9fb048a17242feaa81c7c053e66cb8
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/references/room.md
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4ab04a5d7ed4fa0795de189d4e6cc0370d566aedf5aff5f2b6e9741133a907b9
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/ask.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4f474f8e7e41808fba18152b0edc4d84333e6fdda877b622ad9ef6cc8c5c680e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/feed.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:2f1267f7367f4bcf548fa28151ebdc713511a26a43f85dcc5ba7c3addcd669a7
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/recall.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:77d54c219d721f9cd56db710af17efed79750fde69a5647908861f212724ea9f
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/room.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:100b61bd9e1d8ac0af8e51c7c630e133bc1cd3b2f9acb3b5c5cf1c7c72030657
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/room_template.html
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:8631c113a79ff74c25df88267342a690badc634a3fe6d9e578d48d8d7da0f32e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/signals.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:4e9096ac2e5dac1ff8707689e9b816f6cc52de9872b5ed42d2342cb012f981aa
+- kind: project-relative
+  target: codex
+  value: .agents/skills/first-reader/scripts/skim.py
+  runtime: null
+  scope: project
+  owners:
+  - mizchi/explainer
+  active_owner: mizchi/explainer
+  content_hash: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
+- kind: project-relative
+  target: codex
   value: .agents/skills/grill-me
   runtime: null
   scope: project
@@ -2423,6 +4129,114 @@ deployments:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
   content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:bc977eaf510f2a9605d3315090d124402ca7fdfe015d88fa3052c4e5fa227d73
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/agents/openai.yaml
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:6709bd778be355d8c7da2a3099a1ab51bd1a5c207befd7a102b1ec72ec69c691
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/assets/annotated-source-chart-layout.png
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:337c6c5e490e2590f74f3fcea2d1a0729512101580d4a06c197e19d61b16d3ad
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-layouts.png
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:26734ac6e57efad2dd50c07c3e0f7aa07f1ec87fbfcf344921ee623a7658ddac
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/assets/japanese-corporate-ponchi-template.pptx
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:3d409d186cb0224632dd09d13e0f59425b0759ce2c2e34787d39ff18989b8012
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/jtc-authenticity.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:2b6198d4c7fa57485a9967ae0506c01830fdfc3f41afad5355624b5415f60d6f
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/layout-catalog.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:144aa66240789aaa20fe4eda80c5796153a2b53e738840b4f8db48780ba32955
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/qa-checklist.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:ded3af117aa0a81bbe24983eeb91f03469d48d70d86abc1b1fe177eac6aa7e94
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/research-backed-patterns.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:b0c62525a83b3f68e382813f44e9d5fbd714dc4407517cd9ae89cd7ec882928e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/visual-style.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:cee4b7d8e634a4d6cf498d5694329412ce138aab4e2cabb5357f16dfa46b8b2b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/japanese-corporate-pptx/references/writing-and-density.md
+  runtime: null
+  scope: project
+  owners:
+  - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  active_owner: gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
+  content_hash: sha256:7f23e453688bcdff64ecba6ab47a39c59be53ee28acba8793461b6fd77e12e30
 - kind: project-relative
   target: codex
   value: .agents/skills/japanese-tech-writing
@@ -2648,6 +4462,573 @@ deployments:
   - bigdra50/skills/claude-code/session-recap
   active_owner: bigdra50/skills/claude-code/session-recap
   content_hash: sha256:4fcc273e6fe77c30c54dbe5f977cf39ef0da636ce25e986bc94794cb05063b46
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-design-dark
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-design-dark
+  active_owner: minorun365/minorun-marp-skill/skills/slide-design-dark
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-design-dark/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-design-dark
+  active_owner: minorun365/minorun-marp-skill/skills/slide-design-dark
+  content_hash: sha256:4a24aa475fb40d8dd97e3b7fc4c5f91d8f898a174df79551f021f18233664b53
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-figures
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-figures
+  active_owner: minorun365/minorun-marp-skill/skills/slide-figures
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-figures/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-figures
+  active_owner: minorun365/minorun-marp-skill/skills/slide-figures
+  content_hash: sha256:22ab3876ad2a304b6e88fbd9c7f85f7e1b76bb5eb461707fbcd1d6403da44d95
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-story
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-story
+  active_owner: minorun365/minorun-marp-skill/skills/slide-story
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slide-story/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - minorun365/minorun-marp-skill/skills/slide-story
+  active_owner: minorun365/minorun-marp-skill/skills/slide-story
+  content_hash: sha256:684f8e1e1ca33f30e7d7463a3e8589a7222026ab3a02b776d17104575adcac60
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/LICENSE.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:42ccc89fea49360da73708efaad553c018a4959baa1d7e51e4ff7b721e31b1a2
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/README.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:0348a9c6c8244db73ecb8971a8a73b25bb917168ffd3524bc409b505fc293849
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:4da03b00af5f60beaf9e6aa65113d7f1c1fbdc49dc1bcef7556ae77dc90a1ee1
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/SYNC.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3fac875942ed87ce6b123476169464159062814ff5382a275775069e371dab5d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/animation-click-marker.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:ca20897bad85b12e976bbb4161597b0dcc4c5a9cf604d69d13cc0bdc922696eb
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/animation-drawing.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5fd91b06a9fa0c7a47e20c6eb7fdc4d7bd31de88c4ad792132cf721ab884642e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/animation-rough-marker.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:ef8c8d007d0763288679a18892fcf7a013025adbbd78ea6d70b5b706f6af5ec0
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/api-slide-hooks.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1477fce45bb0c36a75976fe6d4e329da1b0c8b707c9c5cab15456a99d149f67c
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/build-og-image.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:b47dd5bd8dc2123eb1cd1e4e1d35fa2b1ce63f206765751d9f8b6be9a386d9ba
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/build-pdf.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:023e028653116dcbdc1d51c21b51d5a7139e3b4fbfea108bc8d9118e430157a5
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/build-remote-assets.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:a0fa11b7ffde2c5264c1b2c2143a375fc103beee3a4dc97f140c71a319c95efd
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/build-seo-meta.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5188fb1378c640fe87714cbb72fb0de8ac9c82ef05c78f369cb87819feac3519
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-groups.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c46d38d1e3606961068d264492474e61cbb636deb9c4f064802c81011ebc2328
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-import-snippet.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3f794e2387c70415f436ce70b248a6101122fa2b6e2dd983b3557a97f5e58510
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-line-highlighting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:4571a5faf1111fd4bf0a30d331cfa5623d4052cc084ee83831e02abb6873968f
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-line-numbers.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f69d767362dc135062899bb15037aba8f2be78e428daff55c4863732b1584858
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-magic-move.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:78121e4b2006bb3dae3b09c32fc547c42eca452935a6e4dcecad6add570f088d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-max-height.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6f7ec03bf10559f37c9d144d0339de0a850590a6f40e3bfc1471561ba1f0505b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/code-twoslash.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:12d80b5fbdd8fcf1a60e8a97d2cbb6861745d9839aa6d5c826d28550a771b3b7
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-animations.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:a3f8d12f06af0164025dcdbe450c198689f3a8a69eb1dc62fca0850ebcb2685d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-cli.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f94193da70776c78753c8894a25be2053740bca9bdff4622235b14e48a98d260
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-components.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5e111844fbbe7cded2adfb630fc42d6f254d0d2d2106c2c4452e060cb10d957d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-exporting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6c22209942852d60f18d8be7fc429446ec513dfd12a45cbc0335e8419d61987d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-frontmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:044861667fee30b63358429d555770552913cc5f3e59569ec0c82d6347716513
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-global-context.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1bd3884b31819b9cb4b7957000d06dcbf56678b742aa1aa6bbc7145b4f8ff98d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-headmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1421e7bf36551e2c220a57c74eeec7755210916a6dc68c57de128a225fb2eb99
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-hosting.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:69e8d015df1359924de9c1b157c1037a275d263a561a5af27d04d9a8aa31bb5e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-layouts.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:95fd7274b4d0055263938092db2115632a34636451bb651961d94c12f6bbb833
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/core-syntax.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:cd4ef071b1ad40f3fb8ab5ed7c5f4743628456dd8e0bcfc25f246be64992726b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/diagram-latex.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:6fb51a8a3d5a1ab151e3d84950df0d38c609a30a53d82b1eb10dd0630369c093
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/diagram-mermaid.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:2edfba65f4f46df2af20f504616b84e18d59fed47cc0c3008ceb7577a0d2e580
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/diagram-plantuml.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c006d564a031d1a76c6dc8d560c8bbafd14799512bf08d629f5e291f4413fc8b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-monaco-run.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f47be9b308f01006a95839eb6c54f94536e108af4f91909fa5d81e8856798221
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-monaco-write.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:fb17f1f5c8f40e53f12afc47a0dcf5e4530189ba3c8d9b1749e627d4c5589ab9
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-monaco.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:d54e5abbade63c837c9ab9c9515ceb5a0ceca157d2af3adbfbb84c68671833dc
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-prettier.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:126d048841dad13be1e1be7b2cff8c845bc0a78457c0f675b494b2815c0d94ca
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-side.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:0a5993ab5db99ae90ec83fa11e7bb53b4ed5baf4aa0d3dacc5a389e51f7547cf
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/editor-vscode.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:54faab932076ee772032c9b89e8ecf3c1ae562e4b575ab565e7431a2f241427a
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-canvas-size.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:2d17e65933c63a8b7e8a9bd9c5b73478d19332f4da25b26195aaeb5a1bd1953b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-draggable.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:cedf74ff840326b336f5846c7ec3603009fac2f8c126ee4a972a0b7d67b3019c
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-global-layers.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:1614c681cee8f50a362fe31c69f3fe6012b772e4b759771132f68a7325fa3580
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-slots.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:b77222cc46ae53abe750aacb916822033ac220b41bbde5954824b534906e8d8e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-transform.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:3d6a90df9a48c657e3709ecc01610f222e04dfb9fa5d530444653345e29e733a
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/layout-zoom.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c0ab0c3242e0a99f6bbc7eea163f551054ca4ca9d900174ea7f4073218ce89c0
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/presenter-notes-ruby.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:aeadf860f7f23c1a7fd199180ac519c2f8b9f9e8c0609578c909b52c0c9e99e0
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/presenter-recording.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f2adf9c92892d468fd7297246462b669a444a4c000131bbcfbd178004d941a5c
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/presenter-remote.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:90683d6eedf25395c312cb7b8f893f456ba2c5e221ee6ed91e7a192944a78ecb
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/presenter-timer.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:7d0306a69c5f55cf223d47acbafb6ed3739ca68f21928d61fd6ca255df7e5a87
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/style-direction.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:aaa1a10000ef92f05b3d63c1e0126cd41aead53d72432261f541d72c9d57a381
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/style-icons.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:881daa50e5c1bec53cbaaa93029a4b0ed12f9f6ea36b9ab645799ac3b4c1521b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/style-scoped.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f2caa6d5a3482f1d9364b41e70217f2150950be51375c0472e2ea912cdae895f
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/syntax-block-frontmatter.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:fafee6da3b24fe8dcc60b0c1b6e212859d2e047322dc5479ec2fef70ef35d2ce
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/syntax-comark.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:89316f0e900d2c8262cab221549ffaf434b09eb092de5c8feb5881de774e6cc5
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/syntax-frontmatter-merging.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:f92f3de298e7b6cdff5e085a4f1f9d2a154878e340063504bfd26a6c94fed336
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/syntax-importing-slides.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:5121a7fa19dd0496c4f5f42be0204ada7fb17484665727a1d259e31451c5ef42
+- kind: project-relative
+  target: codex
+  value: .agents/skills/slidev/references/tool-eject-theme.md
+  runtime: null
+  scope: project
+  owners:
+  - antfu/skills/skills/slidev
+  active_owner: antfu/skills/skills/slidev
+  content_hash: sha256:c25fb0debc1af89bfe7aad1be3f09c67a9f97eafb051cb852063eaf1c9b995b0
 - kind: project-relative
   target: codex
   value: .agents/skills/sync-docs
