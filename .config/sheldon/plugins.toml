@@ -42,3 +42,7 @@ github = "1160054/claude-code-zsh-completion"
 github = "olets/zsh-abbr"
 apply = ["source"]
 hooks.pre = "ABBR_DEFAULT_BINDINGS=0"
+
+# pushd / popd のあと、組み込みの 1 行表示の代わりにスタックを番号付きの表で出す。
+[plugins.zsh-dirs-table]
+github = "bigdra50/zsh-dirs-table"
