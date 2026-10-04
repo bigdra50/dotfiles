@@ -110,7 +110,8 @@
       "Bash(command -v:*)",
       "Bash(echo:*)",
       "Bash(printf:*)",
-      "Bash(write:/tmp/*)"
+      "Bash(write:/tmp/*)",
+      "Bash(agentdeck record:*)"
     ],
     "deny": [],
     "defaultMode": "auto",
@@ -239,6 +240,17 @@
           {
             "type": "command",
             "command": "command -v session-topic-capture >/dev/null && session-topic-capture SessionEnd || true"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v agentdeck >/dev/null && agentdeck hook claude session-start || true",
+            "timeout": 10
           }
         ]
       }
