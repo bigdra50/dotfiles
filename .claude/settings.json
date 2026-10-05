@@ -285,7 +285,9 @@
     "hookify@claude-plugins-official": false,
     "plugin-dev@claude-plugins-official": false,
     "codex@openai-codex": false,
-    "oh-my-mermaid@oh-my-mermaid": false
+    "oh-my-mermaid@oh-my-mermaid": false,
+    "recap-plus@claude-recap-plus": true,
+    "next-steps@claude-community": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -304,6 +306,18 @@
       "source": {
         "source": "github",
         "repo": "oh-my-mermaid/oh-my-mermaid"
+      }
+    },
+    "claude-recap-plus": {
+      "source": {
+        "source": "github",
+        "repo": "skanehira/claude-recap-plus"
+      }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
       }
     }
   },
