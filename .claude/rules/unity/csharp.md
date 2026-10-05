@@ -7,8 +7,6 @@ paths:
 
 ## アーキテクチャ
 
-- MonoBehaviourは薄く保つ（ロジックは別クラスへ）
-- ScriptableObjectで設定・データを外部化
 - DIはVContainer（プロジェクトが既にZenjectを使っている場合のみZenjectに従う）
 - Assembly Definitionで依存関係を明示
 
@@ -39,14 +37,6 @@ paths:
 ## 非同期処理
 
 - UniTaskを優先（Coroutineより）
-- CancellationTokenは呼び出し先まで引き渡し、破棄時にキャンセルする
-- async voidは避ける（UniTaskVoidを使用）
-
-## パフォーマンス
-
-- Update内でのアロケーションを避ける
-- GetComponentはキャッシュ
-- LINQのGCに注意（ホットパスでは避ける）
 
 ## ドメインリロード無効化対応
 

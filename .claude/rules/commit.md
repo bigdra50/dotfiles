@@ -84,8 +84,3 @@ PR / commit 本文で `#N` や `@username` を別の意味で使うと GitHub �
 gh pr view <N> --json body -q .body | rg -n '(^|[^a-zA-Z0-9])#[0-9]+' && echo "AUTO-LINK"
 gh pr view <N> --json body -q .body | rg -n '(^|[^a-zA-Z0-9])@[a-zA-Z0-9_-]+' && echo "MENTION"
 ```
-
-## HEREDOC
-
-`<<'EOF'`（シングルクオート）を使う。
-中の特殊文字はエスケープしない。
