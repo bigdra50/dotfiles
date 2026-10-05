@@ -1,5 +1,5 @@
 lockfile_version: '1'
-generated_at: '2026-09-30T07:32:38.554769+00:00'
+generated_at: '2026-10-05T18:38:04.120068+00:00'
 apm_version: 0.28.0
 dependencies:
 - repo_url: antfu/skills
@@ -768,6 +768,159 @@ dependencies:
     .agents/skills/refactor-loop/SKILL.md: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
     .claude/skills/refactor-loop/SKILL.md: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
   content_hash: sha256:a33e3a50a3e71515ca1bbfbac0c55aad03f1d5e8790b0b8570ca80cdc98175fb
+- repo_url: bigdra50/unity-coding-skills
+  name: unity-coding-skills
+  host: github.com
+  resolved_commit: fb6b050ed2c4dee7fb21a3b16a4187eac7024c74
+  resolved_ref: fb6b050ed2c4dee7fb21a3b16a4187eac7024c74
+  version: 1.2.0
+  package_type: marketplace_plugin
+  deployed_files:
+  - .agents/skills/code-writing-guide
+  - .agents/skills/code-writing-guide/SKILL.md
+  - .agents/skills/code-writing-guide/resources/coding-guideline.md
+  - .agents/skills/code-writing-guide/resources/diagnostics-review-feedback.md
+  - .agents/skills/code-writing-guide/resources/unity-event-functions.md
+  - .agents/skills/code-writing-guide/resources/unity-modern-guidelines.md
+  - .agents/skills/code-writing-guide/resources/unity-references.md
+  - .agents/skills/edit-scene
+  - .agents/skills/edit-scene/SKILL.md
+  - .agents/skills/edit-scene/resources/troubleshooting-run-editor-script.md
+  - .agents/skills/edit-scene/resources/ugui.md
+  - .agents/skills/fix-bug
+  - .agents/skills/fix-bug/SKILL.md
+  - .agents/skills/plan-feature
+  - .agents/skills/plan-feature/SKILL.md
+  - .agents/skills/refine-tests
+  - .agents/skills/refine-tests/SKILL.md
+  - .agents/skills/run-tests
+  - .agents/skills/run-tests/SKILL.md
+  - .agents/skills/run-tests/resources/troubleshooting-run-unity-tests.md
+  - .agents/skills/run-tests/resources/troubleshooting-test-helper-ui.md
+  - .agents/skills/run-tests/resources/troubleshooting-test-helper.md
+  - .agents/skills/run-tests/scripts/resolve-test-target.sh
+  - .agents/skills/test-designing-guide
+  - .agents/skills/test-designing-guide/SKILL.md
+  - .agents/skills/test-writing-guide
+  - .agents/skills/test-writing-guide/SKILL.md
+  - .agents/skills/test-writing-guide/resources/test-helper-ui.md
+  - .agents/skills/test-writing-guide/resources/test-helper.md
+  - .agents/skills/test-writing-guide/resources/unity-test-framework.md
+  - .agents/skills/test-writing-guide/scripts/create-test-asmdef.sh
+  - .agents/skills/unity-yaml-editing-guide
+  - .agents/skills/unity-yaml-editing-guide/SKILL.md
+  - .agents/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md
+  - .claude/agents/failing-test-writer.md
+  - .claude/agents/test-deduplicator.md
+  - .claude/agents/test-designer.md
+  - .claude/skills/code-writing-guide
+  - .claude/skills/code-writing-guide/SKILL.md
+  - .claude/skills/code-writing-guide/resources/coding-guideline.md
+  - .claude/skills/code-writing-guide/resources/diagnostics-review-feedback.md
+  - .claude/skills/code-writing-guide/resources/unity-event-functions.md
+  - .claude/skills/code-writing-guide/resources/unity-modern-guidelines.md
+  - .claude/skills/code-writing-guide/resources/unity-references.md
+  - .claude/skills/edit-scene
+  - .claude/skills/edit-scene/SKILL.md
+  - .claude/skills/edit-scene/resources/troubleshooting-run-editor-script.md
+  - .claude/skills/edit-scene/resources/ugui.md
+  - .claude/skills/fix-bug
+  - .claude/skills/fix-bug/SKILL.md
+  - .claude/skills/plan-feature
+  - .claude/skills/plan-feature/SKILL.md
+  - .claude/skills/refine-tests
+  - .claude/skills/refine-tests/SKILL.md
+  - .claude/skills/run-tests
+  - .claude/skills/run-tests/SKILL.md
+  - .claude/skills/run-tests/resources/troubleshooting-run-unity-tests.md
+  - .claude/skills/run-tests/resources/troubleshooting-test-helper-ui.md
+  - .claude/skills/run-tests/resources/troubleshooting-test-helper.md
+  - .claude/skills/run-tests/scripts/resolve-test-target.sh
+  - .claude/skills/test-designing-guide
+  - .claude/skills/test-designing-guide/SKILL.md
+  - .claude/skills/test-writing-guide
+  - .claude/skills/test-writing-guide/SKILL.md
+  - .claude/skills/test-writing-guide/resources/test-helper-ui.md
+  - .claude/skills/test-writing-guide/resources/test-helper.md
+  - .claude/skills/test-writing-guide/resources/unity-test-framework.md
+  - .claude/skills/test-writing-guide/scripts/create-test-asmdef.sh
+  - .claude/skills/unity-yaml-editing-guide
+  - .claude/skills/unity-yaml-editing-guide/SKILL.md
+  - .claude/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md
+  - .codex/agents/failing-test-writer.toml
+  - .codex/agents/test-deduplicator.toml
+  - .codex/agents/test-designer.toml
+  - .copilot/agents/failing-test-writer.agent.md
+  - .copilot/agents/test-deduplicator.agent.md
+  - .copilot/agents/test-designer.agent.md
+  - .cursor/agents/failing-test-writer.md
+  - .cursor/agents/test-deduplicator.md
+  - .cursor/agents/test-designer.md
+  deployed_file_hashes:
+    .agents/skills/code-writing-guide/SKILL.md: sha256:b6a45c25386e21237fbd2de9ed30b6d348795028dbbc2698ce7bbef79aacd366
+    .agents/skills/code-writing-guide/resources/coding-guideline.md: sha256:93cd440afa9d3def20e60ffbcefe0f43146717ebc6bff202bc3294f2fe491c0e
+    .agents/skills/code-writing-guide/resources/diagnostics-review-feedback.md: sha256:d94d51f55b28e0c92eda02b09697aa204b6acf7b1bc698238ff03aa80ca5b8f1
+    .agents/skills/code-writing-guide/resources/unity-event-functions.md: sha256:fadbd54cd656701bec52a374513a2f3d4e2293ef2013c89aa4e1990881ced8b9
+    .agents/skills/code-writing-guide/resources/unity-modern-guidelines.md: sha256:79a7dbe014b404dea002231fedcc6f1796e460e2602dbc1e8456021fccde5c76
+    .agents/skills/code-writing-guide/resources/unity-references.md: sha256:7f1d606604343ea9ef614ee4adc4ff9632c9e78f624a04c66e97129ccdda5e34
+    .agents/skills/edit-scene/SKILL.md: sha256:775c767ac4b1ecef7a7aed9067c5508e3dd847c16c96537aeee7b595415d3f0d
+    .agents/skills/edit-scene/resources/troubleshooting-run-editor-script.md: sha256:49caf9aa5f1a18cb2349c67c225167887999736610517bd0da3364659df61bc1
+    .agents/skills/edit-scene/resources/ugui.md: sha256:1e0e69c977a0c284c0bcf9639a7ec92b694bd033ff1d2ad32bbeab8b6a84b7b9
+    .agents/skills/fix-bug/SKILL.md: sha256:b421c572c6b4876af2a79a139bef02b5d35b5f4f87a73e38832d883455a00de2
+    .agents/skills/plan-feature/SKILL.md: sha256:35b44bc5b0a588e5a52eec9cec0f5fb9a097570a888c8a281417a4e9a91c4a83
+    .agents/skills/refine-tests/SKILL.md: sha256:cc3934b4a4a6d1abd09e2a1056d862ae13a985450c07e2f84c2f064fbb4ba1bc
+    .agents/skills/run-tests/SKILL.md: sha256:b59fc4746a282c344615367e662eb3e3407d5b66dec2db9afa296e5d475f2d45
+    .agents/skills/run-tests/resources/troubleshooting-run-unity-tests.md: sha256:42cf060abd318d4c675c9786288ea22b764f0ebe24c46855fde525a588b9c9f9
+    .agents/skills/run-tests/resources/troubleshooting-test-helper-ui.md: sha256:522db994871bf06c6d760a9732fdd54e1d95b4c7afbf9cf0805cbb06030f7a19
+    .agents/skills/run-tests/resources/troubleshooting-test-helper.md: sha256:b8da4bacfed30888ce0f7ac37bd6d63c408e4966db298641480fbb4cb9433b7c
+    .agents/skills/run-tests/scripts/resolve-test-target.sh: sha256:cc23f5f120501b49e2573f6c20607451fc773579e64ae9e7af1e219b3b390276
+    .agents/skills/test-designing-guide/SKILL.md: sha256:bedd2e9ba882ba45b536002651d45144db2f10e29d48314dcdd69aa3f99529df
+    .agents/skills/test-writing-guide/SKILL.md: sha256:ee8f13d8a3f6d7a0aee32bb0e8d24b9abb6ca8d367ae9d1ee9a389aa6712d4f4
+    .agents/skills/test-writing-guide/resources/test-helper-ui.md: sha256:c1ecaaecb31ea85def4ccd5d6babd4698d188f15d30f30e757a921f4c9d6bc03
+    .agents/skills/test-writing-guide/resources/test-helper.md: sha256:74ac9584d09bbd1e79a4bc1d5640043a184d34a1bdeede88525a242f27e16e5d
+    .agents/skills/test-writing-guide/resources/unity-test-framework.md: sha256:c6761fbf2f26736ad7dbae481622f94e6de218e1405b7f402014abf7d91718c6
+    .agents/skills/test-writing-guide/scripts/create-test-asmdef.sh: sha256:83c313efbec5b7f8c7c02f472acf154e4c32b3bedd2d032a095059500b66b063
+    .agents/skills/unity-yaml-editing-guide/SKILL.md: sha256:18421fb4a31b117b73a7a71d48fa2e03ec7d550155d339bc912674254ac23d9b
+    .agents/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md: sha256:fc5cffac47e472615e53fa7f3b2b8e17b8dafd20db1ef834a63b2467f10836d5
+    .claude/agents/failing-test-writer.md: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+    .claude/agents/test-deduplicator.md: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+    .claude/agents/test-designer.md: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
+    .claude/skills/code-writing-guide/SKILL.md: sha256:b6a45c25386e21237fbd2de9ed30b6d348795028dbbc2698ce7bbef79aacd366
+    .claude/skills/code-writing-guide/resources/coding-guideline.md: sha256:93cd440afa9d3def20e60ffbcefe0f43146717ebc6bff202bc3294f2fe491c0e
+    .claude/skills/code-writing-guide/resources/diagnostics-review-feedback.md: sha256:d94d51f55b28e0c92eda02b09697aa204b6acf7b1bc698238ff03aa80ca5b8f1
+    .claude/skills/code-writing-guide/resources/unity-event-functions.md: sha256:fadbd54cd656701bec52a374513a2f3d4e2293ef2013c89aa4e1990881ced8b9
+    .claude/skills/code-writing-guide/resources/unity-modern-guidelines.md: sha256:79a7dbe014b404dea002231fedcc6f1796e460e2602dbc1e8456021fccde5c76
+    .claude/skills/code-writing-guide/resources/unity-references.md: sha256:7f1d606604343ea9ef614ee4adc4ff9632c9e78f624a04c66e97129ccdda5e34
+    .claude/skills/edit-scene/SKILL.md: sha256:775c767ac4b1ecef7a7aed9067c5508e3dd847c16c96537aeee7b595415d3f0d
+    .claude/skills/edit-scene/resources/troubleshooting-run-editor-script.md: sha256:49caf9aa5f1a18cb2349c67c225167887999736610517bd0da3364659df61bc1
+    .claude/skills/edit-scene/resources/ugui.md: sha256:1e0e69c977a0c284c0bcf9639a7ec92b694bd033ff1d2ad32bbeab8b6a84b7b9
+    .claude/skills/fix-bug/SKILL.md: sha256:b421c572c6b4876af2a79a139bef02b5d35b5f4f87a73e38832d883455a00de2
+    .claude/skills/plan-feature/SKILL.md: sha256:35b44bc5b0a588e5a52eec9cec0f5fb9a097570a888c8a281417a4e9a91c4a83
+    .claude/skills/refine-tests/SKILL.md: sha256:cc3934b4a4a6d1abd09e2a1056d862ae13a985450c07e2f84c2f064fbb4ba1bc
+    .claude/skills/run-tests/SKILL.md: sha256:b59fc4746a282c344615367e662eb3e3407d5b66dec2db9afa296e5d475f2d45
+    .claude/skills/run-tests/resources/troubleshooting-run-unity-tests.md: sha256:42cf060abd318d4c675c9786288ea22b764f0ebe24c46855fde525a588b9c9f9
+    .claude/skills/run-tests/resources/troubleshooting-test-helper-ui.md: sha256:522db994871bf06c6d760a9732fdd54e1d95b4c7afbf9cf0805cbb06030f7a19
+    .claude/skills/run-tests/resources/troubleshooting-test-helper.md: sha256:b8da4bacfed30888ce0f7ac37bd6d63c408e4966db298641480fbb4cb9433b7c
+    .claude/skills/run-tests/scripts/resolve-test-target.sh: sha256:cc23f5f120501b49e2573f6c20607451fc773579e64ae9e7af1e219b3b390276
+    .claude/skills/test-designing-guide/SKILL.md: sha256:bedd2e9ba882ba45b536002651d45144db2f10e29d48314dcdd69aa3f99529df
+    .claude/skills/test-writing-guide/SKILL.md: sha256:ee8f13d8a3f6d7a0aee32bb0e8d24b9abb6ca8d367ae9d1ee9a389aa6712d4f4
+    .claude/skills/test-writing-guide/resources/test-helper-ui.md: sha256:c1ecaaecb31ea85def4ccd5d6babd4698d188f15d30f30e757a921f4c9d6bc03
+    .claude/skills/test-writing-guide/resources/test-helper.md: sha256:74ac9584d09bbd1e79a4bc1d5640043a184d34a1bdeede88525a242f27e16e5d
+    .claude/skills/test-writing-guide/resources/unity-test-framework.md: sha256:c6761fbf2f26736ad7dbae481622f94e6de218e1405b7f402014abf7d91718c6
+    .claude/skills/test-writing-guide/scripts/create-test-asmdef.sh: sha256:83c313efbec5b7f8c7c02f472acf154e4c32b3bedd2d032a095059500b66b063
+    .claude/skills/unity-yaml-editing-guide/SKILL.md: sha256:18421fb4a31b117b73a7a71d48fa2e03ec7d550155d339bc912674254ac23d9b
+    .claude/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md: sha256:fc5cffac47e472615e53fa7f3b2b8e17b8dafd20db1ef834a63b2467f10836d5
+    .codex/agents/failing-test-writer.toml: sha256:279a528c4d594b64e906b6a6975e4d8c3053592f478cfd0fa4e25132361c5664
+    .codex/agents/test-deduplicator.toml: sha256:005644dc0e474686c93de1f220da6be6d1313f3d77534549b5a7d5a497db0f47
+    .codex/agents/test-designer.toml: sha256:e0a064bb87679f99dfc39c8387e1a3a4898e3833c9cf0703dc5f6f2799559dc7
+    .copilot/agents/failing-test-writer.agent.md: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+    .copilot/agents/test-deduplicator.agent.md: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+    .copilot/agents/test-designer.agent.md: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
+    .cursor/agents/failing-test-writer.md: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+    .cursor/agents/test-deduplicator.md: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+    .cursor/agents/test-designer.md: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
+  content_hash: sha256:7a999e644f6903d6886a48fa335e7d80ecf8bb839a1383b4db7b24a4bd505d6b
+  declared_license: Unlicense
 - repo_url: gonta223/japanese-corporate-pptx-skill
   name: japanese-corporate-pptx
   host: github.com
@@ -1323,6 +1476,33 @@ deployments:
   content_hash: sha256:d99828443f8f348da3a3a808b965c7a1290c5a38ba3c421ceaa94038811a65ec
 - kind: project-relative
   target: claude
+  value: .claude/agents/failing-test-writer.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+- kind: project-relative
+  target: claude
+  value: .claude/agents/test-deduplicator.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+- kind: project-relative
+  target: claude
+  value: .claude/agents/test-designer.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
+- kind: project-relative
+  target: claude
   value: .claude/skills/ask
   runtime: null
   scope: project
@@ -1348,6 +1528,69 @@ deployments:
   - bigdra50/survey-any-tools
   active_owner: bigdra50/survey-any-tools
   content_hash: sha256:02715ec7fb05b47b914e592251bcaebc0c7c72159e933305f478e73c0e39d829
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b6a45c25386e21237fbd2de9ed30b6d348795028dbbc2698ce7bbef79aacd366
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/resources/coding-guideline.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:93cd440afa9d3def20e60ffbcefe0f43146717ebc6bff202bc3294f2fe491c0e
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/resources/diagnostics-review-feedback.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:d94d51f55b28e0c92eda02b09697aa204b6acf7b1bc698238ff03aa80ca5b8f1
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/resources/unity-event-functions.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:fadbd54cd656701bec52a374513a2f3d4e2293ef2013c89aa4e1990881ced8b9
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/resources/unity-modern-guidelines.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:79a7dbe014b404dea002231fedcc6f1796e460e2602dbc1e8456021fccde5c76
+- kind: project-relative
+  target: claude
+  value: .claude/skills/code-writing-guide/resources/unity-references.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:7f1d606604343ea9ef614ee4adc4ff9632c9e78f624a04c66e97129ccdda5e34
 - kind: project-relative
   target: claude
   value: .claude/skills/compact-prep
@@ -1710,6 +1953,42 @@ deployments:
   content_hash: sha256:9b68a1ec27b97b67252cd85c6611ac34a726687c1aa6f761cf2c418d7c006648
 - kind: project-relative
   target: claude
+  value: .claude/skills/edit-scene
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/edit-scene/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:775c767ac4b1ecef7a7aed9067c5508e3dd847c16c96537aeee7b595415d3f0d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/edit-scene/resources/troubleshooting-run-editor-script.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:49caf9aa5f1a18cb2349c67c225167887999736610517bd0da3364659df61bc1
+- kind: project-relative
+  target: claude
+  value: .claude/skills/edit-scene/resources/ugui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:1e0e69c977a0c284c0bcf9639a7ec92b694bd033ff1d2ad32bbeab8b6a84b7b9
+- kind: project-relative
+  target: claude
   value: .claude/skills/empirical-prompt-tuning
   runtime: null
   scope: project
@@ -2061,6 +2340,24 @@ deployments:
   content_hash: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
 - kind: project-relative
   target: claude
+  value: .claude/skills/fix-bug
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/fix-bug/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b421c572c6b4876af2a79a139bef02b5d35b5f4f87a73e38832d883455a00de2
+- kind: project-relative
+  target: claude
   value: .claude/skills/grill-me
   runtime: null
   scope: project
@@ -2385,6 +2682,24 @@ deployments:
   content_hash: sha256:fdf29912280e4c43e700f0dd879e14f5671f8f330c08cf875f6c1bbf729c8f78
 - kind: project-relative
   target: claude
+  value: .claude/skills/plan-feature
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/plan-feature/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:35b44bc5b0a588e5a52eec9cec0f5fb9a097570a888c8a281417a4e9a91c4a83
+- kind: project-relative
+  target: claude
   value: .claude/skills/preview
   runtime: null
   scope: project
@@ -2457,6 +2772,24 @@ deployments:
   content_hash: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
 - kind: project-relative
   target: claude
+  value: .claude/skills/refine-tests
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/refine-tests/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:cc3934b4a4a6d1abd09e2a1056d862ae13a985450c07e2f84c2f064fbb4ba1bc
+- kind: project-relative
+  target: claude
   value: .claude/skills/report-issue
   runtime: null
   scope: project
@@ -2482,6 +2815,60 @@ deployments:
   - bigdra50/skills/github/report-issue
   active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b59fc4746a282c344615367e662eb3e3407d5b66dec2db9afa296e5d475f2d45
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests/resources/troubleshooting-run-unity-tests.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:42cf060abd318d4c675c9786288ea22b764f0ebe24c46855fde525a588b9c9f9
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests/resources/troubleshooting-test-helper-ui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:522db994871bf06c6d760a9732fdd54e1d95b4c7afbf9cf0805cbb06030f7a19
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests/resources/troubleshooting-test-helper.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b8da4bacfed30888ce0f7ac37bd6d63c408e4966db298641480fbb4cb9433b7c
+- kind: project-relative
+  target: claude
+  value: .claude/skills/run-tests/scripts/resolve-test-target.sh
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:cc23f5f120501b49e2573f6c20607451fc773579e64ae9e7af1e219b3b390276
 - kind: project-relative
   target: claude
   value: .claude/skills/second-opinion
@@ -3231,6 +3618,78 @@ deployments:
   content_hash: sha256:206cd1cc6045af339855f348061bd4f8b27c9118e596e989c37f6c501aa8a37f
 - kind: project-relative
   target: claude
+  value: .claude/skills/test-designing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-designing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:bedd2e9ba882ba45b536002651d45144db2f10e29d48314dcdd69aa3f99529df
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:ee8f13d8a3f6d7a0aee32bb0e8d24b9abb6ca8d367ae9d1ee9a389aa6712d4f4
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide/resources/test-helper-ui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:c1ecaaecb31ea85def4ccd5d6babd4698d188f15d30f30e757a921f4c9d6bc03
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide/resources/test-helper.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:74ac9584d09bbd1e79a4bc1d5640043a184d34a1bdeede88525a242f27e16e5d
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide/resources/unity-test-framework.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:c6761fbf2f26736ad7dbae481622f94e6de218e1405b7f402014abf7d91718c6
+- kind: project-relative
+  target: claude
+  value: .claude/skills/test-writing-guide/scripts/create-test-asmdef.sh
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:83c313efbec5b7f8c7c02f472acf154e4c32b3bedd2d032a095059500b66b063
+- kind: project-relative
+  target: claude
   value: .claude/skills/unity-cli
   runtime: null
   scope: project
@@ -3321,6 +3780,33 @@ deployments:
   content_hash: sha256:b840875e8a6d736534465064d9a05e578d17d8b393760893c1a3e14a12aff29a
 - kind: project-relative
   target: claude
+  value: .claude/skills/unity-yaml-editing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: claude
+  value: .claude/skills/unity-yaml-editing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:18421fb4a31b117b73a7a71d48fa2e03ec7d550155d339bc912674254ac23d9b
+- kind: project-relative
+  target: claude
+  value: .claude/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:fc5cffac47e472615e53fa7f3b2b8e17b8dafd20db1ef834a63b2467f10836d5
+- kind: project-relative
+  target: claude
   value: .claude/skills/x-research
   runtime: null
   scope: project
@@ -3355,6 +3841,69 @@ deployments:
   - bigdra50/skills/research/x-research
   active_owner: bigdra50/skills/research/x-research
   content_hash: sha256:fb6b2fe4865a7193f982389bc4e545f468ef04d185e6981cccfda7cab09fff90
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b6a45c25386e21237fbd2de9ed30b6d348795028dbbc2698ce7bbef79aacd366
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/resources/coding-guideline.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:93cd440afa9d3def20e60ffbcefe0f43146717ebc6bff202bc3294f2fe491c0e
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/resources/diagnostics-review-feedback.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:d94d51f55b28e0c92eda02b09697aa204b6acf7b1bc698238ff03aa80ca5b8f1
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/resources/unity-event-functions.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:fadbd54cd656701bec52a374513a2f3d4e2293ef2013c89aa4e1990881ced8b9
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/resources/unity-modern-guidelines.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:79a7dbe014b404dea002231fedcc6f1796e460e2602dbc1e8456021fccde5c76
+- kind: project-relative
+  target: codex
+  value: .agents/skills/code-writing-guide/resources/unity-references.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:7f1d606604343ea9ef614ee4adc4ff9632c9e78f624a04c66e97129ccdda5e34
 - kind: project-relative
   target: codex
   value: .agents/skills/compact-prep
@@ -3697,6 +4246,42 @@ deployments:
   - bigdra50/skills/design/drawio
   active_owner: bigdra50/skills/design/drawio
   content_hash: sha256:9b68a1ec27b97b67252cd85c6611ac34a726687c1aa6f761cf2c418d7c006648
+- kind: project-relative
+  target: codex
+  value: .agents/skills/edit-scene
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/edit-scene/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:775c767ac4b1ecef7a7aed9067c5508e3dd847c16c96537aeee7b595415d3f0d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/edit-scene/resources/troubleshooting-run-editor-script.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:49caf9aa5f1a18cb2349c67c225167887999736610517bd0da3364659df61bc1
+- kind: project-relative
+  target: codex
+  value: .agents/skills/edit-scene/resources/ugui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:1e0e69c977a0c284c0bcf9639a7ec92b694bd033ff1d2ad32bbeab8b6a84b7b9
 - kind: project-relative
   target: codex
   value: .agents/skills/empirical-prompt-tuning
@@ -4050,6 +4635,24 @@ deployments:
   content_hash: sha256:47ceffc0b6c2a737e206a97b34fba2dff493e328bb8f68c371fd810201335ecb
 - kind: project-relative
   target: codex
+  value: .agents/skills/fix-bug
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/fix-bug/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b421c572c6b4876af2a79a139bef02b5d35b5f4f87a73e38832d883455a00de2
+- kind: project-relative
+  target: codex
   value: .agents/skills/grill-me
   runtime: null
   scope: project
@@ -4320,6 +4923,24 @@ deployments:
   content_hash: sha256:d622bab34caaf40b249773ce59d2d50971c4d3033ec8cae65027088fc47b2901
 - kind: project-relative
   target: codex
+  value: .agents/skills/plan-feature
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/plan-feature/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:35b44bc5b0a588e5a52eec9cec0f5fb9a097570a888c8a281417a4e9a91c4a83
+- kind: project-relative
+  target: codex
   value: .agents/skills/quality-audit
   runtime: null
   scope: project
@@ -4374,6 +4995,24 @@ deployments:
   content_hash: sha256:aaa5026f74d62c7d3a8e2405a8470203f678ce60b3c71cf738ab74041ef8078a
 - kind: project-relative
   target: codex
+  value: .agents/skills/refine-tests
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/refine-tests/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:cc3934b4a4a6d1abd09e2a1056d862ae13a985450c07e2f84c2f064fbb4ba1bc
+- kind: project-relative
+  target: codex
   value: .agents/skills/report-issue
   runtime: null
   scope: project
@@ -4399,6 +5038,60 @@ deployments:
   - bigdra50/skills/github/report-issue
   active_owner: bigdra50/skills/github/report-issue
   content_hash: sha256:af072c805a2e33ae3201db642b44215a12d20efccb822dd3a561f1f286886065
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b59fc4746a282c344615367e662eb3e3407d5b66dec2db9afa296e5d475f2d45
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests/resources/troubleshooting-run-unity-tests.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:42cf060abd318d4c675c9786288ea22b764f0ebe24c46855fde525a588b9c9f9
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests/resources/troubleshooting-test-helper-ui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:522db994871bf06c6d760a9732fdd54e1d95b4c7afbf9cf0805cbb06030f7a19
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests/resources/troubleshooting-test-helper.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:b8da4bacfed30888ce0f7ac37bd6d63c408e4966db298641480fbb4cb9433b7c
+- kind: project-relative
+  target: codex
+  value: .agents/skills/run-tests/scripts/resolve-test-target.sh
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:cc23f5f120501b49e2573f6c20607451fc773579e64ae9e7af1e219b3b390276
 - kind: project-relative
   target: codex
   value: .agents/skills/second-opinion
@@ -5094,6 +5787,78 @@ deployments:
   content_hash: sha256:206cd1cc6045af339855f348061bd4f8b27c9118e596e989c37f6c501aa8a37f
 - kind: project-relative
   target: codex
+  value: .agents/skills/test-designing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-designing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:bedd2e9ba882ba45b536002651d45144db2f10e29d48314dcdd69aa3f99529df
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:ee8f13d8a3f6d7a0aee32bb0e8d24b9abb6ca8d367ae9d1ee9a389aa6712d4f4
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide/resources/test-helper-ui.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:c1ecaaecb31ea85def4ccd5d6babd4698d188f15d30f30e757a921f4c9d6bc03
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide/resources/test-helper.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:74ac9584d09bbd1e79a4bc1d5640043a184d34a1bdeede88525a242f27e16e5d
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide/resources/unity-test-framework.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:c6761fbf2f26736ad7dbae481622f94e6de218e1405b7f402014abf7d91718c6
+- kind: project-relative
+  target: codex
+  value: .agents/skills/test-writing-guide/scripts/create-test-asmdef.sh
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:83c313efbec5b7f8c7c02f472acf154e4c32b3bedd2d032a095059500b66b063
+- kind: project-relative
+  target: codex
   value: .agents/skills/unity-cli
   runtime: null
   scope: project
@@ -5184,6 +5949,33 @@ deployments:
   content_hash: sha256:b840875e8a6d736534465064d9a05e578d17d8b393760893c1a3e14a12aff29a
 - kind: project-relative
   target: codex
+  value: .agents/skills/unity-yaml-editing-guide
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: null
+- kind: project-relative
+  target: codex
+  value: .agents/skills/unity-yaml-editing-guide/SKILL.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:18421fb4a31b117b73a7a71d48fa2e03ec7d550155d339bc912674254ac23d9b
+- kind: project-relative
+  target: codex
+  value: .agents/skills/unity-yaml-editing-guide/resources/asset-yaml-format.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:fc5cffac47e472615e53fa7f3b2b8e17b8dafd20db1ef834a63b2467f10836d5
+- kind: project-relative
+  target: codex
   value: .agents/skills/x-research
   runtime: null
   scope: project
@@ -5218,3 +6010,84 @@ deployments:
   - bigdra50/skills/research/x-research
   active_owner: bigdra50/skills/research/x-research
   content_hash: sha256:fb6b2fe4865a7193f982389bc4e545f468ef04d185e6981cccfda7cab09fff90
+- kind: project-relative
+  target: codex
+  value: .codex/agents/failing-test-writer.toml
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:279a528c4d594b64e906b6a6975e4d8c3053592f478cfd0fa4e25132361c5664
+- kind: project-relative
+  target: codex
+  value: .codex/agents/test-deduplicator.toml
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:005644dc0e474686c93de1f220da6be6d1313f3d77534549b5a7d5a497db0f47
+- kind: project-relative
+  target: codex
+  value: .codex/agents/test-designer.toml
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:e0a064bb87679f99dfc39c8387e1a3a4898e3833c9cf0703dc5f6f2799559dc7
+- kind: project-relative
+  target: copilot
+  value: .copilot/agents/failing-test-writer.agent.md
+  runtime: null
+  scope: user
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+- kind: project-relative
+  target: copilot
+  value: .copilot/agents/test-deduplicator.agent.md
+  runtime: null
+  scope: user
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+- kind: project-relative
+  target: copilot
+  value: .copilot/agents/test-designer.agent.md
+  runtime: null
+  scope: user
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
+- kind: project-relative
+  target: cursor
+  value: .cursor/agents/failing-test-writer.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:8cc9fc83e4cb9f5798fbb9fc06897b50fc4716eab4942b6f3b6afa993756fc9c
+- kind: project-relative
+  target: cursor
+  value: .cursor/agents/test-deduplicator.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:39cf063dcc7d04fb743f540e2e674ebf8e25dbc093463d4da8411654f99f6951
+- kind: project-relative
+  target: cursor
+  value: .cursor/agents/test-designer.md
+  runtime: null
+  scope: project
+  owners:
+  - bigdra50/unity-coding-skills
+  active_owner: bigdra50/unity-coding-skills
+  content_hash: sha256:184011a111018bf86ac823584ff1c3d01f04a53972d977d9a576d3bd4ac2802b
