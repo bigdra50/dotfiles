@@ -286,8 +286,7 @@
     "oh-my-mermaid@oh-my-mermaid": false,
     "recap-plus@claude-recap-plus": true,
     "next-steps@claude-community": true,
-    "watch@claude-video": true,
-    "everything-evenhub@everything-evenhub": false
+    "watch@claude-video": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -318,12 +317,6 @@
       "source": {
         "source": "github",
         "repo": "bradautomates/claude-video"
-      }
-    },
-    "everything-evenhub": {
-      "source": {
-        "source": "github",
-        "repo": "even-realities/everything-evenhub"
       }
     }
   },
