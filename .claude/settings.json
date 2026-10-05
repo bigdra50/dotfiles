@@ -124,7 +124,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/notify.py --type stop",
+            "command": "command -v agentdeck >/dev/null && agentdeck hook claude notify --type stop || true",
+            "timeout": 10,
             "async": true
           }
         ]
@@ -135,7 +136,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/notify.py --type permission_prompt",
+            "command": "command -v agentdeck >/dev/null && agentdeck hook claude notify --type permission_prompt || true",
+            "timeout": 10,
             "async": true
           }
         ]
@@ -147,23 +149,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/notify.py --type idle_prompt",
-            "timeout": 5
+            "command": "command -v agentdeck >/dev/null && agentdeck hook claude notify --type idle_prompt || true",
+            "timeout": 10,
+            "async": true
           }
         ]
       }
     ],
     "PreToolUse": [
-      {
-        "matcher": "AskUserQuestion",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 ~/.claude/hooks/notify.py --type elicitation_dialog",
-            "async": true
-          }
-        ]
-      },
       {
         "matcher": "Bash",
         "hooks": [
@@ -171,6 +164,17 @@
             "type": "command",
             "command": "bash ~/.claude/hooks/textlint-gh-body.sh",
             "timeout": 60
+          }
+        ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v agentdeck >/dev/null && agentdeck hook claude notify --type elicitation_dialog || true",
+            "timeout": 10,
+            "async": true
           }
         ]
       }
