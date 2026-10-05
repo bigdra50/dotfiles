@@ -287,7 +287,8 @@
     "codex@openai-codex": false,
     "oh-my-mermaid@oh-my-mermaid": false,
     "recap-plus@claude-recap-plus": true,
-    "next-steps@claude-community": true
+    "next-steps@claude-community": true,
+    "watch@claude-video": true
   },
   "extraKnownMarketplaces": {
     "claude-plugins-official": {
@@ -318,6 +319,12 @@
       "source": {
         "source": "github",
         "repo": "anthropics/claude-plugins-community"
+      }
+    },
+    "claude-video": {
+      "source": {
+        "source": "github",
+        "repo": "bradautomates/claude-video"
       }
     }
   },
