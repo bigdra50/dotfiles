@@ -448,7 +448,7 @@ dependencies:
 - repo_url: bigdra50/skills
   name: japanese-tech-writing
   host: github.com
-  resolved_commit: 33772c1d962cfea4c05ff316fa0ab5f39280673e
+  resolved_commit: da98da6c15f816be54029105ebbf77c5a1decde7
   version: unknown
   virtual_path: docs/japanese-tech-writing
   is_virtual: true
@@ -462,10 +462,10 @@ dependencies:
   - .claude/skills/japanese-tech-writing/SKILL.md
   deployed_file_hashes:
     .agents/skills/japanese-tech-writing/README.md: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
-    .agents/skills/japanese-tech-writing/SKILL.md: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
+    .agents/skills/japanese-tech-writing/SKILL.md: sha256:90de0fc068285bbce498537b38d2d0cd6a66f6c82a3de16e060086b12e9c46c3
     .claude/skills/japanese-tech-writing/README.md: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
-    .claude/skills/japanese-tech-writing/SKILL.md: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
-  content_hash: sha256:c7477aa78519f89930422c99aea862239733bcd5951606cb08cbe40e0e5ff6a9
+    .claude/skills/japanese-tech-writing/SKILL.md: sha256:90de0fc068285bbce498537b38d2d0cd6a66f6c82a3de16e060086b12e9c46c3
+  content_hash: sha256:4397650be780539f88d41a87d36396fa8b342ab7dde45964021698938e9e5af8
 - repo_url: bigdra50/skills
   name: md-prose-cleanup
   host: github.com
@@ -2589,7 +2589,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
+  content_hash: sha256:90de0fc068285bbce498537b38d2d0cd6a66f6c82a3de16e060086b12e9c46c3
 - kind: project-relative
   target: claude
   value: .claude/skills/list-topics
@@ -4866,7 +4866,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
+  content_hash: sha256:90de0fc068285bbce498537b38d2d0cd6a66f6c82a3de16e060086b12e9c46c3
 - kind: project-relative
   target: codex
   value: .agents/skills/md-prose-cleanup
