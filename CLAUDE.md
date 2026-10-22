@@ -111,6 +111,7 @@ Cursor が `cli-config.json` へ認証情報を書き込み、同じディレク
 ├── scripts/        # hooks/skills が参照する補助スクリプト（セッションID解決等）
 ├── tools/          # 補助スクリプト（statusline 用）
 ├── .textlintrc.json        # Markdown 文体検査の設定（正本）
+├── .textlintrc.hook.json   # md を書いた直後の hook が読む、規則を絞った設定
 ├── .textlintignore         # エージェント向けプロンプトの除外
 ├── prh-writing-style.yml   # writing-style.md を機械検査へ移した辞書
 ├── package.json            # textlint の依存（lockfile も追跡）
@@ -145,6 +146,7 @@ Issue / PR 本文の hook は譲らず、どの repo でも個人の規範を当
 サーバサイドの `body-lint.yml` はこのリポジトリでしか動かない。
 
 - `PostToolUse`（`Write|Edit`）: md を書いた直後に検査し、指摘があればモデルへ差し戻す
+  - 差し戻すのは `prh-writing-style.yml`、太字の禁止、一文一行だけ。ほかの規則は CI と `mise run md:lint` が指摘する
 - `PreToolUse`（`Bash`）: `gh issue/pr create|edit|comment` の `--body-file` を投稿前に検査する
 - `body-lint.yml`: Issue / PR 本文を投稿・編集のたびに検査し、コメントで報告する（CI は落とさない）
 

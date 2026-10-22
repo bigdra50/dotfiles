@@ -271,7 +271,7 @@ AI の日本語に出やすい語の辞書で、構造を見る ai-writing prese
 このリポジトリの用語として使う語（検査・実測・正本など）は `allows` で外してある。
 辞書は誤検知の実測で 2 段に分けてある。
 人が書いた md で 0 件だったパターンだけを `prh-writing-style.yml` に error として置き、機械では黒と断定できない語は `prh-business.yml` に warning として置く。
-warning は exit code を変えないため CI と PR は落ちないが、書いた直後の hook には届く。
+warning は exit code を変えないため、CI と PR は落ちない。
 textlint は同じルール id を 1 つしか持てないので、2 つ目の辞書は package 名 `textlint-rule-prh` を key にした別インスタンスとして読ませている。
 一文一行は `scripts/sembr-check.sh` が別途見る。
 箇条書き項目にも発火してしまう textlint-rule-one-sentence-per-line は規範と衝突するため使わない。
@@ -279,10 +279,24 @@ textlint は同じルール id を 1 つしか持てないので、2 つ目の�
 `scripts/md-lint.sh` が唯一の実行経路で、mise task・CI・2 つの hook すべてがここを通る。
 手元と CI で結果が食い違わないようにするための集約点。
 
+md を書いた直後の hook（`textlint-md.sh`）だけは、`MD_LINT_CONFIG` で `.claude/.textlintrc.hook.json` を渡し、規則を絞る。
+
+| 規則 | 書いた直後の hook | CI・`mise run md:lint`・本文の hook |
+| --- | --- | --- |
+| `prh-writing-style.yml`、太字の禁止、一文一行 | 差し戻す | 指摘する |
+| AI っぽい語（ai-words-ja、ai-writing preset） | 見ない | 指摘する |
+| 助詞の重なり、文の長さ、読点の数 | 見ない | 指摘する |
+| `prh-business.yml` | 見ない | 指摘する（warning） |
+
+hook が見ない規則は、文脈で判断が要るものである。
+書き直しても指摘が消えにくく、差し戻しが上限の 2 回まで続きやすい。
+AI っぽい言い回しの書き直しは、yomiyasu スキルで行う。
+
 ```mermaid
 flowchart TB
     subgraph canon["設定の正本"]
         rc[".claude/.textlintrc.json"]
+        rch[".claude/.textlintrc.hook.json<br/>(Write|Edit の hook 用)"]
         prh[".claude/prh-writing-style.yml<br/>(error)"]
         prhb[".claude/prh-business.yml<br/>(warning)"]
         ign[".claude/.textlintignore"]

@@ -8,6 +8,8 @@
 #
 # 環境変数:
 #   MD_LINT_FORMAT   textlint の formatter (既定 stylish、hook は compact)
+#   MD_LINT_CONFIG   textlint の設定 (既定 .claude/.textlintrc.json。Write|Edit の
+#                    hook は規則を絞った .claude/.textlintrc.hook.json を渡す)
 #
 # 依存は .claude/package.json に置き `npm ci --prefix .claude` で
 # .claude/node_modules へ入る。textlint はルール preset を Node の module 解決で
@@ -20,7 +22,7 @@ set -uo pipefail
 
 REPO_ROOT="$(cd -P "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TEXTLINT="$REPO_ROOT/.claude/node_modules/.bin/textlint"
-CONFIG="$REPO_ROOT/.claude/.textlintrc.json"
+CONFIG="${MD_LINT_CONFIG:-$REPO_ROOT/.claude/.textlintrc.json}"
 IGNORE="$REPO_ROOT/.claude/.textlintignore"
 SEMBR="$REPO_ROOT/scripts/sembr-check.sh"
 FORMAT="${MD_LINT_FORMAT:-stylish}"

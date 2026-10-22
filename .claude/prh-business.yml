@@ -1,8 +1,9 @@
 # 判断が要る語の辞書（severity: warning）
 #
 # .textlintrc.json から 2 つ目の prh インスタンスとして読み込む。warning なので
-# textlint は exit 0 を返し、CI も PR も落ちない。ただし Write|Edit の hook は
-# 出力の有無で差し戻すため、書いた直後のモデルには届く。
+# textlint は exit 0 を返し、CI も PR も落ちない。Write|Edit の hook は
+# .textlintrc.hook.json を読み、この辞書を使わないので、書いた直後には差し戻さない。
+# 指摘は mise run md:lint、CI のログ、Issue と PR の本文の hook に出る。
 # 「機械には黒と断定できないが、書き手には見直してほしい」語をここに置く。
 #
 # 元記事「AI の変な日本語を Hooks で検査する」からの推定実装。元記事そのものは

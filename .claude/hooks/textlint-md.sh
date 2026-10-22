@@ -3,14 +3,17 @@
 # 指摘があれば decision:"block" + reason でモデルへ差し戻す。
 # textlint が決定論的な「検出」、モデルが「修正」を担当する分担。
 #
+# 差し戻すのは .claude/.textlintrc.hook.json の規則（prh-writing-style.yml と太字の禁止）と
+# 一文一行だけ。文脈で判断が要る規則は、書き直しても指摘が消えずに上限まで往復することが
+# 多かったので外した。外した規則は CI と mise run md:lint が今までどおり指摘する。
+#
 # ユーザスコープ (~/.claude/settings.json) に登録するため、dotfiles 以外の
 # プロジェクトでも動く。自前の textlint 設定を持つプロジェクトでは譲る。
 # Claude のメモリと scratchpad の md は人が読む文書ではないので検査しない。
 #
 # 安全弁:
 #   1. 同一ファイルへの block は CLAUDE_TEXTLINT_MAX_BLOCKS 回まで（既定 2）。
-#      ai-writing preset のルールは textlint --fix で直らないため、直せない指摘で
-#      往復し続けるのを防ぐ
+#      直せない指摘で往復し続けるのを防ぐ
 #   2. ランナーと textlint 本体のどちらかが無ければフェイルオープン（exit 0）
 #   3. CLAUDE_TEXTLINT_DISABLE=1 で無効化
 set -uo pipefail
@@ -29,9 +32,10 @@ BLOCK_LIMIT="${CLAUDE_TEXTLINT_MAX_BLOCKS:-2}"
 HOOK_DIR="$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)" || exit 0
 REPO_ROOT="$(cd -P "$HOOK_DIR/../.." && pwd)" || exit 0
 RUNNER="$REPO_ROOT/scripts/md-lint.sh"
+HOOK_CONFIG="$REPO_ROOT/.claude/.textlintrc.hook.json"
 # ランナーだけでなく textlint 本体の有無も見る。ランナーは textlint 不在で
 # exit 2 を返すので、ここを省くと「検査できていないのに block する」経路ができる。
-if [[ ! -x "$RUNNER" || ! -x "$REPO_ROOT/.claude/node_modules/.bin/textlint" ]]; then
+if [[ ! -x "$RUNNER" || ! -x "$REPO_ROOT/.claude/node_modules/.bin/textlint" || ! -f "$HOOK_CONFIG" ]]; then
     exit 0
 fi
 
@@ -83,7 +87,7 @@ COUNTER_DIR="${TMPDIR:-/tmp}/claude-textlint/$SESSION_ID"
 mkdir -p "$COUNTER_DIR" 2>/dev/null || exit 0
 COUNTER="$COUNTER_DIR/$KEY"
 
-OUTPUT=$(MD_LINT_FORMAT=compact "$RUNNER" "$FILE" 2>/dev/null)
+OUTPUT=$(MD_LINT_CONFIG="$HOOK_CONFIG" MD_LINT_FORMAT=compact "$RUNNER" "$FILE" 2>/dev/null)
 if [[ -z "$OUTPUT" ]]; then
     # 直ったら予算を戻す。同じファイルを後で壊したときに再び差し戻せる。
     rm -f "$COUNTER"
@@ -103,12 +107,13 @@ printf '%s\n' "$((COUNT + 1))" >"$COUNTER" 2>/dev/null || true
 
 REASON="textlint が $FILE に指摘を出しました。
 
-直し方: 指摘された語だけを別の語へ差し替えないこと。 指摘を含む文を丸ごと書き直す。
-多くの指摘は「語が悪い」のではなく「書くべき中身が抜けている」ことを示す。
-たとえば「効率的に」への指摘は、改善の中身（何が・どれだけ速くなるか）が書かれていないという意味なので、
-語を言い換えても解決しない。各指摘の「こう書く:」が書き換え後の形を示しているので、その形へ文ごと寄せる。
-例外は直訳調の指摘（「効く」など）で、これは日本語として自然な動詞へ言い換えることが直し方そのもの。
-textlint --fix は使わないこと。prh の置換候補はリライト方針のヒントであって置換文字列ではない。
+直し方:
+- 一文一行の指摘は、句点の後で改行する。太字の指摘は、太字をやめて強調したい内容を短い一文で言い切る
+- prh の指摘は、指摘された語だけを別の語へ差し替えず、指摘を含む文を丸ごと書き直す。
+  たとえば「効率的に」への指摘は、改善の中身（何が・どれだけ速くなるか）が書かれていないという意味なので、
+  語を言い換えても解決しない。各指摘の「こう書く:」が書き換え後の形を示しているので、その形へ文ごと寄せる。
+  例外は直訳調の指摘（「写す」など）で、これは日本語として自然な動詞へ言い換えることが直し方そのもの
+- textlint --fix は使わないこと。prh の置換候補はリライト方針のヒントであって置換文字列ではない
 
 指摘が妥当でない場合は直さずに理由を述べてください（差し戻しは同一ファイルにつき ${BLOCK_LIMIT} 回で打ち切ります）。
 

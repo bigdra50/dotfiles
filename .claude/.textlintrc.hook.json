@@ -1,0 +1,23 @@
+{
+  "//": [
+    "Write|Edit の hook（textlint-md.sh）だけが読む設定。書いた直後に差し戻すのは、",
+    "文脈を見なくても直し方が決まる規則に限る。prh-writing-style.yml（実測で誤検知 0 件の",
+    "パターンだけを置いた辞書）と太字の禁止がそれに当たり、一文一行は md-lint.sh の",
+    "sembr-check.sh が見る。",
+    "AI っぽい語（no-ai-words、ai-writing preset）、助詞の重なり、文の長さ、prh-business.yml は",
+    "文脈で判断が要る。書き直しても指摘が消えず、上限の 2 回まで往復することが多かったので、",
+    "ここには入れない。これらは .textlintrc.json に残り、CI、mise run md:lint、",
+    "Issue と PR の本文の hook が指摘する。AI っぽい言い回しの書き直しは yomiyasu で行う。"
+  ],
+  "filters": {
+    "comments": true
+  },
+  "rules": {
+    "no-strong-emphasis": true,
+    "prh": {
+      "rulePaths": [
+        "./prh-writing-style.yml"
+      ]
+    }
+  }
+}
