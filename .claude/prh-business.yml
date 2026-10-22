@@ -3,7 +3,8 @@
 # .textlintrc.json から 2 つ目の prh インスタンスとして読み込む。warning なので
 # textlint は exit 0 を返し、CI も PR も落ちない。Write|Edit の hook は
 # .textlintrc.hook.json を読み、この辞書を使わないので、書いた直後には差し戻さない。
-# 指摘は mise run md:lint、CI のログ、Issue と PR の本文の hook に出る。
+# 指摘は mise run md:lint と CI のログに出る。Issue と PR の本文の hook は全規則を読み、
+# warning でも投稿を止める。
 # 「機械には黒と断定できないが、書き手には見直してほしい」語をここに置く。
 #
 # 元記事「AI の変な日本語を Hooks で検査する」からの推定実装。元記事そのものは

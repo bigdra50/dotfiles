@@ -288,6 +288,9 @@ md を書いた直後の hook（`textlint-md.sh`）だけは、`MD_LINT_CONFIG` 
 | 助詞の重なり、文の長さ、読点の数 | 見ない | 指摘する |
 | `prh-business.yml` | 見ない | 指摘する（warning） |
 
+本文の hook（`textlint-gh-body.sh`）は全規則を読み、warning の指摘でも投稿を止める。
+CI と `mise run md:lint` は error だけで失敗し、warning はログに出すだけである。
+
 hook が見ない規則は、文脈で判断が要るものである。
 書き直しても指摘が消えにくく、差し戻しが上限の 2 回まで続きやすい。
 AI っぽい言い回しの書き直しは、yomiyasu スキルで行う。
