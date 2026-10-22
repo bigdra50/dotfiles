@@ -427,7 +427,7 @@ dependencies:
 - repo_url: bigdra50/skills
   name: ja-ng-rule-register
   host: github.com
-  resolved_commit: 9008523567dddcc481ab599d7b51027c86035d95
+  resolved_commit: 33772c1d962cfea4c05ff316fa0ab5f39280673e
   version: unknown
   virtual_path: docs/ja-ng-rule-register
   is_virtual: true
@@ -440,15 +440,15 @@ dependencies:
   - .claude/skills/ja-ng-rule-register/README.md
   - .claude/skills/ja-ng-rule-register/SKILL.md
   deployed_file_hashes:
-    .agents/skills/ja-ng-rule-register/README.md: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
-    .agents/skills/ja-ng-rule-register/SKILL.md: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
-    .claude/skills/ja-ng-rule-register/README.md: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
-    .claude/skills/ja-ng-rule-register/SKILL.md: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
-  content_hash: sha256:24c9d04f1f8708e6bbfd08d8715833959da5f6a35bb557908ceca502b3fb42a1
+    .agents/skills/ja-ng-rule-register/README.md: sha256:fb304bb5cc24fbaceb16b1575a380aa2510b67115bab2acd3aa460ae0b94dfdc
+    .agents/skills/ja-ng-rule-register/SKILL.md: sha256:cdc5b30682bae9adff9ba228dc978436dbad867a1659df94c31d75118429cc56
+    .claude/skills/ja-ng-rule-register/README.md: sha256:fb304bb5cc24fbaceb16b1575a380aa2510b67115bab2acd3aa460ae0b94dfdc
+    .claude/skills/ja-ng-rule-register/SKILL.md: sha256:cdc5b30682bae9adff9ba228dc978436dbad867a1659df94c31d75118429cc56
+  content_hash: sha256:51f46911ce00dfc0c8adcbbebd23855a3f30c477fc73fb35bff7c5e1555fc004
 - repo_url: bigdra50/skills
   name: japanese-tech-writing
   host: github.com
-  resolved_commit: 9008523567dddcc481ab599d7b51027c86035d95
+  resolved_commit: 33772c1d962cfea4c05ff316fa0ab5f39280673e
   version: unknown
   virtual_path: docs/japanese-tech-writing
   is_virtual: true
@@ -461,15 +461,15 @@ dependencies:
   - .claude/skills/japanese-tech-writing/README.md
   - .claude/skills/japanese-tech-writing/SKILL.md
   deployed_file_hashes:
-    .agents/skills/japanese-tech-writing/README.md: sha256:b3ca7548c5cdfa0e45a543f67f7969a4dd36469b9a00664860cafe767ffc8dd2
-    .agents/skills/japanese-tech-writing/SKILL.md: sha256:fefa815da10fbef2a248d883e75a4d161ec0f9e7162f3707f94eff7d8e366606
-    .claude/skills/japanese-tech-writing/README.md: sha256:b3ca7548c5cdfa0e45a543f67f7969a4dd36469b9a00664860cafe767ffc8dd2
-    .claude/skills/japanese-tech-writing/SKILL.md: sha256:fefa815da10fbef2a248d883e75a4d161ec0f9e7162f3707f94eff7d8e366606
-  content_hash: sha256:3aad60c07a04c8d11ae229e27ad17eb9ec30725f693916d760716f99612bec51
+    .agents/skills/japanese-tech-writing/README.md: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
+    .agents/skills/japanese-tech-writing/SKILL.md: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
+    .claude/skills/japanese-tech-writing/README.md: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
+    .claude/skills/japanese-tech-writing/SKILL.md: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
+  content_hash: sha256:c7477aa78519f89930422c99aea862239733bcd5951606cb08cbe40e0e5ff6a9
 - repo_url: bigdra50/skills
   name: md-prose-cleanup
   host: github.com
-  resolved_commit: 9008523567dddcc481ab599d7b51027c86035d95
+  resolved_commit: 33772c1d962cfea4c05ff316fa0ab5f39280673e
   version: unknown
   virtual_path: docs/md-prose-cleanup
   is_virtual: true
@@ -488,17 +488,17 @@ dependencies:
   - .claude/skills/md-prose-cleanup/references/pitfalls.md
   - .claude/skills/md-prose-cleanup/scripts/survey.py
   deployed_file_hashes:
-    .agents/skills/md-prose-cleanup/README.md: sha256:539007835f012c700e9e1a457596cff38490e2eab40de13ed90eee8d1ca08dba
-    .agents/skills/md-prose-cleanup/SKILL.md: sha256:cb14db8cc6a588bb42b3950d00b9d637a9abb19cc819e0c53655e149df468bb2
+    .agents/skills/md-prose-cleanup/README.md: sha256:c34c6272982751301d3496956e5bbae3b59ad8b77bc50585ee4f9b834e21037e
+    .agents/skills/md-prose-cleanup/SKILL.md: sha256:4437ef3c21209fbdc51c63f48bbba59a907085f91d3e0a357ab78cb30dbec106
     .agents/skills/md-prose-cleanup/references/fix-agent-brief.md: sha256:2eb291bbdfb98fba25e00e42938208822c465dd1a8e7f461e90f34eb307d9d58
     .agents/skills/md-prose-cleanup/references/pitfalls.md: sha256:92717b48c7604ddbd25b0909ec03ab1442f1abf7e708956c9df5cd93e8e7ec69
     .agents/skills/md-prose-cleanup/scripts/survey.py: sha256:d622bab34caaf40b249773ce59d2d50971c4d3033ec8cae65027088fc47b2901
-    .claude/skills/md-prose-cleanup/README.md: sha256:539007835f012c700e9e1a457596cff38490e2eab40de13ed90eee8d1ca08dba
-    .claude/skills/md-prose-cleanup/SKILL.md: sha256:cb14db8cc6a588bb42b3950d00b9d637a9abb19cc819e0c53655e149df468bb2
+    .claude/skills/md-prose-cleanup/README.md: sha256:c34c6272982751301d3496956e5bbae3b59ad8b77bc50585ee4f9b834e21037e
+    .claude/skills/md-prose-cleanup/SKILL.md: sha256:4437ef3c21209fbdc51c63f48bbba59a907085f91d3e0a357ab78cb30dbec106
     .claude/skills/md-prose-cleanup/references/fix-agent-brief.md: sha256:2eb291bbdfb98fba25e00e42938208822c465dd1a8e7f461e90f34eb307d9d58
     .claude/skills/md-prose-cleanup/references/pitfalls.md: sha256:92717b48c7604ddbd25b0909ec03ab1442f1abf7e708956c9df5cd93e8e7ec69
     .claude/skills/md-prose-cleanup/scripts/survey.py: sha256:d622bab34caaf40b249773ce59d2d50971c4d3033ec8cae65027088fc47b2901
-  content_hash: sha256:57bea3aab31aee39025f9ae45784bb8152f5ed0a94b68e4624efe4cbb08aefc7
+  content_hash: sha256:9034c1ed2f36b36e105fe778ef609bfa5d101736e57d5e449f6f3212fc2156ad
 - repo_url: bigdra50/skills
   name: sync-docs
   host: github.com
@@ -2445,7 +2445,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
-  content_hash: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+  content_hash: sha256:fb304bb5cc24fbaceb16b1575a380aa2510b67115bab2acd3aa460ae0b94dfdc
 - kind: project-relative
   target: claude
   value: .claude/skills/ja-ng-rule-register/SKILL.md
@@ -2454,7 +2454,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
-  content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+  content_hash: sha256:cdc5b30682bae9adff9ba228dc978436dbad867a1659df94c31d75118429cc56
 - kind: project-relative
   target: claude
   value: .claude/skills/japanese-corporate-pptx
@@ -2580,7 +2580,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:b3ca7548c5cdfa0e45a543f67f7969a4dd36469b9a00664860cafe767ffc8dd2
+  content_hash: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
 - kind: project-relative
   target: claude
   value: .claude/skills/japanese-tech-writing/SKILL.md
@@ -2589,7 +2589,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:fefa815da10fbef2a248d883e75a4d161ec0f9e7162f3707f94eff7d8e366606
+  content_hash: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
 - kind: project-relative
   target: claude
   value: .claude/skills/list-topics
@@ -2625,7 +2625,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/md-prose-cleanup
   active_owner: bigdra50/skills/docs/md-prose-cleanup
-  content_hash: sha256:539007835f012c700e9e1a457596cff38490e2eab40de13ed90eee8d1ca08dba
+  content_hash: sha256:c34c6272982751301d3496956e5bbae3b59ad8b77bc50585ee4f9b834e21037e
 - kind: project-relative
   target: claude
   value: .claude/skills/md-prose-cleanup/SKILL.md
@@ -2634,7 +2634,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/md-prose-cleanup
   active_owner: bigdra50/skills/docs/md-prose-cleanup
-  content_hash: sha256:cb14db8cc6a588bb42b3950d00b9d637a9abb19cc819e0c53655e149df468bb2
+  content_hash: sha256:4437ef3c21209fbdc51c63f48bbba59a907085f91d3e0a357ab78cb30dbec106
 - kind: project-relative
   target: claude
   value: .claude/skills/md-prose-cleanup/references/fix-agent-brief.md
@@ -4722,7 +4722,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
-  content_hash: sha256:320cedd5f875563e2e3254f5fa9088b3845438c26e5186a15056bd8d1ff27d42
+  content_hash: sha256:fb304bb5cc24fbaceb16b1575a380aa2510b67115bab2acd3aa460ae0b94dfdc
 - kind: project-relative
   target: codex
   value: .agents/skills/ja-ng-rule-register/SKILL.md
@@ -4731,7 +4731,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/ja-ng-rule-register
   active_owner: bigdra50/skills/docs/ja-ng-rule-register
-  content_hash: sha256:b35187311da6ebe125f26631aa59fe480562d2072e133eb201ceeca1d1f50d2f
+  content_hash: sha256:cdc5b30682bae9adff9ba228dc978436dbad867a1659df94c31d75118429cc56
 - kind: project-relative
   target: codex
   value: .agents/skills/japanese-corporate-pptx
@@ -4857,7 +4857,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:b3ca7548c5cdfa0e45a543f67f7969a4dd36469b9a00664860cafe767ffc8dd2
+  content_hash: sha256:716d91a4f7a692c8b605282b435a5922468c9749c2313c9467e568a2f6c34bb4
 - kind: project-relative
   target: codex
   value: .agents/skills/japanese-tech-writing/SKILL.md
@@ -4866,7 +4866,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/japanese-tech-writing
   active_owner: bigdra50/skills/docs/japanese-tech-writing
-  content_hash: sha256:fefa815da10fbef2a248d883e75a4d161ec0f9e7162f3707f94eff7d8e366606
+  content_hash: sha256:10c9caad24ccf99b80e2c6345fb08ac9c73e72d432600a43b06eecf9cbe6c7d2
 - kind: project-relative
   target: codex
   value: .agents/skills/md-prose-cleanup
@@ -4884,7 +4884,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/md-prose-cleanup
   active_owner: bigdra50/skills/docs/md-prose-cleanup
-  content_hash: sha256:539007835f012c700e9e1a457596cff38490e2eab40de13ed90eee8d1ca08dba
+  content_hash: sha256:c34c6272982751301d3496956e5bbae3b59ad8b77bc50585ee4f9b834e21037e
 - kind: project-relative
   target: codex
   value: .agents/skills/md-prose-cleanup/SKILL.md
@@ -4893,7 +4893,7 @@ deployments:
   owners:
   - bigdra50/skills/docs/md-prose-cleanup
   active_owner: bigdra50/skills/docs/md-prose-cleanup
-  content_hash: sha256:cb14db8cc6a588bb42b3950d00b9d637a9abb19cc819e0c53655e149df468bb2
+  content_hash: sha256:4437ef3c21209fbdc51c63f48bbba59a907085f91d3e0a357ab78cb30dbec106
 - kind: project-relative
   target: codex
   value: .agents/skills/md-prose-cleanup/references/fix-agent-brief.md
