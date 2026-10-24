@@ -38,12 +38,10 @@ dependencies:
     - bigdra50/skills/docs/ja-ng-rule-register
     - bigdra50/skills/docs/japanese-tech-writing
     - bigdra50/skills/docs/md-prose-cleanup
-    - bigdra50/skills/docs/sync-docs
     - bigdra50/skills/even/evenhub-upload
     # github カテゴリは pr-brief を入れないため、bundle ではなく個別に指定する。
     - bigdra50/skills/github/creating-pull-requests
     - bigdra50/skills/github/report-issue
-    - bigdra50/skills/research/x-research
     - bigdra50/skills/review/second-opinion
     - bigdra50/skills/system/disk-usage
     # Unity 公式のスキル集からは unity-cli だけを入れる。上流なのでタグは無く #sha で pin する。
@@ -81,7 +79,55 @@ dependencies:
     - minorun365/minorun-marp-skill/skills/slide-figures
     - minorun365/minorun-marp-skill/skills/slide-design-dark
     - gonta223/japanese-corporate-pptx-skill/skills/japanese-corporate-pptx
-    - antfu/skills/skills/slidev
-  mcp: []
+    # AI が書いた日本語の推敲。上流なので #sha で pin する (v2.1.0)。
+    - nanaism/yomiyasu/skills/yomiyasu#8be3ef6e0e668f14cae30c3da6b0c20b95b2179f
+  # MCP は -g では claude / codex / copilot にだけ配置される (cursor は global 非対応)。
+  # 追加・変更は `apm mcp install` ではなくここを手で編集し、`apm install -g --only mcp` で反映する。
+  # `apm mcp install` は apm.yml を書き直し、このファイルのコメントを消す。
+  mcp:
+    # Crafting Apps (storytold/photocraft, vectorcraft, filmcraft, lightcraft)。
+    # 作業ルート・ポート・トークンはマシン固有なので ~/.local/bin/craft (dotfiles 管理外) に閉じ込め、
+    # ここには `craft` の呼び出しだけを書く。craft の無いマシンではこれらは起動失敗と表示される。
+    # *-live は `craft open <app>` で起動した GUI を操作する。
+    - name: photocraft
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp, photocraft]
+    - name: photocraft-live
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp-live, photocraft]
+    - name: vectorcraft
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp, vectorcraft]
+    - name: vectorcraft-live
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp-live, vectorcraft]
+    - name: filmcraft
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp, filmcraft]
+    - name: filmcraft-live
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp-live, filmcraft]
+    - name: lightcraft
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp, lightcraft]
+    - name: lightcraft-live
+      registry: false
+      transport: stdio
+      command: craft
+      args: [mcp-live, lightcraft]
 includes: auto
 scripts: {}
