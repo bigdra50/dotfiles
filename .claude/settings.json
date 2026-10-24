@@ -129,6 +129,16 @@
             "async": true
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v python3 >/dev/null 2>&1 && python3 ~/.claude/hooks/ja-reply-stop.py || true",
+            "timeout": 10,
+            "statusMessage": "返答が日本語かを確認"
+          }
+        ]
       }
     ],
     "PermissionRequest": [
