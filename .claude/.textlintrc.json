@@ -13,7 +13,10 @@
     "語を置く (2026-09-15 の測定。検査・実測・正本はこの repo の用語)。効く は prh-business が",
     "言い換え先付きで扱うので、二重に指摘しないよう allows に入れる。allows は活用形の表層",
     "（効か、効い）と照合されるため、語幹の正規表現で書く。no-short-topic-comma は",
-    "「結論は、」のような短い主題の読点を見るルールで、指摘が多くなるので入れない。"
+    "「結論は、」のような短い主題の読点を見るルールで、指摘が多くなるので入れない。",
+    "max-kanji-continuous-len の max は 10。2026-10-24 に survey-any の md 1,179 件（漢字の連続 26.8 万件）で",
+    "測ると、7〜8 文字は専門用語（多項式時間還元、情報源符号化定理）、9〜10 文字も大半が固有名詞と用語",
+    "だった。11 文字以上は 12 件で、固有名詞、書誌、統計と医学の専門用語。既定の 5 や以前の 6 では普通の複合語が通らない。"
   ],
   "filters": {
     "comments": true
@@ -22,7 +25,7 @@
     "preset-ja-technical-writing": {
       "sentence-length": { "max": 150, "skipUrlStringLink": true },
       "max-ten": { "max": 3 },
-      "max-kanji-continuous-len": { "max": 6 },
+      "max-kanji-continuous-len": { "max": 10 },
       "no-doubled-joshi": { "min_interval": 1 },
       "no-double-negative-ja": true,
       "no-doubled-conjunction": true,
