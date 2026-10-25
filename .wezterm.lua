@@ -153,6 +153,17 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 else
 	table.insert(config.launch_menu, { label = "bash", args = { "bash", "-l" } })
 	table.insert(config.launch_menu, { label = "fish", args = { "fish", "-l" } })
+
+	if wezterm.target_triple:find("darwin") then
+		config.ssh_domains = {
+			{
+				name = "rtx4080mux",
+				remote_address = "100.113.211.113", -- Tailscale IP (RTX4080)
+				username = "ryu19",
+				multiplexing = "WezTerm",
+			},
+		}
+	end
 end
 
 -- 背景画像設定（画像が存在する場合のみ）
