@@ -8,7 +8,7 @@ source "$DOTFILES_DIR/scripts/lib.sh"
 PLATFORM=$(detect_platform)
 
 # File exclusion lists
-EXCLUDE_COMMON=".DS_Store .git .gitignore .gitmodules README.md CLAUDE.md install.sh install.ps1 bootstrap bootstrap.ps1 docker-compose.yml Dockerfile scripts mise.toml"
+EXCLUDE_COMMON=".DS_Store .git .gitignore .gitattributes .gitmodules .chezmoiroot README.md CLAUDE.md install.sh install.ps1 bootstrap bootstrap.ps1 docker-compose.yml Dockerfile scripts mise.toml"
 EXCLUDE_LINUX=".yabairc .skhdrc"
 EXCLUDE_WSL=".yabairc .skhdrc"
 

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# 配置先に実体があるリンクを、退避してから張り直す。
+#
+# chezmoi は、自分が一度も書いていない配置先を確認なしに置き換える。
+# 実ファイルも、中身のあるディレクトリも消えるので、適用の前に <配置先>.backup.<日時> へ移す。
+#
+# 移したあと、リンクまで張っておく。
+# 配置先を空けたままにすると、chezmoi は「前回書いたあとに変わった」と判断して入力を求め、
+# 対話のない実行が止まる。
+set -euo pipefail
+
+dest={{ .chezmoi.destDir | quote }}
+tree={{ .chezmoi.workingTree | quote }}
+stamp="$(date +%Y%m%d_%H%M%S)"
+
+while IFS=$'\t' read -r state kind target source; do
+    [[ "$state" == "on" && "$kind" == "link" ]] || continue
+    path="$dest/$target"
+    # symlink は chezmoi が張り替える。失うものが無いので退避しない
+    [[ -e "$path" && ! -L "$path" ]] || continue
+    # 親ディレクトリがリポジトリを指す古い配置では、配置先がソースそのものになる。
+    # 退避するとリポジトリの中身を動かしてしまう
+    [[ "$path" -ef "$tree/$source" ]] && continue
+    mv "$path" "$path.backup.$stamp"
+    ln -s "$tree/$source" "$path"
+    echo "退避: $path -> $path.backup.$stamp"
+done <<'TABLE'
+{{ includeTemplate "dotfiles/link-table" . }}
+TABLE

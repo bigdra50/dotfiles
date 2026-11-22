@@ -1,0 +1,37 @@
+{{- /* マシンごとの選択を尋ねて、chezmoi の設定ファイル（~/.config/chezmoi/chezmoi.toml）を作る。
+
+       対話なしで作る:  chezmoi init --promptChoice preset=server
+       選び直す:        chezmoi init --prompt   （今の値を既定にして尋ね直す）
+
+       chezmoi はこのテンプレートを .chezmoidata より先に評価する。
+       プリセット名はここにも書き、テストが home/.chezmoidata/dotfiles.toml との一致を確かめる。 */ -}}
+{{- $presets := list "desktop" "server" -}}
+{{- $preset := promptChoiceOnce . "machine.preset" "preset" $presets "desktop" -}}
+{{- $machine := get . "machine" | default (dict) -}}
+sourceDir = {{ .chezmoi.workingTree | quote }}
+
+[data.machine]
+# home/.chezmoidata/dotfiles.toml の presets のどれか
+preset = {{ $preset | quote }}
+# プリセットに加えるモジュールと、プリセットから外すモジュール
+with = {{ get $machine "with" | default (list) | toJson }}
+without = {{ get $machine "without" | default (list) | toJson }}
+
+# 毎回走るスクリプト（退避と掃除）を差分の表示と検査から外す。
+# 外さないと、変更が無くても status に 1 行出て、verify が常に失敗する
+[diff]
+exclude = ["always"]
+
+[status]
+exclude = ["always"]
+
+[verify]
+exclude = ["always"]
+{{- if eq .chezmoi.os "windows" }}
+
+# .ps1 のスクリプトは PowerShell 7 で、プロファイルを読まずに実行する。
+# 既定の Windows PowerShell 5.1 は BOM の無い UTF-8 を読めず、symlink の解決も持たない
+[interpreters.ps1]
+command = "pwsh"
+args = ["-NoLogo", "-NoProfile"]
+{{- end }}

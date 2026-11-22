@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# そのマシンで選ばれていない配置先に残った symlink を消す。
+#
+# chezmoi は、管理から外れた配置先を自分では消さない。
+# プリセットやモジュールの選択を変えると、外したモジュールのリンクが残る。
+#
+# 消すのは、この作業ツリーの同じファイルを指す symlink と、指し先が無い symlink だけ。
+# 実ファイルと、ほかの場所を指す symlink は本人が置いたものなので触らない。
+set -euo pipefail
+
+dest={{ .chezmoi.destDir | quote }}
+tree={{ .chezmoi.workingTree | quote }}
+
+while IFS=$'\t' read -r state kind target source; do
+    [[ "$state" == "off" ]] || continue
+    path="$dest/$target"
+    [[ -L "$path" ]] || continue
+    if [[ ! -e "$path" ]] || { [[ "$kind" == "link" ]] && [[ "$path" -ef "$tree/$source" ]]; }; then
+        rm "$path"
+        echo "削除: $path"
+    fi
+done <<'TABLE'
+{{ includeTemplate "dotfiles/link-table" . }}
+TABLE

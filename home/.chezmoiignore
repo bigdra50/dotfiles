@@ -1,0 +1,151 @@
+{{- /* scripts/chezmoi/gen.py が home/.chezmoidata/dotfiles.toml から生成する。手で編集しない */ -}}
+{{- $on := includeTemplate "dotfiles/enabled" . | fromJson -}}
+{{- $p := includeTemplate "dotfiles/platform" . -}}
+
+{{ if not (has "claude-skills" $on) }}
+.apm
+{{ end }}
+{{ if not (has "claude-skills" $on) }}
+.apm/apm.yml
+{{ end }}
+{{ if not (has "shell" $on) }}
+.bashrc
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/CLAUDE.md
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/commands
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/hooks
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/output-styles
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/rules
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/scripts
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/settings.json
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/statusline.sh
+{{ end }}
+{{ if not (has "claude-core" $on) }}
+.claude/tools
+{{ end }}
+{{ if not (has "shell" $on) }}
+.colorrc
+{{ end }}
+{{ if not (or (and (has "claude-core" $on) (has $p (list "macos" "linux" "wsl"))) (and (has "cursor" $on) (stat (joinPath .chezmoi.destDir ".config/cursor/cli-config.json"))) (has "editor" $on) (has "git" $on) (has "mise" $on) (has "shell" $on) (has "unity" $on)) }}
+.config
+{{ end }}
+{{ if not (has "shell" $on) }}
+.config/atuin
+{{ end }}
+{{ if not (and (has "claude-core" $on) (has $p (list "macos" "linux" "wsl"))) }}
+.config/ccstatuskit
+{{ end }}
+{{ if not (and (has "cursor" $on) (stat (joinPath .chezmoi.destDir ".config/cursor/cli-config.json"))) }}
+.config/cursor
+{{ end }}
+{{ if not (and (has "cursor" $on) (stat (joinPath .chezmoi.destDir ".config/cursor/cli-config.json"))) }}
+.config/cursor/cli-config.json
+{{ end }}
+{{ if not (has "git" $on) }}
+.config/gh
+{{ end }}
+{{ if not (and (has "git" $on) (has $p (list "macos" "linux" "wsl"))) }}
+.config/git
+{{ end }}
+{{ if not (has "git" $on) }}
+.config/gitui
+{{ end }}
+{{ if not (has "shell" $on) }}
+.config/glow
+{{ end }}
+{{ if not (has "git" $on) }}
+.config/lazygit
+{{ end }}
+{{ if not (has "mise" $on) }}
+.config/mise
+{{ end }}
+{{ if not (has "editor" $on) }}
+.config/nvim
+{{ end }}
+{{ if not (has "shell" $on) }}
+.config/sheldon
+{{ end }}
+{{ if not (has "shell" $on) }}
+.config/starship.toml
+{{ end }}
+{{ if not (has "unity" $on) }}
+.config/u
+{{ end }}
+{{ if not (has "shell" $on) }}
+.config/zsh
+{{ end }}
+{{ if not (has "root-misc" $on) }}
+.dockerignore
+{{ end }}
+{{ if not (has "git" $on) }}
+.gitconfig
+{{ end }}
+{{ if not (and (has "git" $on) (has $p (list "macos" "linux" "wsl"))) }}
+.gitconfig-bigdra50
+{{ end }}
+{{ if not (and (has "root-misc" $on) (has $p (list "macos" "linux" "wsl"))) }}
+.gitleaks.toml
+{{ end }}
+{{ if not (has "root-misc" $on) }}
+.gitleaksignore
+{{ end }}
+{{ if not (has "editor" $on) }}
+.ideavimrc
+{{ end }}
+{{ if not (has "root-misc" $on) }}
+.pre-commit-config.yaml
+{{ end }}
+{{ if not (has "desktop-mac" $on) }}
+.skhdrc
+{{ end }}
+{{ if not (has "ssh" $on) }}
+.ssh
+{{ end }}
+{{ if not (has "ssh" $on) }}
+.ssh/config
+{{ end }}
+{{ if not (has "ssh" $on) }}
+.ssh/config.d
+{{ end }}
+{{ if not (has "editor" $on) }}
+.vimrc
+{{ end }}
+{{ if not (has "terminal" $on) }}
+.wezterm.lua
+{{ end }}
+{{ if not (has "desktop-mac" $on) }}
+.yabairc
+{{ end }}
+{{ if not (has "shell" $on) }}
+.zshenv
+{{ end }}
+{{ if not (has "shell" $on) }}
+.zshenv_local.example
+{{ end }}
+{{ if not (has "shell" $on) }}
+.zshrc_local.example
+{{ end }}
+{{- /* スクリプトは OS が実行できる形式だけを残す */ -}}
+{{ if eq .chezmoi.os "windows" }}
+.chezmoiscripts/*.sh
+{{ else }}
+.chezmoiscripts/*.ps1
+{{ end }}

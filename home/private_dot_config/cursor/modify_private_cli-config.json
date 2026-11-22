@@ -1,0 +1,3 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* scripts/chezmoi/gen.py が home/.chezmoidata/dotfiles.toml から生成する。手で編集しない */ -}}
+{{- includeTemplate "dotfiles/json-merge" (dict "chezmoi" .chezmoi "source" ".config/cursor/cli-config.json" "keys" (list "attribution") "create" false) -}}

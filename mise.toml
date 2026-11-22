@@ -11,6 +11,9 @@ shellcheck = "0.11.0"
 shfmt = "3.14.1"
 stylua = "2.6.0"
 actionlint = "1.7.12"
+# Applies the dotfiles. scripts/chezmoi/tests runs this binary against a
+# throwaway HOME, so the templates meet the same template functions everywhere.
+chezmoi = "2.74.1"
 
 [tasks."setup"]
 description = "Full dotfiles setup"
@@ -168,6 +171,22 @@ uvx ruff format --check scripts/lint/
 uvx mypy --strict scripts/lint/
 python -m unittest discover -s scripts/lint/tests -t scripts/lint
 python scripts/lint/check_path_refs.py
+"""
+
+[tasks."chezmoi:gen"]
+description = "Regenerate the chezmoi source under home/ from home/.chezmoidata/dotfiles.toml"
+dir = "{{cwd}}"
+run = "python scripts/chezmoi/gen.py"
+
+[tasks."chezmoi:test"]
+description = "Check the module manifest and what chezmoi apply places (ruff + mypy + unittest)"
+dir = "{{cwd}}"
+run = """
+uvx ruff check scripts/chezmoi/
+uvx ruff format --check scripts/chezmoi/
+uvx mypy --strict scripts/chezmoi/
+python scripts/chezmoi/gen.py --check
+python -m unittest discover -s scripts/chezmoi/tests -t scripts/chezmoi
 """
 
 [tasks."claude-vanilla:test"]

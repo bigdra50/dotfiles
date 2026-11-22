@@ -1,0 +1,51 @@
+{{- /* scripts/chezmoi/gen.py が home/.chezmoidata/dotfiles.toml から生成する。手で編集しない */ -}}
+{{- $on := includeTemplate "dotfiles/enabled" . | fromJson -}}
+{{- $p := includeTemplate "dotfiles/platform" . -}}
+off	retired	.Brewfile	-
+{{ if (has "claude-skills" $on) }}on{{ else }}off{{ end }}	link	.apm/apm.yml	.apm/apm.yml
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.bashrc	.bashrc
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/CLAUDE.md	.claude/CLAUDE.md
+off	retired	.claude/agents	-
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/commands	.claude/commands
+off	retired	.claude/docs	-
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/hooks	.claude/hooks
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/output-styles	.claude/output-styles
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/rules	.claude/rules
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/scripts	.claude/scripts
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	merge	.claude/settings.json	.claude/settings.json
+off	retired	.claude/skills	-
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/statusline.sh	.claude/statusline.sh
+{{ if (has "claude-core" $on) }}on{{ else }}off{{ end }}	link	.claude/tools	.claude/tools
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.colorrc	.colorrc
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.config/atuin	.config/atuin
+{{ if (and (has "claude-core" $on) (has $p (list "macos" "linux" "wsl"))) }}on{{ else }}off{{ end }}	link	.config/ccstatuskit	.config/ccstatuskit
+{{ if (and (has "cursor" $on) (stat (joinPath .chezmoi.destDir ".config/cursor/cli-config.json"))) }}on{{ else }}off{{ end }}	merge	.config/cursor/cli-config.json	.config/cursor/cli-config.json
+{{ if (has "git" $on) }}on{{ else }}off{{ end }}	link	.config/gh	.config/gh
+{{ if (and (has "git" $on) (has $p (list "macos" "linux" "wsl"))) }}on{{ else }}off{{ end }}	link	.config/git	.config/git
+{{ if (has "git" $on) }}on{{ else }}off{{ end }}	link	.config/gitui	.config/gitui
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.config/glow	.config/glow
+{{ if (has "git" $on) }}on{{ else }}off{{ end }}	link	.config/lazygit	.config/lazygit
+{{ if (has "mise" $on) }}on{{ else }}off{{ end }}	link	.config/mise	.config/mise
+{{ if (has "editor" $on) }}on{{ else }}off{{ end }}	link	.config/nvim	.config/nvim
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.config/sheldon	.config/sheldon
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.config/starship.toml	.config/starship.toml
+{{ if (has "unity" $on) }}on{{ else }}off{{ end }}	link	.config/u	.config/u
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.config/zsh	.config/zsh
+{{ if (has "root-misc" $on) }}on{{ else }}off{{ end }}	link	.dockerignore	.dockerignore
+{{ if (has "git" $on) }}on{{ else }}off{{ end }}	link	.gitconfig	.gitconfig
+{{ if (and (has "git" $on) (has $p (list "macos" "linux" "wsl"))) }}on{{ else }}off{{ end }}	link	.gitconfig-bigdra50	.gitconfig-bigdra50
+{{ if (and (has "root-misc" $on) (has $p (list "macos" "linux" "wsl"))) }}on{{ else }}off{{ end }}	link	.gitleaks.toml	.gitleaks.toml
+{{ if (has "root-misc" $on) }}on{{ else }}off{{ end }}	link	.gitleaksignore	.gitleaksignore
+{{ if (has "editor" $on) }}on{{ else }}off{{ end }}	link	.ideavimrc	.ideavimrc
+off	retired	.mise.toml	-
+{{ if (has "root-misc" $on) }}on{{ else }}off{{ end }}	link	.pre-commit-config.yaml	.pre-commit-config.yaml
+{{ if (has "desktop-mac" $on) }}on{{ else }}off{{ end }}	link	.skhdrc	.skhdrc
+{{ if (has "ssh" $on) }}on{{ else }}off{{ end }}	link	.ssh/config	.ssh/config
+{{ if (has "editor" $on) }}on{{ else }}off{{ end }}	link	.vimrc	.vimrc
+{{ if (has "terminal" $on) }}on{{ else }}off{{ end }}	link	.wezterm.lua	.wezterm.lua
+{{ if (has "desktop-mac" $on) }}on{{ else }}off{{ end }}	link	.yabairc	.yabairc
+off	retired	.zsh	-
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.zshenv	.zshenv
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.zshenv_local.example	.zshenv_local.example
+off	retired	.zshrc	-
+{{ if (has "shell" $on) }}on{{ else }}off{{ end }}	link	.zshrc_local.example	.zshrc_local.example
