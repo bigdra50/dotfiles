@@ -41,6 +41,10 @@ jobs:
           scripts/tests/test_setup_skills.py
           scripts/tests/test_claude_settings.py
 
+      # ssh と sdl-freerdp はスタブに差し替えるので、ランナーに FreeRDP は要らない
+      - name: Test rdp task
+        run: python3 -m unittest scripts/tests/test_rdp_task.py
+
   markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 10
