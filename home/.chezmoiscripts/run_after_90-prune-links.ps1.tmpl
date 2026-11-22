@@ -20,7 +20,8 @@ foreach ($line in $table -split "`r?`n") {
     $state, $kind, $target, $source = $line -split "`t"
     if ($state -ne 'off') { continue }
 
-    $path = Join-Path $dest $target
+    # リンク表のパスは / 区切り。GetFullPath で OS の区切り文字に揃える
+    $path = [IO.Path]::GetFullPath((Join-Path $dest $target))
     $item = Get-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
     if ($null -eq $item -or $item.LinkType -notin 'SymbolicLink', 'Junction') { continue }
 

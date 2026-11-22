@@ -26,6 +26,13 @@ CHEZMOI = shutil.which("chezmoi")
 PWSH = shutil.which("pwsh")
 HOST = m.host_platform()
 IS_WINDOWS = sys.platform == "win32"
+# chezmoi init が Windows で設定に書く内容（home/.chezmoi.toml.tmpl）と同じ。
+# 既定の Windows PowerShell 5.1 では、スクリプトが使う symlink の解決が動かない
+WINDOWS_INTERPRETER = (
+    ["[interpreters.ps1]", 'command = "pwsh"', 'args = ["-NoLogo", "-NoProfile"]']
+    if IS_WINDOWS
+    else []
+)
 
 # 現行の setup のうち、リンクを張る部分だけを空の HOME に対して走らせる。
 LINK_CLAUDE = r"""
@@ -80,6 +87,7 @@ class ApplyTestCase(unittest.TestCase):
                     # 設定を init で作らずに直接書くので、テンプレートとのずれの警告は出さない
                     "[warnings]",
                     "configFileTemplateHasChanged = false",
+                    *WINDOWS_INTERPRETER,
                     "",
                 ]
             ),
@@ -116,18 +124,25 @@ class ApplyTestCase(unittest.TestCase):
         self.assertEqual(proc.returncode, 0, proc.stderr)
         return proc
 
+    @staticmethod
+    def pointee(link: Path) -> str:
+        """symlink の指し先。作業ツリーの中ならリポジトリ相対、外なら絶対パスで返す。"""
+        # Windows の readlink は、長いパス用の接頭辞 \\?\ を付けて返すことがある
+        text = os.readlink(link).removeprefix("\\\\?\\")
+        try:
+            # relpath は Windows で大文字と小文字、区切り文字の違いを吸収する
+            relative = os.path.relpath(text, REPO_ROOT)
+        except ValueError:  # ドライブが違う
+            return text
+        return text if relative.startswith("..") else Path(relative).as_posix()
+
     def links(self) -> dict[str, str]:
-        """配置先にある symlink を {HOME 相対のパス: リポジトリ相対の指し先} で返す。"""
-        found: dict[str, str] = {}
-        for path in self.dest.rglob("*"):
-            if path.is_symlink():
-                pointee = Path(os.readlink(path))
-                found[path.relative_to(self.dest).as_posix()] = (
-                    pointee.relative_to(REPO_ROOT).as_posix()
-                    if pointee.is_relative_to(REPO_ROOT)
-                    else str(pointee)
-                )
-        return found
+        """配置先にある symlink を {HOME 相対のパス: 指し先} で返す。"""
+        return {
+            path.relative_to(self.dest).as_posix(): self.pointee(path)
+            for path in self.dest.rglob("*")
+            if path.is_symlink()
+        }
 
     def entries(self) -> set[str]:
         """配置先にあるものすべて。symlink の先はたどらない。"""
@@ -214,7 +229,6 @@ class TestEnabledTemplate(ApplyTestCase):
         self.assertEqual(proc.stdout, HOST)
 
 
-@unittest.skipIf(IS_WINDOWS, "symlink の作成に権限が要る")
 class TestApplyLinks(ApplyTestCase):
     def test_places_exactly_what_the_enabled_modules_declare(self) -> None:
         for platform in MANIFEST.platforms:
@@ -232,6 +246,7 @@ class TestApplyLinks(ApplyTestCase):
                     self.assertEqual(self.links(), dict(expected.links))
                     self.assertEqual(self.entries(), set(expected.entries))
 
+    @unittest.skipIf(IS_WINDOWS, "現行の setup は bash で、Windows を対象にしていない")
     def test_matches_what_the_current_setup_scripts_place(self) -> None:
         # 移行の間だけ意味を持つ検査。現行のスクリプトを消すときに一緒に消す。
         baseline_home = self.root / "baseline"
@@ -286,6 +301,7 @@ class TestApplyLinks(ApplyTestCase):
 
         self.assertEqual(target.lstat().st_ino, before)
 
+    @unittest.skipIf(IS_WINDOWS, "POSIX の権限を検査する")
     def test_parent_dirs_marked_private_are_owner_only(self) -> None:
         self.apply()
 
@@ -296,7 +312,6 @@ class TestApplyLinks(ApplyTestCase):
         self.assertEqual(stat.S_IMODE((self.dest / ".claude").stat().st_mode), 0o755)
 
 
-@unittest.skipIf(IS_WINDOWS, "symlink の作成に権限が要る")
 class TestBackupConflicts(ApplyTestCase):
     """chezmoi は初回の適用で実体を確認なしに置き換える。その前に退避する。"""
 
@@ -348,6 +363,9 @@ class TestBackupConflicts(ApplyTestCase):
         self.assertEqual(self.backups(".zshenv"), [])
         self.assertEqual(elsewhere.read_text(encoding="utf-8"), "x\n")
 
+    @unittest.skipIf(
+        IS_WINDOWS, "Windows 用のスクリプトは、親が symlink の配置だけを守る"
+    )
     def test_target_that_is_the_source_itself_is_not_moved(self) -> None:
         # 親ディレクトリがリポジトリを指す古い配置では、配置先とソースが同じファイルになる。
         # それを退避するとリポジトリの中身を動かしてしまう。ここでは hard link で同じ状況を作る。
@@ -374,7 +392,6 @@ class TestBackupConflicts(ApplyTestCase):
         self.assertEqual(self.backups(".zshenv"), [])
 
 
-@unittest.skipIf(IS_WINDOWS, "symlink の作成に権限が要る")
 class TestPruneLinks(ApplyTestCase):
     def test_links_of_a_module_that_was_dropped_are_removed(self) -> None:
         self.apply()
@@ -403,7 +420,7 @@ class TestPruneLinks(ApplyTestCase):
 
         self.apply()
 
-        self.assertEqual(os.readlink(mine), str(elsewhere))
+        self.assertEqual(self.pointee(mine), str(elsewhere))
 
     def test_dangling_link_at_a_retired_target_is_removed(self) -> None:
         retired = self.dest / ".zshrc"
@@ -421,10 +438,9 @@ class TestPruneLinks(ApplyTestCase):
 
         self.apply()
 
-        self.assertEqual(os.readlink(retired), str(elsewhere))
+        self.assertEqual(self.pointee(retired), str(elsewhere))
 
 
-@unittest.skipIf(IS_WINDOWS, "配置先の権限を検査する")
 class TestSettingsMerge(ApplyTestCase):
     """リポジトリの JSON を live のファイルへ合成する。scripts/lib.sh の merge_json_onto と同じ規則。"""
 
@@ -443,7 +459,8 @@ class TestSettingsMerge(ApplyTestCase):
         self.apply()
 
         self.assertEqual(json.loads(self.target.read_text(encoding="utf-8")), self.want)
-        self.assertEqual(stat.S_IMODE(self.target.stat().st_mode), 0o600)
+        if not IS_WINDOWS:
+            self.assertEqual(stat.S_IMODE(self.target.stat().st_mode), 0o600)
 
     def test_repo_keys_win_and_live_only_keys_stay(self) -> None:
         live = {
@@ -492,6 +509,8 @@ class TestSettingsMerge(ApplyTestCase):
         self.assertEqual(json.loads(self.target.read_text(encoding="utf-8")), self.want)
 
     def test_only_the_listed_keys_are_merged_into_the_cursor_config(self) -> None:
+        if not any("cursor" in merge.target for merge in self.placed().merges):
+            self.skipTest("cursor モジュールはこの platform を対象にしていない")
         cursor = self.dest / ".config" / "cursor" / "cli-config.json"
         repo = json.loads(
             (REPO_ROOT / ".config" / "cursor" / "cli-config.json").read_text(
@@ -555,7 +574,6 @@ class TestInit(ApplyTestCase):
             {"preset": "server", "with": ["git"], "without": ["claude-skills"]},
         )
 
-    @unittest.skipIf(IS_WINDOWS, "symlink の作成に権限が要る")
     def test_generated_config_applies_without_warnings(self) -> None:
         self.config.unlink()
         self.chezmoi("init", "--promptChoice", "preset=server")
@@ -660,7 +678,7 @@ class TestPowerShellScripts(ApplyTestCase):
 
         self.run_script(self.BACKUP)
 
-        self.assertEqual(os.readlink(self.dest / ".apm" / "apm.yml"), str(elsewhere))
+        self.assertEqual(self.pointee(self.dest / ".apm" / "apm.yml"), str(elsewhere))
         self.assertFalse((self.dest / ".zshenv").is_symlink())
         self.assertEqual(self.backups(".zshenv") + self.backups(".apm/apm.yml"), [])
 

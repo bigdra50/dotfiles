@@ -41,9 +41,9 @@ jobs:
             tools: chezmoi shellcheck
           - os: macos-latest
             tools: chezmoi shellcheck
-          # Link placement is checked on Linux and macOS only. On Windows this
-          # covers what chezmoi evaluates the same way everywhere: the module
-          # selection templates and the generated machine config.
+          # Windows places the same links through the PowerShell scripts.
+          # Skipped there: the comparison with symlinks.sh (bash only), POSIX
+          # permission checks, and shellcheck.
           - os: windows-latest
             tools: chezmoi
     runs-on: ${{ matrix.os }}
