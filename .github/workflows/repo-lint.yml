@@ -34,7 +34,10 @@ jobs:
 
       # The tests run setup functions against a throwaway HOME; jq and python3 ship with the runner
       - name: Test setup scripts
-        run: python3 -m unittest scripts/tests/test_setup_config_merge.py
+        run: >-
+          python3 -m unittest
+          scripts/tests/test_setup_config_merge.py
+          scripts/tests/test_claude_settings.py
 
   markdown:
     runs-on: ubuntu-latest
@@ -69,9 +72,6 @@ jobs:
         run: |
           jq empty .claude/settings.json
           jq empty .claude/package.json
-          # apm fails a malformed hook manifest closed, with only a warning at
-          # install time, so catch it here instead.
-          find .apm/hooks -name '*.json' -print0 | xargs -0 -r -n1 jq empty
 
   zsh-syntax:
     runs-on: ubuntu-latest

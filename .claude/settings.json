@@ -221,6 +221,10 @@
           {
             "type": "command",
             "command": "bash ~/.claude/hooks/userpromptsubmit-compaction-recovery.sh"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/usage-warn.sh"
           }
         ]
       }
