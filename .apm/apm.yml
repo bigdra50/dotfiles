@@ -38,6 +38,7 @@ dependencies:
     - bigdra50/skills/docs/ja-ng-rule-register
     - bigdra50/skills/docs/japanese-tech-writing
     - bigdra50/skills/docs/md-prose-cleanup
+    - bigdra50/skills/docs/paper-report
     - bigdra50/skills/even/evenhub-upload
     # github カテゴリは pr-brief を入れないため、bundle ではなく個別に指定する。
     - bigdra50/skills/github/creating-pull-requests
