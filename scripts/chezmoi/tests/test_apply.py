@@ -34,6 +34,18 @@ WINDOWS_INTERPRETER = (
     else []
 )
 
+# skills を入れるスクリプトが呼ぶ apm の代わり。呼び出しを記録するだけで、何も配置しない。
+# 本物を呼ぶと、テストのたびに依存を取得して配置してしまう
+APM_STUB = """#!/usr/bin/env bash
+echo "$*" >>"$APM_STUB_LOG"
+case "${1:-}" in
+    --version) echo "Agent Package Manager (APM) CLI version 0.28.0 (stub)" ;;
+    install) exit "$(cat "$APM_STUB_EXIT_FILE" 2>/dev/null || echo 0)" ;;
+esac
+"""
+# skills を入れるスクリプトが配置先に作るもの。chezmoi が置くものとは別に数える
+SKILLS_SCRIPT_OUTPUTS = (".apm/apm.lock.yaml", ".apm/agents")
+
 # 現行の setup のうち、リンクを張る部分だけを空の HOME に対して走らせる。
 LINK_CLAUDE = r"""
 source scripts/lib.sh
@@ -65,7 +77,22 @@ class ApplyTestCase(unittest.TestCase):
         self.state = self.root / "state"
         self.state.mkdir()
         self.config = self.state / "chezmoi.toml"
+        # chezmoi を呼ぶ側の HOME。スクリプトは配置先だけを触り、ここには何も書かないはず
+        self.caller_home = self.root / "caller-home"
+        self.caller_home.mkdir()
+        self.bin = self.root / "bin"
+        self.bin.mkdir()
+        stub = self.bin / "apm"
+        stub.write_text(APM_STUB, encoding="utf-8", newline="\n")
+        stub.chmod(0o755)
+        self.apm_log = self.root / "apm.log"
+        self.apm_exit = self.root / "apm.exit"
         self.machine = self.use(preset="desktop")
+
+    def apm_calls(self) -> list[str]:
+        if not self.apm_log.exists():
+            return []
+        return self.apm_log.read_text(encoding="utf-8").splitlines()
 
     def use(
         self,
@@ -116,6 +143,13 @@ class ApplyTestCase(unittest.TestCase):
             ],
             capture_output=True,
             encoding="utf-8",
+            env={
+                **os.environ,
+                "HOME": str(self.caller_home),
+                "PATH": f"{self.bin}{os.pathsep}{os.environ['PATH']}",
+                "APM_STUB_LOG": str(self.apm_log),
+                "APM_STUB_EXIT_FILE": str(self.apm_exit),
+            },
             check=False,
         )
 
@@ -145,12 +179,19 @@ class ApplyTestCase(unittest.TestCase):
         }
 
     def entries(self) -> set[str]:
-        """配置先にあるものすべて。symlink の先はたどらない。"""
+        """chezmoi が配置先に置いたものすべて。symlink の先はたどらない。"""
         found: set[str] = set()
         for current, dirs, files in os.walk(self.dest, followlinks=False):
             for name in [*dirs, *files]:
                 found.add((Path(current) / name).relative_to(self.dest).as_posix())
-        return found
+        return {
+            path
+            for path in found
+            if not any(
+                path == output or path.startswith(f"{output}/")
+                for output in SKILLS_SCRIPT_OUTPUTS
+            )
+        }
 
     def placed(self) -> m.Placements:
         return m.placements(MANIFEST, self.machine)
@@ -541,6 +582,48 @@ class TestSettingsMerge(ApplyTestCase):
         self.apply()
 
         self.assertEqual(self.target.read_bytes(), before)
+
+
+@unittest.skipIf(
+    IS_WINDOWS, "skills を入れる処理は bash で、Windows は対象にしていない"
+)
+class TestInstallSkillsScript(ApplyTestCase):
+    """chezmoi が、skills を入れる処理（scripts/setup/skills.sh）を必要なときだけ呼ぶ。
+
+    処理そのものの仕様は scripts/tests/test_setup_skills.py にある。
+    """
+
+    INSTALL = "install -g"
+
+    def test_runs_once_and_not_again_while_its_inputs_are_unchanged(self) -> None:
+        self.apply()
+        self.apply()
+
+        self.assertEqual(self.apm_calls().count(self.INSTALL), 1)
+
+    def test_works_on_the_destination_and_leaves_the_callers_home_alone(self) -> None:
+        self.apply()
+
+        # 取り込んだ lock を配置先へ写すのは、この処理の最初の仕事
+        self.assertTrue((self.dest / ".apm" / "apm.lock.yaml").is_file())
+        self.assertEqual(list(self.caller_home.iterdir()), [])
+
+    def test_does_not_run_when_the_module_is_not_enabled(self) -> None:
+        self.use(preset="desktop", without=("claude-skills",))
+
+        self.apply()
+
+        self.assertNotIn(self.INSTALL, self.apm_calls())
+
+    def test_failed_install_fails_the_apply_and_is_tried_again(self) -> None:
+        self.apm_exit.write_text("1", encoding="utf-8")
+
+        failed = self.chezmoi("apply")
+        self.apm_exit.write_text("0", encoding="utf-8")
+        self.apply()
+
+        self.assertNotEqual(failed.returncode, 0)
+        self.assertEqual(self.apm_calls().count(self.INSTALL), 2)
 
 
 class TestInit(ApplyTestCase):
