@@ -1,0 +1,5 @@
+# Keep LF in the working tree on every OS.
+# Windows clones with core.autocrlf=true check text files out as CRLF. The
+# files here are read in place through symlinks, so a CRLF checkout breaks
+# shell hooks under .claude/ and the link definitions chezmoi reads from home/.
+* text=auto eol=lf
