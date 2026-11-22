@@ -211,7 +211,10 @@ install_skills() {
         return 0
     fi
     mkdir -p "$HOME/.apm"
-    create_symlink "$DOTFILES_DIR/.apm/apm.yml" "$HOME/.apm/apm.yml"
+    # `apm update` が atomic write で symlink を実ファイルに置換したあとも、ここで
+    # 再リンクする。素の create_symlink だと既存実ファイルで止まって install に
+    # 届かないので、退避付きの verify_apm_manifest_link を先に走らせる。
+    verify_apm_manifest_link
 
     # Local apm primitives live under .apm/<type>/. Mirror them into ~/.apm so
     # `apm install -g` deploys them alongside the dependency skills.
@@ -250,6 +253,7 @@ install_skills() {
         warning "Lockfile left unsynced; dotfiles keeps the previous resolution"
     fi
 
+    # install は symlink を辿るだけだが、万一途中で実ファイル化していたら戻す。
     verify_apm_manifest_link
 }
 
