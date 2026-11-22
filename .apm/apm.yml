@@ -4,8 +4,7 @@
 # 各エントリは <owner/repo>/<path> のサブパス指定。path は SKILL.md を持つスキル
 # フォルダか、plugin manifest を持つカテゴリ (bundle) を指す。
 # 追加/削除はこのファイルを編集して `mise run setup:claude` で反映する。
-# 削除に `apm uninstall -g` は使わない。apm 0.28.0 では対象と無関係なローカルの
-# hook (.apm/hooks) の統合まで外す。行を消して install すれば hook は残る。
+# 行を消した依存の配置済みファイルは、反映のときに消える（別のマシンで消した分も含む）。
 #
 # 更新は `apm update -g --dry-run` で plan を読んでから、引数なしの `apm update -g`。
 # --yes は付けないこと。既定 No のプロンプトが SHA/tag 書き換えを見せる唯一の関門で、

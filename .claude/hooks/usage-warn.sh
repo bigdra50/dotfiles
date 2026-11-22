@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# usage-warn-hook — UserPromptSubmit hook。
+# UserPromptSubmit hook。
 # ccstatuskit (https://github.com/bigdra50/ccstatuskit) が維持する usage キャッシュを
 # 読み、利用枠が逼迫したときだけ警告をプロンプトへ注入する。
 # 注入するのは初回と severity が上がったときだけ。残量の数字を刻みごとに入れ直すと、
@@ -15,15 +15,15 @@ mkdir -p "$SEEN"
 
 [ -f "$CACHE" ] || exit 0
 
-session_id(){  # UserPromptSubmit の stdin JSON から session_id。無ければ env/manual
-  local sid=""
-  if [ ! -t 0 ]; then
-    sid=$(python3 -c "import json,sys
+session_id() { # UserPromptSubmit の stdin JSON から session_id。無ければ env/manual
+    local sid=""
+    if [ ! -t 0 ]; then
+        sid=$(python3 -c "import json,sys
 try: print((json.load(sys.stdin).get('session_id') or '')[:64])
 except Exception: pass" 2>/dev/null)
-  fi
-  [ -z "$sid" ] && sid="${CLAUDE_SESSION_ID:-manual}"
-  printf '%s' "$sid" | tr -c 'A-Za-z0-9._-' '_'
+    fi
+    [ -z "$sid" ] && sid="${CLAUDE_SESSION_ID:-manual}"
+    printf '%s' "$sid" | tr -c 'A-Za-z0-9._-' '_'
 }
 
 sid=$(session_id)

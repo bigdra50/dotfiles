@@ -1,0 +1,53 @@
+# 配置先に実体があるリンクを、退避してから張り直す（Windows 用）。
+#
+# 規則と理由は run_before_10-backup-conflicts.sh.tmpl と同じ。
+# chezmoi は、自分が一度も書いていない配置先を確認なしに置き換えるので、
+# 適用の前に <配置先>.backup.<日時> へ移し、リンクまで張っておく。
+#
+# PowerShell 7 で実行する（設定ファイルの interpreters.ps1 が pwsh を指定する）。
+$ErrorActionPreference = 'Stop'
+
+$dest = [IO.Path]::GetFullPath({{ .chezmoi.destDir | squote }})
+$tree = [IO.Path]::GetFullPath({{ .chezmoi.workingTree | squote }})
+$stamp = Get-Date -Format 'yyyyMMdd_HHmmss'
+
+# OneDrive のオンデマンドのファイルも reparse point なので、属性ではなくリンクの種類で判定する
+function Test-Link($Item) {
+    return $null -ne $Item -and $Item.LinkType -in 'SymbolicLink', 'Junction'
+}
+
+$table = @'
+{{ includeTemplate "dotfiles/link-table" . }}
+'@
+
+foreach ($line in $table -split "`r?`n") {
+    if (-not $line) { continue }
+    $state, $kind, $target, $source = $line -split "`t"
+    if ($state -ne 'on' -or $kind -ne 'link') { continue }
+
+    # リンク表のパスは / 区切り。GetFullPath で OS の区切り文字に揃える。
+    # / が混じった指し先で symlink を作ると、chezmoi の期待する文字列と食い違い、張り替えが起きる
+    $path = [IO.Path]::GetFullPath((Join-Path $dest $target))
+    $item = Get-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
+    if ($null -eq $item) { continue }
+    # symlink は chezmoi が張り替える。失うものが無いので退避しない
+    if (Test-Link $item) { continue }
+
+    # 親ディレクトリが symlink なら、配置先はその先にある実体。動かすと他人の持ち物を動かす
+    $linkedParent = $false
+    $parent = Split-Path -Parent $path
+    while ($parent -and $parent.Length -gt $dest.Length) {
+        if (Test-Link (Get-Item -LiteralPath $parent -Force -ErrorAction SilentlyContinue)) {
+            $linkedParent = $true
+            break
+        }
+        $parent = Split-Path -Parent $parent
+    }
+    if ($linkedParent) { continue }
+
+    $backup = "$path.backup.$stamp"
+    Move-Item -LiteralPath $path -Destination $backup
+    $pointee = [IO.Path]::GetFullPath((Join-Path $tree $source))
+    New-Item -ItemType SymbolicLink -Path $path -Target $pointee | Out-Null
+    Write-Output "退避: $path -> $backup"
+}

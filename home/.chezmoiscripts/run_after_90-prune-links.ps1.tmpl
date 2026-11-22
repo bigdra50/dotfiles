@@ -1,0 +1,38 @@
+# そのマシンで選ばれていない配置先に残った symlink を消す（Windows 用）。
+#
+# 規則と理由は run_after_90-prune-links.sh.tmpl と同じ。
+# 消すのは、この作業ツリーの同じファイルを指す symlink と、指し先が無い symlink だけ。
+# 実ファイルと、ほかの場所を指す symlink は本人が置いたものなので触らない。
+#
+# PowerShell 7 で実行する（設定ファイルの interpreters.ps1 が pwsh を指定する）。
+$ErrorActionPreference = 'Stop'
+
+$dest = [IO.Path]::GetFullPath({{ .chezmoi.destDir | squote }})
+$tree = [IO.Path]::GetFullPath({{ .chezmoi.workingTree | squote }})
+$comparison = if ($IsWindows) { [StringComparison]::OrdinalIgnoreCase } else { [StringComparison]::Ordinal }
+
+$table = @'
+{{ includeTemplate "dotfiles/link-table" . }}
+'@
+
+foreach ($line in $table -split "`r?`n") {
+    if (-not $line) { continue }
+    $state, $kind, $target, $source = $line -split "`t"
+    if ($state -ne 'off') { continue }
+
+    # リンク表のパスは / 区切り。GetFullPath で OS の区切り文字に揃える
+    $path = [IO.Path]::GetFullPath((Join-Path $dest $target))
+    $item = Get-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
+    if ($null -eq $item -or $item.LinkType -notin 'SymbolicLink', 'Junction') { continue }
+
+    # Test-Path は symlink そのものを見るので、指し先の有無は解決した先で確かめる
+    $pointee = $item.ResolveLinkTarget($true).FullName
+    $dangling = -not (Test-Path -LiteralPath $pointee)
+    $ours = $kind -eq 'link' -and
+        [string]::Equals($pointee, [IO.Path]::GetFullPath((Join-Path $tree $source)), $comparison)
+    if ($dangling -or $ours) {
+        # symlink だけを消す。指し先の中身には触れない
+        $item.Delete()
+        Write-Output "削除: $path"
+    }
+}

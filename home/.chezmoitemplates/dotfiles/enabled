@@ -1,0 +1,36 @@
+{{- /* そのマシンで有効なモジュール名を、JSON の配列で返す。
+       (preset + with - without) のうち、platform に対応するものが有効になる。
+       scripts/chezmoi/manifest.py の enabled_modules と同じ計算で、テストが両者の一致を確かめる。 */ -}}
+{{- if not (hasKey . "machine") -}}
+{{-   fail "マシンの選択が無い。chezmoi init を実行する" -}}
+{{- end -}}
+{{- $platform := includeTemplate "dotfiles/platform" . -}}
+{{- if not (has $platform .dotfiles.platforms) -}}
+{{-   fail (printf "未対応の platform: %s" $platform) -}}
+{{- end -}}
+{{- $preset := get .machine "preset" -}}
+{{- if not (hasKey .dotfiles.presets $preset) -}}
+{{-   fail (printf "未定義の preset: %s" $preset) -}}
+{{- end -}}
+{{- $with := get .machine "with" | default (list) -}}
+{{- $without := get .machine "without" | default (list) -}}
+{{- range concat $with $without -}}
+{{-   if not (hasKey $.dotfiles.modules .) -}}
+{{-     fail (printf "未定義のモジュール: %s" .) -}}
+{{-   end -}}
+{{- end -}}
+{{- /* プリセットの非対応モジュールは黙って外すが、with は本人が名指ししたものなので止める */ -}}
+{{- range $with -}}
+{{-   if not (has $platform (index $.dotfiles.modules .).platforms) -}}
+{{-     fail (printf "platform に対応しない: %s (%s)" . $platform) -}}
+{{-   end -}}
+{{- end -}}
+{{- $enabled := list -}}
+{{- range $name := concat (index .dotfiles.presets $preset) $with | uniq | sortAlpha -}}
+{{-   if and (hasKey $.dotfiles.modules $name) (not (has $name $without)) -}}
+{{-     if has $platform (index $.dotfiles.modules $name).platforms -}}
+{{-       $enabled = append $enabled $name -}}
+{{-     end -}}
+{{-   end -}}
+{{- end -}}
+{{- $enabled | toJson -}}

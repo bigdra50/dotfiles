@@ -1,0 +1,21 @@
+{{- /* このマシンの platform（macos / linux / wsl / windows）を返す。
+       [data.machine] に platform があれば、判定より優先する（テストと、判定が外れる環境のため）。 */ -}}
+{{- $forced := "" -}}
+{{- if hasKey . "machine" -}}
+{{-   $forced = get .machine "platform" | default "" -}}
+{{- end -}}
+{{- if $forced -}}
+{{-   $forced -}}
+{{- else if eq .chezmoi.os "darwin" -}}
+macos
+{{- else if eq .chezmoi.os "windows" -}}
+windows
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   if .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+wsl
+{{-   else -}}
+linux
+{{-   end -}}
+{{- else -}}
+{{-   fail (printf "未対応の platform: %s" .chezmoi.os) -}}
+{{- end -}}

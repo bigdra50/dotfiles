@@ -1,0 +1,80 @@
+name: Chezmoi
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chezmoi-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      - name: Lint (ruff + mypy)
+        # Same pins as the path-refs job in repo-lint.yml; bump them together.
+        run: |
+          pip install --quiet ruff==0.16.1 mypy==2.3.0
+          ruff check scripts/chezmoi/
+          ruff format --check scripts/chezmoi/
+          mypy --strict scripts/chezmoi/
+
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            tools: chezmoi shellcheck
+          - os: macos-latest
+            tools: chezmoi shellcheck
+          # Windows places the same links through the PowerShell scripts.
+          # Skipped there: the comparison with symlinks.sh (bash only), POSIX
+          # permission checks, and shellcheck.
+          - os: windows-latest
+            tools: chezmoi
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      # Versions come from mise.toml, the same ones `mise run chezmoi:test` uses locally
+      - name: Install chezmoi
+        uses: jdx/mise-action@v5
+        with:
+          install_args: ${{ matrix.tools }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.14"
+
+      # The tests skip themselves when chezmoi is missing, so a failed install
+      # would otherwise pass without checking anything.
+      - name: Show the chezmoi version
+        run: chezmoi --version
+
+      - name: Check that home/ matches the manifest
+        run: python scripts/chezmoi/gen.py --check
+
+      # The tests run the real chezmoi against a throwaway HOME, and compare the
+      # result with what scripts/setup/symlinks.sh places on the same runner.
+      - name: Test
+        # Test names and failure messages are Japanese; the Windows runner's
+        # default code page cannot print them.
+        env:
+          PYTHONUTF8: "1"
+        run: python -m unittest discover -s scripts/chezmoi/tests -t scripts/chezmoi

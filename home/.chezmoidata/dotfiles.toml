@@ -1,0 +1,166 @@
+# dotfiles のモジュール定義（正本）。
+#
+# どのファイルをどこへ置くかは、すべてここに書く。
+# home/ 配下のリンク定義（symlink_*.tmpl）、.chezmoiignore、リンク表、modify_* は
+# このファイルから `mise run chezmoi:gen` で生成する。生成物を手で編集しない。
+#
+# マシンごとの選択は ~/.config/chezmoi/chezmoi.toml の [data.machine] に書く。
+#   preset  = "desktop"      下の presets のどれか
+#   with    = ["unity"]      プリセットに加えるモジュール
+#   without = ["terminal"]   プリセットから外すモジュール
+# 実際に入るのは (preset + with - without) のうち、そのマシンの platform に対応するモジュール。
+#
+# links / merges の書き方:
+#   { path = ".zshenv" }                            配置先とリポジトリ内のパスが同じ
+#   { target = "A/b", source = "windows/b" }        違うとき。target は HOME 相対、source はリポジトリ相対
+#   platforms = [...]                               モジュールの platforms をさらに絞る
+
+[dotfiles]
+platforms = ["macos", "linux", "wsl", "windows"]
+
+# 配置先の親ディレクトリのうち、所有者だけが読める権限 (700) にするもの。
+# ここに無い親ディレクトリは 755 になる。
+# .config は Ubuntu の既定が 700 で、認証情報を持つアプリの設定が入るので 700 に揃える。
+private_dirs = [".config", ".ssh", ".ssh/config.d", ".apm"]
+
+# 以前は配置していて、今はリポジトリに無いリンク。壊れた symlink として残っていれば消す。
+retired = [
+    ".zsh",
+    ".zshrc",
+    ".Brewfile",
+    ".mise.toml",
+    ".claude/docs",
+    ".claude/skills",
+    ".claude/agents",
+]
+
+[dotfiles.presets]
+# 開発に使うマシン。対応する platform のモジュールがすべて入る。
+desktop = [
+    "shell",
+    "git",
+    "ssh",
+    "editor",
+    "mise",
+    "terminal",
+    "unity",
+    "desktop-mac",
+    "claude-core",
+    "claude-skills",
+    "cursor",
+    "root-misc",
+]
+# 常時稼働のサーバー。既存の設定に触れないものだけを入れる。
+# shell / git / mise は、ディレクトリごとリンクして実行時のファイル（gh の認証など）を
+# 巻き込むので、サーバーでは with で明示的に足す。
+server = ["claude-skills"]
+
+[dotfiles.modules.shell]
+description = "zsh・bash・プロンプト・履歴"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [
+    { path = ".zshenv" },
+    { path = ".zshenv_local.example" },
+    { path = ".zshrc_local.example" },
+    { path = ".bashrc" },
+    { path = ".colorrc" },
+    { path = ".config/zsh" },
+    { path = ".config/sheldon" },
+    { path = ".config/starship.toml" },
+    { path = ".config/atuin" },
+    { path = ".config/glow" },
+]
+
+[dotfiles.modules.git]
+description = "git と GitHub CLI、TUI クライアント"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [
+    { path = ".gitconfig" },
+    # SSH のホスト別名へ URL を書き換える。Windows の ~/.ssh/config には別名が無く、git の通信が失敗する。
+    { path = ".gitconfig-bigdra50", platforms = ["macos", "linux", "wsl"] },
+    # Windows はマシンごとに実体を持つ。
+    { path = ".config/git", platforms = ["macos", "linux", "wsl"] },
+    { path = ".config/gh" },
+    { path = ".config/lazygit" },
+    { path = ".config/gitui" },
+]
+
+[dotfiles.modules.ssh]
+description = "ssh の共通設定。鍵は管理しない"
+platforms = ["macos", "linux", "wsl"]
+links = [{ path = ".ssh/config" }]
+# マシン固有・プロファイル固有のホストを置くディレクトリ。中身は管理しない。
+dirs = [".ssh/config.d"]
+
+[dotfiles.modules.editor]
+description = "Neovim・Vim・IdeaVim"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [
+    { path = ".config/nvim" },
+    { path = ".vimrc" },
+    { path = ".ideavimrc" },
+]
+
+[dotfiles.modules.mise]
+description = "mise のグローバル設定（ランタイムと CLI ツールの一覧）"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [{ path = ".config/mise" }]
+
+[dotfiles.modules.terminal]
+description = "ターミナルエミュレータ"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [{ path = ".wezterm.lua" }]
+
+[dotfiles.modules.unity]
+description = "unity-cli (u) の設定"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [{ path = ".config/u" }]
+
+[dotfiles.modules.desktop-mac]
+description = "macOS のウィンドウ管理"
+platforms = ["macos"]
+links = [
+    { path = ".yabairc" },
+    { path = ".skhdrc" },
+]
+
+[dotfiles.modules.claude-core]
+description = "Claude Code の CLAUDE.md・rules・hooks・settings.json"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [
+    { path = ".claude/CLAUDE.md" },
+    { path = ".claude/commands" },
+    { path = ".claude/hooks" },
+    { path = ".claude/output-styles" },
+    { path = ".claude/rules" },
+    { path = ".claude/scripts" },
+    { path = ".claude/statusline.sh" },
+    { path = ".claude/tools" },
+    # Windows では shell の指定が要るので実ファイルで持つ。
+    { path = ".config/ccstatuskit", platforms = ["macos", "linux", "wsl"] },
+]
+# Claude Code は settings.json を atomic write で保存するので、symlink にせず合成する。
+# リポジトリ側のキーが勝ち、live にだけあるキーは残る。
+merges = [{ path = ".claude/settings.json" }]
+
+[dotfiles.modules.claude-skills]
+description = "apm で入れる skills と agents のマニフェスト"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [{ path = ".apm/apm.yml" }]
+
+[dotfiles.modules.cursor]
+description = "Cursor CLI の設定のうち、全マシンで揃えるキー"
+platforms = ["macos", "linux", "wsl"]
+# cli-config.json には認証情報とマシンごとの設定が入るので、attribution だけを合成する。
+# Cursor が最初の起動でファイルを作るまでは何も置かない。
+merges = [{ path = ".config/cursor/cli-config.json", keys = ["attribution"], create = false }]
+
+[dotfiles.modules.root-misc]
+description = "リポジトリ直下の glob で HOME に置かれてきたファイル"
+platforms = ["macos", "linux", "wsl", "windows"]
+links = [
+    { path = ".dockerignore" },
+    { path = ".gitleaksignore" },
+    { path = ".pre-commit-config.yaml" },
+    { path = ".gitleaks.toml", platforms = ["macos", "linux", "wsl"] },
+]

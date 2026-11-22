@@ -1,0 +1,38 @@
+{{- /* リポジトリの JSON を、アプリが書き換える live の JSON へ合成する。
+
+       symlink にしない理由: アプリが atomic write（一時ファイル + rename）で保存すると、
+       symlink が実ファイルに置き換わり、リポジトリと食い違う。認証情報などもリポジトリへ書かれる。
+
+       規則は jq の `live * repo` と同じ。
+         - リポジトリにあるキーはリポジトリの値になる
+         - live にだけあるキー（実行時の状態、マシンごとの選択）は残る
+         - 配列は要素ごとに合成せず、丸ごと置き換える
+
+       modify-template から呼ぶ。引数:
+         chezmoi  呼び出し側の .chezmoi（stdin に live の内容が入る）
+         source   リポジトリ相対の JSON
+         keys     合成するトップレベルのキー。空なら全キー
+         create   live のファイルが無いときに作るか */ -}}
+{{- $want := include (joinPath .chezmoi.workingTree .source) | fromJson -}}
+{{- if .keys -}}
+{{-   $picked := dict -}}
+{{-   range .keys -}}
+{{-     if hasKey $want . -}}
+{{-       $_ := set $picked . (index $want .) -}}
+{{-     end -}}
+{{-   end -}}
+{{-   $want = $picked -}}
+{{- end -}}
+{{- $stdin := .chezmoi.stdin -}}
+{{- if $stdin | trim -}}
+{{-   $live := fromJson $stdin -}}
+{{-   $merged := jq ".[0] * .[1]" (list $live $want) | first -}}
+{{- /* 意味が同じなら live の内容をそのまま返す。アプリが自分のキー順で書き戻すたびに差分にしない */ -}}
+{{-   if eq ($merged | toJson) ($live | toJson) -}}
+{{-     $stdin -}}
+{{-   else -}}
+{{-     $merged | toPrettyJson "  " -}}
+{{-   end -}}
+{{- else if .create -}}
+{{-   $want | toPrettyJson "  " -}}
+{{- end -}}

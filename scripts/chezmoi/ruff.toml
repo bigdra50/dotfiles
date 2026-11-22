@@ -1,0 +1,4 @@
+# tomllib entered the standard library in Python 3.11. Without a target version,
+# ruff releases disagree on whether it sorts as a standard-library import, and
+# the pinned ruff in CI rejects what the local one writes.
+target-version = "py311"
