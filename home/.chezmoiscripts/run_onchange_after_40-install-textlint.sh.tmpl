@@ -1,0 +1,20 @@
+{{- /* claude-core モジュールが有効なときだけ、中身のあるスクリプトになる。
+       chezmoi は、描画した結果が空のスクリプトを実行しない。 */ -}}
+{{- $on := includeTemplate "dotfiles/enabled" . | fromJson -}}
+{{- if has "claude-core" $on -}}
+{{- $tree := .chezmoi.workingTree -}}
+#!/usr/bin/env bash
+# Markdown の文体検査に使う textlint を入れる。実装は scripts/setup/textlint.sh。
+#
+# chezmoi は、このスクリプトの描画結果が前回と変わったときだけ実行する (run_onchange)。
+# 入力を下に並べて、どれかが変わると描画結果も変わるようにする。
+#   依存の lock   {{ include (joinPath $tree ".claude/package-lock.json") | sha256sum }}
+#   導入の処理    {{ include (joinPath $tree "scripts/setup/textlint.sh") | sha256sum }}
+#   npm           {{ lookPath "npm" }}
+#
+# npm が無いマシンでは、導入を飛ばして成功で終わる。
+# npm のパスを入力に含めてあるので、あとで node を入れると次の apply で走る。
+set -euo pipefail
+
+exec bash {{ joinPath $tree "scripts/setup/textlint.sh" | quote }}
+{{- end -}}

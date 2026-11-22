@@ -1,0 +1,26 @@
+{{- /* claude-core モジュールが有効なときだけ、中身のあるスクリプトになる。
+       chezmoi は、描画した結果が空のスクリプトを実行しない。 */ -}}
+{{- $on := includeTemplate "dotfiles/enabled" . | fromJson -}}
+{{- if has "claude-core" $on -}}
+{{- $tree := .chezmoi.workingTree -}}
+#!/usr/bin/env bash
+# ~/.claude/rules の内容を、Codex と Copilot が読むファイルへ書き出す。
+# 実装は scripts/sync-rules.sh。
+#
+# chezmoi は、このスクリプトの描画結果が前回と変わったときだけ実行する (run_onchange)。
+# 入力のハッシュを下に並べて、どれかが変わると描画結果も変わるようにする。
+#   同期の処理   {{ include (joinPath $tree "scripts/sync-rules.sh") | sha256sum }}
+{{- range glob (joinPath $tree ".claude/rules/**/*.md") | sortAlpha }}
+#   rule         {{ include . | sha256sum }} {{ trimPrefix $tree . }}
+{{- end }}
+{{- range list ".codex/AGENTS.header.md" ".copilot/instructions.header.md" }}
+{{-   if stat (joinPath $tree .) }}
+#   header       {{ include (joinPath $tree .) | sha256sum }} {{ . }}
+{{-   end }}
+{{- end }}
+set -euo pipefail
+
+# 読み取る rules と書き出し先は、どちらも HOME から決まる。配置先を HOME として渡す
+export HOME={{ .chezmoi.destDir | quote }}
+exec bash {{ joinPath $tree "scripts/sync-rules.sh" | quote }} --global
+{{- end -}}

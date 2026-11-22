@@ -34,17 +34,24 @@ WINDOWS_INTERPRETER = (
     else []
 )
 
-# skills を入れるスクリプトが呼ぶ apm の代わり。呼び出しを記録するだけで、何も配置しない。
-# 本物を呼ぶと、テストのたびに依存を取得して配置してしまう
-APM_STUB = """#!/usr/bin/env bash
-echo "$*" >>"$APM_STUB_LOG"
+# スクリプトが呼ぶ外部コマンドの代わり。呼び出しを記録するだけで、何も取得も配置もしない。
+# 本物を呼ぶと、テストのたびに apm が依存を取得し、npm がリポジトリの node_modules を作り直す
+STUBS = {
+    "apm": """#!/usr/bin/env bash
+echo "$*" >>"$STUB_LOG_DIR/apm"
 case "${1:-}" in
     --version) echo "Agent Package Manager (APM) CLI version 0.28.0 (stub)" ;;
     install) exit "$(cat "$APM_STUB_EXIT_FILE" 2>/dev/null || echo 0)" ;;
 esac
-"""
-# skills を入れるスクリプトが配置先に作るもの。chezmoi が置くものとは別に数える
-SKILLS_SCRIPT_OUTPUTS = (".apm/apm.lock.yaml", ".apm/agents")
+""",
+    "npm": """#!/usr/bin/env bash
+echo "$*" >>"$STUB_LOG_DIR/npm"
+""",
+}
+# スクリプトが配置先に作るもの。chezmoi が置くものとは別に数える
+#   .apm/...           skills を入れる処理が写す lock とローカルの agent
+#   .codex, .copilot   rules の同期が書き出すファイル
+SCRIPT_OUTPUTS = (".apm/apm.lock.yaml", ".apm/agents", ".codex", ".copilot")
 
 # 現行の setup のうち、リンクを張る部分だけを空の HOME に対して走らせる。
 LINK_CLAUDE = r"""
@@ -82,17 +89,22 @@ class ApplyTestCase(unittest.TestCase):
         self.caller_home.mkdir()
         self.bin = self.root / "bin"
         self.bin.mkdir()
-        stub = self.bin / "apm"
-        stub.write_text(APM_STUB, encoding="utf-8", newline="\n")
-        stub.chmod(0o755)
-        self.apm_log = self.root / "apm.log"
+        for name, script in STUBS.items():
+            stub = self.bin / name
+            stub.write_text(script, encoding="utf-8", newline="\n")
+            stub.chmod(0o755)
+        self.stub_logs = self.root / "stub-logs"
+        self.stub_logs.mkdir()
         self.apm_exit = self.root / "apm.exit"
         self.machine = self.use(preset="desktop")
 
+    def calls(self, command: str) -> list[str]:
+        """差し替えたコマンドが受け取った引数。1 回の呼び出しが 1 要素。"""
+        log = self.stub_logs / command
+        return log.read_text(encoding="utf-8").splitlines() if log.exists() else []
+
     def apm_calls(self) -> list[str]:
-        if not self.apm_log.exists():
-            return []
-        return self.apm_log.read_text(encoding="utf-8").splitlines()
+        return self.calls("apm")
 
     def use(
         self,
@@ -147,7 +159,7 @@ class ApplyTestCase(unittest.TestCase):
                 **os.environ,
                 "HOME": str(self.caller_home),
                 "PATH": f"{self.bin}{os.pathsep}{os.environ['PATH']}",
-                "APM_STUB_LOG": str(self.apm_log),
+                "STUB_LOG_DIR": str(self.stub_logs),
                 "APM_STUB_EXIT_FILE": str(self.apm_exit),
             },
             check=False,
@@ -189,7 +201,7 @@ class ApplyTestCase(unittest.TestCase):
             for path in found
             if not any(
                 path == output or path.startswith(f"{output}/")
-                for output in SKILLS_SCRIPT_OUTPUTS
+                for output in SCRIPT_OUTPUTS
             )
         }
 
@@ -624,6 +636,42 @@ class TestInstallSkillsScript(ApplyTestCase):
 
         self.assertNotEqual(failed.returncode, 0)
         self.assertEqual(self.apm_calls().count(self.INSTALL), 2)
+
+
+@unittest.skipIf(IS_WINDOWS, "どちらの処理も bash で、Windows は対象にしていない")
+class TestClaudeCoreScripts(ApplyTestCase):
+    """claude-core が有効なとき、textlint の導入と rules の同期を必要なときだけ走らせる。"""
+
+    def test_textlint_is_installed_from_the_lockfile_once(self) -> None:
+        self.apply()
+        self.apply()
+
+        # hook は .claude/node_modules の textlint を使う。無いと検査せずに素通しする
+        [call] = self.calls("npm")
+        self.assertTrue(call.startswith(f"ci --prefix {REPO_ROOT / '.claude'} "))
+        self.assertIn("--ignore-scripts", call)
+
+    def test_rules_are_generated_for_codex_and_copilot(self) -> None:
+        self.apply()
+
+        rule = (REPO_ROOT / ".claude" / "rules" / "xdg-base-directory.md").read_text(
+            encoding="utf-8"
+        )
+        for output in (".codex/AGENTS.md", ".copilot/copilot-instructions.md"):
+            with self.subTest(output=output):
+                generated = (self.dest / output).read_text(encoding="utf-8")
+                self.assertIn("Auto-generated from ~/.claude/rules/", generated)
+                self.assertIn(rule.strip().splitlines()[-1], generated)
+        self.assertEqual(list(self.caller_home.iterdir()), [])
+
+    def test_neither_runs_when_the_module_is_not_enabled(self) -> None:
+        self.use(preset="server")
+
+        self.apply()
+
+        self.assertEqual(self.calls("npm"), [])
+        self.assertFalse((self.dest / ".codex").exists())
+        self.assertFalse((self.dest / ".copilot").exists())
 
 
 class TestInit(ApplyTestCase):
