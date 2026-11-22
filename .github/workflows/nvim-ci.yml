@@ -25,24 +25,11 @@ jobs:
           [[ -d "$HOME/.local/share/mise/shims" ]] && echo "$HOME/.local/share/mise/shims" >> "$GITHUB_PATH"
           exit 0
 
+      # Versions come from mise.toml, the same one `mise run nvim:fmt` uses locally
       - name: Install stylua
-        run: |
-          if command -v stylua &>/dev/null; then
-            echo "stylua already available: $(stylua --version)"
-            exit 0
-          fi
-          case "$(uname -s)-$(uname -m)" in
-            Linux-x86_64)  archive="stylua-linux-x86_64.zip" ;;
-            Linux-aarch64) archive="stylua-linux-aarch64.zip" ;;
-            Darwin-arm64)  archive="stylua-macos-aarch64.zip" ;;
-            Darwin-x86_64) archive="stylua-macos-x86_64.zip" ;;
-            *) echo "Unsupported platform"; exit 1 ;;
-          esac
-          # Pinned: stylua releases change default formatting between versions,
-          # which silently breaks --check against code formatted by older ones
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
-          unzip -o stylua.zip -d /usr/local/bin
-          rm stylua.zip
+        uses: jdx/mise-action@v5
+        with:
+          install_args: stylua
 
       - name: Check formatting
         run: stylua --check .config/nvim/

@@ -19,18 +19,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Versions come from mise.toml, the same ones `mise run sh:lint` uses locally
       - name: Install shellcheck and shfmt
-        run: |
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/koalaman/shellcheck/releases/download/v0.10.0/shellcheck-v0.10.0.linux.x86_64.tar.xz" -o shellcheck.tar.xz
-          tar -xJf shellcheck.tar.xz
-          sudo cp shellcheck-v0.10.0/shellcheck /usr/local/bin/
-          rm -rf shellcheck.tar.xz shellcheck-v0.10.0
-
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/mvdan/sh/releases/download/v3.10.0/shfmt_v3.10.0_linux_amd64" -o /usr/local/bin/shfmt
-          chmod +x /usr/local/bin/shfmt
-
-          shellcheck --version
-          shfmt --version
+        uses: jdx/mise-action@v5
+        with:
+          install_args: shellcheck shfmt
 
       - name: Shellcheck
         run: shellcheck -S warning scripts/*.sh scripts/setup/*.sh scripts/reference/*.sh .claude/hooks/*.sh .claude/scripts/*.sh
@@ -124,8 +117,12 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Install actionlint
-        run: bash <(curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors https://raw.githubusercontent.com/rhysd/actionlint/main/scripts/download-actionlint.bash)
+      # shellcheck comes along so actionlint checks run: blocks with the pinned
+      # version instead of whichever one the runner image ships
+      - name: Install actionlint and shellcheck
+        uses: jdx/mise-action@v5
+        with:
+          install_args: actionlint shellcheck
 
       - name: Lint workflows
         # actionlint's -shellcheck flag only accepts an executable path; an
@@ -134,7 +131,7 @@ jobs:
         # -S warning policy of the shell job.
         env:
           SHELLCHECK_OPTS: -S warning
-        run: ./actionlint
+        run: actionlint
 
   wezterm-lua-format:
     runs-on: ubuntu-latest
@@ -142,20 +139,11 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Same pinned version as nvim-ci.yml, both read from mise.toml
       - name: Install stylua
-        run: |
-          case "$(uname -s)-$(uname -m)" in
-            Linux-x86_64)  archive="stylua-linux-x86_64.zip" ;;
-            Linux-aarch64) archive="stylua-linux-aarch64.zip" ;;
-            Darwin-arm64)  archive="stylua-macos-aarch64.zip" ;;
-            Darwin-x86_64) archive="stylua-macos-x86_64.zip" ;;
-            *) echo "Unsupported platform"; exit 1 ;;
-          esac
-          # Pinned to the same version as nvim-ci.yml: stylua releases change
-          # default formatting, which breaks --check against committed code
-          curl -fsSL --retry 3 --retry-delay 2 --retry-all-errors "https://github.com/JohnnyMorganz/StyLua/releases/download/v2.4.1/$archive" -o stylua.zip
-          unzip -o stylua.zip -d /usr/local/bin
-          rm stylua.zip
+        uses: jdx/mise-action@v5
+        with:
+          install_args: stylua
 
       - name: Check .wezterm.lua formatting
         run: stylua --check .wezterm.lua
