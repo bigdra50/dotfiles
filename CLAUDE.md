@@ -125,8 +125,9 @@ skills は [bigdra50/skills](https://github.com/bigdra50/skills) と [bigdra50/u
 導入は apm（[Microsoft Agent Package Manager](https://github.com/microsoft/apm)）で行う。
 宣言的マニフェスト `.apm/apm.yml` に各スキルを `<owner/repo>/<skill-dir>` のサブパスで列挙する。
 リポジトリ直下は apm パッケージではないため、個別のスキルフォルダを指す。
-`scripts/setup/claude.sh` が apm を `~/.local`（sudo 不要）へ導入し、`apm install -g` でユーザスコープ `~/.claude/skills` へ展開する。
+`scripts/setup/skills.sh` が apm を `~/.local`（sudo 不要）へ導入し、`apm install -g` でユーザスコープ `~/.claude/skills` へ展開する。
 スキルの追加・削除は `.apm/apm.yml` を編集して `mise run setup:claude` で反映し、最新追従は `apm update -g`。
+マニフェストから外した依存と、`.apm/agents` から消した agent の配置済みファイルは、反映のときに消える。
 旧 `npx skills`（skillpm）状態が残っている場合はセットアップ時に自動でバックアップ退避して apm へ移行する。
 
 settings.json だけは symlink にせず、`apply_claude_settings` が jq で live 側へマージして適用する。
