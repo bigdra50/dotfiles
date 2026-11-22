@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#MISE description="ssh の Host 名で指定したマシンへ sdl-freerdp で RDP 接続する"
+
+set -euo pipefail
+
+usage() {
+    cat <<'USAGE'
+Usage: mise run rdp <ssh-host> [sdl-freerdp options...]
+
+~/.ssh/config の Host 名から接続先の hostname を解決し、sdl-freerdp で接続する。
+<ssh-host> の後ろの引数は、そのまま sdl-freerdp へ渡す。
+
+  mise run rdp gamemaster
+  mise run rdp gamemaster /size:1280x800
+
+環境変数:
+  RDP_USER  RDP のユーザー名。未設定なら接続時に聞かれる
+USAGE
+}
+
+case "${1:-}" in
+    -h | --help)
+        usage
+        exit 0
+        ;;
+    "")
+        usage >&2
+        exit 2
+        ;;
+esac
+
+if ! command -v sdl-freerdp >/dev/null 2>&1; then
+    echo "sdl-freerdp が見つかりません。brew install freerdp で入れてください" >&2
+    exit 1
+fi
+
+ssh_host=$1
+shift
+
+# 接続先の hostname はこの公開 repo に書かず、マシンごとの ssh 設定（~/.ssh/config.d/local.conf）から取る。
+# RequestTTY を設定したマシンでは ssh -G も警告を出すので、stderr は捨てる。
+# awk は途中で exit しない。読み残すと ssh が SIGPIPE で落ち、pipefail で失敗扱いになるため
+if ! server=$(ssh -G "$ssh_host" 2>/dev/null | awk '$1 == "hostname" && !found { print $2; found = 1 }') ||
+    [[ -z $server ]]; then
+    echo "ssh の設定から $ssh_host の hostname を解決できません" >&2
+    exit 1
+fi
+
+# /from-stdin はパスワードをターミナルで聞く。INFO のログがプロンプトの行に割り込むので WARN 以上だけ出す
+args=("/v:$server" +dynamic-resolution /from-stdin /log-level:WARN)
+if [[ -n ${RDP_USER:-} ]]; then
+    args+=("/u:$RDP_USER")
+fi
+
+exec sdl-freerdp "${args[@]}" "$@"
